@@ -19,6 +19,14 @@ public class MenuAppearScript : MonoBehaviour
     {
         if (Input.GetKeyDown(button))
         {
+            if (Time.timeScale == 0.0F)
+            {
+                Time.timeScale = 1.0F;
+            }
+            else
+            {
+                Time.timeScale = 0.0F;
+            }
             isShowing = !isShowing;
             menuToShow.SetActive(isShowing);
             menuToHide.SetActive(!isShowing);
