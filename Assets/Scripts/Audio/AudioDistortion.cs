@@ -6,7 +6,7 @@ public class AudioDistortion : MonoBehaviour {
 
 	private AudioMusic audioMusic;
 
-	void start (){
+	void Start (){
 		audioMusic = FindObjectOfType<AudioMusic> ();
 	}
 
@@ -17,4 +17,5 @@ public class AudioDistortion : MonoBehaviour {
 	public void distOff (){
 		audioMusic.gameMusicEv.setParameterValue("dist_onoff", 0);
 	}
+
 }

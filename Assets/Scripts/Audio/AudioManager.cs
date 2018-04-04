@@ -7,13 +7,14 @@ public class AudioManager : MonoBehaviour {
 	private AudioMusic audioMusic;
 	private AudioDistortion audioDistortion;
 
-	void start (){
+	void Start (){
 		audioMusic = FindObjectOfType<AudioMusic> ();
 		audioDistortion = FindObjectOfType<AudioDistortion> ();
 	}
 
 	public void AudioPlayMusic (string musicTrack){
-		audioMusic.playMusic (musicTrack);
+        //audioMusic = FindObjectOfType<AudioMusic>();
+        audioMusic.playMusic (musicTrack);
 	}
 
 	public void AudioStopMusic (){
