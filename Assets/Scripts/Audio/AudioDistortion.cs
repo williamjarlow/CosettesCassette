@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioDistortion : MonoBehaviour {
 
 	private AudioMusic audioMusic;
+    public Slider distortionSlider;
 
 	void Start (){
 		audioMusic = FindObjectOfType<AudioMusic> ();
 	}
 
-	public void distOn (){
-		audioMusic.gameMusicEv.setParameterValue("dist_onoff", 1);
-	}
-
-	public void distOff (){
-		audioMusic.gameMusicEv.setParameterValue("dist_onoff", 0);
-	}
+    private void Update()
+    {
+        audioMusic.gameMusicEv.setParameterValue("dist_level", distortionSlider.value);
+    }
 
 }

@@ -29,11 +29,4 @@ public class AudioManager : MonoBehaviour {
 		audioMusic.unpauseMusic ();
 	}
 
-	public void AudioDistOn (){
-		audioDistortion.distOn ();
-	}
-
-	public void AudioDistOff (){
-		audioDistortion.distOff ();
-	}
 }

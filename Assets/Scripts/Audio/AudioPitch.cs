@@ -1,23 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class AudioPitch : MonoBehaviour {
 
 	private AudioMusic audioMusic;
-    private BasicTouch basicTouch;
+    public Slider pitchSlider;
 
 	void Start (){
 		audioMusic = FindObjectOfType<AudioMusic> ();
-        basicTouch = FindObjectOfType<BasicTouch>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            audioMusic.gameMusicEv.setParameterValue("pitch_sum", basicTouch.touchDiff);
+            audioMusic.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value);
         }
         
     }

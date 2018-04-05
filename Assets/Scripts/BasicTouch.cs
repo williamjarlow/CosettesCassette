@@ -6,6 +6,7 @@ public class BasicTouch : MonoBehaviour {
 
     [SerializeField]
     private float inputLengthMultiplier;
+    [HideInInspector]
     public float touchDiff;
     private float origin;
 
