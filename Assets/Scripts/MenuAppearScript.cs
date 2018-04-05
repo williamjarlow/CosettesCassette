@@ -4,8 +4,8 @@ using System.Collections;
 public class MenuAppearScript : MonoBehaviour
 {
 
-    [SerializeField] private GameObject menuToShow;
     [SerializeField] private GameObject menuToHide;
+    [SerializeField] private GameObject menuToShow;
     [SerializeField] private string button;
     private bool isShowing = true;
 
