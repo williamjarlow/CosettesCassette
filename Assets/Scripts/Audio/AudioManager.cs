@@ -8,13 +8,13 @@ public class AudioManager : MonoBehaviour {
 	private AudioDistortion audioDistortion;
 
 	void Start (){
-		audioMusic = FindObjectOfType<AudioMusic> ();
-		audioDistortion = FindObjectOfType<AudioDistortion> ();
+		audioMusic = GetComponent<AudioMusic> ();
+		audioDistortion = GetComponent<AudioDistortion> ();
 	}
 
 	public void AudioPlayMusic (string musicTrack){
         //audioMusic = FindObjectOfType<AudioMusic>();
-        audioMusic.playMusic (musicTrack);
+        audioMusic.playMusic ();
 	}
 
 	public void AudioStopMusic (){

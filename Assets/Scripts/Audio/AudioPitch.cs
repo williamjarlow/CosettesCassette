@@ -10,7 +10,7 @@ public class AudioPitch : MonoBehaviour {
     public Slider pitchSlider;
 
 	void Start (){
-		audioMusic = FindObjectOfType<AudioMusic> ();
+		audioMusic = GetComponent<AudioMusic> ();
 	}
 	
 	// Update is called once per frame

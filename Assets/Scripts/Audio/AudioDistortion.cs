@@ -9,7 +9,7 @@ public class AudioDistortion : MonoBehaviour {
     public Slider distortionSlider;
 
 	void Start (){
-		audioMusic = FindObjectOfType<AudioMusic> ();
+		audioMusic = GetComponent<AudioMusic> ();
 	}
 
     private void Update()

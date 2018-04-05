@@ -7,8 +7,11 @@ public class AudioMusic : MonoBehaviour {
 	[FMODUnity.EventRef]
 	public FMOD.Studio.EventInstance gameMusicEv;
 
-	public void playMusic (string musicTrack){
-		gameMusicEv = FMODUnity.RuntimeManager.CreateInstance (musicTrack);
+    // Path for the music that alternates, ie. the music that is being distorted, change of pitch, timeline, etc
+    public string musicPath;
+
+	public void playMusic  (){
+		gameMusicEv = FMODUnity.RuntimeManager.CreateInstance (musicPath);
 		gameMusicEv.start ();
 	}
 
