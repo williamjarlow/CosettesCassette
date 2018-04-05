@@ -37,30 +37,6 @@ public class HenkTestTouch : MonoBehaviour {
         MoveSong();
     }
 
-
-    /*
-    Vector3 SwipeSpeed()
-    {
-        // We assume that the device is held parallel to the ground...
-        // and the Home button is in the right hand
-
-        // Remap the device acceleration axis to game coordinates:
-        // 1) XY plane of the device is mapped onto XZ plane
-        // 2) Rotated 90 degrees around Y axis
-        accel.x = -Input.acceleration.y;
-        accel.y = Input.acceleration.x;
-
-        // Clamp acceleration vector to the unit sphere
-        if (accel.sqrMagnitude > 1)
-            accel.Normalize();
-
-        // Make it move 10 meters per second instead of 10 meters per frame
-        accel *= Time.deltaTime;
-
-        return accel;
-    }
-    */
-
     void MoveSong()
     {
 

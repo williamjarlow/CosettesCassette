@@ -14,6 +14,9 @@ public class ProgressBar : MonoBehaviour {
     private GameManager gameManager;
     private RectTransform thisRect;
 
+    public SkinnedMeshRenderer cassetteWheelLeft;
+    public SkinnedMeshRenderer cassetteWheelRight;
+
 
     // Might want to move these values to GameManager to have them all at the same place
 
@@ -29,6 +32,7 @@ public class ProgressBar : MonoBehaviour {
 
     void Start ()
     {
+
         thisRect = GetComponent<RectTransform>();
 
         barStartPositionX = transform.position.x - (thisRect.rect.width / 2);      // Get start position of bar from mid of bar - width of bar / 2.
@@ -45,5 +49,8 @@ public class ProgressBar : MonoBehaviour {
 	void Update ()
     {
         progressBarFiller.fillAmount = gameManager.posInSong/ gameManager.lengthOfSong;
-	}
+
+        cassetteWheelLeft.SetBlendShapeWeight(0, (gameManager.posInSong / gameManager.lengthOfSong)*100);       // Have to go *100 'cause weight is in percentage.
+        cassetteWheelRight.SetBlendShapeWeight(0, 100 - ((gameManager.posInSong / gameManager.lengthOfSong) * 100));       // Have to go *100 'cause weight is in percentage.
+    }
 }
