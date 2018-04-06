@@ -9,6 +9,7 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private GameObject menuToShow;
     [SerializeField] private string keyboardButton;
     [SerializeField] private Button UIbutton;
+    [SerializeField] private Text UIbuttonText;
     private bool isShowing = true;
 
     void Start()
@@ -39,6 +40,8 @@ public class MenuAppearScript : MonoBehaviour
 
     void Pause()
     {
+        Text btnText = UIbuttonText.GetComponent<Text>();
+
         if (Time.timeScale == 0.0F)
         {
             Time.timeScale = 1.0F;
@@ -47,6 +50,16 @@ public class MenuAppearScript : MonoBehaviour
         {
             Time.timeScale = 0.0F;
         }
+
+        if (isShowing == true)
+        {
+            btnText.text = "Unpause";
+        }
+        else
+        {
+            btnText.text = "Pause";
+        }
+
         isShowing = !isShowing;
         menuToShow.SetActive(isShowing);
         menuToHide.SetActive(!isShowing);
