@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AudioPitch : MonoBehaviour {
 
 	private AudioMusic audioMusic;
-    public Slider pitchSlider;
+    [SerializeField] private Slider pitchSlider;
 
 	void Start (){
 		audioMusic = GetComponent<AudioMusic> ();

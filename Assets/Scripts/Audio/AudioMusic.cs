@@ -7,23 +7,35 @@ public class AudioMusic : MonoBehaviour {
 	[FMODUnity.EventRef]
 	public FMOD.Studio.EventInstance gameMusicEv;
 
-    // Path for the music that alternates, ie. the music that is being distorted, change of pitch, timeline, etc
-    public string musicPath;
+    private AudioManager audioManager;
 
-	public void playMusic  (){
-		gameMusicEv = FMODUnity.RuntimeManager.CreateInstance (musicPath);
-		gameMusicEv.start ();
+
+    private void Start()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+    }
+
+    public void PlayMusic  (){
+        gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(audioManager.GetMusicPath());
+        gameMusicEv.start ();
 	}
 
-	public void stopMusic (){
+	public void StopMusic (){
 		gameMusicEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 	}
 
-	public void pauseMusic (){
+	public void PauseMusic (){
 		gameMusicEv.setPaused (true);
 	}
 
-	public void unpauseMusic (){
+	public void UnpauseMusic (){
 		gameMusicEv.setPaused (false);
 	}
+
+    public float GetTimeLinePosition()
+    {
+        int temp;
+        gameMusicEv.getTimelinePosition(out temp);
+        return temp;
+    }
 }

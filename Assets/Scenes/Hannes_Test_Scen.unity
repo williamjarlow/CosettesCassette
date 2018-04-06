@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 115963820}
   m_Layer: 5
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: AudioManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,7 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9d3c06bef0a4326835cb32082900d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: event:/Music/Cassette_01/test
 --- !u!114 &115963818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844182bf29c8d42d88e9879c085be9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicPath: event:/Music/Cassette_01/music
 --- !u!224 &115963819
 RectTransform:
   m_ObjectHideFlags: 0
@@ -838,8 +838,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 115963820}
-          m_MethodName: ChangeTimeline
+        - m_Target: {fileID: 115963816}
+          m_MethodName: ChangeDistortion
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
