@@ -8,27 +8,30 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private GameObject menuToHide;
     [SerializeField] private GameObject menuToShow;
     [SerializeField] private string keyboardButton;
-    [SerializeField] private Button UIbutton;
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private Button unPauseButton;
     [SerializeField] private Text UIbuttonText;
     private bool isShowing = true;
+    
 
     void Start()
     {
-        menuToShow.SetActive(true);
+       menuToShow.SetActive(true);
         menuToHide.SetActive(false);
-        Button btn = UIbutton.GetComponent<Button>();
-        btn.onClick.AddListener(() => Pause());
+      //  Button btn = pauseButton.GetComponent<Button>();
+      //  btn.onClick.AddListener(() => Pause());
     }
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(keyboardButton))
         {
             if (Time.timeScale == 0.0F)
             {
                 Time.timeScale = 1.0F;
             }
-            else
+            
             {
                 Time.timeScale = 0.0F;
             }
@@ -36,8 +39,12 @@ public class MenuAppearScript : MonoBehaviour
             menuToShow.SetActive(isShowing);
             menuToHide.SetActive(!isShowing);
         }
+        */
+
     }
 
+
+    /*
     void Pause()
     {
         Text btnText = UIbuttonText.GetComponent<Text>();
@@ -51,6 +58,7 @@ public class MenuAppearScript : MonoBehaviour
             Time.timeScale = 0.0F;
         }
 
+        
         if (isShowing == true)
         {
             btnText.text = "Unpause";
@@ -59,9 +67,31 @@ public class MenuAppearScript : MonoBehaviour
         {
             btnText.text = "Pause";
         }
+        
 
         isShowing = !isShowing;
         menuToShow.SetActive(isShowing);
         menuToHide.SetActive(!isShowing);
     }
+    */
+
+
+
+    public void ShowPauseScreen()
+    {
+
+
+
+       // isShowing = !isShowing;
+        menuToShow.SetActive(true);
+        
+    }
+
+    public void HidePauseScreen()
+    {
+        //isShowing = !isShowing;
+        menuToHide.SetActive(false);
+    }
+
+
 }
