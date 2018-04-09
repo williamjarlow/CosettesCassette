@@ -20,8 +20,8 @@ public class CassetteAnimation : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        leftWheel.SetBlendShapeWeight(0, (audioMusic.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
-        rightWheel.SetBlendShapeWeight(0, 100 -  (audioMusic.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+        //leftWheel.SetBlendShapeWeight(0, (audioMusic.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+        //rightWheel.SetBlendShapeWeight(0, 100 -  (audioMusic.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
 
         rightWheel.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));
         leftWheel.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));

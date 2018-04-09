@@ -6,18 +6,18 @@ using UnityEngine.UI;
 
 public class AudioPitch : MonoBehaviour {
 
-	private AudioMusic audioMusic;
+	private AudioManager audioManager;
     [SerializeField] private Slider pitchSlider;
 
 	void Start (){
-		audioMusic = GetComponent<AudioMusic> ();
+		audioManager = GetComponent<AudioManager> ();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         {
-            audioMusic.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value);
+            audioManager.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value);
         }
         
     }
