@@ -10,13 +10,14 @@ public enum Timing{
 
 public class DrumCorruption : CorruptionBaseClass {
     // Use this for initialization
-    [SerializeField]
-    List<int> beats;
-    [SerializeField]
-    float perfectRange;
-    [SerializeField]
-    float okayRange;
-    Dictionary<int, Timing> completedBeats;
+    List <Timing> completedBeats = new List<Timing>();
+
+    [HideInInspector]
+    public List<int> beats;
+    [HideInInspector]
+    public int okayRange;
+    [HideInInspector]
+    public int perfectRange;
 
     int index = 0;
 
@@ -31,7 +32,10 @@ public class DrumCorruption : CorruptionBaseClass {
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                completedBeats.Add(beats[index], CheckTiming());
+                Debug.Log(audioManager.GetTimeLinePosition());
+                completedBeats.Add(CheckTiming());
+                if (completedBeats[index] == Timing.perfect)
+                    Debug.Log("Works");
                 index++;
             }
         }

@@ -7,7 +7,4 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     public Duration duration;
     [HideInInspector]
     public float corruptionClearedPercent;
-
-    virtual public void StartCorruption() { }
-    virtual public void EndCorruption() { }
 }
