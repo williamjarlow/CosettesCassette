@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private string musicPath;
     [SerializeField] private string audioLogPath;
 
-	void Start (){
+	void Awake (){
 		audioMusic = GetComponent<AudioMusic> ();
 		audioDistortion = GetComponent<AudioDistortion> ();
 
