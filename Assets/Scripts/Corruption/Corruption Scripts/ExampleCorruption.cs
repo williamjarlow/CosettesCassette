@@ -20,16 +20,13 @@ public class ExampleCorruption : CorruptionBaseClass {
 
     public override void EndCorruption()
     {
-        if (CheckCorruptionCleared())
-        {
-            corruptionCleared = true;
-        }
+        corruptionClearedPercent = CheckCorruptionCleared();
     }
 
-    bool CheckCorruptionCleared()
+    float CheckCorruptionCleared()
     {
         //Clear conditions go here
-        return true;
+        return 0;
     }
 
 }

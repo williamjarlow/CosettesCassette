@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
+    [FMODUnity.EventRef]
+    public FMOD.Studio.EventInstance gameMusicEv;
 
     private AudioMusic audioMusic;
 	private AudioDistortion audioDistortion;
@@ -19,31 +21,36 @@ public class AudioManager : MonoBehaviour {
 
         musicEventDesc = FMODUnity.RuntimeManager.GetEventDescription(musicPath);
         musicEventDesc.getLength(out trackLength);
-
     }
 
 	public void AudioPlayMusic (string musicTrack){
-        //audioMusic = FindObjectOfType<AudioMusic>();
-        audioMusic.PlayMusic ();
-	}
+        gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
+        gameMusicEv.start();
+    }
 
 	public void AudioStopMusic (){
-		audioMusic.StopMusic ();
-	}
+        gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
 
 	public void AudioPauseMusic (){
-		audioMusic.PauseMusic ();
-	}
+        gameMusicEv.setPaused(true);
+    }
 
 	public void AudioUnpauseMusic (){
-		audioMusic.UnpauseMusic ();
-	}
+        gameMusicEv.setPaused(false);
+    }
 
     public float GetTrackLength()
     {
         return trackLength;
     }
 
+    public float GetTimeLinePosition()
+    {
+        int temp;
+        gameMusicEv.getTimelinePosition(out temp);
+        return temp;
+    }
 
     public string GetMusicPath()
     {
