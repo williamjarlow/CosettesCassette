@@ -6,20 +6,27 @@ public class VisualInput : MonoBehaviour {
 
 
     public GameObject particleEffect;
-    public float speed = 8;
+    public float speed = 25;
     public float distanceFromCamera = 5;
+
+    // Temporary
+
+    public bool tempMouseInput = false;
 
 
     void Start ()
     {
-
+        if (tempMouseInput)
+            particleEffect.SetActive(true);
 	}
 
 
 
     void Update ()
     {
-        //FollowMouse();
+        if (tempMouseInput)
+        FollowMouse();
+        if (!tempMouseInput)
         FollowTouch();
     }
 
