@@ -26,6 +26,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.beats = drumInformation.beats;
             drumCorruption.perfectRange = drumInformation.perfectRange;
             drumCorruption.okayRange = drumInformation.okayRange;
+            drumCorruption.duration = drumInformation.duration;
         }
 	}
 	
