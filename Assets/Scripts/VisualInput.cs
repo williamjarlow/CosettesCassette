@@ -10,13 +10,13 @@ public class VisualInput : MonoBehaviour {
     public float distanceFromCamera = 5;
 
     // Temporary
-
-    public bool tempMouseInput = false;
+    [Header("For Testing Purposes")]
+    public bool workWithMouseInput = false;
 
 
     void Start ()
     {
-        if (tempMouseInput)
+        if (workWithMouseInput)
             particleEffect.SetActive(true);
 	}
 
@@ -24,9 +24,9 @@ public class VisualInput : MonoBehaviour {
 
     void Update ()
     {
-        if (tempMouseInput)
+        if (workWithMouseInput)
         FollowMouse();
-        if (!tempMouseInput)
+        if (!workWithMouseInput)
         FollowTouch();
     }
 
