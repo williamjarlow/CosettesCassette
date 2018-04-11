@@ -14,7 +14,6 @@ public class AudioDistortion : MonoBehaviour {
 
     private void Update()
     {
-        
     }
 
     public float GetDistortion()
