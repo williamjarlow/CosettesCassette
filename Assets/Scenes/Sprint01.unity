@@ -289,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c2c9d23a7114474aae89ef33bbb43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distortionSlider: {fileID: 631979295}
 --- !u!114 &115963817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2519,13 +2518,26 @@ GameObject:
   m_Component:
   - component: {fileID: 1488215062}
   - component: {fileID: 1488215063}
+  - component: {fileID: 1488215061}
   m_Layer: 0
   m_Name: CorruptionHandler
-  m_TagString: Untagged
+  m_TagString: CorruptionHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1488215061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1488215060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65af1dd1fabb02d448a9469103d6a2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overallDistortionMax: 50
 --- !u!4 &1488215062
 Transform:
   m_ObjectHideFlags: 0
@@ -2555,11 +2567,13 @@ MonoBehaviour:
     stop: 0
   drumInformationList:
   - beats: 08070000ca0800008c0a00004e0c0000100e0000d20f00009411000056130000
-    perfectRange: 0
+    perfectRange: 100
     okayRange: 200
     duration:
-      start: 0
+      start: 1600
       stop: 5300
+    maxDistortion: 15
+    currentDistortion: 0
   drumCorruptionPrefab: {fileID: 1842557394649244, guid: 68a1c56d062bc5c4791b46e6992b8a16,
     type: 2}
 --- !u!137 &1520098210 stripped
