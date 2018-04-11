@@ -13,8 +13,8 @@ public class AudioManager : MonoBehaviour {
 	private AudioDistortion audioDistortion;
     private FMOD.Studio.EventDescription musicEventDesc;
     private FMOD.RESULT result;
-    FMOD.Studio.System systemObj;
-    FMOD.System lowLevelSys;
+    private FMOD.Studio.System systemObj;
+    private FMOD.System lowLevelSys;
 
     private int trackLength;
     [SerializeField] private string musicPath;
@@ -30,17 +30,31 @@ public class AudioManager : MonoBehaviour {
 
         audioDistortion = GetComponent<AudioDistortion> ();
 
+        /*systemObj = FMODUnity.RuntimeManager.StudioSystem;
+        lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
+
         //Attempts to reduce sound delay
-        result = FMOD.Studio.System.create(out systemObj);
-        result = systemObj.getLowLevelSystem(out lowLevelSys);
-        result = lowLevelSys.setDSPBufferSize(512, 4);
+        int numBuffers;
+        uint bufferLength;
+
+        //result = FMOD.Studio.System.create(out systemObj);
+        //result = systemObj.getLowLevelSystem(out lowLevelSys);
+        result = lowLevelSys.setSoftwareFormat(48000, FMOD.SPEAKERMODE.DEFAULT, 0);
+        result = lowLevelSys.getDSPBufferSize(out bufferLength, out numBuffers);
+        result = lowLevelSys.setDSPBufferSize(32, 2);
+        result = lowLevelSys.getDSPBufferSize(out bufferLength, out numBuffers);
         Debug.Log(result);
-        result = lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
-        result = lowLevelSys.setOutput(FMOD.OUTPUTTYPE.OPENSL);
+        Debug.Log("After setting: " + bufferLength);
+        Debug.Log("After setting: " + numBuffers);
+        result = lowLevelSys.getDSPBufferSize(out bufferLength, out numBuffers);
+        result = lowLevelSys.setOutput(FMOD.OUTPUTTYPE.NOSOUND);
+        Debug.Log(result);
         result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
+        Debug.Log("After init: " + bufferLength);
+        Debug.Log("After init: " + numBuffers);*/
 
 
-        //Loads the banks 
+        //Loads the FMOD banks 
         for (int i = 0; i < bankFiles.Count; i++)
         {
             FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
@@ -50,9 +64,7 @@ public class AudioManager : MonoBehaviour {
         musicEventDesc = FMODUnity.RuntimeManager.GetEventDescription(musicPath);
         musicEventDesc.getLength(out trackLength);
 
-        //Destroy systemObj because one is created each time in 'play' mode, and the unity editor does not destroy it for you when exiting 'play' mode
-        systemObj.release();
-        lowLevelSys.release();
+
 
     }
 
@@ -95,5 +107,11 @@ public class AudioManager : MonoBehaviour {
         return audioLogPath;
     }
 
+    private void OnDestroy()
+    {
+        //Destroy systemObj because one is created each time in 'play' mode, and the unity editor does not destroy it for you when exiting 'play' mode
+        systemObj.release();
+        lowLevelSys.release();
+    }
 
 }
