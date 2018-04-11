@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AudioDistortion : MonoBehaviour {
 
 	private AudioManager audioManager;
-    float currentDistortion;
+    [SerializeField] private Slider distortionSlider;
 
 	void Start (){
 		audioManager = GetComponent<AudioManager> ();
@@ -17,27 +17,9 @@ public class AudioDistortion : MonoBehaviour {
         
     }
 
-    public float GetDistortion()
+    public void ChangeDistortion()
     {
-        float temp;
-        temp = currentDistortion;
-        return temp;
-    }
-
-    public void AddDistortion(float addedDistortion)
-    {
-        currentDistortion += addedDistortion;
-        audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
-    }
-
-    public void SetDistortion(float newDistortion)
-    {
-        currentDistortion = newDistortion;
-        audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
-    }
-    public void UpdateDistortion()
-    {
-        audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
+        audioManager.gameMusicEv.setParameterValue("dist_level", distortionSlider.value);
     }
 
 }
