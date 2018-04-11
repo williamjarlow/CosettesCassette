@@ -13,6 +13,12 @@ public class VisualInput : MonoBehaviour {
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
     [Header("Tap effect")]
+
+    
+
+
+
+    ///
     [Tooltip("Amount of times to emit effect")]
     [SerializeField] private int emitCount = 1;
 
@@ -76,12 +82,12 @@ public class VisualInput : MonoBehaviour {
                 // Ripple effect!
                 // touchParticleEffect.SetActive(true);
 
-                //touchParticleEffect.GetComponent<ParticleSystem>().Play();
+                touchParticleEffect.GetComponent<ParticleSystem>().Play();
                 // DO MORE STAFFZ MAYBE?!?!?!?!?
-                touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
+                //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
 
                 //touchParticleEffect.SetActive(false);
-                trailParticleEffect.SetActive(false);
+                //trailParticleEffect.SetActive(false);
             }
 
             if (myTouch.phase == TouchPhase.Ended)
@@ -105,7 +111,8 @@ public class VisualInput : MonoBehaviour {
 
         // DO MORE STAFFZ MAYBE?!?!?!?!?
         if (Input.GetMouseButtonDown(0))
-            touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
+            touchParticleEffect.GetComponent<ParticleSystem>().Play();
+        //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
 
     }
     ////
