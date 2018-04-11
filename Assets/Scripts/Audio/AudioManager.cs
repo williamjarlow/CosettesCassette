@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour {
 	public void AudioPlayMusic (string musicTrack){
         gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
         gameMusicEv.start();
+        audioDistortion.UpdateDistortion();
     }
 
 	public void AudioStopMusic (){
