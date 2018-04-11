@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class OverallCorruption : MonoBehaviour {
 
+    bool f = true;
+
     [SerializeField]
     [Range(0, 100)]
     float overallDistortionMax;
@@ -17,10 +19,14 @@ public class OverallCorruption : MonoBehaviour {
 	void Start () {
         corruptionHandlers = new List<CorruptionHandlerBaseClass>(FindObjectsOfType<CorruptionHandlerBaseClass>());
         audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>();
-        audioDistortion.SetDistortion(overallDistortionMax);
 	}
 	
 	void Update () {
+        if (f)
+        {
+            f = false;
+            audioDistortion.SetDistortion(overallDistortionMax);
+        }
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Overall corruption: " + overallCorruption  + "%");

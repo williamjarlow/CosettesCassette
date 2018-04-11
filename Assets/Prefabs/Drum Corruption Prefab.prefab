@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4203985475652908}
-  - component: {fileID: 114488799155596208}
+  - component: {fileID: 114693677444365012}
   m_Layer: 0
   m_Name: Drum Corruption Prefab
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114488799155596208
+--- !u!114 &114693677444365012
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,13 +48,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1842557394649244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd184487356d9c46892a9d5b4e96d2e, type: 3}
+  m_Script: {fileID: 11500000, guid: e51a798193f5f1543a54df1696a6e77d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   duration:
     start: 0
     stop: 0
   corruptionClearedPercent: 0
-  beats: []
-  perfectRange: 5
-  okayRange: 10
+  innerDistortion: 0
+  perfectHitValue: 1
+  hitValue: 0.5
+  missPenalty: -0.5
+  beats: 
+  okayRange: 0
+  perfectRange: 0
+  maxDistortion: 0
