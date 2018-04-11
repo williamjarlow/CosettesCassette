@@ -20,7 +20,7 @@ public class CorruptionHandlerBaseClass : MonoBehaviour {
 
     public virtual float GetDistortionAmount()
     {
-        return 0;
+        return 0; 
     }
 
     public virtual void UpdateDistortionAmount()

@@ -113,7 +113,7 @@ public class DrumCorruption : CorruptionBaseClass {
             else if (beat == Timing.miss)
                 corruptionClearedPercent += missPenalty / beats.Count;
         }
-        if (corruptionClearedPercent < 0)
+        if (corruptionClearedPercent < 0) 
             corruptionClearedPercent = 0;
 
         corruptionClearedPercent *= 100;

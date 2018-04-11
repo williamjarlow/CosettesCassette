@@ -65,7 +65,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
         {
             distortionAmount += drumCorruption.innerDistortion;
         }
-        overallCorruption.UpdateDistortionAmount();
+        overallCorruption.UpdateDistortionAmount();  
     }
 
     public override void UpdateCorruptionAmount()

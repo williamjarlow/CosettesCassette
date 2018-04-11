@@ -11,7 +11,7 @@ public class AudioDistortion : MonoBehaviour {
 	void Start (){
 		audioManager = GetComponent<AudioManager> ();
 	}
-
+      
     private void Update()
     {
     }

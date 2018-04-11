@@ -34,7 +34,7 @@ public class OverallCorruption : MonoBehaviour {
         {
             overallCorruption += corruptionHandler.GetCorruptionAmount() / corruptionHandlers.Count;
         }
-    }
+    } 
 
     public void UpdateDistortionAmount()
     {

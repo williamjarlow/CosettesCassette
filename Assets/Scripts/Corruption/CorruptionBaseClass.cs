@@ -8,6 +8,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector]
     public float corruptionClearedPercent;
     [HideInInspector]
-    public float innerDistortion;
+    public float innerDistortion; 
 
 }
