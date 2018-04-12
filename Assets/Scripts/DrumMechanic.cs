@@ -79,7 +79,6 @@ public class DrumMechanic : MonoBehaviour {
     }
     public void Record(GameObject confirmationObj)
     {
-        Debug.Log(timeStamp);
         // If there is no previous recording and there is a track running --> start recording
         if (inputTimeStamps.Count <= 0 && timeStamp > 0)
         {
