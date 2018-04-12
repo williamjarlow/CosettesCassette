@@ -18,6 +18,7 @@ public class AudioTimeline : MonoBehaviour {
         audioManager = GetComponent<AudioManager>();
 
         //Find the length of the track and set the max value of the slider to it
+        
         timelineSlider.maxValue = audioManager.GetTrackLength();
 
         //Adds a listener to the main slider and invokes a method when the value changes.
