@@ -111,9 +111,11 @@ public class VisualInput : MonoBehaviour {
 
         // DO MORE STAFFZ MAYBE?!?!?!?!?
         if (Input.GetMouseButtonDown(0))
+        {
             touchParticleEffect.GetComponent<ParticleSystem>().Play();
-        //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
-
+            //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
+            print("Emit shit");
+        }
     }
     ////
 
