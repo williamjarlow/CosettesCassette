@@ -17,12 +17,12 @@ public class DrumInformation{
 
 public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
-    [Tooltip("Amount of drum corruptions, as well as their information.")]
-    [SerializeField]
+    [SerializeField] [Tooltip("Amount of drum corruptions, as well as their information.")]
     List<DrumInformation> drumInformationList;
-    [Tooltip("Select the drumCorruptionPrefab object from the 'Prefabs' folder.")]
-    [SerializeField]
+    
+    [SerializeField] [Tooltip("Select the drumCorruptionPrefab object from the 'Prefabs' folder.")]
     GameObject drumCorruptionPrefab;
+
     List<DrumCorruption> drumCorruptions = new List<DrumCorruption>();
 
     OverallCorruption overallCorruption;
@@ -73,8 +73,8 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
         corruptionAmount = 0;
         foreach (DrumCorruption drumCorruption in drumCorruptions)
         {
-            corruptionAmount += 100 - drumCorruption.corruptionClearedPercent / drumCorruptions.Count;
-        } 
+            corruptionAmount += (100 - drumCorruption.corruptionClearedPercent) / drumCorruptions.Count;
+        }
         overallCorruption.UpdateCorruptionAmount();
     }
 

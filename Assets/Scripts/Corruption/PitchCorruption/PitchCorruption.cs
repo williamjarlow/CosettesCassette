@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public enum Timing{
-    miss,
-    okay,
-    perfect
-};
-
-public class DrumCorruption : CorruptionBaseClass {
-    List <Timing> completedBeats = new List<Timing>();
+public class PitchCorruption : CorruptionBaseClass
+{
+    List<Timing> completedBeats = new List<Timing>();
     bool corruptionStarted;
 
     DrumCorruptionHandler drumCorruptionHandler;
@@ -20,8 +15,8 @@ public class DrumCorruption : CorruptionBaseClass {
 
     [SerializeField] [Range(0, 1)] [Tooltip("This value decides how impactful an okay will be. A perfect gives a value of 1.")]
     float hitValue;
-    
-    
+
+
     [SerializeField] [Range(0, -1)] [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
     float missPenalty;
 
@@ -45,7 +40,8 @@ public class DrumCorruption : CorruptionBaseClass {
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
-	void Start () {
+    void Start()
+    {
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>();
         drumCorruptionHandler = GameObject.FindWithTag("CorruptionHandler").GetComponent<DrumCorruptionHandler>();
@@ -54,10 +50,11 @@ public class DrumCorruption : CorruptionBaseClass {
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
         Assert.IsTrue(missPenalty <= 0, "Setting missPenalty to anything higher than 0 will reward the player for missing the beat.");
         Assert.IsTrue(hitValue >= 0, "Setting hitvalue to anything lower than 0 will punish the player for hitting the beat.");
-	}
-	
-	void Update () {
-        if(Input.GetKeyDown(KeyCode.X)) //Debug button
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X)) //Debug button
             Debug.Log(audioManager.GetTimeLinePosition());
 
         if (audioManager.GetTimeLinePosition() >= duration.start &&
@@ -95,7 +92,7 @@ public class DrumCorruption : CorruptionBaseClass {
             Debug.Log("Percent of corruption cleared: " + corruptionClearedPercent + "%");
             ResetConditions();
         }
-	}
+    }
 
     void GradeScore()
     {
@@ -109,7 +106,7 @@ public class DrumCorruption : CorruptionBaseClass {
             else if (beat == Timing.miss)
                 corruptionClearedPercent += missPenalty / beats.Count;
         }
-        if (corruptionClearedPercent < 0) 
+        if (corruptionClearedPercent < 0)
             corruptionClearedPercent = 0;
 
         corruptionClearedPercent *= 100;

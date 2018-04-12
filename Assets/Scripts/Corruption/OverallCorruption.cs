@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OverallCorruption : MonoBehaviour {
 
-    bool f = true;
+    bool lateStart = true;
 
     [SerializeField]
     [Range(0, 100)]
@@ -22,9 +22,9 @@ public class OverallCorruption : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (f)
+        if (lateStart)
         {
-            f = false;
+            lateStart = false;
             audioDistortion.SetDistortion(overallDistortionMax);
         }
         if (Input.GetKeyDown(KeyCode.C))
