@@ -10,10 +10,12 @@ public class DrumMechanic : MonoBehaviour {
 
     /*[HideInInspector]*/ public List<int> inputTimeStamps;
 
+    [HideInInspector] public bool gaveInput = false;
+
     private AudioManager audioManager;
     private AudioSource audioSource;
     [SerializeField] private int timeStamp;
-    private bool recording = false;
+    [HideInInspector] public bool recording = false;
     private bool isPlaying;
     [SerializeField] private int iterator = 0;
     [SerializeField] private string bassDrumPath;
@@ -47,6 +49,8 @@ public class DrumMechanic : MonoBehaviour {
                 isPlaying = true;
                 audioSource.Play();
                 inputTimeStamps.Add(timeStamp);
+                //Right here bby
+                gaveInput = true;
 
                 StartCoroutine(ResetPlayed());
             }

@@ -4,39 +4,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
 
     [FMODUnity.EventRef]
     public FMOD.Studio.EventInstance gameMusicEv;
 
     private AudioMusic audioMusic;
-	private AudioDistortion audioDistortion;
+    private AudioDistortion audioDistortion;
     private FMOD.Studio.EventDescription musicEventDesc;
     private FMOD.RESULT result;
     private FMOD.Studio.System systemObj;
     private FMOD.System lowLevelSys;
 
     private int trackLength;
-    [SerializeField] private string musicPath;
-    [SerializeField] private string audioLogPath;
+    [SerializeField]
+    private string musicPath;
+    [SerializeField]
+    private string audioLogPath;
     //Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'
 
-<<<<<<< HEAD
-	void Awake (){
-		audioMusic = GetComponent<AudioMusic> ();
-		audioDistortion = GetComponent<AudioDistortion> ();
-=======
-    
-    [SerializeField] private List<string> bankFiles;
->>>>>>> FMOD-Load-Banks
+
+    [SerializeField]
+    private List<string> bankFiles;
 
 
-    void Awake (){
+    void Awake()
+    {
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 
-        audioDistortion = GetComponent<AudioDistortion> ();
+        audioDistortion = GetComponent<AudioDistortion>();
 
         /*systemObj = FMODUnity.RuntimeManager.StudioSystem;
         lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
@@ -73,23 +72,27 @@ public class AudioManager : MonoBehaviour {
         musicEventDesc.getLength(out trackLength);
 
 
-
     }
 
-	public void AudioPlayMusic (){
+    public void AudioPlayMusic()
+    {
         gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
         gameMusicEv.start();
+        audioDistortion.UpdateDistortion();
     }
 
-	public void AudioStopMusic (){
+    public void AudioStopMusic()
+    {
         gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
-	public void AudioPauseMusic (){
+    public void AudioPauseMusic()
+    {
         gameMusicEv.setPaused(true);
     }
 
-	public void AudioUnpauseMusic (){
+    public void AudioUnpauseMusic()
+    {
         gameMusicEv.setPaused(false);
     }
 
