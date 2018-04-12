@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// ** Written by Hannes Gustafsson ** //
+
 public class ButtonDisabler : MonoBehaviour {
 
-    [SerializeField] private List<Button> buttonList;
+    [Tooltip("Drag the buttons you wish to disable during 'recording' here")]
+    [SerializeField] private List<Button> disableButtonList;
     [SerializeField] private Dropdown dropdown;
 
     private AudioManager audioManager;
+    private DrumMechanic drumMechanic;
     private FMOD.Studio.PLAYBACK_STATE playbackState;
 
 	void Start ()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        Debug.Assert(buttonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable when recording)");
+        drumMechanic = GameObject.FindObjectOfType<DrumMechanic>();
+        Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable when recording)");
 	}
 	
 
@@ -24,9 +29,9 @@ public class ButtonDisabler : MonoBehaviour {
 
         if(playbackState == FMOD.Studio.PLAYBACK_STATE.PLAYING)
         {
-            for (int i = 0; i < buttonList.Count; i++)
+            for (int i = 0; i < disableButtonList.Count; i++)
             {
-                buttonList[i].interactable = false;
+                disableButtonList[i].interactable = false;
                 dropdown.interactable = false;
             }
         }
@@ -35,10 +40,12 @@ public class ButtonDisabler : MonoBehaviour {
 
     public void EnableButtons()
     {
-        for (int i = 0; i < buttonList.Count; i++)
+        for (int i = 0; i < disableButtonList.Count; i++)
         {
-            buttonList[i].interactable = true;
+            disableButtonList[i].interactable = true;
             dropdown.interactable = true;
         }
     }
+
+
 }

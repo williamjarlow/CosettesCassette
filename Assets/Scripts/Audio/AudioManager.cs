@@ -21,14 +21,8 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private string audioLogPath;
     //Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'
 
-<<<<<<< HEAD
-	void Awake (){
-		audioMusic = GetComponent<AudioMusic> ();
-		audioDistortion = GetComponent<AudioDistortion> ();
-=======
     
     [SerializeField] private List<string> bankFiles;
->>>>>>> FMOD-Load-Banks
 
 
     void Awake (){
@@ -71,7 +65,6 @@ public class AudioManager : MonoBehaviour {
         //Get the event description, needed to get Track Length
         musicEventDesc = FMODUnity.RuntimeManager.GetEventDescription(musicPath);
         musicEventDesc.getLength(out trackLength);
-
 
 
     }

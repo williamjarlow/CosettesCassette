@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-//This script may be transported to AudioTimeline
+// ** Written by Hannes Gustafsson ** //
 
 public class DrumMechanic : MonoBehaviour {
 
@@ -39,7 +39,7 @@ public class DrumMechanic : MonoBehaviour {
         if (recording)
         {
             // If we have started the track and there is some form of input
-            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && timeStamp > 0 && !isPlaying)
+            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
             {
                 //Play the bass drum sound and record it by adding the current time stamp to the list.
                 //FMODUnity.RuntimeManager.PlayOneShot(bassDrumPath);
@@ -47,7 +47,6 @@ public class DrumMechanic : MonoBehaviour {
                 isPlaying = true;
                 audioSource.Play();
                 inputTimeStamps.Add(timeStamp);
-
                 StartCoroutine(ResetPlayed());
             }
         }
@@ -68,21 +67,25 @@ public class DrumMechanic : MonoBehaviour {
 
     }
 
-
-
     private IEnumerator ResetPlayed()
     {
         yield return new WaitForSeconds(0.05f);
         isPlaying = false;
     }
-    public void Record()
+    public void Record(GameObject confirmationObj)
     {
-        //  TODO: Prompt user that the previous recording (if one exists) will be deleted
-        //  Delete previous recording if user confirms, do nothing if not
-        inputTimeStamps.Clear();
-        iterator = 0;
+        Debug.Log(timeStamp);
+        // If there is no previous recording and there is a track running --> start recording
+        if (inputTimeStamps.Count <= 0 && timeStamp > 0)
+        {
+            recording = true;
+        }
 
-        recording = true;
+        // If there is a previous recording and there is a track running --> activate the confirmation window
+        else if(inputTimeStamps.Count > 0 && timeStamp > 0)
+        {
+            confirmationObj.SetActive(true);
+        }
     }
 
     public void Listen()
@@ -90,9 +93,21 @@ public class DrumMechanic : MonoBehaviour {
         recording = false;
     }
 
-    public void ClearRecordings()
+
+    // If 'YES' is pressed during confirmation --> Delete previous recordings, start recording and disable the confirmation window
+    public void YesConfirmation(GameObject confirmationObj)
     {
         inputTimeStamps.Clear();
         iterator = 0;
+        recording = true;
+        confirmationObj.SetActive(false);
     }
+
+    // If 'NO' is pressed during confirmation --> disable the confirmation window
+    public void NoConfirmation(GameObject confirmationObj)
+    {
+        confirmationObj.SetActive(false);
+    }
+
+
 }
