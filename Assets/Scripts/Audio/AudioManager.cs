@@ -20,13 +20,15 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private string musicPath;
     [SerializeField] private string audioLogPath;
     //Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'
-    [SerializeField] private List<string> bankFiles;
 
+    
+    [SerializeField] private List<string> bankFiles;
 
 
     void Awake (){
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
+        Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 
         audioDistortion = GetComponent<AudioDistortion> ();
 
@@ -113,5 +115,6 @@ public class AudioManager : MonoBehaviour {
         systemObj.release();
         lowLevelSys.release();
     }
+
 
 }

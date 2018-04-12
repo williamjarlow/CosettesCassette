@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //This script may be transported to AudioTimeline
@@ -16,7 +17,7 @@ public class DrumMechanic : MonoBehaviour {
     private bool isPlaying;
     [SerializeField] private int iterator = 0;
     [SerializeField] private string bassDrumPath;
-
+    
 
     void Start ()
     {
@@ -46,7 +47,6 @@ public class DrumMechanic : MonoBehaviour {
                 isPlaying = true;
                 audioSource.Play();
                 inputTimeStamps.Add(timeStamp);
-                Debug.LogError("Beat fixed: " + Time.time.ToString());
 
                 StartCoroutine(ResetPlayed());
             }
@@ -69,6 +69,7 @@ public class DrumMechanic : MonoBehaviour {
     }
 
 
+
     private IEnumerator ResetPlayed()
     {
         yield return new WaitForSeconds(0.05f);
@@ -87,5 +88,11 @@ public class DrumMechanic : MonoBehaviour {
     public void Listen()
     {
         recording = false;
+    }
+
+    public void ClearRecordings()
+    {
+        inputTimeStamps.Clear();
+        iterator = 0;
     }
 }
