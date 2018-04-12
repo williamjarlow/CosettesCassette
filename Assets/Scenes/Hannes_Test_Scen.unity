@@ -143,7 +143,7 @@ RectTransform:
   - {fileID: 879796300}
   - {fileID: 1426535281}
   m_Father: {fileID: 1382443276}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -287,7 +287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c2c9d23a7114474aae89ef33bbb43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distortionSlider: {fileID: 631979295}
 --- !u!114 &115963818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,9 +301,9 @@ MonoBehaviour:
   musicPath: event:/Music/Cassette_01/music
   audioLogPath: 
   bankFiles:
+  - Cassette_01.bank
   - Master Bank.bank
   - Master Bank.strings.bank
-  - Cassette_01.bank
 --- !u!224 &115963819
 RectTransform:
   m_ObjectHideFlags: 0
@@ -694,7 +693,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1114126540}
+      - m_Target: {fileID: 0}
         m_MethodName: SelectInstrument
         m_Mode: 1
         m_Arguments:
@@ -1245,7 +1244,7 @@ RectTransform:
   - {fileID: 1936961977}
   - {fileID: 675859955}
   m_Father: {fileID: 1382443276}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1913,7 +1912,7 @@ RectTransform:
   m_Children:
   - {fileID: 1929741343}
   m_Father: {fileID: 1382443276}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1961,16 +1960,16 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1931723802}
         m_MethodName: Record
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1173963188}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1114126541}
+      - m_Target: {fileID: 1114126540}
         m_MethodName: DisableButtons
         m_Mode: 1
         m_Arguments:
@@ -2093,11 +2092,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1931723802}
-        m_MethodName: Record
+        m_MethodName: YesConfirmation
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1173963188}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2764,9 +2774,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1114126539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c44289903a177047a4d733f34576e03, type: 3}
+  m_Script: {fileID: 11500000, guid: 1df7a4ceb36812c46a9c0b944d8e1c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableButtonList:
+  - {fileID: 983012530}
+  - {fileID: 599771681}
+  - {fileID: 640118507}
+  - {fileID: 1454616272}
   dropdown: {fileID: 373748123}
 --- !u!114 &1114126541
 MonoBehaviour:
@@ -2776,14 +2791,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1114126539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df7a4ceb36812c46a9c0b944d8e1c3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c44289903a177047a4d733f34576e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonList:
-  - {fileID: 983012530}
-  - {fileID: 599771681}
-  - {fileID: 640118507}
-  - {fileID: 1454616272}
   dropdown: {fileID: 373748123}
 --- !u!4 &1114126542
 Transform:
@@ -2862,7 +2872,7 @@ RectTransform:
   m_Children:
   - {fileID: 822410756}
   m_Father: {fileID: 1382443276}
-  m_RootOrder: 8
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2919,7 +2929,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1114126541}
+      - m_Target: {fileID: 1114126540}
         m_MethodName: EnableButtons
         m_Mode: 1
         m_Arguments:
@@ -3066,7 +3076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1173963189
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3225,7 +3235,7 @@ RectTransform:
   - {fileID: 1371978937}
   - {fileID: 1031890395}
   m_Father: {fileID: 1382443276}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3532,18 +3542,18 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1382443272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 569.5, y: 269, z: 0}
+  m_LocalPosition: {x: 478, y: 269, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 983012529}
   - {fileID: 599771680}
   - {fileID: 640118506}
   - {fileID: 1454616271}
+  - {fileID: 715123940}
+  - {fileID: 1151011888}
   - {fileID: 1216849506}
   - {fileID: 631979294}
   - {fileID: 70315254}
-  - {fileID: 715123940}
-  - {fileID: 1151011888}
   - {fileID: 373748122}
   - {fileID: 1173963189}
   m_Father: {fileID: 0}
@@ -4453,8 +4463,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1114126541}
-        m_MethodName: DisableConfirmation
+      - m_Target: {fileID: 1931723802}
+        m_MethodName: NoConfirmation
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1173963188}
@@ -4623,9 +4633,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputTimeStamps: 
+  gaveInput: 0
   timeStamp: 0
+  recording: 0
   iterator: 0
-  bassDrumPath: event:/Music/Cassette_01/drums
+  bassDrumPath: 
 --- !u!82 &1931723803
 AudioSource:
   m_ObjectHideFlags: 0
