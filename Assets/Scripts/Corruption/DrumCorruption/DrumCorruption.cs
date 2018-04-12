@@ -13,6 +13,8 @@ public class DrumCorruption : CorruptionBaseClass {
     List <Timing> completedBeats = new List<Timing>();
     bool corruptionStarted;
 
+    DrumMechanic drumMechanic;
+
     DrumCorruptionHandler drumCorruptionHandler;
 
     [SerializeField] [Range(1, 1)] [Header("Value/Penalty per hit/miss")] [Tooltip("Hitting a perfect gives a constant value of 1. Changing this will break the corruption calculations: if (beat == Timing.perfect){ corruptionClearedPercent += perfectHitValue / beats.Count;}")]
@@ -20,7 +22,6 @@ public class DrumCorruption : CorruptionBaseClass {
 
     [SerializeField] [Range(0, 1)] [Tooltip("This value decides how impactful an okay will be. A perfect gives a value of 1.")]
     float hitValue;
-    
     
     [SerializeField] [Range(0, -1)] [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
     float missPenalty;
@@ -49,6 +50,7 @@ public class DrumCorruption : CorruptionBaseClass {
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>();
         drumCorruptionHandler = GameObject.FindWithTag("CorruptionHandler").GetComponent<DrumCorruptionHandler>();
+        drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
 
         Assert.IsNotNull(audioManager.gameObject, "Audiomanager not found. Please add an Audiomanager to the scene and ensure that it is properly tagged.");
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
@@ -61,7 +63,7 @@ public class DrumCorruption : CorruptionBaseClass {
             Debug.Log(audioManager.GetTimeLinePosition());
 
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
+            audioManager.GetTimeLinePosition() < duration.stop && drumMechanic.recording) //If player is inside a corrupted area & recording
         {
             if (inCorruption == false) //If player just entered corruption
             {
@@ -78,8 +80,9 @@ public class DrumCorruption : CorruptionBaseClass {
                     completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
                     index++;
                 }
-                else if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Z)) //If player gave input
+                else if (drumMechanic.gaveInput) //If player gave input
                 {
+                    drumMechanic.gaveInput = false;
                     if (!corruptionStarted)
                         ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
                     completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
