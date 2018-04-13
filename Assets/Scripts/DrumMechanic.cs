@@ -5,21 +5,24 @@ using UnityEngine.UI;
 
 
 // ** Written by Hannes Gustafsson ** //
+// ** TODO: Reset the iterator when returning to the start of the recorded segment ** //
 
 public class DrumMechanic : MonoBehaviour {
 
     /*[HideInInspector]*/ public List<int> inputTimeStamps;
 
-    [HideInInspector] public bool gaveInput = false;
-
     private AudioManager audioManager;
     private AudioSource audioSource;
-    [SerializeField] private int timeStamp;
+    
     [HideInInspector] public bool recording = false;
     private bool isPlaying;
+    [HideInInspector] public bool gaveInput = false;
+
+    [SerializeField] private int timeStamp;
     [SerializeField] private int iterator = 0;
+    [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
     [SerializeField] private string bassDrumPath;
-    
+
 
     void Start ()
     {
@@ -61,7 +64,7 @@ public class DrumMechanic : MonoBehaviour {
         {
             //  Make sure the list is not empty and check if timeStamp matches the value in the list[i]. Also check if we are at the last index in the list
             // When the item in the list matches the current timestamp, play the bass drum sound (play the recorded audio)
-            if (inputTimeStamps.Count > 0 && timeStamp == inputTimeStamps[iterator] && iterator < inputTimeStamps.Count - 1)
+            if (inputTimeStamps.Count > 0  && iterator < inputTimeStamps.Count - 1 && timeStamp < inputTimeStamps[iterator] + tolerance / 2 && timeStamp > inputTimeStamps[iterator] - tolerance / 2)
             {
                 //FMODUnity.RuntimeManager.PlayOneShot(bassDrumPath);
                 audioSource.Play();
