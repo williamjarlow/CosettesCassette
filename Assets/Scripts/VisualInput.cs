@@ -2,27 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualInput : MonoBehaviour {
+public class VisualInput : MonoBehaviour
+{
+
+    [TextArea]
+    public string Notes = "This game object can be anywhere in the scene. The trail effect needs to be attached to the game object but the touch particle should be a prefab.";
 
     [Header("Particle Effects")]
     [SerializeField] private GameObject trailParticleEffect;
-    [SerializeField] private GameObject touchParticleEffect;
-    [Tooltip("Minimum allowed distance for a tap to trigger instead of movement.")]
-    [SerializeField] private float minAllowedDistForTap = 0.25f;
+    [SerializeField] private GameObject touchParticleEffectPrefab;
     [SerializeField] private float distanceFromCamera = 5;
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
     [Header("Tap effect")]
 
-    
-
-
-
-    ///
-    [Tooltip("Amount of times to emit effect")]
-    [SerializeField] private int emitCount = 1;
-
     private Vector3 origPosition = Vector3.zero;
+
 
     // Temporary
     ////
@@ -31,7 +26,7 @@ public class VisualInput : MonoBehaviour {
     ////
 
 
-    void Start ()
+    void Start()
     {
         // Temporary
         ////
@@ -42,15 +37,15 @@ public class VisualInput : MonoBehaviour {
 
 
 
-    void Update ()
+    void Update()
     {
         // Temporary
         ////
         if (workWithMouseInput)
-        FollowMouse();
+            FollowMouse();
         if (!workWithMouseInput)
-        ////
-        FollowTouch();
+            ////
+            FollowTouch();
     }
 
     void FollowTouch()
@@ -66,38 +61,45 @@ public class VisualInput : MonoBehaviour {
 
             if (myTouch.phase == TouchPhase.Began)
             {
-                origPosition = transform.position;      // Store position where finger started
-                transform.position = Camera.main.ScreenToWorldPoint(touchPosition);
+                origPosition = transform.position;      // Store position where object was located
+                transform.position = Camera.main.ScreenToWorldPoint(touchPosition);     // Set position to where touch was detected
                 trailParticleEffect.SetActive(true);
             }
 
             if (myTouch.phase == TouchPhase.Moved)
-            { 
-            Vector3 touchScreenToWorld = Camera.main.ScreenToWorldPoint(touchPosition);
-            Vector3 position = Vector3.Lerp(transform.position, touchScreenToWorld, 1 - Mathf.Exp(-speed * Time.deltaTime));
-            transform.position = position;
+            {
+                Vector3 touchScreenToWorld = Camera.main.ScreenToWorldPoint(touchPosition);
+                Vector3 position = Vector3.Lerp(transform.position, touchScreenToWorld, 1 - Mathf.Exp(-speed * Time.deltaTime));
+                transform.position = position;             // Move object with lerp to position of touch
+                if (origPosition == -Vector3.one)      // Original position will be a negative Vector3.one if touch has ended, so swap to positivie Vector3.one for tap-on effect check
+                {
+                    origPosition = Vector3.one;
+                }
             }
 
-            if (myTouch.phase == TouchPhase.Ended && Vector3.Distance(origPosition, transform.position) < minAllowedDistForTap) {
-                // Ripple effect!
-                // touchParticleEffect.SetActive(true);
+            if (myTouch.phase == TouchPhase.Ended && (origPosition == -Vector3.one || origPosition == Vector3.one))     // If original position is outside of screen or specifically a Vector3.one
+            {                                                                                                               // we've only tapped the screen
+                Vector3 worldPos = Camera.main.ScreenToWorldPoint(touchPosition);                                       // Save position to instantiate touch effect in world space
 
-                touchParticleEffect.GetComponent<ParticleSystem>().Play();
-                // DO MORE STAFFZ MAYBE?!?!?!?!?
-                //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
-
-                //touchParticleEffect.SetActive(false);
-                //trailParticleEffect.SetActive(false);
+                foreach (Transform effect in touchParticleEffectPrefab.transform)                                             // Check for multiple particle effects and run them all once
+                {
+                    GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
+                    temp.GetComponent<ParticleSystem>().Play();
+                    Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+                }
             }
 
             if (myTouch.phase == TouchPhase.Ended)
+            {
                 trailParticleEffect.SetActive(false);
+                transform.position = -Vector3.one;
+            }
         }
     }
 
     // Temporary
     ////
-    void FollowMouse() 
+    void FollowMouse()
     {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = distanceFromCamera;
@@ -109,14 +111,20 @@ public class VisualInput : MonoBehaviour {
         transform.position = position;
 
 
-        // DO MORE STAFFZ MAYBE?!?!?!?!?
         if (Input.GetMouseButtonDown(0))
         {
-            touchParticleEffect.GetComponent<ParticleSystem>().Play();
-            //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
-          //  print("Emit shit");
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
+
+            foreach (Transform effect in touchParticleEffectPrefab.transform)
+            {
+                GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
+                temp.GetComponent<ParticleSystem>().Play();
+                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+            }
         }
     }
     ////
+
+
 
 }
