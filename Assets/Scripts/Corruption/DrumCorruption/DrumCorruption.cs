@@ -60,10 +60,11 @@ public class DrumCorruption : CorruptionBaseClass {
 	
 	void Update () {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area & recording
+            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
             if (inCorruption == false) //If player just entered corruption
             {
+                audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
                 inCorruption = true;
                 Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
                 drumCorruptionHandler.UpdateCorruptionAmount();
@@ -93,7 +94,8 @@ public class DrumCorruption : CorruptionBaseClass {
         else if (inCorruption) //If player leaves corrupted area
         {
             inCorruption = false;
-            if(drumMechanic.recording)
+            audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
+            if (drumMechanic.recording)
                 GradeScore();
             innerDistortion = 0;
             drumCorruptionHandler.UpdateCorruptionAmount();
