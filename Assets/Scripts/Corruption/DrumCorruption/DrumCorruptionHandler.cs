@@ -73,7 +73,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
         corruptionAmount = 0;
         foreach (DrumCorruption drumCorruption in drumCorruptions)
         {
-            corruptionAmount += (100 - drumCorruption.corruptionClearedPercent) / drumCorruptions.Count;
+                corruptionAmount += (100 - drumCorruption.corruptionClearedPercent) / drumCorruptions.Count;
         }
         overallCorruption.UpdateCorruptionAmount();
     }

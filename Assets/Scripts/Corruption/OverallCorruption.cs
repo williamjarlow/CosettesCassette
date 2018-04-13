@@ -30,6 +30,7 @@ public class OverallCorruption : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Overall corruption: " + overallCorruption  + "%");
+            Debug.Log("Overall distortion: " + overallDistortion + "%");
         }
 	}
 
@@ -51,7 +52,6 @@ public class OverallCorruption : MonoBehaviour {
         }
         overallDistortion += overallCorruption * overallDistortionMax / 100;
         audioDistortion.SetDistortion(overallDistortion);
-        Debug.Log(audioDistortion.GetDistortion());
     }
 
     public float GetOverallCorruptionAmount()

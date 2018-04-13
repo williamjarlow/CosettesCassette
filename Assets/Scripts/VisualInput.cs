@@ -114,7 +114,7 @@ public class VisualInput : MonoBehaviour {
         {
             touchParticleEffect.GetComponent<ParticleSystem>().Play();
             //touchParticleEffect.GetComponent<ParticleSystem>().Emit(emitCount);
-            print("Emit shit");
+          //  print("Emit shit");
         }
     }
     ////

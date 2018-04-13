@@ -41,7 +41,7 @@ public class DrumCorruption : CorruptionBaseClass {
     It does not increase if a note is hit outside of the okay/perfect ranges. 
     This is done so that mass-tapping does not end the corruption prematurely.*/
 
-    bool inCorruption = false;
+   [HideInInspector] public bool inCorruption = false;
 
     AudioDistortion audioDistortion;
     AudioManager audioManager;
@@ -59,43 +59,46 @@ public class DrumCorruption : CorruptionBaseClass {
 	}
 	
 	void Update () {
-        if(Input.GetKeyDown(KeyCode.X)) //Debug button
-            Debug.Log(audioManager.GetTimeLinePosition());
-
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop && drumMechanic.recording) //If player is inside a corrupted area & recording
+            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area & recording
         {
             if (inCorruption == false) //If player just entered corruption
             {
+                inCorruption = true;
+                Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
                 drumCorruptionHandler.UpdateCorruptionAmount();
                 innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); //Set distortion
                 drumCorruptionHandler.UpdateDistortionAmount();
-                inCorruption = true;
             }
-
-            if (index < beats.Count) //If there are more beats available for the player to hit
+            if (drumMechanic.recording)
             {
-                if (corruptionStarted && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
+                if (index < beats.Count) //If there are more beats available for the player to hit
                 {
-                    completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
-                    index++;
-                }
-                else if (drumMechanic.gaveInput) //If player gave input
-                {
-                    drumMechanic.gaveInput = false;
-                    if (!corruptionStarted)
-                        ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
-                    completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
-                    corruptionStarted = true;
+                    if (corruptionStarted && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
+                    {
+                        completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
+                        index++;
+                    }
+                    else if (drumMechanic.gaveInput) //If player gave input
+                    {
+                        drumMechanic.gaveInput = false;
+                        if (!corruptionStarted)
+                            ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
+                        completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
+                        corruptionStarted = true;
+                    }
                 }
             }
         }
-        else if (inCorruption == true && (audioManager.GetTimeLinePosition() > duration.stop || audioManager.GetTimeLinePosition() < duration.stop)) //If player leaves corrupted area
+        else if (inCorruption) //If player leaves corrupted area
         {
-            innerDistortion = 0;
-            GradeScore();
             inCorruption = false;
-            Debug.Log("Percent of corruption cleared: " + corruptionClearedPercent + "%");
+            if(drumMechanic.recording)
+                GradeScore();
+            innerDistortion = 0;
+            drumCorruptionHandler.UpdateCorruptionAmount();
+            drumCorruptionHandler.UpdateDistortionAmount();
+            Debug.Log("Percent of inner corruption cleared: " + corruptionClearedPercent + "%");
             ResetConditions();
         }
 	}
@@ -116,8 +119,6 @@ public class DrumCorruption : CorruptionBaseClass {
             corruptionClearedPercent = 0;
 
         corruptionClearedPercent *= 100;
-        drumCorruptionHandler.UpdateCorruptionAmount();
-        drumCorruptionHandler.UpdateDistortionAmount();
     }
 
     Timing CheckTiming()
@@ -126,15 +127,15 @@ public class DrumCorruption : CorruptionBaseClass {
         { //If within range to hit the beat
             if (audioManager.GetTimeLinePosition() >= beats[index] - perfectRange && audioManager.GetTimeLinePosition() <= beats[index] + perfectRange)
             { //If within range to hit the beat "perfectly"
-                Debug.Log("Perfect");
+                //Debug.Log("Perfect");
                 index++; //Index increases if a note was hit
                 return Timing.perfect;
             }
-            Debug.Log("Okay");
+            //Debug.Log("Okay");
             index++;//Index increases if a note was hit
             return Timing.okay;
         }
-        Debug.Log("Miss");
+        //Debug.Log("Miss");
         return Timing.miss;
     }
 
