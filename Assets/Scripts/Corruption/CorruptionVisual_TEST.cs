@@ -9,9 +9,13 @@ public class CorruptionVisual_TEST : MonoBehaviour {
 
     private AudioManager audioManager;
 
+    private int pixelTrackLength;
+
 	void Start ()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();	
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        //pixelTrackLength = (int)audioManager.GetTrackLength() / 
+            //32000 / 1000 = 32
 	}
 	
 	// Update is called once per frame
