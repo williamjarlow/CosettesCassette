@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CorruptionBaseClass : MonoBehaviour {
-    [HideInInspector]
     public Duration duration;
-    [HideInInspector]
-    public float corruptionClearedPercent;
+    [HideInInspector] public float corruptionClearedPercent;
+    [HideInInspector] public float innerDistortion;
 
-    [HideInInspector]
-    public float innerDistortion; 
+    public virtual void EnterCorruption()
+    {
 
+    }
+    public virtual void ExitCorruption()
+    {
 
-    virtual public void StartCorruption() { }
-    virtual public void EndCorruption() { }
+    }
+    public virtual void UpdateCorruption()
+    {
+
+    }
+
 }
