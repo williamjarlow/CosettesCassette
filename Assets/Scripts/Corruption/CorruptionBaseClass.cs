@@ -6,7 +6,11 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector]
     public Duration duration;
     [HideInInspector]
-    public bool corruptionCleared;
+    public float corruptionClearedPercent;
+
+    [HideInInspector]
+    public float innerDistortion; 
+
 
     virtual public void StartCorruption() { }
     virtual public void EndCorruption() { }

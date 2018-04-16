@@ -10,7 +10,6 @@ public class AudioTimeline : MonoBehaviour {
 
     [SerializeField]
     private Slider timelineSlider;
-
     private int temp;
 
     void Start ()
@@ -19,6 +18,7 @@ public class AudioTimeline : MonoBehaviour {
         audioManager = GetComponent<AudioManager>();
 
         //Find the length of the track and set the max value of the slider to it
+        
         timelineSlider.maxValue = audioManager.GetTrackLength();
 
         //Adds a listener to the main slider and invokes a method when the value changes.
@@ -29,12 +29,12 @@ public class AudioTimeline : MonoBehaviour {
 	void Update ()
     {
         //Moves the slider according to which part of the track is being played
-        audioMusic.gameMusicEv.getTimelinePosition(out temp);
+        audioManager.gameMusicEv.getTimelinePosition(out temp);
         timelineSlider.value = temp;
     }
 
     public void ChangeTimeline()
     {
-        audioMusic.gameMusicEv.setTimelinePosition((int)timelineSlider.value);
+        audioManager.gameMusicEv.setTimelinePosition((int)timelineSlider.value);
     }
 }
