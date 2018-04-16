@@ -39,7 +39,7 @@ public class OverallCorruption : MonoBehaviour {
         overallCorruption = 0;
         foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
         {
-            overallCorruption += corruptionHandler.GetCorruptionAmount() / corruptionHandlers.Count;
+            overallCorruption += corruptionHandler.corruptionAmount / corruptionHandlers.Count;
         }
     } 
 
@@ -48,7 +48,7 @@ public class OverallCorruption : MonoBehaviour {
         overallDistortion = 0;
         foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
         {
-            overallDistortion += corruptionHandler.GetDistortionAmount();
+            overallDistortion += corruptionHandler.distortionAmount;
         }
         overallDistortion += overallCorruption * overallDistortionMax / 100;
         audioDistortion.SetDistortion(overallDistortion);

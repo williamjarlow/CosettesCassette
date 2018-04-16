@@ -26,16 +26,12 @@ public class DrumCorruption : CorruptionBaseClass {
     [SerializeField] [Range(0, -1)] [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
     float missPenalty;
 
-    [HideInInspector]
-    public List<int> beats;
+    [HideInInspector] public List<int> beats;
 
-    [HideInInspector]
-    public int okayRange;
-    [HideInInspector]
-    public int perfectRange;
+    [HideInInspector] public int okayRange;
+    [HideInInspector] public int perfectRange;
 
-    [HideInInspector]
-    public float maxDistortion;
+    [HideInInspector] public float maxDistortion;
 
     int index = 0;  /*Index increases only if a hit has been detected, or if a note is not hit at all.
     It does not increase if a note is hit outside of the okay/perfect ranges. 
@@ -47,8 +43,8 @@ public class DrumCorruption : CorruptionBaseClass {
     AudioManager audioManager;
 
 	void Start () {
-        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
-        audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>();
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>(); //People didn't like this for obvious reasons, either go through 
+        audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>(); //the inspector or keep this solution.
         drumCorruptionHandler = GameObject.FindWithTag("CorruptionHandler").GetComponent<DrumCorruptionHandler>();
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
 
@@ -64,14 +60,9 @@ public class DrumCorruption : CorruptionBaseClass {
         {
             if (inCorruption == false) //If player just entered corruption
             {
-                audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
-                inCorruption = true;
-                Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
-                drumCorruptionHandler.UpdateCorruptionAmount();
-                innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); //Set distortion
-                drumCorruptionHandler.UpdateDistortionAmount();
+                EnterCorruption();
             }
-            if (drumMechanic.recording)
+            if (drumMechanic.recording) //If recording
             {
                 if (index < beats.Count) //If there are more beats available for the player to hit
                 {
@@ -82,7 +73,7 @@ public class DrumCorruption : CorruptionBaseClass {
                     }
                     else if (drumMechanic.gaveInput) //If player gave input
                     {
-                        drumMechanic.gaveInput = false;
+                        drumMechanic.gaveInput = false; //Remove
                         if (!corruptionStarted)
                             ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
                         completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
@@ -93,17 +84,40 @@ public class DrumCorruption : CorruptionBaseClass {
         }
         else if (inCorruption) //If player leaves corrupted area
         {
-            inCorruption = false;
-            audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
-            if (drumMechanic.recording)
-                GradeScore();
-            innerDistortion = 0;
-            drumCorruptionHandler.UpdateCorruptionAmount();
-            drumCorruptionHandler.UpdateDistortionAmount();
-            Debug.Log("Percent of inner corruption cleared: " + corruptionClearedPercent + "%");
-            ResetConditions();
+            ExitCorruption();
+        }
+        else {
+            drumMechanic.gaveInput = false; //Remove
         }
 	}
+
+    public override void EnterCorruption()
+    {
+        audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
+        inCorruption = true;
+        Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
+
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); //Set distortion
+        UpdateCorruption();
+    }
+
+    public override void ExitCorruption()
+    {
+        inCorruption = false;
+        audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
+        if (drumMechanic.recording)
+            GradeScore();
+        innerDistortion = 0; //Set distortion
+        UpdateCorruption();
+        Debug.Log("Percent of inner corruption cleared: " + corruptionClearedPercent + "%");
+        ResetConditions();
+    }
+
+    public override void UpdateCorruption()
+    {
+        drumCorruptionHandler.UpdateCorruptionAmount();
+        drumCorruptionHandler.UpdateDistortionAmount();
+    }
 
     void GradeScore()
     {
@@ -129,15 +143,15 @@ public class DrumCorruption : CorruptionBaseClass {
         { //If within range to hit the beat
             if (audioManager.GetTimeLinePosition() >= beats[index] - perfectRange && audioManager.GetTimeLinePosition() <= beats[index] + perfectRange)
             { //If within range to hit the beat "perfectly"
-                //Debug.Log("Perfect");
+                Debug.Log("Perfect, " +  audioManager.GetTimeLinePosition());
                 index++; //Index increases if a note was hit
                 return Timing.perfect;
             }
-            //Debug.Log("Okay");
+            Debug.Log("Okay, " + audioManager.GetTimeLinePosition());
             index++;//Index increases if a note was hit
             return Timing.okay;
         }
-        //Debug.Log("Miss");
+        Debug.Log("Miss, " + audioManager.GetTimeLinePosition());
         return Timing.miss;
     }
 

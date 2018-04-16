@@ -5,17 +5,25 @@ using UnityEngine.Assertions;
 
 [System.Serializable]
 public class DrumInformation{
+    [Header("Beat corruption placement.")] [Tooltip("16 = 1 bar. 4 = perfectly on beat.")]
     public List<int> beats;
+
+    [Header("Ranges in milliseconds")]
     public int perfectRange;
     public int okayRange;
-    public Duration duration;
-    [Range(0, 100)]
-    public float maxDistortion;
-    [HideInInspector]
-    public float currentDistortion;
+
+    Duration duration;
+    [Header("ID of segment in 'Game Manager'")]
+    public int segmentID;
+
+    [Range(0, 100)] public float maxDistortion;
+    [HideInInspector] public float currentDistortion;
 }
 
 public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
+
+    [SerializeField] int bpm;
+    float bpmConverted;
 
     [SerializeField] [Tooltip("Amount of drum corruptions, as well as their information.")]
     List<DrumInformation> drumInformationList;
@@ -27,9 +35,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    float corruptionAmount;
-    float distortionAmount;
-
     void Awake()
     {
         if(drumInformationList.Count <= 0)
@@ -38,10 +43,12 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
     void Start () {
 
+        bpmConverted = (60000/4) / bpm; //Convert bpm into milliseconds
+
         overallCorruption = GetComponent<OverallCorruption>();
         Assert.IsNotNull(overallCorruption, "Please make sure that the DrumCorruptionHandler script is on the same object as the OverallCorruption script.");
 
-		foreach(DrumInformation drumInformation in drumInformationList)
+		foreach(DrumInformation drumInformation in drumInformationList) //Set starting values for corruption
         {
             GameObject go = Instantiate(drumCorruptionPrefab, gameObject.transform);
             DrumCorruption drumCorruption = go.GetComponent<DrumCorruption>();
@@ -49,8 +56,13 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.beats = drumInformation.beats;
             drumCorruption.perfectRange = drumInformation.perfectRange;
             drumCorruption.okayRange = drumInformation.okayRange;
-            drumCorruption.duration = drumInformation.duration;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
+            for (int i = 0; i < drumInformation.beats.Count; i++)
+            {
+                drumCorruption.beats[i] = Mathf.RoundToInt(drumInformation.beats[i] * bpmConverted);
+            }
+            //Set corruption duration to segment value based on drumInformation.segment
+
         }
 	}
 
@@ -76,15 +88,5 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
                 corruptionAmount += (100 - drumCorruption.corruptionClearedPercent) / drumCorruptions.Count;
         }
         overallCorruption.UpdateCorruptionAmount();
-    }
-
-    public override float GetDistortionAmount()
-    {
-        return distortionAmount;
-    }
-
-    public override float GetCorruptionAmount()
-    {
-        return corruptionAmount;
     }
 }

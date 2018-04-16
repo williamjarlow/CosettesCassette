@@ -10,18 +10,8 @@ public class Duration
 }
 
 public class CorruptionHandlerBaseClass : MonoBehaviour {
-    [HideInInspector]
-    public Duration duration;
-
-    public virtual float GetCorruptionAmount()
-    {
-        return 0;
-    }
-
-    public virtual float GetDistortionAmount()
-    {
-        return 0; 
-    }
+    [HideInInspector] public float distortionAmount;
+    [HideInInspector] public float corruptionAmount;
 
     public virtual void UpdateDistortionAmount()
     {

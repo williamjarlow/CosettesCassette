@@ -25,9 +25,6 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass
 
     OverallCorruption overallCorruption;
 
-    float corruptionAmount;
-    float distortionAmount;
-
     void Awake()
     {
         if (pitchInformationList.Count <= 0)
@@ -73,15 +70,5 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass
             corruptionAmount += 100 - pitchCorruption.corruptionClearedPercent / pitchCorruptions.Count;
         }
         overallCorruption.UpdateCorruptionAmount();
-    }
-
-    public override float GetDistortionAmount()
-    {
-        return distortionAmount;
-    }
-
-    public override float GetCorruptionAmount()
-    {
-        return corruptionAmount;
     }
 }
