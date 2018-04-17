@@ -22,9 +22,6 @@ public class DrumInformation{
 
 public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
-    [SerializeField] int bpm;
-    float bpmConverted;
-
     [SerializeField] [Tooltip("Amount of drum corruptions, as well as their information.")]
     List<DrumInformation> drumInformationList;
     
@@ -42,9 +39,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
     }
 
     void Start () {
-
-        bpmConverted = (60000/4) / bpm; //Convert bpm into milliseconds
-
         overallCorruption = GetComponent<OverallCorruption>();
         Assert.IsNotNull(overallCorruption, "Please make sure that the DrumCorruptionHandler script is on the same object as the OverallCorruption script.");
 
@@ -59,10 +53,9 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {
-                drumCorruption.beats[i] = Mathf.RoundToInt(drumInformation.beats[i] * bpmConverted);
+                drumCorruption.beats[i] = drumInformation.beats[i] * GameManager.Instance.bpmInMs;
             }
-            //Set corruption duration to segment value based on drumInformation.segment
-
+            drumCorruption.duration = GameManager.Instance.durations[drumInformation.segmentID];
         }
 	}
 

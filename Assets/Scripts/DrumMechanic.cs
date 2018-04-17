@@ -52,7 +52,6 @@ public class DrumMechanic : MonoBehaviour {
                 isPlaying = true;
                 audioSource.Play();
                 inputTimeStamps.Add(timeStamp);
-
                 gaveInput = true;
 
                 StartCoroutine(ResetPlayed());

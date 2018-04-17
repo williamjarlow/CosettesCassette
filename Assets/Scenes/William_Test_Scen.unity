@@ -2598,6 +2598,55 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &949005955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 949005957}
+  - component: {fileID: 949005956}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &949005956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 949005955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ee5168829537745b173645f1c4a372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioDistortion: {fileID: 115963816}
+  audioManager: {fileID: 115963818}
+  segments: 0a0000003200000046000000
+  bpm: 110
+  bpmInMs: 0
+  durations: []
+  pitch: 0
+  posInSong: 0
+  lengthOfSong: 0
+--- !u!4 &949005957
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 949005955}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.628705, y: 1.2667089, z: -0.57073164}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &970516246
 GameObject:
   m_ObjectHideFlags: 0
@@ -6126,6 +6175,11 @@ Prefab:
       propertyPath: drumInformationList.Array.data[0].segment
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[0].segmentID
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 217ff3c6edad08746800892c4eab6f54, type: 2}
   m_IsPrefabParent: 0
@@ -6256,7 +6310,6 @@ MonoBehaviour:
   recording: 0
   gaveInput: 0
   timeStamp: 0
-  iterator: 0
   tolerance: 30
   bassDrumPath: event:/Music/Cassette_01/drums
 --- !u!82 &1931723803

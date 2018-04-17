@@ -73,7 +73,7 @@ public class DrumCorruption : CorruptionBaseClass {
                     }
                     else if (drumMechanic.gaveInput) //If player gave input
                     {
-                        drumMechanic.gaveInput = false; //Remove
+                        drumMechanic.gaveInput = false;
                         if (!corruptionStarted)
                             ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
                         completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
@@ -86,13 +86,11 @@ public class DrumCorruption : CorruptionBaseClass {
         {
             ExitCorruption();
         }
-        else {
-            drumMechanic.gaveInput = false; //Remove
-        }
 	}
 
     public override void EnterCorruption()
     {
+        drumMechanic.gaveInput = false;
         audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
         inCorruption = true;
         Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
