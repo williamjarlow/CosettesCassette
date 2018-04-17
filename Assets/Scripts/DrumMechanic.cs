@@ -19,7 +19,7 @@ public class DrumMechanic : MonoBehaviour {
     [HideInInspector] public bool gaveInput = false;
 
     [SerializeField] private int timeStamp;
-    [SerializeField] private int iterator = 0;
+    //[SerializeField] private int iterator = 0;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
     [SerializeField] private string bassDrumPath;
 
@@ -59,7 +59,31 @@ public class DrumMechanic : MonoBehaviour {
             }
         }
 
+        else if(recording == false && !isPlaying)
+        {
+            // Check if there is something in the list and that we are not at the last item
+            if (inputTimeStamps.Count > 0)
+            {
+                // Check if the current position in the song is between the first and last recorded input (performance)
+                if(timeStamp >= inputTimeStamps[0] - tolerance / 2 && timeStamp <= inputTimeStamps[inputTimeStamps.Count - 1] + tolerance / 2)
+                {
+                    // Loop through the list and match the current time stamp with the recorded input. If they match --> play recorded sound (drum sound)
+                    for(int i = 0; i < inputTimeStamps.Count; i++)
+                    {
+                        if (timeStamp < inputTimeStamps[i] + tolerance / 2 && timeStamp > inputTimeStamps[i] - tolerance / 2)
+                        {
+                            audioSource.Play();
+                            Debug.Log("Played drum sound at index " + i);
+                            isPlaying = true;
+                            StartCoroutine(ResetPlayed());
+                        }
+                            
+                    }
+                }
+            }
+        }
 
+        /*
         else if (recording == false)
         {
             //  Make sure the list is not empty and check if timeStamp matches the value in the list[i]. Also check if we are at the last index in the list
@@ -70,7 +94,9 @@ public class DrumMechanic : MonoBehaviour {
                 audioSource.Play();
                 iterator++;
             }
-        }
+        }*/
+
+
 
 
     }
@@ -105,7 +131,6 @@ public class DrumMechanic : MonoBehaviour {
     public void YesConfirmation(GameObject confirmationObj)
     {
         inputTimeStamps.Clear();
-        iterator = 0;
         recording = true;
         confirmationObj.SetActive(false);
     }
