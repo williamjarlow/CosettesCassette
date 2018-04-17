@@ -15,20 +15,23 @@ public class PitchDetection : MonoBehaviour {
 
     public List<PitchNode> nodes = new List<PitchNode>();
 
-    Vector2 goalRange = new Vector2(0, 5);
-    Vector2 speedRange = new Vector2(2, 4);
-    const int nodeAmount = 3;
-
-    float points = 100;
-    const float pointPenalty = 0.25f;
+    Vector2 goalRange = new Vector2(-1, 3);
+    Vector2 speedRange = new Vector2(1, 3);
+    const int nodeAmount = 100;
 
     int index = 0;
 
     bool animationDone = true;
 
+    [SerializeField] bool randomizeNodes;
+
     // Use this for initialization
     void Start () {
-        Randomize();
+        if (randomizeNodes)
+        {
+            nodes.Clear();
+            Randomize();
+        }
         MovePitchObject();
     }
 	
@@ -41,8 +44,6 @@ public class PitchDetection : MonoBehaviour {
 
         if (!DetectRaycastCollision() && animationDone == false)
         {
-            points -= pointPenalty;
-            Debug.Log(points);
         }
     }
 

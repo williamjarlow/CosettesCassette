@@ -8,6 +8,9 @@ public class AudioPitch : MonoBehaviour {
 
 	private AudioManager audioManager;
     [SerializeField] private Slider pitchSlider;
+    [SerializeField] private PitchDetection pitchDetection;
+
+    const int mercyZone = 5;
 
 	void Start (){
 		audioManager = GetComponent<AudioManager> ();
@@ -16,9 +19,9 @@ public class AudioPitch : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        {
-            audioManager.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value);
-        }
-        
+        if (pitchSlider.value <= ((pitchDetection.transform.position.y - 1) * 10) + mercyZone && pitchSlider.value >= ((pitchDetection.transform.position.y - 1) * 10) - mercyZone)
+            audioManager.gameMusicEv.setParameterValue("pitch_sum", 0);
+        else
+            audioManager.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value - ((pitchDetection.transform.position.y - 1.5f) * 10));
     }
 }
