@@ -16,7 +16,7 @@ public class MenuAppearScript : MonoBehaviour
 
     void Start()
     {
-       menuToShow.SetActive(true);
+        menuToShow.SetActive(true);
         menuToHide.SetActive(false);
       //  Button btn = pauseButton.GetComponent<Button>();
       //  btn.onClick.AddListener(() => Pause());
@@ -79,12 +79,8 @@ public class MenuAppearScript : MonoBehaviour
 
     public void ShowPauseScreen()
     {
-
-
-
        // isShowing = !isShowing;
         menuToShow.SetActive(true);
-        
     }
 
     public void HidePauseScreen()
@@ -93,5 +89,17 @@ public class MenuAppearScript : MonoBehaviour
         menuToHide.SetActive(false);
     }
 
+    public void StartCassette()
+    {
+        GameObject cassetteAnimation = GameObject.Find("CassettesBeROlling");
+        CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
+        cassetteAnim.cassetteAnimation = true;
+    }
 
+    public void StopCassette()
+    {
+        GameObject cassetteAnimation = GameObject.Find("CassettesBeROlling");
+        CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
+        cassetteAnim.cassetteAnimation = false;
+    }
 }

@@ -7,13 +7,15 @@ public class Buttons_Movement : MonoBehaviour {
     [SerializeField] float ButtonSpeed;
     
     Vector3 button_Startposition;
+    Vector3 local_target;
     [SerializeField] Vector3 button_Endposition;
 
 	// Use this for initialization
 	void Start () {
         button_Startposition = transform.position;
-        
-	}
+        local_target = button_Endposition - transform.position;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
