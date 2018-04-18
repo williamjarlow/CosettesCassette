@@ -5,33 +5,34 @@ using UnityEngine.UI;
 
 public class Credits : MonoBehaviour {
 
-    [SerializeField] private float speed;
     [SerializeField] private GameObject stopper;
-    [SerializeField] private float endPos;
+    [SerializeField] private float currentPos;
+    [SerializeField] private float endOfTheLine;
+    [SerializeField] private GameObject AudioManagerz;
+    private AudioManager audioManager;
+    private float audiolength;
+    private float audioPos;
+    private float audioP;
+
 
     // Use this for initialization
     void Start ()
     {
+        audioManager = AudioManagerz.GetComponent<AudioManager>();
+        endOfTheLine = 2260.116f;
+        audiolength = audioManager.GetTrackLength();
+    }
 
-        endPos = stopper.transform.position.y;
-
-        		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
 
-        
-        if (transform.position.y < endPos)
-        {
-            transform.Translate(Vector3.up * speed);
-          
-        }
-        else
-        {
-            transform.Translate(Vector3.up * 0);
-            
-        }
+        audioPos = audioManager.GetTimeLinePosition();
+        audioP = audioPos / audiolength;
+        currentPos = audioP * endOfTheLine;
+        Vector3 temp = transform.localPosition;
+        temp.y = currentPos - 1100;
+        transform.localPosition = temp;
+
     }
 }
