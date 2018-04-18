@@ -15,9 +15,9 @@ public class PitchDetection : MonoBehaviour {
 
     public List<PitchNode> nodes = new List<PitchNode>();
 
-    Vector2 goalRange = new Vector2(-1, 3);
-    Vector2 speedRange = new Vector2(1, 3);
-    const int nodeAmount = 100;
+    [SerializeField] Vector2 rGoalRange = new Vector2(-2, 2);
+    [SerializeField] Vector2 rTravelTimeRange = new Vector2(1, 3);
+    int nodeAmount;
 
     int index = 0;
 
@@ -27,6 +27,7 @@ public class PitchDetection : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        nodeAmount = nodes.Count;
         if (randomizeNodes)
         {
             nodes.Clear();
@@ -42,12 +43,12 @@ public class PitchDetection : MonoBehaviour {
             MovePitchObject();
         }
 
-        if (!DetectRaycastCollision() && animationDone == false)
+       /* if (!DetectRaycastCollision() && animationDone == false)
         {
-        }
+        }*/
     }
 
-    bool DetectRaycastCollision()
+    /*bool DetectRaycastCollision()
     {
         Vector2 pos = Input.mousePosition; // Mouse position
         RaycastHit hit;
@@ -59,15 +60,15 @@ public class PitchDetection : MonoBehaviour {
             return true;
         }
         return false;
-    }
+    }*/
 
     void Randomize()
     {
         for (int i = 0; i < nodeAmount; i++)
         {
             nodes.Add(new PitchNode());
-            nodes[i].seconds = Random.Range(speedRange.x, speedRange.y);
-            nodes[i].position = new Vector3(gameObject.transform.position.x, Random.Range(goalRange.x, goalRange.y), gameObject.transform.position.z);
+            nodes[i].seconds = Random.Range(rTravelTimeRange.x, rTravelTimeRange.y);
+            nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(rGoalRange.x, rGoalRange.y), gameObject.transform.localPosition.z);
         }
     }
 
@@ -82,14 +83,14 @@ public class PitchDetection : MonoBehaviour {
         {
             animationDone = false;
             float elapsedTime = 0;
-            Vector3 startingPos = objectToMove.transform.position;
+            Vector3 startingPos = objectToMove.transform.localPosition;
             while (elapsedTime < seconds)
             {
-                transform.position = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
+                transform.localPosition = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
-            transform.position = end;
+            transform.localPosition = end;
             index++;
             animationDone = true;
         }

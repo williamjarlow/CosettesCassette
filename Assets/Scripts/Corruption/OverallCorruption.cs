@@ -2,6 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Segment
+{
+    public int segmentEnd;
+    [HideInInspector]
+    public bool inSegment;
+}
+
+
+public class CorruptionInformation {
+    [Range(0, 100)]
+    public float maxDistortion;
+    [HideInInspector]
+    public float currentDistortion;
+}
+
 public class OverallCorruption : MonoBehaviour {
     [SerializeField]
     [Range(0, 100)]

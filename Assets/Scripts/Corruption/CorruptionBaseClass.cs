@@ -7,12 +7,12 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector] public float corruptionClearedPercent;
     [HideInInspector] public float innerDistortion;
 
-    public virtual void EnterCorruption()
+    public virtual void EnterSegment()
     {
         GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
         GameManager.Instance.overallCorruption.UpdateDistortionAmount();
     }
-    public virtual void ExitCorruption()
+    public virtual void ExitSegment()
     {
         GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
         GameManager.Instance.overallCorruption.UpdateDistortionAmount();

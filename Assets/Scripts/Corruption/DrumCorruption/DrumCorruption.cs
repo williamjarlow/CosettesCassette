@@ -11,7 +11,6 @@ public enum Timing{
 
 public class DrumCorruption : CorruptionBaseClass {
     List <Timing> completedBeats = new List<Timing>();
-    bool corruptionStarted;
 
     DrumMechanic drumMechanic;
 
@@ -37,7 +36,9 @@ public class DrumCorruption : CorruptionBaseClass {
     It does not increase if a note is hit outside of the okay/perfect ranges. 
     This is done so that mass-tapping does not end the corruption prematurely.*/
 
-   [HideInInspector] public bool inCorruption = false;
+    [HideInInspector] bool inSegment = false;
+    [HideInInspector] bool inCorruption = false;
+    [HideInInspector] bool insliggelysegment;
 
     AudioDistortion audioDistortion;
     AudioManager audioManager;
@@ -46,6 +47,11 @@ public class DrumCorruption : CorruptionBaseClass {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
+
+        for(int i =0; i < beats.Count; i++)
+        {
+            beats[i] += duration.start;
+        }
 
         Assert.IsNotNull(audioManager.gameObject, "Audiomanager not found. Please add an Audiomanager to the game manager.");
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
@@ -57,15 +63,15 @@ public class DrumCorruption : CorruptionBaseClass {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
-            if (inCorruption == false) //If player just entered corruption
+            if (inSegment == false) //If player just entered the segment
             {
-                EnterCorruption();
+                EnterSegment();
             }
             if (drumMechanic.recording) //If recording
             {
                 if (index < beats.Count) //If there are more beats available for the player to hit
                 {
-                    if (corruptionStarted && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
+                    if (inCorruption && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
                     {
                         completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
                         index++;
@@ -73,39 +79,48 @@ public class DrumCorruption : CorruptionBaseClass {
                     else if (drumMechanic.gaveInput) //If player gave input
                     {
                         drumMechanic.gaveInput = false;
-                        if (!corruptionStarted)
+                        if (!inCorruption)
                             ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
                         completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
-                        corruptionStarted = true;
+                        inCorruption = true;
                     }
                 }
             }
         }
-        else if (inCorruption) //If player leaves corrupted area
+        else if (inSegment) //If player leaves corrupted area
         {
-            ExitCorruption();
+            ExitSegment();
         }
 	}
 
-    public override void EnterCorruption()
+    void EnterCorruption()
     {
-        
-        drumMechanic.gaveInput = false;
-        audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
-        inCorruption = true;
 
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        base.EnterCorruption();
     }
 
-    public override void ExitCorruption()
+    void ExitCorruption()
     {
-        inCorruption = false;
+
+    }
+
+    public override void EnterSegment()
+    {
+        drumMechanic.gaveInput = false;
+        audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
+        inSegment = true;
+
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        base.EnterSegment();
+    }
+
+    public override void ExitSegment()
+    {
+        inSegment = false;
         audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
         if (drumMechanic.recording)
             GradeScore();
         innerDistortion = 0;
-        base.ExitCorruption();
+        base.ExitSegment();
         ResetConditions();
     }
 
@@ -148,7 +163,7 @@ public class DrumCorruption : CorruptionBaseClass {
     void ResetConditions()
     {
         completedBeats.Clear();
-        corruptionStarted = false;
+        inCorruption = false;
         index = 0;
     }
 }

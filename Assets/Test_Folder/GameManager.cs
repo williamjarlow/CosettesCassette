@@ -5,12 +5,14 @@ using UnityEngine.Assertions;
 
 public class GameManager : Singleton<GameManager> {
 
-    public AudioDistortion audioDistortion;
+    [HideInInspector] public AudioDistortion audioDistortion;
+    [HideInInspector] public OverallCorruption overallCorruption;
+    public GameObject drumMechanic;
     public AudioManager audioManager;
-    public OverallCorruption overallCorruption;
-    public List<int> segments;
-    public int bpm;
-
+    public GameObject corruptionHandler;
+    [SerializeField] List<int> segmentEnds;
+    [HideInInspector] public List<Segment> segments;
+    [Range(1, 200)] public int bpm;
 
     [HideInInspector] public int bpmInMs;
 
@@ -22,19 +24,27 @@ public class GameManager : Singleton<GameManager> {
 
 	void Awake ()
     {
-        Assert.AreNotEqual(bpm, 0, "BPM cannot be 0.");
+        foreach(int segmentEnd in segmentEnds)
+        {
+            Segment segment = new Segment();
+            segment.segmentEnd = segmentEnd;
+            segments.Add(segment);
+        }
+
+        audioDistortion = audioManager.GetComponent<AudioDistortion>();
+        overallCorruption = corruptionHandler.GetComponent<OverallCorruption>();
 
         bpmInMs = ConvertBpmToMs(bpm);
         for (int i = 0; i < segments.Count; i++)
         {
             Duration duration = new Duration();
-            segments[i] = segments[i] * bpmInMs;
+            segments[i].segmentEnd = segments[i].segmentEnd * bpmInMs;
             if (i == 0)
                 duration.start = 0;
             else
-                duration.start = segments[i - 1];
+                duration.start = segments[i - 1].segmentEnd;
 
-            duration.stop = segments[i];
+            duration.stop = segments[i].segmentEnd;
             durations.Add(duration);
         }
     }

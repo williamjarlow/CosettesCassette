@@ -25,20 +25,9 @@ public class AudioDistortion : MonoBehaviour
         return temp;
     }
 
-    public void AddDistortion(float addedDistortion)
-    {
-        currentDistortion += addedDistortion;
-        audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
-    }
-
     public void SetDistortion(float newDistortion)
     {
         currentDistortion = newDistortion;
         audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
     }
-    public void UpdateDistortion()
-    {
-        audioManager.gameMusicEv.setParameterValue("dist_level", currentDistortion);
-    }
-
 }

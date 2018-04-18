@@ -19,9 +19,9 @@ public class AudioPitch : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (pitchSlider.value <= ((pitchDetection.transform.position.y - 1) * 10) + mercyZone && pitchSlider.value >= ((pitchDetection.transform.position.y - 1) * 10) - mercyZone)
+        if (pitchSlider.value <= (pitchDetection.transform.localPosition.y * 10) + mercyZone && pitchSlider.value >= (pitchDetection.transform.localPosition.y * 10) - mercyZone)
             audioManager.gameMusicEv.setParameterValue("pitch_sum", 0);
         else
-            audioManager.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value - ((pitchDetection.transform.position.y - 1.5f) * 10));
+            audioManager.gameMusicEv.setParameterValue("pitch_sum", pitchSlider.value - (pitchDetection.transform.localPosition.y * 10));
     }
 }
