@@ -110,6 +110,8 @@ public class VisualInput : MonoBehaviour
 
         transform.position = position;
 
+        //print(mouseScreenToWorld);
+
 
         if (Input.GetMouseButtonDown(0))
         {

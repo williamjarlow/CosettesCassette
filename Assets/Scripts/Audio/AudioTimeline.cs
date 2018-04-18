@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AudioTimeline : MonoBehaviour {
 
     [TextArea]
-    public string Notes = "Timeline slider needs specific event data: \n Pointer Down: Call function ToggleHold() \n Pointer up: Call function ToggleHold() \n Select: Call function SaveValue() \n Drag: Call function UpdateValues()";
+    public string Notes = "Timeline slider needs specific event data to function properly: \n Pointer Down: Call function ToggleHold(); \n Pointer up: Call function ToggleHold(); \n Select: Call function SaveValue(); \n Drag: Call function UpdateValues();";
 
     private AudioManager audioManager;
 
@@ -26,21 +26,41 @@ public class AudioTimeline : MonoBehaviour {
     private float sliderValueAtPush = 0;
     private float valuePushedOn = 0;
 
+    [TextArea]
+    public string MoreNotes = "To get the mask working correctly the Hidden Timeline Images prefab needs to be a child object to the Timeline Slider \n Mask should start inactivated as we only want it to show when touching the timeline bar.";
+
+    public GameObject timelineMask;
+    public GameObject timelineBar;
+
+    private float maskStartPos = 0;
+
+    private float songToImageLengthConversion = 0;
+
     void Start ()
     {
-        audioManager = GetComponent<AudioManager>();
 
+        audioManager = GetComponent<AudioManager>();
         //Find the length of the track and set the max value of the slider to it
         timelineSlider.maxValue = audioManager.GetTrackLength();
+
+        // Get start position of timeline bar in x
+        maskStartPos = timelineBar.transform.position.x - (timelineBar.GetComponent<RectTransform>().sizeDelta.x / 2);
+
+        songToImageLengthConversion = timelineSlider.maxValue / timelineBar.GetComponent<RectTransform>().sizeDelta.x;
     }
-	
-	
-	void Update ()
+
+
+    void Update ()
     {
         if (!holding)
+        {
             ChangeOnPlaying();
+        }
+
         if (holding)
+        {
             HoldChange();
+        }
     }
 
     public void ChangeTimeline()
@@ -67,14 +87,28 @@ public class AudioTimeline : MonoBehaviour {
 
         timelineSlider.value = sliderValueAtPush;
         audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
+
+        // Update mask according to timeline bar
+        timelineMask.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMask.transform.localPosition.y, 0);
     }
 
     // Toggle hold.... 'Cause buttons
     public void ToggleHold()
     {
         if (!holding)
+        {
             valuePushedOn = timelineSlider.value;
-        holding = !holding;
+            timelineMask.SetActive(true);
+            holding = true;
+            return;
+        }
+
+        if (holding)
+        {
+            timelineMask.SetActive(false);
+            holding = false;
+            return;
+        }
     }
 
     // Sliders are stupid and the value is changed BEFORE running code on click events. So current value of slider needs to be saved in order to update slider correctly from original position.
@@ -90,7 +124,7 @@ public class AudioTimeline : MonoBehaviour {
     }
 
 
-    // Update slider according to music when not touching the slider
+    // Update slider according to music when not touching the slider    
     void ChangeOnPlaying()
     {
         audioManager.gameMusicEv.getTimelinePosition(out temp);

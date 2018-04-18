@@ -41,7 +41,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c495cae511ff06545872a48f360b115f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Notes: "Timeline slider needs specific event data to function properly: \n Pointer
+    Down: Call function ToggleHold(); \n Pointer up: Call function ToggleHold(); \n
+    Select: Call function SaveValue(); \n Drag: Call function UpdateValues();"
   timelineSlider: {fileID: 0}
+  maxSpeedThresholdInMs: 6000
+  fastSpeedInMs: 20000
+  slowSpeedInMs: 1500
+  MoreNotes: "To get the mask working correctly the Hidden Timeline Images prefab
+    needs to be a child object to the Timeline Slider \n Mask should start inactivated
+    as we only want it to show when touching the timeline bar."
+  timelineMask: {fileID: 0}
+  timelineBar: {fileID: 0}
 --- !u!114 &114392548795063230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,6 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitchSlider: {fileID: 0}
+  pitchDetection: {fileID: 0}
 --- !u!114 &114487042810904678
 MonoBehaviour:
   m_ObjectHideFlags: 1
