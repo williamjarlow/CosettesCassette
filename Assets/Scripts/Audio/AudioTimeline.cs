@@ -27,7 +27,7 @@ public class AudioTimeline : MonoBehaviour {
     private float valuePushedOn = 0;
 
     [TextArea]
-    public string MoreNotes = "To get the mask working correctly the Hidden Timeline Images prefab needs to be a child object to the Timeline Slider \n Mask should start inactivated as we only want it to show when touching the timeline bar.";
+    public string MoreNotes = "To get the mask working correctly the Hidden Timeline Images prefab needs to be a child object to the Timeline Slider\n Mask should start inactivated as we only want it to show when touching the timeline bar.\n The mask needs a MaskingMaterial and the hidden images needs HideMaterial.";
 
     public GameObject timelineMask;
     public GameObject timelineBar;
@@ -73,7 +73,7 @@ public class AudioTimeline : MonoBehaviour {
     public void HoldChange()
     {
         // Stop player from breaking song by forcing it to play the same exact moment over and over again
-        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100)
+        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100)     // Magic numbers, 'cause I say so!
             return;
 
         if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
