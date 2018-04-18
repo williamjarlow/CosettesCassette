@@ -12,7 +12,11 @@ public class DrumMechanic : MonoBehaviour {
     /*[HideInInspector]*/ public List<int> inputTimeStamps;
 
     private AudioManager audioManager;
-    private AudioSource audioSource;
+    private FMOD.RESULT result;
+
+    private FMOD.Sound kick;
+    private FMOD.ChannelGroup channelGroup;
+    private FMOD.Channel channel;
     
     [HideInInspector] public bool recording = false;
     private bool isPlaying;
@@ -21,18 +25,15 @@ public class DrumMechanic : MonoBehaviour {
     [SerializeField] private int timeStamp;
     //[SerializeField] private int iterator = 0;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
-    [SerializeField] private string bassDrumPath;
 
 
     void Start ()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        audioSource = GetComponent<AudioSource>();
-
-        //Set audio buffer size to reduce delay
-        AudioSettings.SetDSPBufferSize(256, 2);
-
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
+        result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
+        Debug.Log(" *** Create sound result *** --> " + result);
+
 	}
 
 
@@ -47,10 +48,10 @@ public class DrumMechanic : MonoBehaviour {
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
             {
                 //Play the bass drum sound and record it by adding the current time stamp to the list.
-                //FMODUnity.RuntimeManager.PlayOneShot(bassDrumPath);
+                result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+                Debug.Log(result);
 
                 isPlaying = true;
-                audioSource.Play();
                 inputTimeStamps.Add(timeStamp);
                 gaveInput = true;
 
@@ -71,8 +72,7 @@ public class DrumMechanic : MonoBehaviour {
                     {
                         if (timeStamp < inputTimeStamps[i] + tolerance / 2 && timeStamp > inputTimeStamps[i] - tolerance / 2)
                         {
-                            audioSource.Play();
-                            Debug.Log("Played drum sound at index " + i);
+                            audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
                             isPlaying = true;
                             StartCoroutine(ResetPlayed());
                         }
