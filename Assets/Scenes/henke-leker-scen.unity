@@ -659,6 +659,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &255114783 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114326354796356080, guid: cc431697147c3554eb232afc93d154c3,
+    type: 2}
+  m_PrefabInternal: {fileID: 565128310}
+  m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
 --- !u!1 &261306296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1241,40 +1247,25 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1984666899360990, guid: 4a1527e69dfdf6a458fd98ee76b70c6c, type: 2}
-      propertyPath: m_Name
-      value: AudioManager
-      objectReference: {fileID: 0}
     - target: {fileID: 114392548795063230, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
         type: 2}
       propertyPath: pitchSlider
       value: 
       objectReference: {fileID: 1216849507}
+    - target: {fileID: 114392548795063230, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
+        type: 2}
+      propertyPath: pitchDetection
+      value: 
+      objectReference: {fileID: 255114783}
+    - target: {fileID: 1984666899360990, guid: 4a1527e69dfdf6a458fd98ee76b70c6c, type: 2}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
     - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
         type: 2}
       propertyPath: timelineSlider
       value: 
       objectReference: {fileID: 70315255}
-    - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
-        type: 2}
-      propertyPath: maxSpeedInMs
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
-        type: 2}
-      propertyPath: test
-      value: 
-      objectReference: {fileID: 2800000, guid: b0b230ba329ca8a40a8d31cc37f41844, type: 3}
-    - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
-        type: 2}
-      propertyPath: TimelineMask
-      value: 
-      objectReference: {fileID: 1540321235}
-    - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
-        type: 2}
-      propertyPath: timelineHandle
-      value: 
-      objectReference: {fileID: 596634735}
     - target: {fileID: 114081617221075886, guid: 4a1527e69dfdf6a458fd98ee76b70c6c,
         type: 2}
       propertyPath: timelineMask
@@ -1287,6 +1278,48 @@ Prefab:
       objectReference: {fileID: 70315253}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a1527e69dfdf6a458fd98ee76b70c6c, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &565128310
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4619194560789936, guid: cc431697147c3554eb232afc93d154c3, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: cc431697147c3554eb232afc93d154c3, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &596634735
 GameObject:
@@ -3986,6 +4019,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1397713778}
+  - component: {fileID: 1397713780}
+  - component: {fileID: 1397713779}
   m_Layer: 0
   m_Name: Hidden Timeline Images
   m_TagString: Untagged
@@ -4013,6 +4048,45 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 125}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1397713779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1397713777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Add to Timeline Slider
+--- !u!222 &1397713780
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1397713777}
 --- !u!1 &1426535280
 GameObject:
   m_ObjectHideFlags: 0

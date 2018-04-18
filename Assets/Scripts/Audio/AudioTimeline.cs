@@ -40,6 +40,7 @@ public class AudioTimeline : MonoBehaviour {
     {
 
         audioManager = GetComponent<AudioManager>();
+
         //Find the length of the track and set the max value of the slider to it
         timelineSlider.maxValue = audioManager.GetTrackLength();
 
@@ -71,6 +72,10 @@ public class AudioTimeline : MonoBehaviour {
     // Manually change the slider with touch
     public void HoldChange()
     {
+        // Stop player from breaking song by forcing it to play the same exact moment over and over again
+        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100)
+            return;
+
         if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
             sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
 
