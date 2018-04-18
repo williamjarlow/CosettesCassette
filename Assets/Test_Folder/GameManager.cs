@@ -7,8 +7,11 @@ public class GameManager : Singleton<GameManager> {
 
     public AudioDistortion audioDistortion;
     public AudioManager audioManager;
+    public OverallCorruption overallCorruption;
     public List<int> segments;
     public int bpm;
+
+
     [HideInInspector] public int bpmInMs;
 
    [HideInInspector] public List<Duration> durations;

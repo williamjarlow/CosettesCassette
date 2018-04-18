@@ -43,12 +43,11 @@ public class DrumCorruption : CorruptionBaseClass {
     AudioManager audioManager;
 
 	void Start () {
-        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>(); //People didn't like this for obvious reasons, either go through 
-        audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>(); //the inspector or keep this solution.
-        drumCorruptionHandler = GameObject.FindWithTag("CorruptionHandler").GetComponent<DrumCorruptionHandler>();
+        audioManager = GameManager.Instance.audioManager;
+        audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
 
-        Assert.IsNotNull(audioManager.gameObject, "Audiomanager not found. Please add an Audiomanager to the scene and ensure that it is properly tagged.");
+        Assert.IsNotNull(audioManager.gameObject, "Audiomanager not found. Please add an Audiomanager to the game manager.");
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
         Assert.IsTrue(missPenalty <= 0, "Setting missPenalty to anything higher than 0 will reward the player for missing the beat.");
         Assert.IsTrue(hitValue >= 0, "Setting hitvalue to anything lower than 0 will punish the player for hitting the beat.");
@@ -90,13 +89,13 @@ public class DrumCorruption : CorruptionBaseClass {
 
     public override void EnterCorruption()
     {
+        
         drumMechanic.gaveInput = false;
         audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
         inCorruption = true;
-        Debug.Log("CorruptionClearedPercentForRealsies: " + corruptionClearedPercent);
 
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); //Set distortion
-        UpdateCorruption();
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        base.EnterCorruption();
     }
 
     public override void ExitCorruption()
@@ -105,19 +104,12 @@ public class DrumCorruption : CorruptionBaseClass {
         audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
         if (drumMechanic.recording)
             GradeScore();
-        innerDistortion = 0; //Set distortion
-        UpdateCorruption();
-        Debug.Log("Percent of inner corruption cleared: " + corruptionClearedPercent + "%");
+        innerDistortion = 0;
+        base.ExitCorruption();
         ResetConditions();
     }
 
-    public override void UpdateCorruption()
-    {
-        drumCorruptionHandler.UpdateCorruptionAmount();
-        drumCorruptionHandler.UpdateDistortionAmount();
-    }
-
-    void GradeScore()
+    public override void GradeScore()
     {
         corruptionClearedPercent = 0;
         foreach (Timing beat in completedBeats)

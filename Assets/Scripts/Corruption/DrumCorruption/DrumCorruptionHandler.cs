@@ -28,17 +28,13 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
     [SerializeField] [Tooltip("Select the drumCorruptionPrefab object from the 'Prefabs' folder.")]
     GameObject drumCorruptionPrefab;
 
-    List<DrumCorruption> drumCorruptions = new List<DrumCorruption>();
-
     OverallCorruption overallCorruption;
 
-    void Awake()
-    {
-        if(drumInformationList.Count <= 0)
-            Assert.IsNotNull(drumCorruptionPrefab);
-    }
+    void Awake () {
 
-    void Start () {
+        if (drumInformationList.Count <= 0)
+            Assert.IsNotNull(drumCorruptionPrefab);
+
         overallCorruption = GetComponent<OverallCorruption>();
         Assert.IsNotNull(overallCorruption, "Please make sure that the DrumCorruptionHandler script is on the same object as the OverallCorruption script.");
 
@@ -46,7 +42,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
         {
             GameObject go = Instantiate(drumCorruptionPrefab, gameObject.transform);
             DrumCorruption drumCorruption = go.GetComponent<DrumCorruption>();
-            drumCorruptions.Add(drumCorruption);
+            corruptions.Add(drumCorruption);
             drumCorruption.beats = drumInformation.beats;
             drumCorruption.perfectRange = drumInformation.perfectRange;
             drumCorruption.okayRange = drumInformation.okayRange;
@@ -58,28 +54,4 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.duration = GameManager.Instance.durations[drumInformation.segmentID];
         }
 	}
-
-	void Update () {
-
-	}
-
-    public override void UpdateDistortionAmount()
-    {
-        distortionAmount = 0;
-        foreach (DrumCorruption drumCorruption in drumCorruptions)
-        {
-            distortionAmount += drumCorruption.innerDistortion;
-        }
-        overallCorruption.UpdateDistortionAmount();  
-    }
-
-    public override void UpdateCorruptionAmount()
-    {
-        corruptionAmount = 0;
-        foreach (DrumCorruption drumCorruption in drumCorruptions)
-        {
-                corruptionAmount += (100 - drumCorruption.corruptionClearedPercent) / drumCorruptions.Count;
-        }
-        overallCorruption.UpdateCorruptionAmount();
-    }
 }

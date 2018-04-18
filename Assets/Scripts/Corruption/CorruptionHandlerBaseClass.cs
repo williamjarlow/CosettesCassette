@@ -12,14 +12,5 @@ public class Duration
 public class CorruptionHandlerBaseClass : MonoBehaviour {
     [HideInInspector] public float distortionAmount;
     [HideInInspector] public float corruptionAmount;
-
-    public virtual void UpdateDistortionAmount()
-    {
-
-    }
-
-    public virtual void UpdateCorruptionAmount()
-    {
-
-    }
+    [HideInInspector] public List<CorruptionBaseClass> corruptions;
 }

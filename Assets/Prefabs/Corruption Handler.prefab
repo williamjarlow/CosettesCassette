@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6491359230e1ef458c9759a0572bc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overallDistortionMax: 50
+  overallDistortionMax: 20
 --- !u!114 &114939071933341766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -64,33 +64,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75fcd10b98fea2a499d544f7dfb2bf16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration:
-    start: 0
-    stop: 0
+  distortionAmount: 0
+  corruptionAmount: 0
+  corruptions: []
   drumInformationList:
-  - beats: 0807000098080000280a0000
+  - beats: 34000000380000003c00000040000000
     perfectRange: 200
     okayRange: 200
-    duration:
-      start: 1600
-      stop: 2800
-    maxDistortion: 10
-    currentDistortion: 0
-  - beats: b80b0000480d0000d80e0000
-    perfectRange: 200
-    okayRange: 200
-    duration:
-      start: 2900
-      stop: 3900
-    maxDistortion: 10
-    currentDistortion: 0
-  - beats: 68100000f811000088130000
-    perfectRange: 200
-    okayRange: 200
-    duration:
-      start: 4100
-      stop: 5100
-    maxDistortion: 10
+    segmentID: 2
+    maxDistortion: 20
     currentDistortion: 0
   drumCorruptionPrefab: {fileID: 1842557394649244, guid: 68a1c56d062bc5c4791b46e6992b8a16,
     type: 2}

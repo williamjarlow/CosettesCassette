@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class OverallCorruption : MonoBehaviour {
-
-    bool lateStart = true;
-
     [SerializeField]
     [Range(0, 100)]
     float overallDistortionMax;
@@ -15,18 +12,20 @@ public class OverallCorruption : MonoBehaviour {
 
     List<CorruptionHandlerBaseClass> corruptionHandlers;
     AudioDistortion audioDistortion;
+    List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
-	void Start () {
-        corruptionHandlers = new List<CorruptionHandlerBaseClass>(FindObjectsOfType<CorruptionHandlerBaseClass>());
-        audioDistortion = GameObject.FindWithTag("AudioManager").GetComponent<AudioDistortion>();
-	}
+    void Start () {
+        corruptionHandlers = new List<CorruptionHandlerBaseClass>(GetComponents<CorruptionHandlerBaseClass>());
+        audioDistortion = GameManager.Instance.audioDistortion;
+        foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
+        {
+            corruptions.AddRange(corruptionHandler.corruptions);
+        }
+        UpdateCorruptionAmount();
+        UpdateDistortionAmount();
+    }
 	
 	void Update () {
-        if (lateStart)
-        {
-            lateStart = false;
-            audioDistortion.SetDistortion(overallDistortionMax);
-        }
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Overall corruption: " + overallCorruption  + "%");
@@ -37,18 +36,18 @@ public class OverallCorruption : MonoBehaviour {
     public void UpdateCorruptionAmount()
     {
         overallCorruption = 0;
-        foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
+        foreach (CorruptionBaseClass corruption in corruptions)
         {
-            overallCorruption += corruptionHandler.corruptionAmount / corruptionHandlers.Count;
+            overallCorruption += (100 - corruption.corruptionClearedPercent) / corruptions.Count;
         }
     } 
 
     public void UpdateDistortionAmount()
     {
         overallDistortion = 0;
-        foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
+        foreach (CorruptionBaseClass corruption in corruptions)
         {
-            overallDistortion += corruptionHandler.distortionAmount;
+            overallDistortion += corruption.innerDistortion; 
         }
         overallDistortion += overallCorruption * overallDistortionMax / 100;
         audioDistortion.SetDistortion(overallDistortion);

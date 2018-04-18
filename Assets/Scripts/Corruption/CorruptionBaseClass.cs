@@ -9,15 +9,16 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
 
     public virtual void EnterCorruption()
     {
-
+        GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
+        GameManager.Instance.overallCorruption.UpdateDistortionAmount();
     }
     public virtual void ExitCorruption()
     {
-
+        GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
+        GameManager.Instance.overallCorruption.UpdateDistortionAmount();
     }
-    public virtual void UpdateCorruption()
+    public virtual void GradeScore()
     {
 
     }
-
 }

@@ -9,7 +9,7 @@ public class AudioDistortion : MonoBehaviour
     private AudioManager audioManager;
     float currentDistortion;
 
-    void Start()
+    void Awake()
     {
         audioManager = GetComponent<AudioManager>();
     }
