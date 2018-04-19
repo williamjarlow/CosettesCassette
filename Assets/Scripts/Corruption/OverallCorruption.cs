@@ -21,6 +21,7 @@ public class OverallCorruption : MonoBehaviour {
     AudioDistortion audioDistortion;
     List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
+
     void Start () {
         corruptionHandlers = new List<CorruptionHandlerBaseClass>(GetComponents<CorruptionHandlerBaseClass>());
         audioDistortion = GameManager.Instance.audioDistortion;

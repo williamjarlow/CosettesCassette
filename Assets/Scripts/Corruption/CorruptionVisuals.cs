@@ -46,15 +46,21 @@ public class CorruptionVisuals : MonoBehaviour {
         // Calculate how many milliseconds one pixel represents
         rectWidth = timelineRectTransform.rect.width;
         pixelToMs = trackLength / rectWidth;
-        Debug.Log("One pixel represents " + pixelToMs + " milliseconds");
 
-        // Convert the start/endpoints to pixel values
-        corruptionStart = corruptionStart / pixelToMs;
-        corruptionEnd = corruptionEnd / pixelToMs;
+        // Save the original color to be able to reset it when the corrupted area has been fixed
+        originalColor = maskImage.color;
+
+	}
+
+    public void SetCorruptionPosition(float corruptionStartPoint, float corruptionEndPoint)
+    {
+        // Convert start- and endpoint values to pixel values
+        corruptionStart = corruptionStartPoint / pixelToMs;
+        corruptionEnd = corruptionEndPoint / pixelToMs;
 
         // Change the width of the corrupted area according to the pixel-to-ms values
         corruptedAreaRectTransform.sizeDelta = new Vector2(corruptionEnd - corruptionStart, timelineRectTransform.rect.height);
-        
+
         /* 1. Place the anchor (middle) of the corrupted object at the start of the timeline position
          * 2. Place the start of the corrupted object at the start of the timeline position
          * 3. Place the start of the corrupted object at the start of the corruptionStart variable  */
@@ -62,10 +68,7 @@ public class CorruptionVisuals : MonoBehaviour {
         corruptedAreaRectTransform.localPosition = new Vector3(corruptedAreaRectTransform.localPosition.x + corruptedAreaRectTransform.rect.width / 2, 0, 0);
         corruptedAreaRectTransform.localPosition = new Vector3(corruptedAreaRectTransform.localPosition.x + corruptionStart, 0, 0);
 
-        // Save the original color to be able to reset it when the corrupted area has been fixed
-        originalColor = maskImage.color;
-
-	}
+    }
 
 
 }

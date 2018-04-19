@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class DrumInformation : CorruptionInformation{
@@ -26,7 +27,14 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    void Awake () {
+
+    // ** TEST ** //
+    [SerializeField] [Tooltip("Corrupted area prefab")]
+    private GameObject corruptedArea;
+    [SerializeField]
+    private GameManager gameManager;
+
+    void Start () {
 
         if (drumInformationList.Count <= 0)
             Assert.IsNotNull(drumCorruptionPrefab);
@@ -46,8 +54,18 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {
                 drumCorruption.beats[i] = drumInformation.beats[i] * GameManager.Instance.bpmInMs;
+
+                // Instantiate the corrupted area prefab according to the corrupted area specifications
+                RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
+                GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
+                instantiatedObject.transform.SetAsFirstSibling();
+                //instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(drumCorruption.beats[i]);
+               // corruptionVisuals.SetCorruptionStart(drumCorruption.beats[i]);
             }
             drumCorruption.duration = GameManager.Instance.durations[drumInformation.segmentID];
+
+
         }
 	}
+
 }
