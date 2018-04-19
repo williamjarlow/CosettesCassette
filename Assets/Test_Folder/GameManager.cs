@@ -45,6 +45,8 @@ public class GameManager : Singleton<GameManager> {
             duration.stop = segments[i];
             durations.Add(duration);
         }
+
+        Debug.Assert(this.gameObject.tag != "GameManager", "Set GameManager tag to GameManager");
     }
 
 	void Update ()
