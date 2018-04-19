@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AudioTimeline : MonoBehaviour {
+public class AudioTimeline : MonoBehaviour
+{
 
     [TextArea]
     public string Notes = "Timeline slider needs specific event data to function properly: \n Pointer Down: Call function ToggleHold(); \n Pointer up: Call function ToggleHold(); \n Select: Call function SaveValue(); \n Drag: Call function UpdateValues();";
@@ -27,7 +28,7 @@ public class AudioTimeline : MonoBehaviour {
     private float valuePushedOn = 0;
 
     [TextArea]
-    public string MoreNotes = "To get the mask working correctly the Hidden Timeline Images prefab needs to be a child object to the Timeline Slider\n Mask should start inactivated as we only want it to show when touching the timeline bar.\n The mask needs a MaskingMaterial and the hidden images needs HideMaterial.";
+    public string MoreNotes = "Mask is under 'Hidden Timeline Images'\n Mask should start inactive as we only want it to show when touching the timeline bar.\n The mask itself needs a MaskingMaterial and the images to hide needs a HideMaterial.";
 
     public GameObject timelineMask;
     public GameObject timelineBar;
@@ -36,22 +37,22 @@ public class AudioTimeline : MonoBehaviour {
 
     private float songToImageLengthConversion = 0;
 
-    void Start ()
+    void Start()
     {
 
         audioManager = GetComponent<AudioManager>();
-
         //Find the length of the track and set the max value of the slider to it
         timelineSlider.maxValue = audioManager.GetTrackLength();
 
         // Get start position of timeline bar in x
         maskStartPos = timelineBar.transform.position.x - (timelineBar.GetComponent<RectTransform>().sizeDelta.x / 2);
 
+        // Convert length of song to size of image to compare where in timeline we're at
         songToImageLengthConversion = timelineSlider.maxValue / timelineBar.GetComponent<RectTransform>().sizeDelta.x;
     }
 
 
-    void Update ()
+    void Update()
     {
         if (!holding)
         {
@@ -72,8 +73,8 @@ public class AudioTimeline : MonoBehaviour {
     // Manually change the slider with touch
     public void HoldChange()
     {
-        // Stop player from breaking song by forcing it to play the same exact moment over and over again
-        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100)     // Magic numbers, 'cause I say so!
+        // Stop player from breaking song by forcing it to play the exact same moment over and over again.
+        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
             return;
 
         if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
