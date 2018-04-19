@@ -30,8 +30,6 @@ public class DrumCorruption : CorruptionBaseClass {
     [HideInInspector] public int okayRange;
     [HideInInspector] public int perfectRange;
 
-    [HideInInspector] public float maxDistortion;
-
     int index = 0;  /*Index increases only if a hit has been detected, or if a note is not hit at all.
     It does not increase if a note is hit outside of the okay/perfect ranges. 
     This is done so that mass-tapping does not end the corruption prematurely.*/

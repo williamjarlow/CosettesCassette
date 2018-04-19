@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private List<string> bankFiles;
 
 
-    void Start (){
+    void Awake (){
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
