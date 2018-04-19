@@ -2,15 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Segment
-{
-    public int segmentEnd;
-    [HideInInspector]
-    public bool inSegment;
-}
-
-
 public class CorruptionInformation {
     [Range(0, 100)]
     public float maxDistortion;

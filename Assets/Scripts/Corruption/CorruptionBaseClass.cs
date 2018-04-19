@@ -6,6 +6,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector] public Duration duration;
     [HideInInspector] public float corruptionClearedPercent;
     [HideInInspector] public float innerDistortion;
+    [HideInInspector] public float maxDistortion;
 
     public virtual void EnterSegment()
     {

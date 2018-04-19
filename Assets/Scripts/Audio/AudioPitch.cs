@@ -8,7 +8,7 @@ public class AudioPitch : MonoBehaviour {
 
 	private AudioManager audioManager;
     [SerializeField] private Slider pitchSlider;
-    [SerializeField] private PitchDetection pitchDetection;
+    [SerializeField] private PitchCorruption pitchDetection;
 
     const int mercyZone = 5;
 

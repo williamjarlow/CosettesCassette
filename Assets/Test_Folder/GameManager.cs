@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager> {
     public AudioManager audioManager;
     public GameObject corruptionHandler;
     [SerializeField] List<int> segmentEnds;
-    [HideInInspector] public List<Segment> segments;
+    [HideInInspector] public List<int> segments;
     [Range(1, 200)] public int bpm;
 
     [HideInInspector] public int bpmInMs;
@@ -24,13 +24,6 @@ public class GameManager : Singleton<GameManager> {
 
 	void Awake ()
     {
-        foreach(int segmentEnd in segmentEnds)
-        {
-            Segment segment = new Segment();
-            segment.segmentEnd = segmentEnd;
-            segments.Add(segment);
-        }
-
         audioDistortion = audioManager.GetComponent<AudioDistortion>();
         overallCorruption = corruptionHandler.GetComponent<OverallCorruption>();
 
@@ -38,13 +31,13 @@ public class GameManager : Singleton<GameManager> {
         for (int i = 0; i < segments.Count; i++)
         {
             Duration duration = new Duration();
-            segments[i].segmentEnd = segments[i].segmentEnd * bpmInMs;
+            segments[i] = segments[i] * bpmInMs;
             if (i == 0)
                 duration.start = 0;
             else
-                duration.start = segments[i - 1].segmentEnd;
+                duration.start = segments[i - 1];
 
-            duration.stop = segments[i].segmentEnd;
+            duration.stop = segments[i];
             durations.Add(duration);
         }
     }
@@ -54,12 +47,7 @@ public class GameManager : Singleton<GameManager> {
 
 	}
 
-    public float GetPosInSong()
-    {
-        return audioManager.GetTimeLinePosition();
-    }
-
-    public int ConvertBpmToMs(int bpm)
+    int ConvertBpmToMs(int bpm)
     {
         return Mathf.RoundToInt((60000 / 4) / bpm);
     }

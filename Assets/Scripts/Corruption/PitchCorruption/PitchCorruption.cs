@@ -9,31 +9,19 @@ public class PitchNode
     public float seconds = 0;
 }
 
-public class PitchDetection : MonoBehaviour {
-    [SerializeField]
-    LayerMask layerMask;
+public class PitchCorruption : CorruptionBaseClass {
+    [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
 
-    public List<PitchNode> nodes = new List<PitchNode>();
-
-    [SerializeField] Vector2 rGoalRange = new Vector2(-2, 2);
-    [SerializeField] Vector2 rTravelTimeRange = new Vector2(1, 3);
-    int nodeAmount;
+    Vector2 rGoalRange = new Vector2(-2, 2);
+    Vector2 rTravelTimeRange = new Vector2(1, 3);
 
     int index = 0;
 
     bool animationDone = true;
 
-    [SerializeField] bool randomizeNodes;
-
     // Use this for initialization
     void Start () {
-        nodeAmount = nodes.Count;
-        if (randomizeNodes)
-        {
-            nodes.Clear();
-            Randomize();
-        }
-        MovePitchObject();
+        //MovePitchObject();
     }
 	
 	// Update is called once per frame
@@ -61,16 +49,6 @@ public class PitchDetection : MonoBehaviour {
         }
         return false;
     }*/
-
-    void Randomize()
-    {
-        for (int i = 0; i < nodeAmount; i++)
-        {
-            nodes.Add(new PitchNode());
-            nodes[i].seconds = Random.Range(rTravelTimeRange.x, rTravelTimeRange.y);
-            nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(rGoalRange.x, rGoalRange.y), gameObject.transform.localPosition.z);
-        }
-    }
 
     void MovePitchObject()
     {
