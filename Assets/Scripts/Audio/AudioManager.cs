@@ -28,7 +28,6 @@ public class AudioManager : MonoBehaviour {
 
     public bool switchedToAudioLog = false;
 
-
     void Awake ()
     {
 

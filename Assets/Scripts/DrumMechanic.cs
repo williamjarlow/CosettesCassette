@@ -107,7 +107,7 @@ public class DrumMechanic : MonoBehaviour {
     }
     public void Record(GameObject confirmationObj)
     {
-        // If there is no previous recording and there is a track running --> start recording
+        // If there is no previous recording, there is a track running and we are at the music side of the cassette --> start recording
         if (inputTimeStamps.Count <= 0 && timeStamp > 0 && !audioManager.switchedToAudioLog)
         {
             recording = true;
@@ -129,9 +129,14 @@ public class DrumMechanic : MonoBehaviour {
     // If 'YES' is pressed during confirmation --> Delete previous recordings, start recording and disable the confirmation window
     public void YesConfirmation(GameObject confirmationObj)
     {
-        inputTimeStamps.Clear();
-        recording = true;
-        confirmationObj.SetActive(false);
+        // If we are at the music cassette 
+        if (!audioManager.switchedToAudioLog)
+        {
+            inputTimeStamps.Clear();
+            confirmationObj.SetActive(false);
+            recording = true;
+        }
+
     }
 
     // If 'NO' is pressed during confirmation --> disable the confirmation window
