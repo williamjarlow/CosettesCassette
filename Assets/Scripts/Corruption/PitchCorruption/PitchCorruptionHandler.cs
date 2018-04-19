@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class PitchInformation : CorruptionInformation{
@@ -9,6 +10,7 @@ public class PitchInformation : CorruptionInformation{
     [Header("Pitch nodes")]
     public List<PitchNode> nodes = new List<PitchNode>();
 
+    public Slider pitchSlider;
     
     public Vector2 rGoalRange = new Vector2(-2, 2);
     public Vector2 rTravelTimeRange = new Vector2(1, 3);
@@ -33,13 +35,12 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
     OverallCorruption overallCorruption;
 
     void Awake () {
-
         if (pitchInformationList.Count <= 0)
             Assert.IsNotNull(pitchCorruptionPrefab);
 
         overallCorruption = GetComponent<OverallCorruption>();
-        Assert.IsNotNull(overallCorruption, "Please make sure that the DrumCorruptionHandler script is on the same object as the OverallCorruption script.");
-
+        Assert.IsNotNull(overallCorruption, "Please make sure that the PitchCorruptionHandler script is on the same object as the OverallCorruption script.");
+        
 		foreach(PitchInformation pitchInformation in pitchInformationList) //Set starting values for corruption
         {
             GameObject go = Instantiate(pitchCorruptionPrefab, gameObject.transform);
@@ -47,15 +48,19 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             corruptions.Add(pitchCorruption);
             pitchCorruption.maxDistortion = pitchInformation.maxDistortion;
             pitchCorruption.duration = GameManager.Instance.durations[pitchInformation.segmentID];
+            pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
+            
             if(pitchInformation.randomizeNodes)
             {
                 for (int i = 0; i < pitchInformation.nodes.Count; i++)
                 {
-                    pitchInformation.nodes.Add(new PitchNode());
-                    pitchInformation.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
-                    pitchInformation.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
+                    pitchCorruption.nodes.Add(new PitchNode());
+                    pitchCorruption.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
+                    pitchCorruption.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
                 }
             }
+            else
+                pitchCorruption.nodes = pitchInformation.nodes;
         }
-	}
+    }
 }
