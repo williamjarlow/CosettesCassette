@@ -11,17 +11,20 @@ public class GameManager : Singleton<GameManager> {
     public GameObject drumMechanic;
     public AudioManager audioManager;
     public GameObject corruptionHandler;
+    public GameObject timelineSlider;
     [SerializeField] List<int> segmentEnds;
     [HideInInspector] public List<int> segments;
     [Range(1, 200)] public int bpm;
 
     [HideInInspector] public int bpmInMs;
 
-   [HideInInspector] public List<Duration> durations;
+    [HideInInspector] public List<Duration> durations;
 
     [HideInInspector] public float pitch;
     [HideInInspector] public float posInSong;
     [HideInInspector] public float lengthOfSong;
+
+    
 
 	void Awake ()
     {
