@@ -28,9 +28,9 @@ public class AudioTimeline : MonoBehaviour
     private float valuePushedOn = 0;
 
     [TextArea]
-    public string MoreNotes = "Mask is under 'Hidden Timeline Images'\n Mask should start inactive as we only want it to show when touching the timeline bar.\n The mask itself needs a MaskingMaterial and the images to hide needs a HideMaterial.";
+    public string MoreNotes = "Mask parent is under 'Hidden Timeline Images'\n Mask should start inactive as we only want it to show when touching the timeline bar.\n The mask itself needs a MaskingMaterial and the images to hide needs a HideMaterial.";
 
-    public GameObject timelineMask;
+    public GameObject timelineMaskParent;
     public GameObject timelineBar;
 
     private float maskStartPos = 0;
@@ -95,7 +95,7 @@ public class AudioTimeline : MonoBehaviour
         audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
 
         // Update mask according to timeline bar
-        timelineMask.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMask.transform.localPosition.y, 0);
+        timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
     }
 
     // Toggle hold.... 'Cause buttons
@@ -104,14 +104,14 @@ public class AudioTimeline : MonoBehaviour
         if (!holding)
         {
             valuePushedOn = timelineSlider.value;
-            timelineMask.SetActive(true);
+            timelineMaskParent.SetActive(true);
             holding = true;
             return;
         }
 
         if (holding)
         {
-            timelineMask.SetActive(false);
+            timelineMaskParent.SetActive(false);
             holding = false;
             return;
         }
