@@ -7,6 +7,7 @@ public class GameManager : Singleton<GameManager> {
 
     [HideInInspector] public AudioDistortion audioDistortion;
     [HideInInspector] public OverallCorruption overallCorruption;
+    [HideInInspector] public AudioPitch audioPitch;
     public GameObject drumMechanic;
     public AudioManager audioManager;
     public GameObject corruptionHandler;
@@ -25,6 +26,7 @@ public class GameManager : Singleton<GameManager> {
 	void Awake ()
     {
         audioDistortion = audioManager.GetComponent<AudioDistortion>();
+        audioPitch = audioManager.GetComponent<AudioPitch>();
         overallCorruption = corruptionHandler.GetComponent<OverallCorruption>();
 
         bpmInMs = ConvertBpmToMs(bpm);

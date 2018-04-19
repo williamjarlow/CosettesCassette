@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class PitchNode
@@ -10,18 +11,15 @@ public class PitchNode
 }
 
 public class PitchCorruption : CorruptionBaseClass {
+    [HideInInspector] public Slider pitchSlider;
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
-
-    Vector2 rGoalRange = new Vector2(-2, 2);
-    Vector2 rTravelTimeRange = new Vector2(1, 3);
-
+    AudioPitch audioPitch;
     int index = 0;
-
     bool animationDone = true;
 
     // Use this for initialization
     void Start () {
-        //MovePitchObject();
+        audioPitch = GameManager.Instance.audioPitch;
     }
 	
 	// Update is called once per frame
