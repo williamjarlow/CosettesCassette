@@ -46,10 +46,15 @@ public class GameManager : Singleton<GameManager> {
             durations.Add(duration);
         }
 
-        Debug.Assert(this.gameObject.tag != "GameManager", "Set GameManager tag to GameManager");
     }
 
-	void Update ()
+    private void Start()
+    {
+        Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
+    }
+
+
+    void Update ()
     {
 
 	}

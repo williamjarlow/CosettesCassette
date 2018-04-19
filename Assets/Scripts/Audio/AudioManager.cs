@@ -26,8 +26,11 @@ public class AudioManager : MonoBehaviour {
     [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'")]
     [SerializeField] private List<string> bankFiles;
 
+    public bool switchedToAudioLog = false;
 
-    void Awake (){
+
+    void Awake ()
+    {
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
@@ -41,6 +44,7 @@ public class AudioManager : MonoBehaviour {
 		//Creates FMOD system object and gets low-level system object
         FMOD.Studio.System.create(out systemObj);
         systemObj.getLowLevelSystem(out lowLevelSys);
+
 
 		//FMOD system object initialization
 		lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
@@ -60,20 +64,27 @@ public class AudioManager : MonoBehaviour {
         musicEventDesc.getLength(out trackLength);
     }
 
-	public void AudioPlayMusic (){
-        gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
+	public void AudioPlayMusic ()
+    {
+        if(!switchedToAudioLog)
+            gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
+        if(switchedToAudioLog)
+            gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(audioLogPath);
         gameMusicEv.start();
     }
 
-	public void AudioStopMusic (){
+	public void AudioStopMusic ()
+    {
         gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
-	public void AudioPauseMusic (){
+	public void AudioPauseMusic ()
+    {
         gameMusicEv.setPaused(true);
     }
 
-	public void AudioUnpauseMusic (){
+	public void AudioUnpauseMusic ()
+    {
         gameMusicEv.setPaused(false);
     }
 
@@ -97,6 +108,11 @@ public class AudioManager : MonoBehaviour {
     public string GetAudioLogPath()
     {
         return audioLogPath;
+    }
+
+    public void toggleTapeSide()
+    {
+        switchedToAudioLog = !switchedToAudioLog;
     }
 
     private void OnDestroy()
