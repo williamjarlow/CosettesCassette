@@ -23,8 +23,10 @@ public class DrumMechanic : MonoBehaviour {
     [HideInInspector] public bool gaveInput = false;
 
     [SerializeField] private int timeStamp;
-    //[SerializeField] private int iterator = 0;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
+
+    // ** TEMPORARY while FMOD is not fixed ** //
+    private AudioSource audioSource;
 
 
     void Start ()
@@ -33,6 +35,10 @@ public class DrumMechanic : MonoBehaviour {
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
         Debug.Log(" *** Create sound result *** --> " + result);
+
+        // ** TEMP ** //
+        audioSource = GetComponent<AudioSource>();
+        AudioSettings.SetDSPBufferSize(256, 2);
 
 	}
 
@@ -48,8 +54,10 @@ public class DrumMechanic : MonoBehaviour {
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
             {
                 //Play the bass drum sound and record it by adding the current time stamp to the list.
-                result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
-                Debug.Log(result);
+                // result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+                //Debug.Log(result);
+                audioSource.Play();
+
 
                 isPlaying = true;
                 inputTimeStamps.Add(timeStamp);
@@ -72,7 +80,8 @@ public class DrumMechanic : MonoBehaviour {
                     {
                         if (timeStamp < inputTimeStamps[i] + tolerance / 2 && timeStamp > inputTimeStamps[i] - tolerance / 2)
                         {
-                            audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+                           // audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+                            audioSource.Play();
                             isPlaying = true;
                             StartCoroutine(ResetPlayed());
                         }

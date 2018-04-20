@@ -41,13 +41,10 @@ public class DrumCorruption : CorruptionBaseClass {
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
-    GameObject go;//Ta bort
-
 	void Start () {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
-        go = GameObject.Find("temp");//Ta bort
 
         for(int i =0; i < beats.Count; i++)
         {
@@ -83,14 +80,6 @@ public class DrumCorruption : CorruptionBaseClass {
             {
                 if (index < beats.Count) //If there are more beats available for the player to hit
                 {
-                    if(audioManager.GetTimeLinePosition() >= beats[index] - okayRange && audioManager.GetTimeLinePosition() <= beats[index] + okayRange)
-                    {
-                        go.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, 1); //ta bort
-                    }
-                    else
-                    {
-                        go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); //ta bort
-                    }
                     if (inCorruption && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
                     {
                         completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list

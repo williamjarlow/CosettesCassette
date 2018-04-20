@@ -32,7 +32,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
 
 
-    void Start () {
+    void Awake () {
 
         if (drumInformationList.Count <= 0)
             Assert.IsNotNull(drumCorruptionPrefab);

@@ -67,8 +67,10 @@ public class AudioManager : MonoBehaviour {
 
 	public void AudioPlayMusic ()
     {
+        gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         if(!switchedToAudioLog)
             gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
+
         if(switchedToAudioLog)
             gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(audioLogPath);
         gameMusicEv.start();

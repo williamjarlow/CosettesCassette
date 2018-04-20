@@ -8,7 +8,7 @@ public class CassetteAnimation : MonoBehaviour {
     public bool cassetteAnimation = true;
     [SerializeField] private SkinnedMeshRenderer rightWheel;
     [SerializeField] private SkinnedMeshRenderer leftWheel;
-	void Start ()
+    void Start ()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
@@ -20,7 +20,7 @@ public class CassetteAnimation : MonoBehaviour {
 	void Update ()
     {
         leftWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
-        rightWheel.SetBlendShapeWeight(0, 100 -  (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+        rightWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
 
         if(cassetteAnimation)
         {
