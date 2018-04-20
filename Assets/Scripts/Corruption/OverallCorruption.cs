@@ -70,8 +70,6 @@ public class OverallCorruption : MonoBehaviour {
             GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
             instantiatedObject.transform.SetAsFirstSibling();
             instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
-            Debug.Log("Index " + i + " start: " + durations[i].start);
-            Debug.Log("Index " + i + " stop: " + durations[i].stop);
         }
     }
 
