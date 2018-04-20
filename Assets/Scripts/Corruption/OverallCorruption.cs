@@ -31,6 +31,10 @@ public class OverallCorruption : MonoBehaviour {
     AudioDistortion audioDistortion;
     List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
+    // ** TEST ** //
+    [SerializeField]
+    [Tooltip("Corrupted area prefab")]
+    private GameObject corruptedArea;
 
     void Awake () {
         corruptionHandlers = new List<CorruptionHandlerBaseClass>(GetComponents<CorruptionHandlerBaseClass>());
@@ -56,9 +60,20 @@ public class OverallCorruption : MonoBehaviour {
        
         UpdateCorruptionAmount();
         UpdateDistortionAmount();
+
+        Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            // Instantiate the corrupted area prefab according to the corrupted area specifications
+            RectTransform timelineSlider = GameManager.Instance.timelineSlider.GetComponent<RectTransform>();
+            GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
+            instantiatedObject.transform.SetAsFirstSibling();
+            instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
+        }
     }
 
-	void Update () {
+    void Update () {
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Overall corruption: " + overallCorruption  + "%");

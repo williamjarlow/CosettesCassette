@@ -30,9 +30,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
     OverallCorruption overallCorruption;
 
 
-    // ** TEST ** //
-    [SerializeField] [Tooltip("Corrupted area prefab")]
-    private GameObject corruptedArea;
+
 
     void Start () {
 
@@ -58,13 +56,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {
                 drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
-
-                // Instantiate the corrupted area prefab according to the corrupted area specifications
-                RectTransform timelineSlider = GameManager.Instance.timelineSlider.GetComponent<RectTransform>();
-                GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
-                instantiatedObject.transform.SetAsFirstSibling();
-                //instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(drumCorruption.beats[i]);
-               // corruptionVisuals.SetCorruptionStart(drumCorruption.beats[i]);
             }
             drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
         }
