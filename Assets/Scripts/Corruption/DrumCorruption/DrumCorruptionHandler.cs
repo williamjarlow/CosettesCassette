@@ -13,6 +13,8 @@ public class DrumInformation : CorruptionInformation{
     public int perfectRange;
     public int okayRange;
 
+    public bool autoGenerateCorruption;
+
     [Header("ID of segment in 'Game Manager'")]
     public int segmentID;
 }
@@ -31,8 +33,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
     // ** TEST ** //
     [SerializeField] [Tooltip("Corrupted area prefab")]
     private GameObject corruptedArea;
-    [SerializeField]
-    private GameManager gameManager;
 
     void Start () {
 
@@ -51,21 +51,36 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.perfectRange = drumInformation.perfectRange;
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
+
+            if (drumInformation.autoGenerateCorruption)
+                GenerateCorruption(drumInformation);
+
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {
-                drumCorruption.beats[i] = drumInformation.beats[i] * GameManager.Instance.bpmInMs;
+                drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
 
                 // Instantiate the corrupted area prefab according to the corrupted area specifications
-                RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
+                RectTransform timelineSlider = GameManager.Instance.timelineSlider.GetComponent<RectTransform>();
                 GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
                 instantiatedObject.transform.SetAsFirstSibling();
                 //instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(drumCorruption.beats[i]);
                // corruptionVisuals.SetCorruptionStart(drumCorruption.beats[i]);
             }
-            drumCorruption.duration = GameManager.Instance.durations[drumInformation.segmentID];
-
-
+            drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
         }
 	}
-
+    void GenerateCorruption(DrumInformation drumInformation)
+    {
+        drumInformation.beats.Clear();
+        for (int i = 0; i < overallCorruption.segments.Count; i++)
+        {
+            if (i == drumInformation.segmentID - 1)
+            {
+                for (int j = overallCorruption.segments[i].start; j < overallCorruption.segments[i].stop; j += 4)
+                {
+                    drumInformation.beats.Add(j);
+                }
+            }
+        }
+    }
 }

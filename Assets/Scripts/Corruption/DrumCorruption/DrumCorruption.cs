@@ -36,7 +36,7 @@ public class DrumCorruption : CorruptionBaseClass {
 
     [HideInInspector] bool inSegment = false;
     [HideInInspector] bool inCorruption = false;
-    [HideInInspector] bool insliggelysegment;
+    [HideInInspector] bool firstBeat = false;
 
     AudioDistortion audioDistortion;
     AudioManager audioManager;
@@ -65,6 +65,17 @@ public class DrumCorruption : CorruptionBaseClass {
             {
                 EnterSegment();
             }
+            if(audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count-1] && firstBeat == false)
+            {
+                audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
+                firstBeat = true;
+            }
+            else if(audioManager.GetTimeLinePosition() > beats[beats.Count-1] && firstBeat)
+            {
+                audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
+                firstBeat = false;
+            } 
+
             if (drumMechanic.recording) //If recording
             {
                 if (index < beats.Count) //If there are more beats available for the player to hit
@@ -91,30 +102,19 @@ public class DrumCorruption : CorruptionBaseClass {
         }
 	}
 
-    void EnterCorruption()
-    {
-
-    }
-
-    void ExitCorruption()
-    {
-
-    }
-
     public override void EnterSegment()
     {
         drumMechanic.gaveInput = false;
-        audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
         inSegment = true;
 
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        Debug.Log(innerDistortion);
         base.EnterSegment();
     }
 
     public override void ExitSegment()
     {
         inSegment = false;
-        audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
         if (drumMechanic.recording)
             GradeScore();
         innerDistortion = 0;

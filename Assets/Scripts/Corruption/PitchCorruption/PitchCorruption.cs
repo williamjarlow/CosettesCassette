@@ -11,6 +11,7 @@ public class PitchNode
 }
 
 public class PitchCorruption : CorruptionBaseClass {
+    [HideInInspector] public float mercyRange;
     [HideInInspector] public Slider pitchSlider;
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
     AudioPitch audioPitch;
@@ -28,10 +29,13 @@ public class PitchCorruption : CorruptionBaseClass {
         {
             MovePitchObject();
         }
+        
+        if (pitchSlider.value <= (transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (transform.localPosition.y * 10) - mercyRange)
+            audioPitch.SetPitch(0);
+        else
+            audioPitch.SetPitch(pitchSlider.value - (transform.localPosition.y * 10));
 
-       /* if (!DetectRaycastCollision() && animationDone == false)
-        {
-        }*/
+        audioPitch.SetPitch(100);
     }
 
     /*bool DetectRaycastCollision()

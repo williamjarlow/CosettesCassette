@@ -11,6 +11,7 @@ public class PitchInformation : CorruptionInformation{
     public List<PitchNode> nodes = new List<PitchNode>();
 
     public Slider pitchSlider;
+    public float mercyRange;
     
     public Vector2 rGoalRange = new Vector2(-2, 2);
     public Vector2 rTravelTimeRange = new Vector2(1, 3);
@@ -34,7 +35,7 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    void Awake () {
+    void Start () {
         if (pitchInformationList.Count <= 0)
             Assert.IsNotNull(pitchCorruptionPrefab);
 
@@ -47,9 +48,9 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             PitchCorruption pitchCorruption = go.GetComponent<PitchCorruption>();
             corruptions.Add(pitchCorruption);
             pitchCorruption.maxDistortion = pitchInformation.maxDistortion;
-            pitchCorruption.duration = GameManager.Instance.durations[pitchInformation.segmentID];
+            pitchCorruption.duration = overallCorruption.durations[pitchInformation.segmentID];
             pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
-            
+            pitchCorruption.mercyRange = pitchInformation.mercyRange;
             if(pitchInformation.randomizeNodes)
             {
                 for (int i = 0; i < pitchInformation.nodes.Count; i++)
