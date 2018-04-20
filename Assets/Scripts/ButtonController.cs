@@ -77,7 +77,7 @@ public class ButtonController : MonoBehaviour {
                     if (buttonclicked)
                     {
                         UITargetDual.GetComponent<Button>().onClick.Invoke();
-                        buttonclicked = false;
+                        //buttonclicked = false;
                         startingPos = false;
                         buttonstate = buttonstates.Moving;
                     }
