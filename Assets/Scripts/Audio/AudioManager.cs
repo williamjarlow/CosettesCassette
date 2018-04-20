@@ -30,37 +30,39 @@ public class AudioManager : MonoBehaviour {
 
     void Awake ()
     {
-
-        Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
-        Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
-
-        audioDistortion = GetComponent<AudioDistortion> ();
-
-        //Used to retrieve DSP buffer size
-        int numBuffers;
-        uint bufferLength;
-
-		//Creates FMOD system object and gets low-level system object
-        FMOD.Studio.System.create(out systemObj);
-        systemObj.getLowLevelSystem(out lowLevelSys);
-
-
-		//FMOD system object initialization
-		lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
-        lowLevelSys.setDSPBufferSize(512, 4);
-        lowLevelSys.setOutput(FMOD.OUTPUTTYPE.AUTODETECT);
-        result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
-
-
-        //Loads the FMOD banks 
+        //Loads the FMOD banks
         for (int i = 0; i < bankFiles.Count; i++)
         {
             FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
         }
 
-        //Get the event description of music event, needed to get Track Length
+        // Get the event description of music event, needed to get Track Length
+        // Required to be in Awake() because alot of game objects ask for the track length in Start()
         musicEventDesc = FMODUnity.RuntimeManager.GetEventDescription(musicPath);
         musicEventDesc.getLength(out trackLength);
+    }
+
+    void Start()
+    {
+        Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
+        Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
+
+        audioDistortion = GetComponent<AudioDistortion>();
+
+        //Used to retrieve DSP buffer size
+        int numBuffers;
+        uint bufferLength;
+
+        //Creates FMOD system object and gets low-level system object
+        FMOD.Studio.System.create(out systemObj);
+        systemObj.getLowLevelSystem(out lowLevelSys);
+
+
+        //FMOD system object initialization
+        lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
+        lowLevelSys.setDSPBufferSize(512, 4);
+        lowLevelSys.setOutput(FMOD.OUTPUTTYPE.AUTODETECT);
+        result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
     }
 
 	public void AudioPlayMusic ()
