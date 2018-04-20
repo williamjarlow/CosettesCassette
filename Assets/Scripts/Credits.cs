@@ -24,12 +24,9 @@ public class Credits : MonoBehaviour {
     {
         
         audioManager = AudioManagerz.GetComponent<AudioManager>();
-        origPos = 1100f;
-        endOfTheLine = 2260.116f;
+        //origPos = 2200f;
+        //endOfTheLine = 4400f;
         audiolength = audioManager.GetTrackLength();
-        //FindString();
-        //Text temp = credits.GetComponent<Text>();
-        //temp.text = FindString();
         
     }
 
@@ -44,17 +41,6 @@ public class Credits : MonoBehaviour {
         transform.localPosition = temp;
 
     }
-
-    /*static string FindString()
-    {
-        string path = "Assets/Test_Folder/Credits.txt";
-
-        StreamReader creditstext = new StreamReader(path);
-        Debug.Log(creditstext.ReadToEnd());
-        creditstext.Close();
-        return creditstext.ToString();
-
-    }*/
   
 }
 
