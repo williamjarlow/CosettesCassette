@@ -12,8 +12,8 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private Button unPauseButton;
     [SerializeField] private Text UIbuttonText;
     private bool isShowing = true;
-    
 
+    [SerializeField] private GameObject cassetteAnimation;
     void Start()
     {
         menuToShow.SetActive(true);
@@ -91,14 +91,14 @@ public class MenuAppearScript : MonoBehaviour
 
     public void StartCassette()
     {
-        GameObject cassetteAnimation = GameObject.Find("CassettesBeROlling");
+        
         CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
         cassetteAnim.cassetteAnimation = true;
     }
 
     public void StopCassette()
     {
-        GameObject cassetteAnimation = GameObject.Find("CassettesBeROlling");
+        
         CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
         cassetteAnim.cassetteAnimation = false;
     }
