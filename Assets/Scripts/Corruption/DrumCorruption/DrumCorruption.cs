@@ -41,10 +41,13 @@ public class DrumCorruption : CorruptionBaseClass {
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
+    GameObject go;//Ta bort
+
 	void Start () {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
+        go = GameObject.Find("temp");//Ta bort
 
         for(int i =0; i < beats.Count; i++)
         {
@@ -80,6 +83,14 @@ public class DrumCorruption : CorruptionBaseClass {
             {
                 if (index < beats.Count) //If there are more beats available for the player to hit
                 {
+                    if(audioManager.GetTimeLinePosition() >= beats[index] - okayRange && audioManager.GetTimeLinePosition() <= beats[index] + okayRange)
+                    {
+                        go.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0, 1); //ta bort
+                    }
+                    else
+                    {
+                        go.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); //ta bort
+                    }
                     if (inCorruption && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
                     {
                         completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
@@ -146,15 +157,15 @@ public class DrumCorruption : CorruptionBaseClass {
         { //If within range to hit the beat
             if (audioManager.GetTimeLinePosition() >= beats[index] - perfectRange && audioManager.GetTimeLinePosition() <= beats[index] + perfectRange)
             { //If within range to hit the beat "perfectly"
-                Debug.Log("Perfect, " +  audioManager.GetTimeLinePosition());
+                Debug.Log("Perfect, " +  (float)(audioManager.GetTimeLinePosition()) * 110f /60000f);
                 index++; //Index increases if a note was hit
                 return Timing.perfect;
             }
-            Debug.Log("Okay, " + audioManager.GetTimeLinePosition());
+            Debug.Log("Okay, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
             index++;//Index increases if a note was hit
             return Timing.okay;
         }
-        Debug.Log("Miss, " + audioManager.GetTimeLinePosition());
+        Debug.Log("Miss, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
         return Timing.miss;
     }
 
