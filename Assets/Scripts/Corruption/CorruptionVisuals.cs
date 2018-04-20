@@ -9,7 +9,7 @@ public class CorruptionVisuals : MonoBehaviour {
 
     private AudioManager audioManager;
 
-    private Image maskImage;
+    [SerializeField] private Image maskImage;
     private Color originalColor;
     private RectTransform timelineRectTransform;
     private RectTransform corruptedAreaRectTransform;
@@ -26,8 +26,7 @@ public class CorruptionVisuals : MonoBehaviour {
     void Start ()
     {
         // Save the original color to be able to reset it when the corrupted area has been fixed
-        maskImage = GetComponentInChildren<Image>();
-        originalColor = maskImage.color;
+        //maskImage = GetComponentInChildren<Image>();
 
 	}
 
@@ -60,5 +59,8 @@ public class CorruptionVisuals : MonoBehaviour {
 
     }
 
-
+    public void RestoreOriginalColor()
+    {
+        maskImage.color = Color.white;
+    }
 }

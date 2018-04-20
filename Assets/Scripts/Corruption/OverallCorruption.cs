@@ -21,6 +21,8 @@ public class OverallCorruption : MonoBehaviour {
     [HideInInspector]
     public int bpmInMs;
 
+    [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
+
     float overallCorruption;
     float overallDistortion;
 
@@ -31,14 +33,14 @@ public class OverallCorruption : MonoBehaviour {
     AudioDistortion audioDistortion;
     List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
-    // ** TEST ** //
+    // ** Corrupted Area** //
     [SerializeField]
     [Tooltip("Corrupted area prefab")]
     private GameObject corruptedArea;
+    private List<GameObject> corruptedAreaList = new List<GameObject>();
 
     void Awake () {
         corruptionHandlers = new List<CorruptionHandlerBaseClass>(GetComponents<CorruptionHandlerBaseClass>());
-        audioDistortion = GameManager.Instance.audioDistortion;
 
         bpmInMs = ConvertBpmToMs(bpm);
 
@@ -52,6 +54,7 @@ public class OverallCorruption : MonoBehaviour {
 	
     void Start()
     {
+        audioDistortion = GameManager.Instance.audioDistortion;
 
         foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
         {
@@ -69,6 +72,7 @@ public class OverallCorruption : MonoBehaviour {
             RectTransform timelineSlider = GameManager.Instance.timelineSlider.GetComponent<RectTransform>();
             GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
             instantiatedObject.transform.SetAsFirstSibling();
+            corruptedAreaList.Add(instantiatedObject);
             instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
         }
     }
@@ -86,8 +90,15 @@ public class OverallCorruption : MonoBehaviour {
         overallCorruption = 0;
         foreach (CorruptionBaseClass corruption in corruptions)
         {
-           
             overallCorruption += (100 - corruption.corruptionClearedPercent) / corruptions.Count;
+            if(corruption.corruptionClearedPercent >= corruptionClearThreshold)
+            {
+                for (int i = 0; i < corruptedAreaList.Count; i++)
+                {
+                    corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                }
+                    
+            }
         }
     } 
 
