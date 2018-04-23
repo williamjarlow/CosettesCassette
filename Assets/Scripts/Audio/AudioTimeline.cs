@@ -11,9 +11,10 @@ public class AudioTimeline : MonoBehaviour
 
     private AudioManager audioManager;
 
-
-    [SerializeField]
     private Slider timelineSlider;
+    private GameObject timelineBar;
+    public GameObject timelineMaskParent;
+
     private int temp;
 
     [Header("Threshold accepted before we slow down the slider")]
@@ -30,16 +31,14 @@ public class AudioTimeline : MonoBehaviour
     [TextArea]
     public string MoreNotes = "Mask parent is under 'Hidden Timeline Images'\n Mask should start inactive as we only want it to show when touching the timeline bar.\n The mask itself needs a MaskingMaterial and the images to hide needs a HideMaterial.";
 
-    public GameObject timelineMaskParent;
-    public GameObject timelineBar;
-
     private float maskStartPos = 0;
 
     private float songToImageLengthConversion = 0;
 
     void Start()
     {
-
+        timelineSlider = GameManager.Instance.timelineSlider.GetComponent<Slider>();
+        timelineBar = GameManager.Instance.timelineSlider;
         audioManager = GetComponent<AudioManager>();
         //Find the length of the track and set the max value of the slider to it
         timelineSlider.maxValue = audioManager.GetTrackLength();
