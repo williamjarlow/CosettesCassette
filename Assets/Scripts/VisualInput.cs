@@ -15,8 +15,13 @@ public class VisualInput : MonoBehaviour
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
     [Header("Tap effect")]
+    [SerializeField] private Color origRippleColor;
+    private Color changedRippleColor;
+
 
     private Vector3 origPosition = Vector3.zero;
+
+    private DrumMechanic drumMechanic;
 
 
     // Temporary
@@ -33,6 +38,9 @@ public class VisualInput : MonoBehaviour
         if (workWithMouseInput)
             trailParticleEffect.SetActive(true);
         ////
+
+        if (GameManager.Instance.drumMechanic)
+            drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
     }
 
 
@@ -120,6 +128,13 @@ public class VisualInput : MonoBehaviour
             foreach (Transform effect in touchParticleEffectPrefab.transform)
             {
                 GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
+
+
+                if (drumMechanic != null && drumMechanic.recording)
+                {
+                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;                                     /// HÄR ÄR DU OCH PILLA, JAJAJJAJA
+                    tempa.startColor = changedRippleColor;
+                }
                 temp.GetComponent<ParticleSystem>().Play();
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
             }
@@ -127,6 +142,28 @@ public class VisualInput : MonoBehaviour
     }
     ////
 
+    public void getTiming(Timing timing)
+    {
+        if (timing == Timing.perfect)
+        {
+            changedRippleColor = Color.green;
+            print("Painted green");
+            return;
+        }
+
+        if (timing == Timing.okay)
+        {
+            changedRippleColor = Color.blue;
+            print("Painted blue");
+            return;
+        }
+
+        if (timing == Timing.miss)
+        {
+            print("You missed");
+            changedRippleColor = origRippleColor;
+        }
+    }
 
 
 }
