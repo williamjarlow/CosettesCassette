@@ -19,13 +19,13 @@ public class StickerPrefs : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
         Sticker newSticker = new Sticker(name, description, points, stickerRef, notCompleted, completed);
         //stickersDictionary = managerRef.GetComponent<StickerManager>().stickers;
 
-        stickersDictionary.Add(name, newSticker);
+        /*stickersDictionary.Add(name, newSticker);
+        managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);*/
         managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
-        //managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
         /*stickman = managerRef.GetComponent<StickerManager>();
         stickman.stickers.Add(name, newSticker);*/
     }
