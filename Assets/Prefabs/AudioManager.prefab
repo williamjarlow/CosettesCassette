@@ -54,12 +54,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicPath: event:/Music/Cassette_01/music
-  audioLogPath: 
+  audioLogPath: event:/Logs/log_01
   bassDrumPath: 
   bankFiles:
   - Cassette_01.bank
   - Master Bank.bank
   - Master Bank.strings.bank
+  switchedToAudioLog: 0
 --- !u!114 &114660314149128492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -85,17 +86,13 @@ MonoBehaviour:
   Notes: "Timeline slider needs specific event data to function properly: \n Pointer
     Down: Call function ToggleHold(); \n Pointer up: Call function ToggleHold(); \n
     Select: Call function SaveValue(); \n Drag: Call function UpdateValues();"
-  timelineSlider: {fileID: 114917943191304398, guid: f7ea318db5a52a24e95f7d01a84bdb78,
-    type: 2}
+  timelineMaskParent: {fileID: 0}
   maxSpeedThresholdInMs: 6000
   fastSpeedInMs: 20000
   slowSpeedInMs: 1500
   MoreNotes: "To get the mask working correctly the Hidden Timeline Images prefab
     needs to be a child object to the Timeline Slider \n Mask should start inactivated
     as we only want it to show when touching the timeline bar."
-  timelineMask: {fileID: 0}
-  timelineBar: {fileID: 1050486546503320, guid: f7ea318db5a52a24e95f7d01a84bdb78,
-    type: 2}
 --- !u!224 &224783026982276808
 RectTransform:
   m_ObjectHideFlags: 1
