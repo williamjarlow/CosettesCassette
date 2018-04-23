@@ -13,8 +13,6 @@ public class DrumInformation : CorruptionInformation{
     public int perfectRange;
     public int okayRange;
 
-    public bool autoGenerateCorruption;
-
     [Header("ID of segment in 'Game Manager'")]
     public int segmentID;
 }
@@ -28,9 +26,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
     GameObject drumCorruptionPrefab;
 
     OverallCorruption overallCorruption;
-
-
-
 
     void Start () {
 
@@ -50,9 +45,6 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
 
-            if (drumInformation.autoGenerateCorruption)
-                GenerateCorruption(drumInformation);
-
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {
                 drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
@@ -60,18 +52,4 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
         }
 	}
-    void GenerateCorruption(DrumInformation drumInformation)
-    {
-        drumInformation.beats.Clear();
-        for (int i = 0; i < overallCorruption.segments.Count; i++)
-        {
-            if (i == drumInformation.segmentID - 1)
-            {
-                for (int j = overallCorruption.segments[i].start; j < overallCorruption.segments[i].stop; j += 4)
-                {
-                    drumInformation.beats.Add(j);
-                }
-            }
-        }
-    }
 }

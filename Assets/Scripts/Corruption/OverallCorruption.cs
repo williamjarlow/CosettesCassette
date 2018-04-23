@@ -17,6 +17,7 @@ public class OverallCorruption : MonoBehaviour {
     public List<Duration> segments;
     [Range(1, 200)]
     public int bpm;
+    const int beatsToMsConversion = 15000;
 
     [HideInInspector]
     public int bpmInMs;
@@ -46,6 +47,7 @@ public class OverallCorruption : MonoBehaviour {
 
         for (int i = 0; i < segments.Count; i++)
         {
+            Debug.Log(durations.Count);
             durations.Add(new Duration());
             durations[i].start = segments[i].start * bpmInMs;
             durations[i].stop = segments[i].stop * bpmInMs;
@@ -120,7 +122,7 @@ public class OverallCorruption : MonoBehaviour {
 
     int ConvertBpmToMs(int bpm)
     {
-        return Mathf.RoundToInt((60000 / 4) / bpm);
+        return Mathf.RoundToInt(beatsToMsConversion / bpm);
     }
 
 }
