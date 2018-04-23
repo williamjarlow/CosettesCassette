@@ -14,6 +14,7 @@ public class PitchCorruption : CorruptionBaseClass {
     [HideInInspector] public float mercyRange;
     [HideInInspector] public Slider pitchSlider;
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
+    AudioManager audioManager;
     AudioPitch audioPitch;
     int index = 0;
     bool animationDone = true;
@@ -21,13 +22,23 @@ public class PitchCorruption : CorruptionBaseClass {
     // Use this for initialization
     void Start () {
         audioPitch = GameManager.Instance.audioPitch;
+        audioManager = GameManager.Instance.audioManager;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (animationDone && index < nodes.Count)
+        if (audioManager.GetTimeLinePosition() >= duration.start &&
+            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
-            MovePitchObject();
+            if (animationDone && index < nodes.Count)
+            {
+                MovePitchObject();
+            }
+            else if (index == nodes.Count)
+            {
+                ExitSegment();
+                Destroy(gameObject);
+            }
         }
         
         if (pitchSlider.value <= (transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (transform.localPosition.y * 10) - mercyRange)
@@ -37,20 +48,6 @@ public class PitchCorruption : CorruptionBaseClass {
 
         audioPitch.SetPitch(100);
     }
-
-    /*bool DetectRaycastCollision()
-    {
-        Vector2 pos = Input.mousePosition; // Mouse position
-        RaycastHit hit;
-        Camera _cam = Camera.main; // Camera to use for raycasting
-        Ray ray = _cam.ScreenPointToRay(pos);
-        Physics.Raycast(_cam.transform.position, ray.direction, out hit, 10000.0f, layerMask);
-        if (hit.collider)
-        {
-            return true;
-        }
-        return false;
-    }*/
 
     void MovePitchObject()
     {
