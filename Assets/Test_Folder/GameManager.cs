@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager> {
     public AudioManager audioManager;
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
+    public GameObject uiHandler;
 
     [HideInInspector] public float pitch;
     [HideInInspector] public float posInSong;

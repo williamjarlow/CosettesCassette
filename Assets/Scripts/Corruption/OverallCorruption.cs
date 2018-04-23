@@ -14,6 +14,7 @@ public class OverallCorruption : MonoBehaviour {
     [Range(0, 100)]
     float overallDistortionMax;
 
+    // The list of beats
     public List<Duration> segments;
     [Range(1, 200)]
     public int bpm;
@@ -28,6 +29,7 @@ public class OverallCorruption : MonoBehaviour {
     float overallDistortion;
 
     [HideInInspector]
+    // The list of beats converted to milliseconds
     public List<Duration> durations;
 
     List<CorruptionHandlerBaseClass> corruptionHandlers;
@@ -47,7 +49,6 @@ public class OverallCorruption : MonoBehaviour {
 
         for (int i = 0; i < segments.Count; i++)
         {
-            Debug.Log(durations.Count);
             durations.Add(new Duration());
             durations[i].start = segments[i].start * bpmInMs;
             durations[i].stop = segments[i].stop * bpmInMs;
