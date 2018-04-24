@@ -40,7 +40,7 @@ public class DrumMechanic : MonoBehaviour {
     {
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
-        buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
+        //buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
         result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
@@ -118,7 +118,7 @@ public class DrumMechanic : MonoBehaviour {
 
     public void Listen()
     {
-        buttonDisabler.EnableButtons();
+        //buttonDisabler.EnableButtons();
         recording = false;
     }
 

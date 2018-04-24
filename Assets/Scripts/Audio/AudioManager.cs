@@ -119,13 +119,18 @@ public class AudioManager : MonoBehaviour {
 		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
 		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
 
-		//in DSP 3 of subgroup
-		//0 = chords
-		//1 = vocals
-		//2 = drums
-		//3 = bass
-		//4 = lead
-	}
+        pitchChordsDSP.setBypass(false);
+        pitchVocalsDSP.setBypass(false);
+        pitchDrumsDSP.setBypass(false);
+        pitchBassDSP.setBypass(false);
+        pitchLeadDSP.setBypass(false);
+        //in DSP 3 of subgroup
+        //0 = chords
+        //1 = vocals
+        //2 = drums
+        //3 = bass
+        //4 = lead
+    }
 
     public float GetTrackLength()
     {

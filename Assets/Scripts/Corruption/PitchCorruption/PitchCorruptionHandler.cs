@@ -27,10 +27,10 @@ public class PitchInformation : CorruptionInformation{
 
 public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
 
-    [SerializeField] [Tooltip("Amount of drum corruptions, as well as their information.")]
+    [SerializeField] [Tooltip("Amount of pitch corruptions, as well as their information.")]
     List<PitchInformation> pitchInformationList;
     
-    [SerializeField] [Tooltip("Select the drumCorruptionPrefab object from the 'Prefabs' folder.")]
+    [SerializeField] [Tooltip("Select the pitchCorruptionPrefab object from the 'Prefabs' folder.")]
     GameObject pitchCorruptionPrefab;
 
     OverallCorruption overallCorruption;
@@ -53,15 +53,17 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
             if(pitchInformation.randomizeNodes)
             {
-                for (int i = 0; i < pitchInformation.nodes.Count; i++)
+                int nodesCount = pitchInformation.nodes.Count;
+                pitchInformation.nodes.Clear();
+                for (int i = 0; i < nodesCount; i++)
                 {
-                    pitchCorruption.nodes.Add(new PitchNode());
-                    pitchCorruption.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
-                    pitchCorruption.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
+                    pitchInformation.nodes.Add(new PitchNode());
+                    pitchInformation.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
+                    pitchInformation.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
                 }
             }
-            else
-                pitchCorruption.nodes = pitchInformation.nodes;
+            
+            pitchCorruption.nodes = pitchInformation.nodes;
         }
     }
 }
