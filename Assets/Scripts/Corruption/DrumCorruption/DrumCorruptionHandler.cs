@@ -12,9 +12,6 @@ public class DrumInformation : CorruptionInformation{
     [Header("Ranges in milliseconds")]
     public int perfectRange;
     public int okayRange;
-
-    [Header("ID of segment in 'Game Manager'")]
-    public int segmentID;
 }
 
 public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
@@ -27,7 +24,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    void Awake () {
+    void Start () {
 
         if (drumInformationList.Count <= 0)
             Assert.IsNotNull(drumCorruptionPrefab);
@@ -44,6 +41,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.perfectRange = drumInformation.perfectRange;
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
+            drumCorruption.clearThreshold = drumInformation.clearThreshold;
 
             for (int i = 0; i < drumInformation.beats.Count; i++)
             {

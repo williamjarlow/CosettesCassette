@@ -290,7 +290,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 70315253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -284.92264, z: 0}
+  m_LocalPosition: {x: 0, y: -314.32, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_Children:
   - {fileID: 1749077567}
@@ -461,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicPath: event:/Music/Cassette_01/music
   audioLogPath: 
-  bassDrumPath: 
+  bassDrumKey: 
   bankFiles:
   - Cassette_01.bank
   - Master Bank.bank
@@ -943,7 +943,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 373748121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 689.99994, y: 303.28262, z: 0}
+  m_LocalPosition: {x: 690, y: 332.68, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1743541576}
@@ -1551,7 +1551,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 599771679}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -804.0999, y: 99, z: 0}
+  m_LocalPosition: {x: -804.1, y: 99, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1748098058}
@@ -1863,7 +1863,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 640118505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -804.0999, y: 29.7, z: 0}
+  m_LocalPosition: {x: -804.1, y: 29.7, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1206411574}
@@ -2966,7 +2966,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 983012528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -804.0999, y: 165.4, z: 0}
+  m_LocalPosition: {x: -804.1, y: 165.4, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 660268693}
@@ -3593,7 +3593,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1173963188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 257.00262, z: 0}
+  m_LocalPosition: {x: 0, y: 286.4, z: 0}
   m_LocalScale: {x: 2.3, y: 2.3, z: 1}
   m_Children:
   - {fileID: 770742751}
@@ -4125,7 +4125,7 @@ RectTransform:
   m_GameObject: {fileID: 1382443272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.12644479, y: 0.12644479, z: 0.12644479}
+  m_LocalScale: {x: 0.11879635, y: 0.11879635, z: 0.11879635}
   m_Children:
   - {fileID: 983012529}
   - {fileID: 599771680}
@@ -4279,7 +4279,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1454616270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -804.0999, y: -41.3, z: 0}
+  m_LocalPosition: {x: -804.1, y: -41.3, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 464170587}
@@ -5129,6 +5129,8 @@ MonoBehaviour:
   pitchInformationList:
   - maxDistortion: 20
     currentDistortion: 0
+    clearThreshold: 10
+    segmentID: 1
     nodes:
     - position: {x: 0, y: 0, z: 0}
       seconds: 0
@@ -5154,9 +5156,6 @@ MonoBehaviour:
     mercyRange: 5
     rGoalRange: {x: -2, y: 2}
     rTravelTimeRange: {x: 1, y: 2}
-    startingScore: 100
-    scorePunishment: 1
-    segmentID: 1
     randomizeNodes: 1
   pitchCorruptionPrefab: {fileID: 1312742080630916, guid: daada61ace94abe46ad6c26817817724,
     type: 2}
@@ -6073,6 +6072,16 @@ Prefab:
       value: 
       objectReference: {fileID: 1862118199916272, guid: f6c05bde89f2a914e9a4f8532caa5cd8,
         type: 2}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[0].clearThreshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[1].clearThreshold
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 217ff3c6edad08746800892c4eab6f54, type: 2}
   m_IsPrefabParent: 0
@@ -6580,6 +6589,11 @@ Prefab:
       propertyPath: timelineSlider
       value: 
       objectReference: {fileID: 70315253}
+    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
+        type: 2}
+      propertyPath: uiHandler
+      value: 
+      objectReference: {fileID: 1114126539}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aef8bb58cd7cb7c418421394dfeb49d7, type: 2}
   m_IsPrefabParent: 0

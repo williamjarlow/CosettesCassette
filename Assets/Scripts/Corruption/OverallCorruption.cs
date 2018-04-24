@@ -7,6 +7,10 @@ public class CorruptionInformation {
     public float maxDistortion;
     [HideInInspector]
     public float currentDistortion;
+    [Range(0, 100)]
+    public int clearThreshold;
+    [Header("ID of segment in 'Game Manager'")]
+    public int segmentID;
 }
 
 public class OverallCorruption : MonoBehaviour {

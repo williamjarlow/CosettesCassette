@@ -3,49 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public enum Timing{
+public enum Timing
+{
     miss,
     okay,
     perfect
 };
 
-public class DrumCorruption : CorruptionBaseClass {
-    List <Timing> completedBeats = new List<Timing>();
+public class DrumCorruption : CorruptionBaseClass
+{
+    List<Timing> completedBeats = new List<Timing>();
 
     DrumMechanic drumMechanic;
 
     DrumCorruptionHandler drumCorruptionHandler;
 
-    [SerializeField] [Range(1, 1)] [Header("Value/Penalty per hit/miss")] [Tooltip("Hitting a perfect gives a constant value of 1. Changing this will break the corruption calculations: if (beat == Timing.perfect){ corruptionClearedPercent += perfectHitValue / beats.Count;}")]
+    [SerializeField]
+    [Range(1, 1)]
+    [Header("Value/Penalty per hit/miss")]
+    [Tooltip("Hitting a perfect gives a constant value of 1. Changing this will break the corruption calculations: if (beat == Timing.perfect){ corruptionClearedPercent += perfectHitValue / beats.Count;}")]
     float perfectHitValue = 1;
 
-    [SerializeField] [Range(0, 1)] [Tooltip("This value decides how impactful an okay will be. A perfect gives a value of 1.")]
+    [SerializeField]
+    [Range(0, 1)]
+    [Tooltip("This value decides how impactful an okay will be. A perfect gives a value of 1.")]
     float hitValue;
-    
-    [SerializeField] [Range(0, -1)] [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
+
+    [SerializeField]
+    [Range(0, -1)]
+    [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
     float missPenalty;
 
-    [HideInInspector] public List<int> beats;
+    [HideInInspector]
+    public List<int> beats;
 
-    [HideInInspector] public int okayRange;
-    [HideInInspector] public int perfectRange;
+    [HideInInspector]
+    public int okayRange;
+    [HideInInspector]
+    public int perfectRange;
+    [HideInInspector]
+    public int clearThreshold;
 
     int index = 0;  /*Index increases only if a hit has been detected, or if a note is not hit at all.
     It does not increase if a note is hit outside of the okay/perfect ranges. 
     This is done so that mass-tapping does not end the corruption prematurely.*/
 
-    [HideInInspector] bool inCorruption = false;
-    [HideInInspector] bool firstBeat = false;
+    [HideInInspector]
+    bool inCorruption = false;
+    [HideInInspector]
+    bool firstBeat = false;
 
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
-	void Start () {
+    void Start()
+    {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
 
-        for(int i =0; i < beats.Count; i++)
+        for (int i = 0; i < beats.Count; i++)
         {
             beats[i] += duration.start;
         }
@@ -54,26 +71,27 @@ public class DrumCorruption : CorruptionBaseClass {
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
         Assert.IsTrue(missPenalty <= 0, "Setting missPenalty to anything higher than 0 will reward the player for missing the beat.");
         Assert.IsTrue(hitValue >= 0, "Setting hitvalue to anything lower than 0 will punish the player for hitting the beat.");
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
+            audioManager.GetTimeLinePosition() < duration.stop && corruptionClearedPercent < clearThreshold) //If player is inside a corrupted area
         {
             if (inSegment == false) //If player just entered the segment
             {
                 EnterSegment();
             }
-            if(audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count-1] && firstBeat == false)
+            if (audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count - 1] && firstBeat == false)
             {
                 audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
                 firstBeat = true;
             }
-            else if(audioManager.GetTimeLinePosition() > beats[beats.Count-1] && firstBeat)
+            else if (audioManager.GetTimeLinePosition() > beats[beats.Count - 1] && firstBeat)
             {
                 audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
                 firstBeat = false;
-            } 
+            }
 
             if (drumMechanic.recording) //If recording
             {
@@ -100,7 +118,7 @@ public class DrumCorruption : CorruptionBaseClass {
         {
             ExitSegment();
         }
-	}
+    }
 
     public override void EnterSegment()
     {
@@ -134,7 +152,7 @@ public class DrumCorruption : CorruptionBaseClass {
             else if (beat == Timing.miss)
                 corruptionClearedPercent += missPenalty / beats.Count;
         }
-        if (corruptionClearedPercent < 0) 
+        if (corruptionClearedPercent < 0)
             corruptionClearedPercent = 0;
 
         corruptionClearedPercent *= 100;
@@ -146,7 +164,7 @@ public class DrumCorruption : CorruptionBaseClass {
         { //If within range to hit the beat
             if (audioManager.GetTimeLinePosition() >= beats[index] - perfectRange && audioManager.GetTimeLinePosition() <= beats[index] + perfectRange)
             { //If within range to hit the beat "perfectly"
-                Debug.Log("Perfect, " +  (float)(audioManager.GetTimeLinePosition()) * 110f /60000f);
+                Debug.Log("Perfect, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
                 index++; //Index increases if a note was hit
                 return Timing.perfect;
             }

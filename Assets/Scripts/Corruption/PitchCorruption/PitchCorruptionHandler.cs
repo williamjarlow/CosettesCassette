@@ -17,8 +17,6 @@ public class PitchInformation : CorruptionInformation{
     public Vector2 rTravelTimeRange = new Vector2(1, 3);
 
     Duration duration;
-    [Header("ID of segment in 'Game Manager'")]
-    public int segmentID;
 
     [Header("Random generation of pitch nodes")]
     public bool randomizeNodes;
@@ -51,6 +49,7 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             pitchCorruption.duration = overallCorruption.durations[pitchInformation.segmentID];
             pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
+            pitchCorruption.threshold = pitchInformation.clearThreshold;
             if(pitchInformation.randomizeNodes)
             {
                 int nodesCount = pitchInformation.nodes.Count;
@@ -58,11 +57,18 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
                 for (int i = 0; i < nodesCount; i++)
                 {
                     pitchInformation.nodes.Add(new PitchNode());
-                    pitchInformation.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
-                    pitchInformation.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
+                    if (i == 0)
+                    {
+                        pitchInformation.nodes[i].seconds = 1;
+                        pitchInformation.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, 0, gameObject.transform.localPosition.z);
+                    }
+                    else
+                    {
+                        pitchInformation.nodes[i].seconds = Random.Range(pitchInformation.rTravelTimeRange.x, pitchInformation.rTravelTimeRange.y);
+                        pitchInformation.nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(pitchInformation.rGoalRange.x, pitchInformation.rGoalRange.y), gameObject.transform.localPosition.z);
+                    }
                 }
             }
-            
             pitchCorruption.nodes = pitchInformation.nodes;
         }
     }
