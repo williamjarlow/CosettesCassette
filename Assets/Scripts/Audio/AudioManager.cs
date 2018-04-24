@@ -90,7 +90,7 @@ public class AudioManager : MonoBehaviour {
         result = gameMusicEv.start();
 		Debug.Log ("start instance " + result);
 
-		drumMechanic.LoadKick ();
+		//drumMechanic.LoadKick ();
 		StartCoroutine (GetDSP());
 
 		FMOD.Studio.PLAYBACK_STATE state;

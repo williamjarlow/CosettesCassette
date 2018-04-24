@@ -18,7 +18,7 @@ public class DrumMechanic : MonoBehaviour {
     private FMOD.ChannelGroup channelGroup;
     private FMOD.Channel channel;
     
-    [HideInInspector] public bool recording = false;
+    /*[HideInInspector]*/ public bool recording = false;
     private bool isPlaying;
     [HideInInspector] public bool gaveInput = false;
 
@@ -32,16 +32,15 @@ public class DrumMechanic : MonoBehaviour {
     private OverallCorruption overallCorruption;
     private ButtonDisabler buttonDisabler;
 
-                        //** TODO ** //
-    // 1. Connect the confirmation window to the new recording system // 
-
+                //** TODO ** //
+    // 1. Fix recording not stopping when you rewind to before the segment
 
     void Start ()
     {
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
-        //buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
-        result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
+        buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
+        //result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         Debug.Log(" *** Create sound result *** --> " + result);
@@ -57,10 +56,6 @@ public class DrumMechanic : MonoBehaviour {
     {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
-
-        // If we exited the corrupted segment, stop recording
-        if (timeStamp < overallCorruption.durations[currentSegmentIndex].start || timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
-            Listen();
 
         if (recording)
         {
@@ -109,6 +104,16 @@ public class DrumMechanic : MonoBehaviour {
         
     }
 
+    private void LateUpdate()
+    {
+        // If we exited the corrupted segment, stop recording
+        //if (timeStamp < overallCorruption.durations[currentSegmentIndex].start || timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
+        if (timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
+        {
+            Listen();
+        }
+    }
+
     private IEnumerator ResetPlayed()
     {
         yield return new WaitForSeconds(0.05f);
@@ -118,34 +123,67 @@ public class DrumMechanic : MonoBehaviour {
 
     public void Listen()
     {
-        //buttonDisabler.EnableButtons();
+        buttonDisabler.EnableButtons();
         recording = false;
     }
 
     public void Record(GameObject confirmationObj)
     {
-        // Loop through the corrupted segments in milliseconds
-        for(int i = 0; i < overallCorruption.durations.Count; i++)
+        FindClosestSegment();
+
+        if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].GetDrumRecordings().Count == 0)
         {
-            // If the current timeline position is not 0 and is inside a segment and there is no previous recording at segment [i]
-            if (timeStamp > 0 && timeStamp >= overallCorruption.durations[i].start && timeStamp < overallCorruption.durations[i].stop && overallCorruption.durations[i].GetDrumRecordings().Count == 0) 
-            {
-                // Snap to start of corrupted area
-                audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[i].start);
-                recording = true;
-                currentSegmentIndex = i;
+            // Snap to the nearest corrupted area
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
 
-                buttonDisabler.DisableButtons();
-            }
-
-            // If there is the current timeline position is not 0 and is inside a segment and there IS a previous recording at segment [i]
-            else if (timeStamp > 0 && timeStamp >= overallCorruption.durations[i].start && timeStamp < overallCorruption.durations[i].stop && overallCorruption.durations[i].GetDrumRecordings().Count > 0)   
-            {
-                confirmationObj.SetActive(true);
-            }
+            recording = true;
+            buttonDisabler.DisableButtons();
         }
 
+        // If there is the current timeline position is not 0 and is inside a segment and there IS a previous recording at segment [i]
+        else if( timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].GetDrumRecordings().Count > 0)
+        {
+            confirmationObj.SetActive(true);
+        }
 
+    }
+
+    private void FindClosestSegment()
+    {
+        // Declare an int array with the same size as the number of corrupted segments
+        int[] timelineDifference = new int[overallCorruption.durations.Count];
+
+        for (int i = 0; i < overallCorruption.durations.Count; i++)
+        {
+            // Find the distance between start or endpoint of the segment
+            if(timeStamp > 0 && timeStamp < overallCorruption.durations[i].start)
+            {
+                timelineDifference[i] = Mathf.Abs(timeStamp - overallCorruption.durations[i].start);           
+            }
+
+            else if(timeStamp > 0 && timeStamp > overallCorruption.durations[i].stop)
+            {
+                timelineDifference[i] = Mathf.Abs(timeStamp - overallCorruption.durations[i].stop);
+            }
+        }
+        
+        int closestSegment = timelineDifference[0];
+        int closestSegmentIndex = 0;
+
+        // Find the closest segment by looping through the array and comparing the elements
+        for (int i = 0; i < timelineDifference.Length; i++)
+        {
+
+            if (closestSegment > timelineDifference[i])
+            {
+                closestSegment = timelineDifference[i];
+                closestSegmentIndex = i;
+            }
+                
+        }
+
+        // Set the current segment index to the closest one
+        currentSegmentIndex = closestSegmentIndex;
     }
 
 
@@ -155,9 +193,12 @@ public class DrumMechanic : MonoBehaviour {
         // If we are at the music cassette 
         if (!audioManager.switchedToAudioLog)
         {
-            inputTimeStamps.Clear();
             confirmationObj.SetActive(false);
             buttonDisabler.DisableButtons();
+
+            // Snap to the current segment start, delete previous recordings, start recording
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            overallCorruption.durations[currentSegmentIndex].ClearRecordings();
             recording = true;
         }
 
@@ -169,72 +210,91 @@ public class DrumMechanic : MonoBehaviour {
         confirmationObj.SetActive(false);
     }
 
+    
+
     //    **** TEMPORARY SAVINGS **** //
-     /*     
-     *     
-     *     void FixedUpdate()
-    {
-        //Find the timeline position in the track
-        audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
+    /*     
+    *     
+    *     void FixedUpdate()
+   {
+       //Find the timeline position in the track
+       audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
 
-        if (recording)
-        {
-            // If we have started the track and there is some form of input
-            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
-            {
-                //Play the bass drum sound and record it by adding the current time stamp to the list.
-                // result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
-                //Debug.Log(result);
-                audioSource.Play();
+       if (recording)
+       {
+           // If we have started the track and there is some form of input
+           if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
+           {
+               //Play the bass drum sound and record it by adding the current time stamp to the list.
+               // result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+               //Debug.Log(result);
+               audioSource.Play();
 
-                inputTimeStamps.Add(timeStamp);
-                isPlaying = true;
-                gaveInput = true;
+               inputTimeStamps.Add(timeStamp);
+               isPlaying = true;
+               gaveInput = true;
 
-                StartCoroutine(ResetPlayed());
+               StartCoroutine(ResetPlayed());
+           }
+       }
+
+       else if(recording == false && !isPlaying)
+       {
+           // Check if there is something in the list and that we are not at the last item
+           if (inputTimeStamps.Count > 0)
+           {
+               // Check if the current position in the song is between the first and last recorded input (performance)
+               if(timeStamp >= inputTimeStamps[0] - tolerance / 2 && timeStamp <= inputTimeStamps[inputTimeStamps.Count - 1] + tolerance / 2)
+               {
+                   // Loop through the list and match the current time stamp with the recorded input. If they match --> play recorded sound (drum sound)
+                   for(int i = 0; i < inputTimeStamps.Count; i++)
+                   {
+                       if (timeStamp < inputTimeStamps[i] + tolerance / 2 && timeStamp > inputTimeStamps[i] - tolerance / 2)
+                       {
+                          // audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
+                           audioSource.Play();
+                           isPlaying = true;
+                           StartCoroutine(ResetPlayed());
+                       }
+
+                   }
+               }
+           }
+       }
+
+
+
+   public void Record(GameObject confirmationObj)
+   {
+
+       // If there is no previous recording, there is a track running and we are at the music side of the cassette --> start recording
+       if (inputTimeStamps.Count <= 0 && timeStamp > 0 && !audioManager.switchedToAudioLog)
+       {
+           recording = true;
+       }
+
+       // If there is a previous recording and there is a track running --> activate the confirmation window
+       else if (inputTimeStamps.Count > 0 && timeStamp > 0)
+       {
+           confirmationObj.SetActive(true);
+       }
+  }
+
+
+        // If 'YES' is pressed during confirmation --> Delete previous recordings, start recording and disable the confirmation window
+   public void YesConfirmation(GameObject confirmationObj)
+   {
+       // If we are at the music cassette 
+       if (!audioManager.switchedToAudioLog)
+       {
+           inputTimeStamps.Clear();
+           confirmationObj.SetActive(false);
+           buttonDisabler.DisableButtons();
+           recording = true;
+       }
+
+   }
+
+    */
+
             }
-        }
-
-        else if(recording == false && !isPlaying)
-        {
-            // Check if there is something in the list and that we are not at the last item
-            if (inputTimeStamps.Count > 0)
-            {
-                // Check if the current position in the song is between the first and last recorded input (performance)
-                if(timeStamp >= inputTimeStamps[0] - tolerance / 2 && timeStamp <= inputTimeStamps[inputTimeStamps.Count - 1] + tolerance / 2)
-                {
-                    // Loop through the list and match the current time stamp with the recorded input. If they match --> play recorded sound (drum sound)
-                    for(int i = 0; i < inputTimeStamps.Count; i++)
-                    {
-                        if (timeStamp < inputTimeStamps[i] + tolerance / 2 && timeStamp > inputTimeStamps[i] - tolerance / 2)
-                        {
-                           // audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
-                            audioSource.Play();
-                            isPlaying = true;
-                            StartCoroutine(ResetPlayed());
-                        }
-                            
-                    }
-                }
-            }
-        }
-
-
-
-    public void Record(GameObject confirmationObj)
-    {
-
-        // If there is no previous recording, there is a track running and we are at the music side of the cassette --> start recording
-        if (inputTimeStamps.Count <= 0 && timeStamp > 0 && !audioManager.switchedToAudioLog)
-        {
-            recording = true;
-        }
-
-        // If there is a previous recording and there is a track running --> activate the confirmation window
-        else if (inputTimeStamps.Count > 0 && timeStamp > 0)
-        {
-            confirmationObj.SetActive(true);
-        }
-    }*/
-
-}
