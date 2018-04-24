@@ -15,13 +15,14 @@ public class VisualInput : MonoBehaviour
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
     [Header("Tap effect")]
-    [SerializeField] private Color origRippleColor;
-    private Color changedRippleColor;
+    [SerializeField] private Color originalRippleColor;
+    //private Color changedRippleColor;
 
 
     private Vector3 origPosition = Vector3.zero;
 
-    private DrumMechanic drumMechanic;
+    //private DrumMechanic drumMechanic;
+    //[SerializeField]private DrumCorruption drumCorruption;
 
 
     // Temporary
@@ -39,8 +40,12 @@ public class VisualInput : MonoBehaviour
             trailParticleEffect.SetActive(true);
         ////
 
+        /*
         if (GameManager.Instance.drumMechanic)
             drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
+            */
+        //if (drumCorruption != null)
+            //drumCorruption = gameObject.GetComponent<DrumCorruption>();
     }
 
 
@@ -118,9 +123,6 @@ public class VisualInput : MonoBehaviour
 
         transform.position = position;
 
-        //print(mouseScreenToWorld);
-
-
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -129,41 +131,27 @@ public class VisualInput : MonoBehaviour
             {
                 GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
 
-
-                if (drumMechanic != null && drumMechanic.recording)
+                /*
+                if (drumMechanic != null && drumCorruption != null && drumMechanic.recording)
                 {
-                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;                                     /// HÄR ÄR DU OCH PILLA, JAJAJJAJA
-                    tempa.startColor = changedRippleColor;
+                    drumCorruption = GameManager.Instance.drumMechanic.GetComponentInChildren<DrumCorruption>();
+                    print(drumMechanic);
+                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
+                    Timing timing = drumCorruption.CheckTiming();
+                    if (timing == Timing.perfect)
+                        print("JIA)#I=?WD=");
+                        //tempa.startColor = Color.green;
+                    if (drumCorruption.CheckTiming() == Timing.okay)
+                        tempa.startColor = Color.red;
+                    else
+                        tempa.startColor = originalRippleColor;
                 }
+                */
+
                 temp.GetComponent<ParticleSystem>().Play();
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
             }
         }
     }
     ////
-
-    public void getTiming(Timing timing)
-    {
-        if (timing == Timing.perfect)
-        {
-            changedRippleColor = Color.green;
-            print("Painted green");
-            return;
-        }
-
-        if (timing == Timing.okay)
-        {
-            changedRippleColor = Color.blue;
-            print("Painted blue");
-            return;
-        }
-
-        if (timing == Timing.miss)
-        {
-            print("You missed");
-            changedRippleColor = origRippleColor;
-        }
-    }
-
-
 }

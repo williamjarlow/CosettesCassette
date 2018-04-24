@@ -40,13 +40,11 @@ public class DrumCorruption : CorruptionBaseClass {
 
     AudioDistortion audioDistortion;
     AudioManager audioManager;
-    VisualInput visualInput;
 
 	void Start () {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
-        visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();
 
         for(int i =0; i < beats.Count; i++)
         {
@@ -151,16 +149,13 @@ public class DrumCorruption : CorruptionBaseClass {
             { //If within range to hit the beat "perfectly"
                 Debug.Log("Perfect, " +  (float)(audioManager.GetTimeLinePosition()) * 110f /60000f);
                 index++; //Index increases if a note was hit
-                visualInput.getTiming(Timing.perfect);
                 return Timing.perfect;
             }
             Debug.Log("Okay, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
             index++;//Index increases if a note was hit
-            visualInput.getTiming(Timing.okay);
             return Timing.okay;
         }
         Debug.Log("Miss, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
-        visualInput.getTiming(Timing.miss);
         return Timing.miss;
     }
 
