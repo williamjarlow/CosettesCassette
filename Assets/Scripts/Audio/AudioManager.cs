@@ -13,32 +13,54 @@ public class AudioManager : MonoBehaviour {
 	[FMODUnity.EventRef]
     public FMOD.Studio.EventInstance gameMusicEv;
 	private FMOD.Studio.EventDescription musicEventDesc;
+	private FMOD.Studio.EventDescription logEventDesc;
 
 	private AudioDistortion audioDistortion;
+	private DrumMechanic drumMechanic;
 
     private int trackLength;
 
     [SerializeField] private string musicPath;
     [SerializeField] private string audioLogPath;
-    public string bassDrumPath;
+    public string bassDrumKey;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'")]
     [SerializeField] private List<string> bankFiles;
+	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
     public bool switchedToAudioLog = false;
 
     void Awake ()
-    {
+	{
+		FMOD.Studio.System.create(out systemObj);
+		systemObj.getLowLevelSystem (out lowLevelSys);
+
+		//FMOD system object initialization
+		lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
+		lowLevelSys.setDSPBufferSize(512, 4);
+		lowLevelSys.setOutput(FMOD.OUTPUTTYPE.AUTODETECT);
+		result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
+
+		FMOD.Studio.LOADING_STATE state;
+
         //Loads the FMOD banks
         for (int i = 0; i < bankFiles.Count; i++)
         {
-            FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
+			result = systemObj.loadBankFile (Application.dataPath + "/StreamingAssets/" + bankFiles [i], FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out banks[i]);
+			Debug.Log ("load bank: " + result);
+            //FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
+			banks[i].getLoadingState(out state);
+			Debug.Log("load state: " + state);
         }
 
+		systemObj.flushCommands ();
+		systemObj.flushSampleLoading ();
+
         // Get the event description of music event, needed to get Track Length
-        // Required to be in Awake() because alot of game objects ask for the track length in Start()
-        musicEventDesc = FMODUnity.RuntimeManager.GetEventDescription(musicPath);
+        // Required to be in Awake() because a lot of game objects ask for the track length in Start()
+		systemObj.getEvent(musicPath, out musicEventDesc);
         musicEventDesc.getLength(out trackLength);
+		systemObj.getEvent (audioLogPath, out logEventDesc);
     }
 
     void Start()
@@ -47,50 +69,62 @@ public class AudioManager : MonoBehaviour {
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 
         audioDistortion = GetComponent<AudioDistortion>();
+		drumMechanic = FindObjectOfType<DrumMechanic>();
+	}
 
-        //Used to retrieve DSP buffer size
-        int numBuffers;
-        uint bufferLength;
-
-        //Creates FMOD system object and gets low-level system object
-        FMOD.Studio.System.create(out systemObj);
-        systemObj.getLowLevelSystem(out lowLevelSys);
-
-        //FMOD system object initialization
-        lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
-        lowLevelSys.setDSPBufferSize(512, 4);
-        lowLevelSys.setOutput(FMOD.OUTPUTTYPE.AUTODETECT);
-        result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
-    }
+	void Update(){
+		systemObj.update ();
+		lowLevelSys.update ();
+	}
 
 	public void AudioPlayMusic ()
     {
-        gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         if(!switchedToAudioLog)
-            gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(musicPath);
+			result = musicEventDesc.createInstance(out gameMusicEv);
+		Debug.Log ("create instance " + result); 
 
         if(switchedToAudioLog)
-            gameMusicEv = FMODUnity.RuntimeManager.CreateInstance(audioLogPath);
+			result = logEventDesc.createInstance(out gameMusicEv);
+		Debug.Log ("create instance " + result); 
 		
-        gameMusicEv.start();
+        result = gameMusicEv.start();
+		Debug.Log ("start instance " + result);
 
+		drumMechanic.LoadKick ();
 		StartCoroutine (GetDSP());
+
+		FMOD.Studio.PLAYBACK_STATE state;
+		result = gameMusicEv.getPlaybackState (out state);
+		Debug.Log ("playback state: " + state);
     }
 
 	public void AudioStopMusic ()
     {
-        gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        result = gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+		Debug.Log ("stop: " + result);
+
+		FMOD.Studio.PLAYBACK_STATE state;
+		result = gameMusicEv.getPlaybackState (out state);
+		Debug.Log ("playback state: " + state);
     }
 
 	public void AudioPauseMusic ()
     {
-		FMODUnity.RuntimeManager.PlayOneShot ("event:/Interface/Playback/pause");
+		FMOD.Studio.EventDescription pauseEventDesc;
+		FMOD.Studio.EventInstance pauseEv;
+		systemObj.getEvent ("event:/Interface/Playback/pause", out pauseEventDesc);
+		pauseEventDesc.createInstance (out pauseEv);
+		pauseEv.start ();
         gameMusicEv.setPaused(true);
     }
 
 	public void AudioUnpauseMusic ()
     {
-		FMODUnity.RuntimeManager.PlayOneShot ("event:/Interface/Playback/play");
+		FMOD.Studio.EventDescription playEventDesc;
+		FMOD.Studio.EventInstance playEv;
+		systemObj.getEvent ("event:/Interface/Playback/play", out playEventDesc);
+		playEventDesc.createInstance (out playEv);
+		playEv.start ();
         gameMusicEv.setPaused(false);
     }
 
@@ -119,18 +153,13 @@ public class AudioManager : MonoBehaviour {
 		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
 		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
 
-        pitchChordsDSP.setBypass(false);
-        pitchVocalsDSP.setBypass(false);
-        pitchDrumsDSP.setBypass(false);
-        pitchBassDSP.setBypass(false);
-        pitchLeadDSP.setBypass(false);
-        //in DSP 3 of subgroup
-        //0 = chords
-        //1 = vocals
-        //2 = drums
-        //3 = bass
-        //4 = lead
-    }
+		//in DSP 3 of subgroup
+		//0 = chords
+		//1 = vocals
+		//2 = drums
+		//3 = bass
+		//4 = lead
+	}
 
     public float GetTrackLength()
     {
