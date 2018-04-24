@@ -19,6 +19,11 @@ public class Duration
     {
         return drumRecordings;
     }
+
+    public void ClearRecordings()
+    {
+        drumRecordings.Clear();
+    }
 }
 
 public class CorruptionHandlerBaseClass : MonoBehaviour {
