@@ -14,7 +14,9 @@ public class PitchCorruption : CorruptionBaseClass {
     [HideInInspector] public float mercyRange;
     [HideInInspector] public Slider pitchSlider;
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
-    [HideInInspector] const float startingScore = 100;
+    [HideInInspector] public int threshold;
+
+    const float startingScore = 100;
 
     float punishment;
     float totalSeconds;
@@ -38,7 +40,7 @@ public class PitchCorruption : CorruptionBaseClass {
 	// Update is called once per frame
 	void Update () {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
+            audioManager.GetTimeLinePosition() < duration.stop && corruptionClearedPercent < threshold) //If player is inside a corrupted area
         {
             if (!inSegment)
             {
@@ -80,6 +82,8 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void ExitSegment()
     {
+        if (score < 0)
+            score = 0;
         corruptionClearedPercent = score;
         innerDistortion = 0;
         StopCoroutine(lastCoroutine);
