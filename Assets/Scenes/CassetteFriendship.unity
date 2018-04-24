@@ -870,22 +870,22 @@ MonoBehaviour:
   drumInformationList:
   - maxDistortion: 20
     currentDistortion: 0
-    beats: 4800000050000000580000006a000000
+    beats: 000000000800000010000000180000002000000028000000
     perfectRange: 200
-    okayRange: 600
-    segmentID: 0
-  - maxDistortion: 20
-    currentDistortion: 0
-    beats: 04000000080000000c0000006f010000
-    perfectRange: 200
-    okayRange: 600
-    segmentID: 1
-  - maxDistortion: 20
-    currentDistortion: 0
-    beats: 04000000080000000c0000006f010000
-    perfectRange: 200
-    okayRange: 600
+    okayRange: 400
     segmentID: 2
+  - maxDistortion: 20
+    currentDistortion: 0
+    beats: 04000000080000000c00000010000000
+    perfectRange: 200
+    okayRange: 400
+    segmentID: 4
+  - maxDistortion: 20
+    currentDistortion: 0
+    beats: 04000000080000000c00000010000000
+    perfectRange: 200
+    okayRange: 400
+    segmentID: 6
   drumCorruptionPrefab: {fileID: 1842557394649244, guid: 68a1c56d062bc5c4791b46e6992b8a16,
     type: 2}
 --- !u!1 &152183464
@@ -1630,6 +1630,7 @@ MonoBehaviour:
     type: 2}
   distanceFromCamera: 25
   speed: 25
+  origRippleColor: {r: 0, g: 0, b: 0, a: 0}
   workWithMouseInput: 1
 --- !u!1 &456110787
 GameObject:
@@ -5994,6 +5995,12 @@ Prefab:
       propertyPath: m_Delegates.Array.data[3].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpdateValues
       objectReference: {fileID: 0}
+    - target: {fileID: 114280680049271818, guid: 0ca5233559948fc40a18c2b4ea8e990f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c90b15ed882ae3f4ca7cef25d9aca96f,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ca5233559948fc40a18c2b4ea8e990f, type: 2}
   m_IsPrefabParent: 0
@@ -10258,6 +10265,11 @@ Prefab:
       propertyPath: timelineSlider
       value: 
       objectReference: {fileID: 846332488}
+    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
+        type: 2}
+      propertyPath: uiHandler
+      value: 
+      objectReference: {fileID: 1718787021}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aef8bb58cd7cb7c418421394dfeb49d7, type: 2}
   m_IsPrefabParent: 0
@@ -11602,7 +11614,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1469152704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1144.5782, y: -222, z: 0}
+  m_LocalPosition: {x: 740, y: -222, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 619515676}
@@ -11611,7 +11623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 184.57825, y: -762}
+  m_AnchoredPosition: {x: -220, y: -762}
   m_SizeDelta: {x: 92, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1469152706
@@ -11692,7 +11704,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1469152706}
-        m_MethodName: setButtonEnabled
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11703,7 +11715,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1340151129}
-        m_MethodName: setButtonEnabled
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11714,8 +11726,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1340151126}
-        m_MethodName: set_enabled
-        m_Mode: 6
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11725,8 +11737,8 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1469152707}
-        m_MethodName: set_enabled
-        m_Mode: 6
+        m_MethodName: 
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -19158,8 +19170,8 @@ MonoBehaviour:
   disableButtonList:
   - {fileID: 2110408943}
   - {fileID: 2110408942}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2110408948}
+  - {fileID: 1469152707}
   dropdown: {fileID: 2110408940}
 --- !u!4 &1718787024
 Transform:
