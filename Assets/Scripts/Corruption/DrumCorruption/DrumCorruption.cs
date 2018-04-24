@@ -34,7 +34,6 @@ public class DrumCorruption : CorruptionBaseClass {
     It does not increase if a note is hit outside of the okay/perfect ranges. 
     This is done so that mass-tapping does not end the corruption prematurely.*/
 
-    [HideInInspector] bool inSegment = false;
     [HideInInspector] bool inCorruption = false;
     [HideInInspector] bool firstBeat = false;
 

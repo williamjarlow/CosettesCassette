@@ -30,6 +30,7 @@ public class AudioManager : MonoBehaviour {
 
     public bool switchedToAudioLog = false;
 
+
     void Awake ()
 	{
 		FMOD.Studio.System.create(out systemObj);
@@ -43,17 +44,18 @@ public class AudioManager : MonoBehaviour {
 
 		FMOD.Studio.LOADING_STATE state;
 
-        //Loads the FMOD banks
+
+        //Loads the FMOD banks for the Unity Editor
         for (int i = 0; i < bankFiles.Count; i++)
         {
-			result = systemObj.loadBankFile (Application.dataPath + "/StreamingAssets/" + bankFiles [i], FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out banks[i]);
+			result = systemObj.loadBankFile (Application.dataPath + "/StreamingAssets/" + bankFiles[i], FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out banks[i]);
 			Debug.Log ("load bank: " + result);
             //FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
 			banks[i].getLoadingState(out state);
 			Debug.Log("load state: " + state);
         }
 
-		systemObj.flushCommands ();
+        systemObj.flushCommands ();
 		systemObj.flushSampleLoading ();
 
         // Get the event description of music event, needed to get Track Length
@@ -62,6 +64,8 @@ public class AudioManager : MonoBehaviour {
         musicEventDesc.getLength(out trackLength);
 		systemObj.getEvent (audioLogPath, out logEventDesc);
     }
+
+
 
     void Start()
     {
@@ -77,7 +81,8 @@ public class AudioManager : MonoBehaviour {
 		lowLevelSys.update ();
 	}
 
-	public void AudioPlayMusic ()
+
+    public void AudioPlayMusic ()
     {
         if(!switchedToAudioLog)
 			result = musicEventDesc.createInstance(out gameMusicEv);
@@ -90,7 +95,7 @@ public class AudioManager : MonoBehaviour {
         result = gameMusicEv.start();
 		Debug.Log ("start instance " + result);
 
-		//drumMechanic.LoadKick ();
+		drumMechanic.LoadKick ();
 		StartCoroutine (GetDSP());
 
 		FMOD.Studio.PLAYBACK_STATE state;

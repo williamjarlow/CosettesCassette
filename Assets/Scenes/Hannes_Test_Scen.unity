@@ -4284,6 +4284,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: bassDrumKey
+      value: cassette_01_kick
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f236062a340c42644b0efd0d34e0e407, type: 2}
   m_IsPrefabParent: 0
@@ -4935,12 +4940,17 @@ Prefab:
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: corruptionClearThreshold
-      value: 80
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[0].start
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[0].okayRange
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 217ff3c6edad08746800892c4eab6f54, type: 2}
@@ -5073,7 +5083,6 @@ MonoBehaviour:
   gaveInput: 0
   timeStamp: 0
   tolerance: 30
-  tempActivationWindow: {fileID: 1173963188}
 --- !u!81 &1931723803
 AudioListener:
   m_ObjectHideFlags: 0

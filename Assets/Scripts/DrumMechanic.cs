@@ -14,11 +14,14 @@ public class DrumMechanic : MonoBehaviour {
     private AudioManager audioManager;
     private FMOD.RESULT result;
 
-    private FMOD.Sound kick;
-    private FMOD.ChannelGroup channelGroup;
-    private FMOD.Channel channel;
-    
-    /*[HideInInspector]*/ public bool recording = false;
+    private FMOD.Sound kickSound;
+    private FMOD.Sound kickSubSound;
+    private FMOD.Studio.SOUND_INFO kickInfo;
+    private FMOD.ChannelGroup kickChannelGroup;
+    private FMOD.Channel kickChannel;
+
+    [HideInInspector]
+    public bool recording = false;
     private bool isPlaying;
     [HideInInspector] public bool gaveInput = false;
 
@@ -40,7 +43,7 @@ public class DrumMechanic : MonoBehaviour {
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
         buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
-        //result = audioManager.lowLevelSys.createSound(audioManager.bassDrumPath, FMOD.MODE.CREATESAMPLE, out kick);
+        //result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, FMOD.MODE.CREATESAMPLE, out kickInfo);
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         Debug.Log(" *** Create sound result *** --> " + result);
@@ -51,6 +54,18 @@ public class DrumMechanic : MonoBehaviour {
 
 	}
 
+    public void LoadKick()
+    {
+        result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
+        Debug.Log("info " + result);
+        kickInfo.mode = FMOD.MODE.CREATECOMPRESSEDSAMPLE;
+        Debug.Log("mode " + result);
+
+        result = audioManager.lowLevelSys.createSound(kickInfo.name_or_data, kickInfo.mode, ref kickInfo.exinfo, out kickSound);
+        Debug.Log(" *** Create sound result *** --> " + result);
+        result = kickSound.getSubSound(0, out kickSubSound);
+        Debug.Log("subSound: " + result);
+    }
 
     void FixedUpdate()
     {
@@ -63,9 +78,9 @@ public class DrumMechanic : MonoBehaviour {
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
             {
                 //Play the bass drum sound and record it by adding the current time stamp to the list.
-                // result = audioManager.lowLevelSys.playSound(kick, channelGroup, false, out channel);
-                //Debug.Log(result);
-                audioSource.Play();
+                result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
+                Debug.Log("Kick: " + result);
+                //audioSource.Play();
 
 
                 overallCorruption.durations[currentSegmentIndex].AddDrumRecordings(timeStamp);
@@ -91,7 +106,9 @@ public class DrumMechanic : MonoBehaviour {
                         // Play the recorded sound when the current timestamp matches the recorded timestamp
                         if(timeStamp <= overallCorruption.durations[i].GetDrumRecordings()[j] + tolerance / 2 && timeStamp >= overallCorruption.durations[i].GetDrumRecordings()[j] - tolerance / 2)
                         {
-                            audioSource.Play();
+                            result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
+                            Debug.Log("kick recording: " + result);
+                            //audioSource.Play();
                             isPlaying = true;
                             StartCoroutine(ResetPlayed());
                         }
