@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+public enum instruments { drums, synth, vocals, guitar, bass, pitch };
 public class GameManager : Singleton<GameManager> {
 
     [HideInInspector] public AudioDistortion audioDistortion;
@@ -18,6 +19,9 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector] public float posInSong;
     [HideInInspector] public float lengthOfSong;
 
+
+    public instruments currentInstrument = instruments.drums;
+
     
 
 	void Awake ()
@@ -30,6 +34,11 @@ public class GameManager : Singleton<GameManager> {
     private void Start()
     {
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
+    }
+
+    public instruments CurrentInstrument{
+        get { return currentInstrument; }
+        set { currentInstrument = value; }
     }
 
 
