@@ -83,7 +83,6 @@ public class PitchCorruption : CorruptionBaseClass {
         }
         punishment = score / totalSeconds;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        Debug.Log(innerDistortion);
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform);
         base.EnterSegment();
     }

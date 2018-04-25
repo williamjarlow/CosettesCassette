@@ -101,8 +101,6 @@ public class OverallCorruption : MonoBehaviour {
             if (corruption.corruptionClearedPercent >= corruption.clearThreshold)
             {
                 corruption.cleared = true;
-                Debug.Log("Clearpecent: " + corruption.corruptionClearedPercent);
-                Debug.Log("Thresh: " + corruption.clearThreshold);
             }
             else
                 corruption.cleared = false;
@@ -114,7 +112,6 @@ public class OverallCorruption : MonoBehaviour {
             {
                 if (i == corruption.segmentID)
                 {
-                    Debug.Log("i: " + i + " id: " + corruption.segmentID);
                     if (corruption.cleared != true)
                         corruptionCleared = false;
                         
@@ -122,7 +119,6 @@ public class OverallCorruption : MonoBehaviour {
             }
             if (corruptionCleared)
             {
-                Debug.Log("re");
                 corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
             }
         }
