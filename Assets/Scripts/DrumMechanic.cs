@@ -72,7 +72,8 @@ public class DrumMechanic : MonoBehaviour {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
 
-        if (recording)
+        // If we are recording and we are in a drum corruption segment
+        if (recording && overallCorruption.durations[currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
         {
             // If we have started the track and there is some form of input
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)

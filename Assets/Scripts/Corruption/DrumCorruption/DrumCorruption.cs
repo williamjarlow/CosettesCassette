@@ -57,13 +57,16 @@ public class DrumCorruption : CorruptionBaseClass
     AudioManager audioManager;
 
     [Header("Visual input for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
-    [SerializeField] private VisualInput visualInput;   
+    [SerializeField] private VisualInput visualInput;
+
+    private OverallCorruption overallCorruption;
 
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
-        drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
+        drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
+        overallCorruption = GameManager.Instance.overallCorruption;
         if (visualInput != null)
             visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();      // Has to be found by tag unfortunately, but still has to be known that we want to use it, so has to be set in prefab
 
@@ -71,6 +74,9 @@ public class DrumCorruption : CorruptionBaseClass
         {
             beats[i] += duration.start;
         }
+
+        // Set the drum segments to the recording type 'DRUMS'
+        overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.DRUMS;
 
         Assert.IsNotNull(audioManager.gameObject, "Audiomanager not found. Please add an Audiomanager to the game manager.");
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");

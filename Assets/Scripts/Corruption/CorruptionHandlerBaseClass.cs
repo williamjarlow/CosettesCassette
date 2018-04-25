@@ -7,9 +7,13 @@ public class Duration
 {
     public int start;
     public int stop;
-    
+
     private List<int> drumRecordings = new List<int>();
 
+    // Recording type to differentiate the corrupted area
+    public enum RecordingType { DRUMS, PITCH };
+    public RecordingType recordingType { get; set; }
+    
     public void AddDrumRecordings(int timeStamp)
     {
         drumRecordings.Add(timeStamp);
@@ -24,6 +28,12 @@ public class Duration
     {
         drumRecordings.Clear();
     }
+
+    /*public void SetRecordingType(RecordingType in_recordingType)
+    {
+        recordingType = in_recordingType;
+    }*/
+
 }
 
 public class CorruptionHandlerBaseClass : MonoBehaviour {
