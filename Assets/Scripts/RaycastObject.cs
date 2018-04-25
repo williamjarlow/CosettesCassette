@@ -15,13 +15,7 @@ public class RaycastObject : MonoBehaviour
 
     void Update()
     {
-        if (this.tag == "Cassette")
-        {
-            Rigidbody rigb;
-            rigb = GetComponent<Rigidbody>();
-            rigb.AddForce(transform.forward * 3);
-            this.transform.Translate(Input.acceleration.x, 0, -Input.acceleration.z);
-        }
+ 
     }
 
 	void PlaceCassette()
