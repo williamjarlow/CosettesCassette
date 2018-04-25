@@ -8,7 +8,7 @@ public class Credits : MonoBehaviour {
 
     [SerializeField] private GameObject stopper;
     [SerializeField] private float origPos;
-    [SerializeField] private float currentPos;
+    [SerializeField] public float currentPos;
     [SerializeField] private float endOfTheLine;
     [SerializeField] private GameObject AudioManagerz;
     [SerializeField] private GameObject credits;
