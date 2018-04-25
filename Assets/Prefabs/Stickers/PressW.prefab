@@ -75,8 +75,9 @@ GameObject:
   - component: {fileID: 222791071431072996}
   - component: {fileID: 114194362692328954}
   - component: {fileID: 114843526768892412}
+  - component: {fileID: 114599236300864626}
   m_Layer: 0
-  m_Name: StickerTest1
+  m_Name: PressW
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,7 +161,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5
+  m_Text: 10
 --- !u!114 &114194362692328954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -234,7 +235,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Test Sticker 1
+  m_Text: Title
 --- !u!114 &114482161622090372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -262,6 +263,25 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114599236300864626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1670348663384646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: PressW
+  description: Press W to earn this
+  unlocked: 0
+  points: 10
+  notCompleted: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
+  completed: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef, type: 3}
+  stickerRef: {fileID: 1670348663384646}
+  managerRef: {fileID: 0}
 --- !u!114 &114843526768892412
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,7 +333,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <i>press 1</i>
+  m_Text: <i>Description</i>
 --- !u!222 &222434589056606848
 CanvasRenderer:
   m_ObjectHideFlags: 1

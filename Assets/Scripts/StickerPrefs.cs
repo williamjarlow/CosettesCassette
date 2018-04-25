@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class StickerPrefs : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class StickerPrefs : MonoBehaviour {
     [SerializeField] private Sprite notCompleted;
     [SerializeField] private Sprite completed;
     [SerializeField] private GameObject stickerRef;
+    [SerializeField] private Image imageRef;
     [SerializeField] private StickerManager managerRef;
 
     private Dictionary<string, Sticker> stickersDictionary = new Dictionary<string, Sticker>();
@@ -19,23 +21,14 @@ public class StickerPrefs : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
-        Sticker newSticker = new Sticker(name, description, points, stickerRef, notCompleted, completed);
-        //stickersDictionary = managerRef.GetComponent<StickerManager>().stickers;
+    void Awake () {
+        Sticker newSticker = new Sticker(name, description, points, stickerRef, imageRef, notCompleted, completed);
 
-        stickersDictionary.Add(name, newSticker);
         managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
-        //managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
-        /*stickman = managerRef.GetComponent<StickerManager>();
-        stickman.stickers.Add(name, newSticker);*/
     }
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 }
 
+[Serializable]
 public class Sticker
 {
     private string stickerName;
@@ -59,7 +52,7 @@ public class Sticker
     public bool Unlocked
     {
         get { return stickerUnlocked; }
-        set { stickerUnlocked = value; }
+        set { stickerUnlocked = value; SetLoadedSticker(); }
     }
 
     private int stickerPoints;
@@ -80,16 +73,17 @@ public class Sticker
     }
 
     private GameObject stickerRef;
+    private Image imageRef;
+    public bool loaded;
 
-
-
-    public Sticker(string name, string description, int points, GameObject stickerRef, Sprite notCompleted, Sprite completed)
+    public Sticker(string name, string description, int points, GameObject stickerRef, Image imageRef, Sprite notCompleted, Sprite completed)
     {
         this.stickerName = name;
         this.stickerDescription = description;
         this.stickerUnlocked = false;
         this.stickerPoints = points;
         this.stickerRef = stickerRef;
+        this.imageRef = imageRef;
         this.stickerNotCompleted = notCompleted;
         this.stickerCompleted = completed;
     }
@@ -98,9 +92,24 @@ public class Sticker
     {
         if (!stickerUnlocked)
         {
+            this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
             stickerUnlocked = true;
             return true;
         }
         return false;
+    }
+
+    public void SetLoadedSticker()
+    {
+        if (this.loaded == true)
+        {
+            this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
+            stickerUnlocked = true;
+        }
+        else if (this.loaded == false)
+        {
+            this.imageRef.GetComponent<Image>().sprite = this.stickerNotCompleted;
+            stickerUnlocked = false;
+        }
     }
 }

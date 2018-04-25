@@ -12,11 +12,12 @@ public class StickerManager : MonoBehaviour {
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private GameObject generalBtn;
     [SerializeField] private GameObject stickerMenu;
-    [SerializeField] private GameObject visualSticker;
-    [SerializeField] private GameObject earningSticker;
+    [SerializeField] private GameObject[] otherCategories;
     [SerializeField] private GameObject particleSticker;
+    [SerializeField] private GameObject saveSystemRef;
 
     [SerializeField] private GameObject stickerPrefab;
+    private bool menuDisable = true;
 
     public Dictionary<string, Sticker> stickers = new Dictionary<string, Sticker>();
 
@@ -27,12 +28,22 @@ public class StickerManager : MonoBehaviour {
         activeButton = generalBtn.GetComponent<StickerButton>();
         activeButton.OnClick();
 
-        stickerMenu.SetActive(false);
-        
+        for(int i=0; i < otherCategories.Length; i++)
+        {
+            otherCategories[i].SetActive(false);
+        }
+
+        saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickers);
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if(menuDisable == true)
+        {
+            menuDisable = false;
+            stickerMenu.SetActive(false);
+        }
+
 		if(Input.GetKeyDown(KeyCode.S))
         {
             stickerMenu.SetActive(!stickerMenu.activeSelf);
@@ -41,6 +52,21 @@ public class StickerManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             EarnSticker("PressQ");
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            EarnSticker("PressW");
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            EarnSticker("PressE");
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            saveSystemRef.GetComponent<SaveSystem>().ClearStickers(stickers);
         }
     }
 
@@ -52,6 +78,7 @@ public class StickerManager : MonoBehaviour {
             sticker.SetActive(true);
             SetVisualSticker(sticker, title);
             StartCoroutine(HideSticker(sticker));
+            saveSystemRef.GetComponent<SaveSystem>().SaveStickers(title, true);
         }
     }
 
