@@ -56,11 +56,15 @@ public class DrumCorruption : CorruptionBaseClass
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
+    [Header("Using the VisualInput system for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
+    [SerializeField] private VisualInput visualInput;   
+
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
+        //visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();      // Has to be found by tag unfortunately...
 
         for (int i = 0; i < beats.Count; i++)
         {
@@ -158,7 +162,7 @@ public class DrumCorruption : CorruptionBaseClass
         corruptionClearedPercent *= 100;
     }
 
-    public Timing CheckTiming()
+    Timing CheckTiming()
     {
         if (audioManager.GetTimeLinePosition() >= beats[index] - okayRange && audioManager.GetTimeLinePosition() <= beats[index] + okayRange)
         { //If within range to hit the beat
@@ -166,13 +170,19 @@ public class DrumCorruption : CorruptionBaseClass
             { //If within range to hit the beat "perfectly"
                 Debug.Log("Perfect, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
                 index++; //Index increases if a note was hit
+                if (visualInput != null)
+                    visualInput.ChangeColorOnTiming(Timing.perfect);
                 return Timing.perfect;
             }
             Debug.Log("Okay, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
             index++;//Index increases if a note was hit
+            if (visualInput != null)
+                visualInput.ChangeColorOnTiming(Timing.okay);
             return Timing.okay;
         }
         Debug.Log("Miss, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
+        if (visualInput != null)
+            visualInput.ChangeColorOnTiming(Timing.miss);
         return Timing.miss;
     }
 

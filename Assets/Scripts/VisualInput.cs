@@ -15,14 +15,23 @@ public class VisualInput : MonoBehaviour
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
     [Header("Tap effect")]
+    [Header("The DrumCorruption prefab also needs extra information for this to work")]
+    [SerializeField] private bool useDrumCorruptionToMatchTiming;
+    [Header("Color of tap effect depending on timing of drumbeat")]
     [SerializeField] private Color originalRippleColor;
-    //private Color changedRippleColor;
+    [SerializeField] private Color okayRippleColor;
+    [SerializeField] private Color perfectRippleColor;
+
+
+
+
+    [SerializeField] private Color changedRippleColor;
+    
 
 
     private Vector3 origPosition = Vector3.zero;
 
-    //private DrumMechanic drumMechanic;
-    //[SerializeField]private DrumCorruption drumCorruption;
+    private DrumMechanic drumMechanic;      // Fetch from GameManager later
 
 
     // Temporary
@@ -40,12 +49,8 @@ public class VisualInput : MonoBehaviour
             trailParticleEffect.SetActive(true);
         ////
 
-        /*
         if (GameManager.Instance.drumMechanic)
             drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
-            */
-        //if (drumCorruption != null)
-            //drumCorruption = gameObject.GetComponent<DrumCorruption>();
     }
 
 
@@ -130,6 +135,14 @@ public class VisualInput : MonoBehaviour
             foreach (Transform effect in touchParticleEffectPrefab.transform)
             {
                 GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
+                
+                
+                if (useDrumCorruptionToMatchTiming && drumMechanic.recording)
+                {
+                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
+                    tempa.startColor = CatchColorChange();
+                }
+                
 
                 /*
                 if (drumMechanic != null && drumCorruption != null && drumMechanic.recording)
@@ -154,4 +167,20 @@ public class VisualInput : MonoBehaviour
         }
     }
     ////
+
+    public void ChangeColorOnTiming(Timing timing)
+    {
+        if (timing == Timing.perfect)
+            changedRippleColor = perfectRippleColor;
+        if (timing == Timing.okay)
+            changedRippleColor = okayRippleColor;
+        else
+            changedRippleColor = originalRippleColor;            
+    }
+
+    private Color CatchColorChange()
+    {
+        return changedRippleColor;
+    }
+
 }
