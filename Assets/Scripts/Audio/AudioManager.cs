@@ -10,6 +10,13 @@ public class AudioManager : MonoBehaviour {
 	public FMOD.Studio.System systemObj;
 	public FMOD.System lowLevelSys;
 
+	public FMOD.DSP musicChanSubGroupDSP;
+	public FMOD.DSP pitchChordsDSP;
+	public FMOD.DSP pitchVocalsDSP;
+	public FMOD.DSP pitchDrumsDSP;
+	public FMOD.DSP pitchBassDSP;
+	public FMOD.DSP pitchLeadDSP;
+
 	[FMODUnity.EventRef]
     public FMOD.Studio.EventInstance gameMusicEv;
 	private FMOD.Studio.EventDescription musicEventDesc;
@@ -24,7 +31,7 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private string audioLogPath;
     public string bassDrumKey;
 
-    [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01.bank'")]
+    [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01'")]
     [SerializeField] private List<string> bankFiles;
 	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
@@ -41,11 +48,12 @@ public class AudioManager : MonoBehaviour {
         //Loads the FMOD banks for the Unity Editor
         for (int i = 0; i < bankFiles.Count; i++)
         {
-            FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
+            FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
+			result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
         }
 
+		FMODUnity.RuntimeManager.WaitForAllLoads ();
         systemObj.flushCommands ();
-		systemObj.flushSampleLoading ();
 
         // Get the event description of music event, needed to get Track Length
         // Required to be in Awake() because a lot of game objects ask for the track length in Start()
@@ -53,9 +61,7 @@ public class AudioManager : MonoBehaviour {
         musicEventDesc.getLength(out trackLength);
 		systemObj.getEvent (audioLogPath, out logEventDesc);
     }
-
-
-
+		
     void Start()
     {
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
@@ -63,9 +69,10 @@ public class AudioManager : MonoBehaviour {
 
         audioDistortion = GetComponent<AudioDistortion>();
 		drumMechanic = FindObjectOfType<DrumMechanic>();
+
+		GetDSP ();
 	}
-
-
+		
     public void AudioPlayMusic ()
     {
         if(!switchedToAudioLog)
@@ -76,8 +83,8 @@ public class AudioManager : MonoBehaviour {
 
         result = gameMusicEv.start();
 
-		drumMechanic.LoadKick ();
-		StartCoroutine (GetDSP());
+		//drumMechanic.LoadKick ();
+		//StartCoroutine (GetDSP());
 
 		FMOD.Studio.PLAYBACK_STATE state;
 		result = gameMusicEv.getPlaybackState (out state);
@@ -136,21 +143,14 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-	private IEnumerator GetDSP()
+	private void GetDSP()
 	{
 		FMOD.ChannelGroup musicChanGroup;
 		FMOD.ChannelGroup musicChanSubGroup;
 
 		FMOD.DSPConnection DSPCon;
 
-		FMOD.DSP musicChanSubGroupDSP;
-		FMOD.DSP pitchChordsDSP;
-		FMOD.DSP pitchVocalsDSP;
-		FMOD.DSP pitchDrumsDSP;
-		FMOD.DSP pitchBassDSP;
-		FMOD.DSP pitchLeadDSP;
-
-		yield return new WaitForSeconds(0.5f); // Gives event time to load (better solution needed)
+		//yield return new WaitForSeconds(0.5f); // Gives event time to load (better solution needed)
 		result = gameMusicEv.getChannelGroup (out musicChanGroup);
 
 		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
