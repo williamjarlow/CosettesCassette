@@ -20,7 +20,7 @@ public class BasicRaycasting : MonoBehaviour {
             {
                 if (hit.transform.tag == "Cassette")
                 {
-                    hit.transform.SendMessage("PlaceCassette");
+                    hit.transform.SendMessage("SwitchScene");
                 }
             }
         }

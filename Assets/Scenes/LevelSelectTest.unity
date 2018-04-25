@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &117169029
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -386,7 +387,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &117169030
 Rigidbody:
@@ -627,6 +628,10 @@ Prefab:
     - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
       propertyPath: m_Name
       value: CassetteCover (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
@@ -911,6 +916,10 @@ Prefab:
     - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
       propertyPath: m_Name
       value: CassetteCover (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
@@ -1209,6 +1218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &406262115
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1219,7 +1229,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &406262116
 Rigidbody:
@@ -1913,6 +1923,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
   m_IsPrefabParent: 0
@@ -2117,6 +2131,10 @@ Prefab:
     - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
       propertyPath: m_Name
       value: CassetteCover (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
@@ -2792,6 +2810,10 @@ Prefab:
       propertyPath: m_Name
       value: CassetteCover (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
   m_IsPrefabParent: 0
@@ -3209,6 +3231,7 @@ GameObject:
   - component: {fileID: 1053676956}
   - component: {fileID: 1053676955}
   - component: {fileID: 1053676954}
+  - component: {fileID: 1053676958}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3278,6 +3301,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1053676958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053676953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e57bce6f91c13499850b323008b586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1090243236
 GameObject:
   m_ObjectHideFlags: 0
@@ -3763,6 +3797,10 @@ Prefab:
     - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
       propertyPath: m_Name
       value: CassetteCover (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
+      propertyPath: m_TagString
+      value: Cassette
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c03b8ec58d6814b4bbcc27ca393fa8fd, type: 3}
@@ -4431,6 +4469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &1645985576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4441,7 +4480,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1645985577
 Rigidbody:
@@ -4858,6 +4897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &1772524773
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4868,7 +4908,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1772524774
 Rigidbody:
@@ -5747,6 +5787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &2100461155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5757,7 +5798,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2100461156
 Rigidbody:
@@ -5794,6 +5835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelSelectMenu: {fileID: 1393293586}
+  loadLevelIndex: 0
 --- !u!65 &2106264550
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5804,7 +5846,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.12, y: 0.08, z: 0.02}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2106264551
 Rigidbody:

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RaycastObject : MonoBehaviour
 {
     [SerializeField] private GameObject LevelSelectMenu;
+    [SerializeField] private int loadLevelIndex;
     private LevelSelect LevelSelectScript;
 
     void Start()
@@ -32,5 +34,11 @@ public class RaycastObject : MonoBehaviour
         this.transform.localRotation = Quaternion.AngleAxis(0, Vector3.right);
         this.transform.tag = ("PlacedCassette");
         rb.isKinematic = true;
+    }
+
+    void SwitchScene()
+    {
+
+        SceneManager.LoadScene(loadLevelIndex);
     }
 }
