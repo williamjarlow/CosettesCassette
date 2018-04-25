@@ -44,7 +44,6 @@ public class DrumMechanic : MonoBehaviour {
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
         buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
-        //result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, FMOD.MODE.CREATESAMPLE, out kickInfo);
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         Debug.Log(" *** Create sound result *** --> " + result);
@@ -56,11 +55,18 @@ public class DrumMechanic : MonoBehaviour {
         // Set the drum segment's recording type to 'DRUMS'
         overallCorruption.durations[currentSegmentIndex].recordingType = Duration.RecordingType.DRUMS;
 
+		result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
+		Debug.Log("info " + result);
+		kickInfo.mode = FMOD.MODE.CREATESAMPLE;
 
+		result = audioManager.lowLevelSys.createSound(kickInfo.name_or_data, kickInfo.mode, ref kickInfo.exinfo, out kickSound);
+		Debug.Log(" *** Create sound result *** --> " + result);
+		result = kickSound.getSubSound(0, out kickSubSound);
+		Debug.Log("subSound: " + result);
     }
 
     // Loading the kick sound
-    public void LoadKick()
+    /*public void LoadKick()
     {
         result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
         Debug.Log("info " + result);
@@ -71,7 +77,7 @@ public class DrumMechanic : MonoBehaviour {
         Debug.Log(" *** Create sound result *** --> " + result);
         result = kickSound.getSubSound(0, out kickSubSound);
         Debug.Log("subSound: " + result);
-    }
+    }*/
 
     void FixedUpdate()
     {
