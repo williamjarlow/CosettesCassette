@@ -14,6 +14,7 @@ public class StickerManager : MonoBehaviour {
     [SerializeField] private GameObject stickerMenu;
     [SerializeField] private GameObject[] otherCategories;
     [SerializeField] private GameObject particleSticker;
+    [SerializeField] private GameObject saveSystemRef;
 
     [SerializeField] private GameObject stickerPrefab;
     private bool menuDisable = true;
@@ -32,7 +33,7 @@ public class StickerManager : MonoBehaviour {
             otherCategories[i].SetActive(false);
         }
 
-        
+        saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickers);
     }
 	
 	// Update is called once per frame
@@ -62,6 +63,11 @@ public class StickerManager : MonoBehaviour {
         {
             EarnSticker("PressE");
         }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            saveSystemRef.GetComponent<SaveSystem>().ClearStickers(stickers);
+        }
     }
 
     public void EarnSticker(string title)
@@ -72,6 +78,7 @@ public class StickerManager : MonoBehaviour {
             sticker.SetActive(true);
             SetVisualSticker(sticker, title);
             StartCoroutine(HideSticker(sticker));
+            saveSystemRef.GetComponent<SaveSystem>().SaveStickers(title, true);
         }
     }
 
