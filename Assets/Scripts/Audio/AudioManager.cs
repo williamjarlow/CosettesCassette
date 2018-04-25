@@ -28,7 +28,9 @@ public class AudioManager : MonoBehaviour {
     [SerializeField] private List<string> bankFiles;
 	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
-    public bool switchedToAudioLog = false;
+    [HideInInspector] public bool switchedToAudioLog = false;
+    private bool startedMusic = false;
+    private bool pausedMusic = false;
 
 
     void Awake ()
@@ -131,6 +133,31 @@ public class AudioManager : MonoBehaviour {
 		playEventDesc.createInstance (out playEv);
 		playEv.start ();
         gameMusicEv.setPaused(false);
+    }
+
+    public void AudioPlayPauseAndUnpause()
+    {
+        if (startedMusic && !pausedMusic)
+        {
+            print("Hello?");
+            pausedMusic = true;
+            AudioPauseMusic();
+
+        }
+
+        else if (startedMusic && pausedMusic)
+        {
+            print("Hello2?");
+            pausedMusic = false;
+            AudioUnpauseMusic();
+
+        }
+
+        if (!startedMusic)
+        {
+            AudioPlayMusic();
+            startedMusic = true;
+        }
     }
 
 	private IEnumerator GetDSP()

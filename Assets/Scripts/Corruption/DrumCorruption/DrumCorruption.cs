@@ -56,7 +56,7 @@ public class DrumCorruption : CorruptionBaseClass
     AudioDistortion audioDistortion;
     AudioManager audioManager;
 
-    [Header("Using the VisualInput system for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
+    [Header("Visual input for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
     [SerializeField] private VisualInput visualInput;   
 
     void Start()
@@ -64,7 +64,8 @@ public class DrumCorruption : CorruptionBaseClass
         audioManager = GameManager.Instance.audioManager;
         audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameObject.Find("DrumMechanic").GetComponent<DrumMechanic>();
-        //visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();      // Has to be found by tag unfortunately...
+        if (visualInput != null)
+            visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();      // Has to be found by tag unfortunately, but still has to be known that we want to use it, so has to be set in prefab
 
         for (int i = 0; i < beats.Count; i++)
         {
