@@ -96,4 +96,10 @@ public class ButtonController : MonoBehaviour {
         }
 
     }
+    public void setButtonEnabled()
+    {
+        if (buttonclicked) { buttonclicked = false; startingPos = false; buttonstate = buttonstates.Moving; }
+        else if (!buttonclicked) { buttonclicked = true; startingPos = true; buttonstate = buttonstates.Moving; }
+
+    }
 }

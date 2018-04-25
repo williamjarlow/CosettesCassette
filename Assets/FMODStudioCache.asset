@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EditorBanks:
   - {fileID: 114455131482205032}
-  - {fileID: 114918421382524040}
-  - {fileID: 114438305961480952}
-  - {fileID: 114201717884697072}
-  - {fileID: 114686803053581774}
+  - {fileID: 114029602510982946}
+  - {fileID: 114703475019639574}
+  - {fileID: 114335641582177654}
+  - {fileID: 114691576697891908}
   EditorEvents:
   - {fileID: 114741791326783692}
   - {fileID: 114515943596291338}
@@ -32,9 +32,9 @@ MonoBehaviour:
   - {fileID: 114544554760415634}
   - {fileID: 114838976068668610}
   - {fileID: 114886432603073318}
-  MasterBankRef: {fileID: 114686803053581774}
+  MasterBankRef: {fileID: 114691576697891908}
   StringsBankRef: {fileID: 114455131482205032}
-  stringsBankWriteTime: 636600805109432816
+  stringsBankWriteTime: 636600877581375660
   cacheVersion: 2
 --- !u!114 &114000393739734798
 MonoBehaviour:
@@ -310,6 +310,21 @@ MonoBehaviour:
   - Name: 
     Value: 450
   Exists: 1
+--- !u!114 &114015943685116710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_drums
+  Min: -50
+  Max: 50
+  Default: 0
 --- !u!114 &114018631695841720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,6 +445,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114027264658231198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: skip_pitch
+  Min: 0
+  Max: 100
+  Default: 0
 --- !u!114 &114027339813951262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +526,24 @@ MonoBehaviour:
   Min: -50
   Max: 50
   Default: 0
+--- !u!114 &114029602510982946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: P:\Unity Projects\CosettesCassette\FMOD\Build\Mobile\Cassette_01.bank
+  lastModified: 636601847038636720
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 6997216
+  Exists: 1
 --- !u!114 &114031484926716434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,6 +1052,21 @@ MonoBehaviour:
   - Name: 
     Value: 31616
   Exists: 1
+--- !u!114 &114063717189347368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_vocals
+  Min: -50
+  Max: 50
+  Default: 0
 --- !u!114 &114064468443354848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,12 +1186,12 @@ MonoBehaviour:
   Path: event:/SFX/ZoneClear/zone_clear_01
   guid: 8ee14661abc49a47bb0c19be75ea60fc
   Banks:
-  - {fileID: 114918421382524040}
+  - {fileID: 114029602510982946}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114906435326527456}
+  - {fileID: 114409269773300006}
   MinDistance: 0
   MaxDistance: 0
   Length: 590
@@ -1552,6 +1615,21 @@ MonoBehaviour:
   Name: stage_clear_score
   Min: 0
   Max: 1
+  Default: 0
+--- !u!114 &114098774969844430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pan_lead
+  Min: -50
+  Max: 50
   Default: 0
 --- !u!114 &114099127945840248
 MonoBehaviour:
@@ -2111,6 +2189,21 @@ MonoBehaviour:
   - Name: 
     Value: 6516384
   Exists: 1
+--- !u!114 &114128619635752076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_drums
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114129259997474448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2339,6 +2432,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114150279616009310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_bass
+  Min: -50
+  Max: 50
+  Default: 0
 --- !u!114 &114150373094216964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2557,8 +2665,8 @@ MonoBehaviour:
   Path: snapshot:/Pitch Corruption/corr_pitch_01
   guid: 580983a658f9f245a0041a3a4a9220a0
   Banks:
-  - {fileID: 114918421382524040}
-  - {fileID: 114686803053581774}
+  - {fileID: 114029602510982946}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -3483,6 +3591,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114213726117610436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: skip_click
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114214451979065784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4014,7 +4137,7 @@ MonoBehaviour:
   Path: event:/Interface/Playback/play
   guid: 988900e491187342bc6c928f2d184382
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -4370,6 +4493,21 @@ MonoBehaviour:
   - Name: 
     Value: 9124736
   Exists: 0
+--- !u!114 &114270831250504170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_lead
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114274810086489772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5066,12 +5204,12 @@ MonoBehaviour:
   Path: event:/SFX/StageClear/stage_clear_01
   guid: 4d1b6b944a13f44cbc759e69eb0a9346
   Banks:
-  - {fileID: 114918421382524040}
+  - {fileID: 114029602510982946}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114299208850955014}
+  - {fileID: 114605201488522086}
   MinDistance: 0
   MaxDistance: 0
   Length: 5000
@@ -5119,7 +5257,7 @@ MonoBehaviour:
   Path: event:/Interface/PauseMenu/pause
   guid: 0fd6ba3f497f5b4ba8cf49eb8a580c5c
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5367,6 +5505,24 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114335641582177654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: P:\Unity Projects\CosettesCassette\FMOD\Build\Mobile\Cassette_02.bank
+  lastModified: 636596466204187170
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 450
+  Exists: 1
 --- !u!114 &114336248614709906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5478,7 +5634,7 @@ MonoBehaviour:
   Path: event:/Music/Menu/music
   guid: 3a17d61cd47381428e859e8584562142
   Banks:
-  - {fileID: 114438305961480952}
+  - {fileID: 114703475019639574}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -5984,6 +6140,21 @@ MonoBehaviour:
   - Name: 
     Value: 6516384
   Exists: 1
+--- !u!114 &114385593072923680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: dist_eq
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114386097461495946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6313,6 +6484,21 @@ MonoBehaviour:
   Min: 0
   Max: 12
   Default: 0
+--- !u!114 &114409269773300006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: zone_clear_score
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114409284102835102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6530,6 +6716,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: pitch_vocals
+  Min: -50
+  Max: 50
+  Default: 0
+--- !u!114 &114421873897665612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_lead
   Min: -50
   Max: 50
   Default: 0
@@ -6858,6 +7059,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114438105657595532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_chords
+  Min: -50
+  Max: 50
+  Default: 0
 --- !u!114 &114438305961480952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7156,7 +7372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Path: FMOD\Build\Mobile\Master Bank.strings.bank
-  lastModified: 636600805109432816
+  lastModified: 636600877581375660
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -7442,6 +7658,21 @@ MonoBehaviour:
   Min: -50
   Max: 50
   Default: 0
+--- !u!114 &114474341695780976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_fx
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114475298237520280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7456,8 +7687,8 @@ MonoBehaviour:
   Path: snapshot:/dist_01
   guid: fc6998dd774dec4691923bf6badb164a
   Banks:
-  - {fileID: 114918421382524040}
-  - {fileID: 114686803053581774}
+  - {fileID: 114029602510982946}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -8182,7 +8413,7 @@ MonoBehaviour:
   Path: event:/Logs/log_01
   guid: 47856d2a034f19499e555f1709e64160
   Banks:
-  - {fileID: 114918421382524040}
+  - {fileID: 114029602510982946}
   IsStream: 1
   Is3D: 0
   IsOneShot: 1
@@ -8571,13 +8802,13 @@ MonoBehaviour:
   Path: event:/Interface/Playback/skip
   guid: bcc036db0118aa41a7693feb59c97f95
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114178742679948922}
-  - {fileID: 114759428804776398}
+  - {fileID: 114213726117610436}
+  - {fileID: 114027264658231198}
   MinDistance: 0
   MaxDistance: 0
   Length: 10571
@@ -8625,6 +8856,21 @@ MonoBehaviour:
   Name: dist_eq
   Min: 0
   Max: 1
+  Default: 0
+--- !u!114 &114548774735292172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_fx
+  Min: -50
+  Max: 50
   Default: 0
 --- !u!114 &114549391821327588
 MonoBehaviour:
@@ -9407,6 +9653,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: clear_score
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114605201488522086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: stage_clear_score
   Min: 0
   Max: 1
   Default: 0
@@ -10201,6 +10462,21 @@ MonoBehaviour:
   Min: -50
   Max: 50
   Default: 0
+--- !u!114 &114674190225006958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: dist_level
+  Min: 0
+  Max: 100
+  Default: 0
 --- !u!114 &114676573737253936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10524,6 +10800,24 @@ MonoBehaviour:
   - Name: 
     Value: 1106
   Exists: 1
+--- !u!114 &114691576697891908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: P:\Unity Projects\CosettesCassette\FMOD\Build\Mobile\Master Bank.bank
+  lastModified: 636601847038899550
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 97056
+  Exists: 1
 --- !u!114 &114691953435825340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10719,6 +11013,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: solo_drums
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114703475019639574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: P:\Unity Projects\CosettesCassette\FMOD\Build\Mobile\MainMenu.bank
+  lastModified: 636596466204329390
+  LoadResult: 0
+  FileSizes:
+  - Name: 
+    Value: 1106
+  Exists: 1
+--- !u!114 &114704868389286594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: corr_pitch_toggle_01
   Min: 0
   Max: 1
   Default: 0
@@ -10959,16 +11286,31 @@ MonoBehaviour:
   Path: event:/SFX/drumhit
   guid: 2550e5d36714034b94bd635323194a13
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters:
-  - {fileID: 114024850952915010}
-  - {fileID: 114879010509202146}
+  - {fileID: 114818496455370810}
+  - {fileID: 114925600422583706}
   MinDistance: 0
   MaxDistance: 0
   Length: 874
+--- !u!114 &114720059174045758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_bass
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114720539734590236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11262,28 +11604,28 @@ MonoBehaviour:
   Path: event:/Music/Cassette_01/music
   guid: 1cebef2fcf515f4bb55193a79fc09e78
   Banks:
-  - {fileID: 114918421382524040}
+  - {fileID: 114029602510982946}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 114504987944466264}
-  - {fileID: 114815099424273760}
-  - {fileID: 114777966512946584}
-  - {fileID: 114386097461495946}
-  - {fileID: 114313437605825212}
-  - {fileID: 114780199055879708}
-  - {fileID: 114588646635627410}
-  - {fileID: 114561181533470504}
-  - {fileID: 114655708009081298}
-  - {fileID: 114014754283111766}
-  - {fileID: 114226100417177906}
-  - {fileID: 114261503179761270}
-  - {fileID: 114316776418740912}
-  - {fileID: 114925959955016434}
-  - {fileID: 114973274505145372}
-  - {fileID: 114564286922020714}
-  - {fileID: 114415546059395720}
+  - {fileID: 114474341695780976}
+  - {fileID: 114548774735292172}
+  - {fileID: 114852518575638646}
+  - {fileID: 114945804734399496}
+  - {fileID: 114720059174045758}
+  - {fileID: 114674190225006958}
+  - {fileID: 114063717189347368}
+  - {fileID: 114385593072923680}
+  - {fileID: 114704868389286594}
+  - {fileID: 114864920927999226}
+  - {fileID: 114128619635752076}
+  - {fileID: 114270831250504170}
+  - {fileID: 114421873897665612}
+  - {fileID: 114438105657595532}
+  - {fileID: 114098774969844430}
+  - {fileID: 114150279616009310}
+  - {fileID: 114015943685116710}
   MinDistance: 0
   MaxDistance: 0
   Length: 145090
@@ -12515,6 +12857,21 @@ MonoBehaviour:
   Min: 0
   Max: 100
   Default: 0
+--- !u!114 &114818496455370810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: hit_pitch
+  Min: 0
+  Max: 12
+  Default: 0
 --- !u!114 &114818709384114584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12930,7 +13287,7 @@ MonoBehaviour:
   Path: event:/Interface/PauseMenu/unpause
   guid: bfde611a55290046b77a9ed90c0f0f61
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -13065,6 +13422,21 @@ MonoBehaviour:
   Max: 1
   Default: 0
 --- !u!114 &114852388832578964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_vocals
+  Min: 0
+  Max: 1
+  Default: 0
+--- !u!114 &114852518575638646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -13291,6 +13663,21 @@ MonoBehaviour:
   Name: solo_vocals
   Min: 0
   Max: 1
+  Default: 0
+--- !u!114 &114864920927999226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: pitch_sum
+  Min: -50
+  Max: 50
   Default: 0
 --- !u!114 &114867456652434228
 MonoBehaviour:
@@ -13542,7 +13929,7 @@ MonoBehaviour:
   Path: event:/Interface/Playback/pause
   guid: c7845f267c953c4db136b3347a8cfd06
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -14123,6 +14510,21 @@ MonoBehaviour:
   Min: -50
   Max: 50
   Default: 0
+--- !u!114 &114925600422583706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: hit_success
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114925959955016434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14471,6 +14873,21 @@ MonoBehaviour:
   Min: 0
   Max: 1
   Default: 0
+--- !u!114 &114945804734399496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: solo_chords
+  Min: 0
+  Max: 1
+  Default: 0
 --- !u!114 &114950723495467192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14803,7 +15220,7 @@ MonoBehaviour:
   Path: event:/Interface/error
   guid: 263175835626c2498941389b6e88ae34
   Banks:
-  - {fileID: 114686803053581774}
+  - {fileID: 114691576697891908}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
