@@ -139,7 +139,6 @@ public class AudioManager : MonoBehaviour {
     {
         if (startedMusic && !pausedMusic)
         {
-            print("Hello?");
             pausedMusic = true;
             AudioPauseMusic();
 
@@ -147,7 +146,6 @@ public class AudioManager : MonoBehaviour {
 
         else if (startedMusic && pausedMusic)
         {
-            print("Hello2?");
             pausedMusic = false;
             AudioUnpauseMusic();
 
