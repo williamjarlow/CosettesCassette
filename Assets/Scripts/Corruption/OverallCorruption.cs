@@ -53,7 +53,6 @@ public class OverallCorruption : MonoBehaviour {
 
         for (int i = 0; i < segments.Count; i++)
         {
-            Debug.Log("REEE");
             durations.Add(new Duration());
             durations[i].start = segments[i].start * bpmInMs;
             durations[i].stop = segments[i].stop * bpmInMs;
@@ -100,7 +99,9 @@ public class OverallCorruption : MonoBehaviour {
         {
             overallCorruption += (100 - corruption.corruptionClearedPercent) / corruptions.Count;
             if (corruption.corruptionClearedPercent >= corruption.clearThreshold)
+            {
                 corruption.cleared = true;
+            }
             else
                 corruption.cleared = false;
         }
@@ -113,6 +114,7 @@ public class OverallCorruption : MonoBehaviour {
                 {
                     if (corruption.cleared != true)
                         corruptionCleared = false;
+                        
                 }
             }
             if (corruptionCleared)

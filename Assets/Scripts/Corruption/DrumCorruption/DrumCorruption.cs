@@ -135,7 +135,6 @@ public class DrumCorruption : CorruptionBaseClass
         inSegment = true;
 
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        Debug.Log(innerDistortion);
         base.EnterSegment();
     }
 

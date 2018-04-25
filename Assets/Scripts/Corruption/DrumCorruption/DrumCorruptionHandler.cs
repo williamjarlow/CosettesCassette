@@ -42,20 +42,18 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
             drumCorruption.clearThreshold = drumInformation.clearThreshold;
+            drumCorruption.segmentID = drumInformation.segmentID;
         }
 	}
     void Start()
     {
-        foreach (DrumInformation drumInformation in drumInformationList) //Set starting values for corruption
-        {
-            foreach (DrumCorruption drumCorruption in corruptions)
+            for (int j = 0; j < corruptions.Count; j++)
             {
-                for (int i = 0; i < drumInformation.beats.Count; i++)
+                for (int i = 0; i < drumInformationList[j].beats.Count; i++)
                 {
-                    drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
+                    ((DrumCorruption)corruptions[j]).beats[i] = drumInformationList[j].beats[i] * overallCorruption.bpmInMs;
                 }
-                drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
+                ((DrumCorruption)corruptions[j]).duration = overallCorruption.durations[drumInformationList[j].segmentID];
             }
-        }
     }
 }

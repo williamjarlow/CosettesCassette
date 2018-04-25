@@ -102,6 +102,13 @@ public class VisualInput : MonoBehaviour
                 foreach (Transform effect in touchParticleEffectPrefab.transform)                                             // Check for multiple particle effects and run them all once
                 {
                     GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
+
+                    if (useDrumCorruptionToMatchTiming && drumMechanic.recording)       // Info of recording state needs to be in GameManager. REMEMBER! SIMBA!
+                    {
+                        ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
+                        tempa.startColor = CatchColorChange();
+                    }
+
                     temp.GetComponent<ParticleSystem>().Play();
                     Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 }
@@ -142,24 +149,6 @@ public class VisualInput : MonoBehaviour
                     ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
                     tempa.startColor = CatchColorChange();
                 }
-                
-
-                /*
-                if (drumMechanic != null && drumCorruption != null && drumMechanic.recording)
-                {
-                    drumCorruption = GameManager.Instance.drumMechanic.GetComponentInChildren<DrumCorruption>();
-                    print(drumMechanic);
-                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
-                    Timing timing = drumCorruption.CheckTiming();
-                    if (timing == Timing.perfect)
-                        print("JIA)#I=?WD=");
-                        //tempa.startColor = Color.green;
-                    if (drumCorruption.CheckTiming() == Timing.okay)
-                        tempa.startColor = Color.red;
-                    else
-                        tempa.startColor = originalRippleColor;
-                }
-                */
 
                 temp.GetComponent<ParticleSystem>().Play();
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
