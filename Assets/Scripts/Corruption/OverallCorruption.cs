@@ -106,20 +106,28 @@ public class OverallCorruption : MonoBehaviour {
         }
         for (int i = 0; i < segments.Count; i++)
         {
-            bool cleared = true;
+            bool corruptionCleared = true;
             foreach (CorruptionBaseClass corruption in corruptions)
             {
                 if (i == corruption.segmentID)
                 {
                     if (corruption.cleared != true)
-                        cleared = false;
+                        corruptionCleared = false;
                 }
             }
-            if (cleared)
+            if (corruptionCleared)
             {
                 corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
             }
         }
+        bool levelCleared = true;
+        foreach(CorruptionBaseClass corruption in corruptions)
+        {
+            if (corruption.cleared == false)
+                levelCleared = false;
+        }
+        if(levelCleared == true)
+            GameManager.Instance.LevelCleared = true;
     } 
 
     public void UpdateDistortionAmount()
