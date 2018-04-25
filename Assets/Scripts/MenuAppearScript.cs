@@ -11,13 +11,13 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button unPauseButton;
     [SerializeField] private Text UIbuttonText;
-    private bool isShowing = true;
+    private bool isShowing = false;
 
     [SerializeField] private GameObject cassetteAnimation;
     void Start()
     {
-        menuToShow.SetActive(true);
-        menuToHide.SetActive(false);
+        //menuToShow.SetActive(true);
+        //menuToHide.SetActive(false);
       //  Button btn = pauseButton.GetComponent<Button>();
       //  btn.onClick.AddListener(() => Pause());
     }
@@ -75,17 +75,30 @@ public class MenuAppearScript : MonoBehaviour
     }
     */
 
+    public void TogglePauseScreen()
+    {
+        if (!isShowing)
+        {
+            ShowPauseScreen();
+            GameManager.Instance.audioManager.AudioUnpauseMusic();
+        }
 
+        else if (isShowing)
+        {
+            HidePauseScreen();
+            GameManager.Instance.audioManager.AudioPauseMusic();
+        }
+    }
 
     public void ShowPauseScreen()
     {
-       // isShowing = !isShowing;
+        isShowing = true;
         menuToShow.SetActive(true);
     }
 
     public void HidePauseScreen()
     {
-        //isShowing = !isShowing;
+        isShowing = false;
         menuToHide.SetActive(false);
     }
 

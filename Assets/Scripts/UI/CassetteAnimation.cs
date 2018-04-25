@@ -8,12 +8,16 @@ public class CassetteAnimation : MonoBehaviour {
     public bool cassetteAnimation = true;
     [SerializeField] private SkinnedMeshRenderer rightWheel;
     [SerializeField] private SkinnedMeshRenderer leftWheel;
+    [SerializeField] private SkinnedMeshRenderer rightRotator;
+    [SerializeField] private SkinnedMeshRenderer leftRotator;
     void Start ()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameManager.Instance.audioManager;
 
         Debug.Assert(rightWheel != null, "Right wheel is not attached to the script");
         Debug.Assert(leftWheel != null, "Left wheel is not attached to the script");
+        Debug.Assert(rightRotator != null, "Right wheel is not attached to the script");
+        Debug.Assert(leftRotator != null, "Left wheel is not attached to the script");
     }
 	
 	// Update is called once per frame
@@ -24,8 +28,10 @@ public class CassetteAnimation : MonoBehaviour {
 
         if(cassetteAnimation)
         {
-            rightWheel.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));
-            leftWheel.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));
+            rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
+            leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
+            rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
+            leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
         }
     }
 }

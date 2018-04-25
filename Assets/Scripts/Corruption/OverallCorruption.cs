@@ -129,7 +129,10 @@ public class OverallCorruption : MonoBehaviour {
                 levelCleared = false;
         }
         if(levelCleared == true)
+        {
             GameManager.Instance.LevelCleared = true;
+            GameObject.FindGameObjectWithTag("Temporary").GetComponent<KillScreen>().Winning();
+        }
     } 
 
     public void UpdateDistortionAmount()

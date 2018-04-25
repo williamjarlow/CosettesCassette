@@ -75,11 +75,12 @@ public class AudioManager : MonoBehaviour {
 		
     public void AudioPlayMusic ()
     {
-        if(!switchedToAudioLog)
+        if (!switchedToAudioLog)
 			result = musicEventDesc.createInstance(out gameMusicEv);
 
-        if(switchedToAudioLog)
-			result = logEventDesc.createInstance(out gameMusicEv);
+
+        if (switchedToAudioLog)
+            result = logEventDesc.createInstance(out gameMusicEv);
 
         result = gameMusicEv.start();
 
@@ -126,14 +127,12 @@ public class AudioManager : MonoBehaviour {
         {
             pausedMusic = true;
             AudioPauseMusic();
-
         }
 
         else if (startedMusic && pausedMusic)
         {
             pausedMusic = false;
             AudioUnpauseMusic();
-
         }
 
         if (!startedMusic)
@@ -193,6 +192,8 @@ public class AudioManager : MonoBehaviour {
 
     public void toggleTapeSide()
     {
+        AudioStopMusic();
+        startedMusic = false;
         switchedToAudioLog = !switchedToAudioLog;
     }
 

@@ -22,6 +22,6 @@ public class OverallCorruptionBar : MonoBehaviour {
         corruptionPercentage = overallCorruption.overallCorruption;
 
         // Divide by 100 because fillAmount takes values from 0 --> 1 and overallCorrption has values from 0 --> 100
-        thisImage.fillAmount = corruptionPercentage / 100;
+        thisImage.fillAmount = 1 - corruptionPercentage / 100;
 	}
 }
