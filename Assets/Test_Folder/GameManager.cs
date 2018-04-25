@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager> {
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
     public GameObject uiHandler;
+    public bool LevelCleared;
 
     [HideInInspector] public float pitch;
     [HideInInspector] public float posInSong;

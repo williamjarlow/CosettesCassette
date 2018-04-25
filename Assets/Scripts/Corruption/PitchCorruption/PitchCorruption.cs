@@ -39,14 +39,14 @@ public class PitchCorruption : CorruptionBaseClass {
 	
 	// Update is called once per frame
 	void Update () {
-        if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop && corruptionClearedPercent < threshold) //If player is inside a corrupted area
+        if ((audioManager.GetTimeLinePosition() >= duration.start &&
+            audioManager.GetTimeLinePosition() < duration.stop && index < nodes.Count) && corruptionClearedPercent < threshold) //If player is inside a corrupted area
         {
             if (!inSegment)
             {
                 EnterSegment();
             }
-            if (animationDone && index < nodes.Count)
+            if (animationDone)
             {
                 MovePitchObject();
             }

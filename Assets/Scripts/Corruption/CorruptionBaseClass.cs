@@ -8,6 +8,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector] public float innerDistortion;
     [HideInInspector] public float maxDistortion;
     [HideInInspector] public bool inSegment;
+    [HideInInspector] public float clearThreshold;
 
     public virtual void EnterSegment()
     {
