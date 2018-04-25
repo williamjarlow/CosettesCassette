@@ -71,7 +71,7 @@ public class DrumMechanic : MonoBehaviour {
     {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
-
+        
         if (recording)
         {
             // If we have started the track and there is some form of input
