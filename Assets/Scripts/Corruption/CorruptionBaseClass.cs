@@ -9,6 +9,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector] public float maxDistortion;
     [HideInInspector] public bool inSegment;
     [HideInInspector] public float clearThreshold;
+    [HideInInspector] public int segmentID;
 
     public virtual void EnterSegment()
     {

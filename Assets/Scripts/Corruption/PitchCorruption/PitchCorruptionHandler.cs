@@ -50,6 +50,7 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
             pitchCorruption.threshold = pitchInformation.clearThreshold;
+            pitchCorruption.segmentID = pitchInformation.segmentID;
             if(pitchInformation.randomizeNodes)
             {
                 int nodesCount = pitchInformation.nodes.Count;

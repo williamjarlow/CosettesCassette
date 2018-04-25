@@ -29,16 +29,22 @@ public class PitchCorruption : CorruptionBaseClass {
     AudioPitch audioPitch;
     int index = 0;
     bool animationDone = true;
-    
+
+    private OverallCorruption overallCorruption;
 
     // Use this for initialization
     void Start () {
         audioPitch = GameManager.Instance.audioPitch;
         audioManager = GameManager.Instance.audioManager;
+        overallCorruption = GameManager.Instance.overallCorruption;
+
+        // Set the pitch segments to the recording type PITCH 
+        overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
         if ((audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop && index < nodes.Count) && corruptionClearedPercent < threshold) //If player is inside a corrupted area
         {
