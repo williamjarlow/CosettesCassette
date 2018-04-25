@@ -53,6 +53,7 @@ public class OverallCorruption : MonoBehaviour {
 
         for (int i = 0; i < segments.Count; i++)
         {
+            Debug.Log("REEE");
             durations.Add(new Duration());
             durations[i].start = segments[i].start * bpmInMs;
             durations[i].stop = segments[i].stop * bpmInMs;
@@ -67,9 +68,6 @@ public class OverallCorruption : MonoBehaviour {
         {
             corruptions.AddRange(corruptionHandler.corruptions);
         }
-       
-        UpdateCorruptionAmount();
-        UpdateDistortionAmount();
 
         Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
 
@@ -82,6 +80,9 @@ public class OverallCorruption : MonoBehaviour {
             corruptedAreaList.Add(instantiatedObject);
             instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
         }
+
+        UpdateCorruptionAmount();
+        UpdateDistortionAmount();
     }
 
     void Update () {
@@ -98,13 +99,25 @@ public class OverallCorruption : MonoBehaviour {
         foreach (CorruptionBaseClass corruption in corruptions)
         {
             overallCorruption += (100 - corruption.corruptionClearedPercent) / corruptions.Count;
-            if(corruption.corruptionClearedPercent >= corruptionClearThreshold)
+            if (corruption.corruptionClearedPercent >= corruption.clearThreshold)
+                corruption.cleared = true;
+            else
+                corruption.cleared = false;
+        }
+        for (int i = 0; i < segments.Count; i++)
+        {
+            bool cleared = true;
+            foreach (CorruptionBaseClass corruption in corruptions)
             {
-                for (int i = 0; i < corruptedAreaList.Count; i++)
+                if (i == corruption.segmentID)
                 {
-                    corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                    if (corruption.cleared != true)
+                        cleared = false;
                 }
-                    
+            }
+            if (cleared)
+            {
+                corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
             }
         }
     } 

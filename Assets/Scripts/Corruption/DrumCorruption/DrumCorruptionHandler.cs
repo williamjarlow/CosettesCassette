@@ -24,7 +24,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    void Start () {
+    void Awake () {
 
         if (drumInformationList.Count <= 0)
             Assert.IsNotNull(drumCorruptionPrefab);
@@ -42,13 +42,20 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
             drumCorruption.clearThreshold = drumInformation.clearThreshold;
-            drumCorruption.segmentID = drumInformation.segmentID;
-
-            for (int i = 0; i < drumInformation.beats.Count; i++)
-            {
-                drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
-            }
-            drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
         }
 	}
+    void Start()
+    {
+        foreach (DrumInformation drumInformation in drumInformationList) //Set starting values for corruption
+        {
+            foreach (DrumCorruption drumCorruption in corruptions)
+            {
+                for (int i = 0; i < drumInformation.beats.Count; i++)
+                {
+                    drumCorruption.beats[i] = drumInformation.beats[i] * overallCorruption.bpmInMs;
+                }
+                drumCorruption.duration = overallCorruption.durations[drumInformation.segmentID];
+            }
+        }
+    }
 }

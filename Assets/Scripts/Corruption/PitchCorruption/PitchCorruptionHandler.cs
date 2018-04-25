@@ -33,7 +33,7 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
 
     OverallCorruption overallCorruption;
 
-    void Start () {
+    void Awake () {
         if (pitchInformationList.Count <= 0)
             Assert.IsNotNull(pitchCorruptionPrefab);
 
@@ -49,7 +49,7 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             pitchCorruption.duration = overallCorruption.durations[pitchInformation.segmentID];
             pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
-            pitchCorruption.threshold = pitchInformation.clearThreshold;
+            pitchCorruption.clearThreshold = pitchInformation.clearThreshold;
             pitchCorruption.segmentID = pitchInformation.segmentID;
             if(pitchInformation.randomizeNodes)
             {
@@ -71,6 +71,16 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
                 }
             }
             pitchCorruption.nodes = pitchInformation.nodes;
+        }
+    }
+    void Start()
+    {
+        foreach (PitchInformation pitchInformation in pitchInformationList) //Set starting values for corruption
+        {
+            foreach (PitchCorruption pitchCorruption in corruptions)
+            {
+                pitchCorruption.duration = overallCorruption.durations[pitchCorruption.segmentID];
+            }
         }
     }
 }
