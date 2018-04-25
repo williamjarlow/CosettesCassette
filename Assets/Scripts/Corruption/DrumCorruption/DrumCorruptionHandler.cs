@@ -42,6 +42,7 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
             drumCorruption.okayRange = drumInformation.okayRange;
             drumCorruption.maxDistortion = drumInformation.maxDistortion;
             drumCorruption.clearThreshold = drumInformation.clearThreshold;
+            drumCorruption.segmentID = drumInformation.segmentID;
         }
 	}
     void Start()
