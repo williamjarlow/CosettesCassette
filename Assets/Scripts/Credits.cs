@@ -14,32 +14,56 @@ public class Credits : MonoBehaviour {
     [SerializeField] private GameObject credits;
     private AudioManager audioManager;
     private float audiolength;
+    private float audiologlength;
     private float audioPos;
     private float audioP;
+    public bool music = true;
+    public bool audiolog = false;
 
 
     // Use this for initialization
     void Start ()
     {
-        
+        //audiolog = GameManager.Instance.GetComponent<AudioManager>().switchedToAudioLog;
         audioManager = AudioManagerz.GetComponent<AudioManager>();
         //origPos = 2200f;
         //endOfTheLine = 4400f;
-        audiolength = audioManager.GetTrackLength();
+        audiolength = audioManager.GetTrackLength();  
         
     }
 
     // Update is called once per frame
     void Update ()
-    {
-        audioPos = audioManager.GetTimeLinePosition();
-        audioP = audioPos / audiolength;
-        currentPos = audioP * endOfTheLine;
-        Vector3 temp = transform.localPosition;
-        temp.y = currentPos - origPos;
-        transform.localPosition = temp;
+    {/*
 
+        */
+        if (audiolog == true && gameObject.tag == "AudioLog")
+        {
+            print("works");
+            audioPos = audioManager.GetTimeLinePosition();
+            audioP = audioPos / audiolength;
+            currentPos = audioP * endOfTheLine;
+            Vector3 temp2 = transform.localPosition;
+            temp2.y = currentPos - origPos;
+            transform.localPosition = temp2;
+        }
+        else if (music == true && gameObject.tag == "Credits")
+        {
+            audioPos = audioManager.GetTimeLinePosition();
+            audioP = audioPos / audiolength;
+            currentPos = audioP * endOfTheLine;
+            Vector3 temp = transform.localPosition;
+            temp.y = currentPos - origPos;
+            transform.localPosition = temp;
+        }
+        
     }
   
+    public void Flip()
+    {
+        music = !music;
+        audiolog = !audiolog;
+    }
+
 }
 
