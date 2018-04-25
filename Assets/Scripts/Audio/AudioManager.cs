@@ -35,26 +35,13 @@ public class AudioManager : MonoBehaviour {
 
     void Awake ()
 	{
-		FMOD.Studio.System.create(out systemObj);
-		systemObj.getLowLevelSystem (out lowLevelSys);
-
-		//FMOD system object initialization
-		lowLevelSys.setSoftwareFormat(44100, FMOD.SPEAKERMODE.DEFAULT, 0);
-		lowLevelSys.setDSPBufferSize(512, 4);
-		lowLevelSys.setOutput(FMOD.OUTPUTTYPE.AUTODETECT);
-		result = systemObj.initialize(64, FMOD.Studio.INITFLAGS.NORMAL, FMOD.INITFLAGS.NORMAL, (IntPtr)null);
-
-		FMOD.Studio.LOADING_STATE state;
-
+        systemObj = FMODUnity.RuntimeManager.StudioSystem;
+        lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
 
         //Loads the FMOD banks for the Unity Editor
         for (int i = 0; i < bankFiles.Count; i++)
         {
-			result = systemObj.loadBankFile (Application.dataPath + "/StreamingAssets/" + bankFiles[i], FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out banks[i]);
-			Debug.Log ("load bank: " + result);
-            //FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
-			banks[i].getLoadingState(out state);
-			Debug.Log("load state: " + state);
+            FMODUnity.RuntimeManager.LoadBank(bankFiles[i], true);
         }
 
         systemObj.flushCommands ();
@@ -78,31 +65,22 @@ public class AudioManager : MonoBehaviour {
 		drumMechanic = FindObjectOfType<DrumMechanic>();
 	}
 
-	void Update(){
-		systemObj.update ();
-		lowLevelSys.update ();
-	}
-
 
     public void AudioPlayMusic ()
     {
         if(!switchedToAudioLog)
 			result = musicEventDesc.createInstance(out gameMusicEv);
-		Debug.Log ("create instance " + result); 
 
         if(switchedToAudioLog)
 			result = logEventDesc.createInstance(out gameMusicEv);
-		Debug.Log ("create instance " + result); 
-		
+
         result = gameMusicEv.start();
-		Debug.Log ("start instance " + result);
 
 		drumMechanic.LoadKick ();
 		StartCoroutine (GetDSP());
 
 		FMOD.Studio.PLAYBACK_STATE state;
 		result = gameMusicEv.getPlaybackState (out state);
-		Debug.Log ("playback state: " + state);
     }
 
 	public void AudioStopMusic ()

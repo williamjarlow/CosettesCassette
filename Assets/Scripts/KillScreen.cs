@@ -20,25 +20,10 @@ public class KillScreen : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        credit = credits.GetComponent<Credits>();
-        now = credit.currentPos;
-        
-
-
-        if (now > 4000)
-        {
-            Winning();
-        }
-        else if (now < 4000)
-        {
-            GetComponent<Text>().enabled = false;
-            transform.GetChild(0).gameObject.SetActive(false);
-            transform.GetChild(1).gameObject.SetActive(false);
-        }
 
     }
 
-    void Winning ()
+    public void Winning ()
     {
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(true);

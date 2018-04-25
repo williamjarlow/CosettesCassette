@@ -9,6 +9,7 @@ public class Duration
     public int stop;
 
     private List<int> drumRecordings = new List<int>();
+    private List<int> pitchRecordings = new List<int>();
 
     // Recording type to differentiate the corrupted area
     public enum RecordingType { DRUMS, PITCH };
@@ -24,15 +25,22 @@ public class Duration
         return drumRecordings;
     }
 
+    public void AddPitchRecordings(int timeStamp)
+    {
+        pitchRecordings.Add(timeStamp);
+    }
+
+    public List<int> GetPitchRecordings()
+    {
+        return pitchRecordings;
+    }
+
     public void ClearRecordings()
     {
         drumRecordings.Clear();
+        pitchRecordings.Clear();
     }
 
-    /*public void SetRecordingType(RecordingType in_recordingType)
-    {
-        recordingType = in_recordingType;
-    }*/
 
 }
 

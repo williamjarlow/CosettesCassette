@@ -11,6 +11,7 @@ public class CorruptionVisuals : MonoBehaviour {
 
     [SerializeField] private Image maskImage;
     private Color originalColor;
+    public Color repairedColor;
     private RectTransform timelineRectTransform;
     private RectTransform corruptedAreaRectTransform;
 
@@ -27,7 +28,6 @@ public class CorruptionVisuals : MonoBehaviour {
     {
         // Save the original color to be able to reset it when the corrupted area has been fixed
         //maskImage = GetComponentInChildren<Image>();
-
 	}
 
     public void SetCorruptionPosition(int corruptionStartPoint, int corruptionEndPoint)
@@ -61,6 +61,7 @@ public class CorruptionVisuals : MonoBehaviour {
 
     public void RestoreOriginalColor()
     {
-        maskImage.color = Color.white;
+        maskImage.color = repairedColor;
     }
+
 }

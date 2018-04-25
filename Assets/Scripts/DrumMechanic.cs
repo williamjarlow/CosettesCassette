@@ -37,6 +37,7 @@ public class DrumMechanic : MonoBehaviour {
 
                 //** TODO ** //
     // 1. Fix recording not stopping when you rewind to before the segment
+    // 2. The audio input when recording is playing more than once
 
     void Start ()
     {
@@ -49,16 +50,21 @@ public class DrumMechanic : MonoBehaviour {
         Debug.Log(" *** Create sound result *** --> " + result);
 
         // ** TEMP ** //
-        audioSource = GetComponent<AudioSource>();
-        AudioSettings.SetDSPBufferSize(256, 2);
+       // audioSource = GetComponent<AudioSource>();
+       // AudioSettings.SetDSPBufferSize(256, 2);
 
-	}
+        // Set the drum segment's recording type to 'DRUMS'
+        overallCorruption.durations[currentSegmentIndex].recordingType = Duration.RecordingType.DRUMS;
 
+
+    }
+
+    // Loading the kick sound
     public void LoadKick()
     {
         result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
         Debug.Log("info " + result);
-        kickInfo.mode = FMOD.MODE.CREATECOMPRESSEDSAMPLE;
+        kickInfo.mode = FMOD.MODE.CREATESAMPLE;
         Debug.Log("mode " + result);
 
         result = audioManager.lowLevelSys.createSound(kickInfo.name_or_data, kickInfo.mode, ref kickInfo.exinfo, out kickSound);
@@ -71,8 +77,8 @@ public class DrumMechanic : MonoBehaviour {
     {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
-        
-        if (recording)
+
+        if (recording && overallCorruption.durations[currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
         {
             // If we have started the track and there is some form of input
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
@@ -80,8 +86,6 @@ public class DrumMechanic : MonoBehaviour {
                 //Play the bass drum sound and record it by adding the current time stamp to the list.
                 result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
                 Debug.Log("Kick: " + result);
-                //audioSource.Play();
-
 
                 overallCorruption.durations[currentSegmentIndex].AddDrumRecordings(timeStamp);
                 isPlaying = true;
