@@ -29,8 +29,8 @@ public class OverallCorruption : MonoBehaviour {
 
     [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
 
-    float overallCorruption;
-    float overallDistortion;
+    [HideInInspector] public float overallCorruption;
+    [HideInInspector] public float overallDistortion;
 
     [HideInInspector]
     // The list of beats converted to milliseconds

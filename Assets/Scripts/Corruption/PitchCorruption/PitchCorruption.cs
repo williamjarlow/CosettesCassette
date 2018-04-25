@@ -45,22 +45,25 @@ public class PitchCorruption : CorruptionBaseClass {
 	void Update () {
 
         if ((audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop && index < nodes.Count) && !cleared) //If player is inside a corrupted area
+            audioManager.GetTimeLinePosition() < duration.stop ) && !cleared) //If player is inside a corrupted area
         {
             if (!inSegment)
             {
                 EnterSegment();
             }
-            if (animationDone)
+            if (index < nodes.Count)
             {
-                MovePitchObject();
-            }
-            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * 10) - mercyRange)
-                audioPitch.SetPitch(0, PitchType.All);
-            else
-            {
-                audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 10), PitchType.All);
-                score -= (punishment * Time.deltaTime);
+                if (animationDone)
+                {
+                    MovePitchObject();
+                }
+                if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * 10) - mercyRange)
+                    audioPitch.SetPitch(0, PitchType.All);
+                else
+                {
+                    audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 10), PitchType.All);
+                    score -= (punishment * Time.deltaTime);
+                }
             }
 
         }
@@ -91,6 +94,7 @@ public class PitchCorruption : CorruptionBaseClass {
             score = 0;
         corruptionClearedPercent = score;
         innerDistortion = 0;
+        index = 0;
         StopCoroutine(lastCoroutine);
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
