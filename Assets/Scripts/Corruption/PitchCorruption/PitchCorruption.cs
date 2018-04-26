@@ -16,8 +16,7 @@ public class PitchCorruption : CorruptionBaseClass {
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
 
     const float startingScore = 100;
-    const int positionalDivision = 5; //This constant represents the disparity between the maximum value of the slider, 
-    // the value of the pitch indicator's position and 
+    const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
 
     float punishment;
     float totalSeconds;
@@ -97,13 +96,13 @@ public class PitchCorruption : CorruptionBaseClass {
             {
                 MovePitchObject();
             }
-            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / 2)) + mercyRange && 
-                pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / 2) - mercyRange))
+            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax)) + mercyRange && 
+                pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
                 audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
             else
             {
                 audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 
-                (pitchSlider.maxValue/2)), PitchType.All);
+                (pitchSlider.maxValue/pitchIndicatorMax)), PitchType.All);
                 score -= (punishment * Time.deltaTime); //If the player isn't within acceptable margin, mess the pitch up accordingly.
             }
         }
