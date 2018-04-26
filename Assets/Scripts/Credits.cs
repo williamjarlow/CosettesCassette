@@ -12,18 +12,22 @@ public class Credits : MonoBehaviour {
     [SerializeField] private float endOfTheLine;
     [SerializeField] private GameObject AudioManagerz;
     [SerializeField] private GameObject credits;
+    [SerializeField] private GameObject winning;
     private AudioManager audioManager;
+    private KillScreen KS;
     private float audiolength;
     private float audiologlength;
     private float audioPos;
     private float audioP;
     public bool music = true;
     public bool audiolog = false;
+    [SerializeField] private string creditsOrAudiolog;
 
 
     // Use this for initialization
     void Start ()
     {
+        KS = winning.GetComponent<KillScreen>();
         //audiolog = GameManager.Instance.GetComponent<AudioManager>().switchedToAudioLog;
         audioManager = AudioManagerz.GetComponent<AudioManager>();
         //origPos = 2200f;
@@ -34,10 +38,9 @@ public class Credits : MonoBehaviour {
 
     // Update is called once per frame
     void Update ()
-    {/*
-
-        */
-        if (audiolog == true && gameObject.tag == "AudioLog")
+    {
+        
+        if (creditsOrAudiolog == "Audiolog" && audiolog ==true)
         {
             print("works");
             audioPos = audioManager.GetTimeLinePosition();
@@ -47,7 +50,7 @@ public class Credits : MonoBehaviour {
             temp2.y = currentPos - origPos;
             transform.localPosition = temp2;
         }
-        else if (music == true && gameObject.tag == "Credits")
+        else if (creditsOrAudiolog == "Credits" && music == true)
         {
             audioPos = audioManager.GetTimeLinePosition();
             audioP = audioPos / audiolength;

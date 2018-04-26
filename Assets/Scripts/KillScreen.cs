@@ -5,11 +5,6 @@ using UnityEngine.UI;
 
 public class KillScreen : MonoBehaviour {
 
-    [SerializeField] private Credits credits;
-    private Credits credit;
-    
-    private float now;
-
     // Use this for initialization
     void Start ()
     {
@@ -25,15 +20,19 @@ public class KillScreen : MonoBehaviour {
 
     public void Winning ()
     {
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(true);
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
         GetComponent<Text>().enabled = true;
     }
 
     public void ShutdownWinning()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(false);
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
         GetComponent<Text>().enabled = false;
     }
 
