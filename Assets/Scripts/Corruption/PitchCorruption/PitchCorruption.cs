@@ -47,7 +47,7 @@ public class PitchCorruption : CorruptionBaseClass {
 	void Update () {
 
         if ((audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop ) && !cleared) //If player is inside a corrupted area
+            audioManager.GetTimeLinePosition() < duration.stop ) /*&& !cleared*/) //If player is inside a corrupted area
         {
             if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.
             {
