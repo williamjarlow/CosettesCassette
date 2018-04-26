@@ -59,6 +59,8 @@ public class DrumCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
+    private FMOD.RESULT result;
+
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
@@ -93,8 +95,9 @@ public class DrumCorruption : CorruptionBaseClass
             }
             if (audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count - 1] && firstBeat == false)
             {
-                audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
+                result = audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
                 firstBeat = true;
+                Debug.Log("Kick result: " + result);
             }
             else if (audioManager.GetTimeLinePosition() > beats[beats.Count - 1] && firstBeat)
             {
