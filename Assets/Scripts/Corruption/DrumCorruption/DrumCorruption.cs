@@ -59,8 +59,6 @@ public class DrumCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
-    private FMOD.RESULT result;
-
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
@@ -84,7 +82,7 @@ public class DrumCorruption : CorruptionBaseClass
         Assert.IsTrue(hitValue >= 0, "Setting hitvalue to anything lower than 0 will punish the player for hitting the beat.");
     }
 
-    void Update()
+    void Update() //All of everything gets done in Update.
     {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop && corruptionClearedPercent < clearThreshold) //If player is inside a corrupted area
@@ -93,37 +91,12 @@ public class DrumCorruption : CorruptionBaseClass
             {
                 EnterSegment();
             }
-            if (audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count - 1] && firstBeat == false)
-            {
-                result = audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
-                firstBeat = true;
-                Debug.Log("Kick result: " + result);
-            }
-            else if (audioManager.GetTimeLinePosition() > beats[beats.Count - 1] && firstBeat)
-            {
-                audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
-                firstBeat = false;
-            }
+
+            SetKickMute();
 
             if (drumMechanic.recording) //If recording
             {
-                if (index < beats.Count) //If there are more beats available for the player to hit
-                {
-                    if (inCorruption && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
-                    {
-                        completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
-                        index++;
-                    }
-                    else if (drumMechanic.gaveInput) //If player gave input
-                    {
-                        drumMechanic.gaveInput = false;
-                        if (!inCorruption)
-                            ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
-                        completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
-
-                        inCorruption = true;
-                    }
-                }
+                RecordBeats();
             }
         }
         else if (inSegment) //If player leaves corrupted area
@@ -149,6 +122,41 @@ public class DrumCorruption : CorruptionBaseClass
         innerDistortion = 0;
         base.ExitSegment();
         ResetConditions();
+    }
+
+    void SetKickMute()
+    {
+        if (audioManager.GetTimeLinePosition() > beats[0] && audioManager.GetTimeLinePosition() < beats[beats.Count - 1] && firstBeat == false)
+        { //If the player has just entered the corruption (not the segment)
+            audioManager.gameMusicEv.setParameterValue("kick_mute", 1);
+            firstBeat = true;
+        }
+        else if (audioManager.GetTimeLinePosition() > beats[beats.Count - 1] && firstBeat)
+        {//If the player has just exited the corruption (not the segment)
+            audioManager.gameMusicEv.setParameterValue("kick_mute", 0);
+            firstBeat = false;
+        }
+    }
+
+    void RecordBeats()
+    {
+        if (index < beats.Count) //If there are more beats available for the player to hit
+        {
+            if (inCorruption && audioManager.GetTimeLinePosition() > beats[index] + okayRange) //If player missed a beat
+            {
+                completedBeats.Add(CheckTiming()); //Add the missed beat to the completedBeats list
+                index++;
+            }
+            else if (drumMechanic.gaveInput) //If player gave input
+            {
+                drumMechanic.gaveInput = false;
+                if (!inCorruption)
+                    ResetConditions(); //If this is the first input read in the corruption, reset the conditions before proceeding with the rest.
+                completedBeats.Add(CheckTiming()); //Add the beat from the player input to the completedBeats list
+
+                inCorruption = true;
+            }
+        }
     }
 
     public override void GradeScore()
