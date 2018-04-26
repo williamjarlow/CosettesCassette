@@ -17,6 +17,8 @@ public class OverallCorruptionBar : MonoBehaviour {
     {
         thisImage = GetComponent<Image>();
         overallCorruption = GameManager.Instance.overallCorruption;
+
+        thisImage.fillAmount = 0;
 	}
 	
 	void Update ()
@@ -24,7 +26,7 @@ public class OverallCorruptionBar : MonoBehaviour {
         corruptionPercentage = overallCorruption.overallCorruption;
 
         // Divide by 100 because fillAmount takes values from 0 --> 1 and overallCorrption has values from 0 --> 100
-        thisImage.fillAmount = Mathf.Lerp(thisImage.fillAmount, overallCorruption.overallCorruption / 100, Time.deltaTime * speed);
+        thisImage.fillAmount = Mathf.Lerp(thisImage.fillAmount, 1 - overallCorruption.overallCorruption / 100, Time.deltaTime * speed);
 
     }
 }
