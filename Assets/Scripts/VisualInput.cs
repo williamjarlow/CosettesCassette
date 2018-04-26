@@ -103,7 +103,7 @@ public class VisualInput : MonoBehaviour
                 {
                     GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
 
-                    if (useDrumCorruptionToMatchTiming && drumMechanic.recording)       // Info of recording state needs to be in GameManager. REMEMBER! SIMBA!
+                    if (useDrumCorruptionToMatchTiming && GameManager.Instance.recording)       // Info of recording state needs to be in GameManager. REMEMBER! SIMBA!
                     {
                         ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
                         tempa.startColor = CatchColorChange();
@@ -144,7 +144,7 @@ public class VisualInput : MonoBehaviour
                 GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
                 
                 
-                if (useDrumCorruptionToMatchTiming && drumMechanic.recording)
+                if (useDrumCorruptionToMatchTiming && GameManager.Instance.recording)
                 {
                     ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
                     tempa.startColor = CatchColorChange();

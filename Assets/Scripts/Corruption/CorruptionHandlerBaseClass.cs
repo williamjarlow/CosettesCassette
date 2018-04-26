@@ -14,7 +14,18 @@ public class Duration
     // Recording type to differentiate the corrupted area
     public enum RecordingType { DRUMS, PITCH };
     public RecordingType recordingType { get; set; }
-    
+
+
+    // Add more checks when adding more mechanics
+    public bool HasRecordings()
+    {
+        if (drumRecordings.Count == 0 && pitchRecordings.Count == 0)
+            return false;
+
+        else
+            return true;
+    }
+
     public void AddDrumRecordings(int timeStamp)
     {
         drumRecordings.Add(timeStamp);

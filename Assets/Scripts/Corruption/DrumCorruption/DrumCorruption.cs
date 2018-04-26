@@ -94,7 +94,7 @@ public class DrumCorruption : CorruptionBaseClass
 
             SetKickMute();
 
-            if (drumMechanic.recording) //If recording
+            if (GameManager.Instance.recording) //If recording
             {
                 RecordBeats();
             }
@@ -117,7 +117,7 @@ public class DrumCorruption : CorruptionBaseClass
     public override void ExitSegment()
     {
         inSegment = false;
-        if (drumMechanic.recording)
+        if (GameManager.Instance.recording)
             GradeScore();
         innerDistortion = 0;
         base.ExitSegment();
