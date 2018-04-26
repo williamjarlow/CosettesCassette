@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class StickerManager : MonoBehaviour {
 
-    //[SerializeField] private GameObject stickerPrefab;
-    //[SerializeField] private GameObject generalCategory;
-
     private StickerButton activeButton;
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private GameObject generalBtn;
@@ -15,19 +12,21 @@ public class StickerManager : MonoBehaviour {
     [SerializeField] private GameObject[] otherCategories;
     [SerializeField] private GameObject particleSticker;
     [SerializeField] private GameObject saveSystemRef;
+    [SerializeField] private int showDuration;
 
     [SerializeField] private GameObject stickerPrefab;
     private bool menuDisable = true;
 
     public Dictionary<string, Sticker> stickers = new Dictionary<string, Sticker>();
 
-    // Use this for initialization
     void Start ()
     {
 
         activeButton = generalBtn.GetComponent<StickerButton>();
         activeButton.OnClick();
 
+        //Deactivate all other categories than the chosen start category, this needs to be done as the stickers
+        //in each category HAS TO be instantiated before we load the stickers.
         for(int i=0; i < otherCategories.Length; i++)
         {
             otherCategories[i].SetActive(false);
@@ -36,8 +35,9 @@ public class StickerManager : MonoBehaviour {
         saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickers);
     }
 	
-	// Update is called once per frame
 	void Update () {
+        //This HAS TO be done AFTER the Awake() method in StickerPrefs or it wont work
+        //This solution is temporary, if someone has a better idea feel free to change
         if(menuDisable == true)
         {
             menuDisable = false;
@@ -49,6 +49,7 @@ public class StickerManager : MonoBehaviour {
             stickerMenu.SetActive(!stickerMenu.activeSelf);
         }
 
+        //Example on how to earn a sticker
         if (Input.GetKeyDown(KeyCode.Q))
         {
             EarnSticker("PressQ");
@@ -70,6 +71,7 @@ public class StickerManager : MonoBehaviour {
         }
     }
 
+    //Earns the chosen sticker, call thiss with the exact stickers name to earn the sticker and set its correct values in the sticker menu
     public void EarnSticker(string title)
     {
         if(stickers[title].EarnSticker())
@@ -82,26 +84,25 @@ public class StickerManager : MonoBehaviour {
         }
     }
 
+    //Wait for some time and disable the sticker notification
     public IEnumerator HideSticker(GameObject sticker)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(showDuration);
         sticker.SetActive(false);
     }
 
+    //Set the corresponding sticker values inside the visual element of earning a sticker.
+    //The GetChild is hardcoded to find the Image child of the Particle_sticker gameobject, find better solution?
     public void SetVisualSticker(GameObject sticker, string title)
     {
-        //sticker.transform.SetParent(sticker.transform);
         Vector3 temp = sticker.transform.GetChild(4).GetComponent<Image>().rectTransform.localPosition;
         temp.x = 0;
         temp.y = 20;
-        //temp.z = 0;       //Ballar ur i min scne, kan behövas i ett bättre kanvas
         sticker.transform.GetChild(4).GetComponent<Image>().rectTransform.localPosition = temp;
-        //sticker.transform.GetChild(0).GetComponent<Text>().text = title;
-        //sticker.transform.GetChild(1).GetComponent<Text>().text = stickers[title].Description;
-        //sticker.transform.GetChild(2).GetComponent<Text>().text = stickers[title].Points.ToString();
         sticker.transform.GetChild(4).GetComponent<Image>().sprite = stickers[title].Completed;
     }
 
+    //Change the category on button clicks in the sticker album
     public void ChangeCategory(GameObject button)
     {
         StickerButton stickerButton = button.GetComponent<StickerButton>();

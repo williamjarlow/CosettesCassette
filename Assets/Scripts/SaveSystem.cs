@@ -11,11 +11,10 @@ public class SaveSystem : MonoBehaviour
 
     [SerializeField] private GameObject stickerManRef;
     PlayerData data = new PlayerData();
-    //public bool temp = true;
-    //public bool temp1 = true;
 
     void Awake()
     {
+        // Make sure we only have one instance of the save system and make sure it won't be destroyed between scenes
         if (saveSystem == null)
         {
             DontDestroyOnLoad(gameObject);
@@ -27,57 +26,12 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-    // Used for testing, if working properly please remove me
-    /*void Update()
-    {
-        PlayerData data = new PlayerData();
-
-        if (temp == true)
-        {
-            SaveSegmentStruct A = new SaveSegmentStruct();
-            A.points = 1;
-
-            SaveSegmentStruct B = new SaveSegmentStruct();
-            B.points = 1;
-            SaveSegmentStruct F = new SaveSegmentStruct();
-            F.points = 1;
-            SaveSegmentStruct G = new SaveSegmentStruct();
-            G.points = 1;
-
-            data.segmentSave.Add(new List<SaveSegmentStruct> { A, B, F, G });
-
-            SaveSegmentStruct C = new SaveSegmentStruct();
-            C.points = 1;
-
-            SaveSegmentStruct D = new SaveSegmentStruct();
-            D.points = 1;
-
-            SaveSegmentStruct E = new SaveSegmentStruct();
-            E.points = 1;
-
-            data.segmentSave.Add(new List<SaveSegmentStruct> { C, D, E });
-            
-            data.segmentSave[0][1] = A;
-
-            temp = false;
-        }
-
-        if(temp1 == true)
-        {
-            print(data.segmentSave.Count);
-            print(data.segmentSave[0].Count);
-            print(data.segmentSave[1].Count);
-
-            temp1 = false;
-        }
-    }*/
-
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
         
-
+        //Check if the specific level and segment is a part of the save file, if its not we create a slot for it
     CreateSaveState:
         if(data.segmentSave.Count < levelIndex + 1)
         {
@@ -108,6 +62,7 @@ public class SaveSystem : MonoBehaviour
                 }
             }
         }
+    //Add segment save to the save file and serialize it.
     Continue:
         data.segmentSave[levelIndex][segmentIndex] = save;
 
@@ -120,6 +75,7 @@ public class SaveSystem : MonoBehaviour
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
         
+        //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
         if(data.stickersSave.ContainsKey(name))
         {
             data.stickersSave[name] = earned;
@@ -128,6 +84,7 @@ public class SaveSystem : MonoBehaviour
         {
             data.stickersSave.Add(name, earned);
         }
+        //Serialize the values and save
         bf.Serialize(file, data);
         file.Close();
     }
@@ -140,6 +97,8 @@ public class SaveSystem : MonoBehaviour
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
 
+            //Get all keys and update the values in the sticker album, basically check if we have earned a sticker
+            //and make sure we also have it unlocked again when we start the game anew
             List<string> keyList = new List<string>(stickersRef.Keys);
             for (int i = 0; i < data.stickersSave.Count; i++)
             {
@@ -158,6 +117,7 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    //WIP
     public void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
@@ -172,6 +132,8 @@ public class SaveSystem : MonoBehaviour
         }
     }
     
+    //Clears the earned stickers, unsure whether we want to use this later or not. 
+    //This is currently only used for testing the stickers.
     public void ClearStickers(Dictionary<string, Sticker> stickersRef)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -210,5 +172,7 @@ class PlayerData
 {
     //Lista av listor där första listan består av nivåer(kassetter) pch andra listan består av segmenten för denna lista.
     public List<List<SaveSegmentStruct>> segmentSave = new List<List<SaveSegmentStruct>>();
+
+    //Dictionary av strings och bools, sparar namnet på en sticker och sätter boolen till antingen true eller false, baserat på om vi har fått den eller ej.
     public Dictionary<string, bool> stickersSave = new Dictionary<string, bool>();
 }
