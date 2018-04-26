@@ -52,9 +52,6 @@ public class DrumMechanic : MonoBehaviour {
        // audioSource = GetComponent<AudioSource>();
        // AudioSettings.SetDSPBufferSize(256, 2);
 
-        // Set the drum segment's recording type to 'DRUMS'
-        overallCorruption.durations[currentSegmentIndex].recordingType = Duration.RecordingType.DRUMS;
-
 		result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
 		Debug.Log("info " + result);
 		kickInfo.mode = FMOD.MODE.CREATESAMPLE;
