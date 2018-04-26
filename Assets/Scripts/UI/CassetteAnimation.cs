@@ -10,6 +10,8 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private SkinnedMeshRenderer leftWheel;
     [SerializeField] private SkinnedMeshRenderer rightRotator;
     [SerializeField] private SkinnedMeshRenderer leftRotator;
+    [SerializeField] private GameObject Cassette;
+    [SerializeField] private GameObject Lid;
     void Start ()
     {
         audioManager = GameManager.Instance.audioManager;
@@ -33,5 +35,10 @@ public class CassetteAnimation : MonoBehaviour {
             rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
             leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
         }
+    }
+    public void PlayAnimation()
+    {
+        Cassette.GetComponent<Animator>().SetBool("Run", true);
+        Lid.GetComponent<Animator>().SetBool("Run", true);
     }
 }
