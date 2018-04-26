@@ -10,6 +10,8 @@ public class OverallCorruptionBar : MonoBehaviour {
     private Image thisImage;
     private OverallCorruption overallCorruption;
     private float corruptionPercentage;
+    private float startValue;
+    [SerializeField] private float speed = 1;
 
 	void Start ()
     {
@@ -22,6 +24,7 @@ public class OverallCorruptionBar : MonoBehaviour {
         corruptionPercentage = overallCorruption.overallCorruption;
 
         // Divide by 100 because fillAmount takes values from 0 --> 1 and overallCorrption has values from 0 --> 100
-        thisImage.fillAmount = 1 - corruptionPercentage / 100;
-	}
+        thisImage.fillAmount = Mathf.Lerp(thisImage.fillAmount, overallCorruption.overallCorruption / 100, Time.deltaTime * speed);
+
+    }
 }
