@@ -152,29 +152,35 @@ public class AudioManager : MonoBehaviour {
 		FMOD.DSPConnection DSPCon;
 
 		result = gameMusicEv.getChannelGroup (out musicChanGroup);
-		print ("group: " + result);
+		//print ("group: " + result);
 		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
-		print ("sub group: " + result);
+		//print ("sub group: " + result);
 		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP); // 3 carries channels of instrument tracks, 0 is the sum track
-		print ("sub group dsp: " + result);
+		//print ("sub group dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon); // adding effects in studio messes up 4 and beyond
-		print ("dsp: " + result);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
-		print ("dsp: " + result);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-		print ("dsp: " + result);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-		print ("dsp: " + result);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
-		print ("dsp: " + result);
+		//print ("dsp: " + result);
 
-		//in DSP 3 of subgroup
-		//0 = chords
-		//1 = vocals
-		//2 = drums
-		//3 = bass
-		//4 = lead
-	}
+        pitchChordsDSP.setBypass(false);
+        pitchVocalsDSP.setBypass(false);
+        pitchDrumsDSP.setBypass(false);
+        pitchBassDSP.setBypass(false);
+        pitchLeadDSP.setBypass(false);
+
+        //in DSP 3 of subgroup
+        //0 = chords
+        //1 = vocals
+        //2 = drums
+        //3 = bass
+        //4 = lead
+    }
 
     public float GetTrackLength()
     {

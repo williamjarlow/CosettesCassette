@@ -47,22 +47,22 @@ public class PitchCorruption : CorruptionBaseClass {
         if ((audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop ) && !cleared) //If player is inside a corrupted area
         {
-            if (!inSegment)
+            if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.
             {
                 EnterSegment();
             }
-            if (index < nodes.Count)
+            if (index < nodes.Count) //while there are more nodes to visit in the node list
             {
-                if (animationDone)
+                if (animationDone) //if the current animation is done, start a new one.
                 {
                     MovePitchObject();
                 }
                 if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * 10) - mercyRange)
-                    audioPitch.SetPitch(0, PitchType.All);
+                    audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
                 else
                 {
                     audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 10), PitchType.All);
-                    score -= (punishment * Time.deltaTime);
+                    score -= (punishment * Time.deltaTime); //If the player isn't within acceptable margin, mess the pitch up accordingly.
                 }
             }
 
@@ -75,15 +75,15 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
-        score = startingScore;
-        totalSeconds = 0;
+        score = startingScore; //Score starts at 100 and decreases when the player messes up.
+        totalSeconds = 0;   //Amount of time that the entire corruption should take. This is what is used to calculate how punished the player will be.
         foreach(PitchNode node in nodes)
         {
             totalSeconds += node.seconds;
         }
         punishment = score / totalSeconds;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform);
+        pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
         base.EnterSegment();
     }
 
@@ -94,7 +94,7 @@ public class PitchCorruption : CorruptionBaseClass {
         corruptionClearedPercent = score;
         innerDistortion = 0;
         index = 0;
-        StopCoroutine(lastCoroutine);
+        StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
         base.ExitSegment();

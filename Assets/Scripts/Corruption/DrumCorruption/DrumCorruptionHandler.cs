@@ -47,13 +47,13 @@ public class DrumCorruptionHandler : CorruptionHandlerBaseClass {
 	}
     void Start()
     {
-            for (int j = 0; j < corruptions.Count; j++)
+        for (int j = 0; j < corruptions.Count; j++)
+        {
+            for (int i = 0; i < drumInformationList[j].beats.Count; i++)
             {
-                for (int i = 0; i < drumInformationList[j].beats.Count; i++)
-                {
-                    ((DrumCorruption)corruptions[j]).beats[i] = drumInformationList[j].beats[i] * overallCorruption.bpmInMs;
-                }
-                ((DrumCorruption)corruptions[j]).duration = overallCorruption.durations[drumInformationList[j].segmentID];
+                ((DrumCorruption)corruptions[j]).beats[i] = drumInformationList[j].beats[i] * overallCorruption.bpmInMs;
             }
+            ((DrumCorruption)corruptions[j]).duration = overallCorruption.durations[drumInformationList[j].segmentID];
+        }
     }
 }

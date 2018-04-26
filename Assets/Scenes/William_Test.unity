@@ -593,7 +593,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 373748121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 690, y: 334.20352, z: 0}
+  m_LocalPosition: {x: 690, y: 332.68, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1743541576}
@@ -3057,7 +3057,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1173963188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 287.92352, z: 0}
+  m_LocalPosition: {x: 0, y: 286.4, z: 0}
   m_LocalScale: {x: 2.3, y: 2.3, z: 1}
   m_Children:
   - {fileID: 770742751}
@@ -3516,7 +3516,7 @@ RectTransform:
   m_GameObject: {fileID: 1382443272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 90}
-  m_LocalScale: {x: 0.11842511, y: 0.11842511, z: 0.11842511}
+  m_LocalScale: {x: 0.11879635, y: 0.11879635, z: 0.11879635}
   m_Children:
   - {fileID: 983012529}
   - {fileID: 599771680}
@@ -4289,6 +4289,21 @@ Prefab:
       propertyPath: bassDrumKey
       value: cassette_01_kick
       objectReference: {fileID: 0}
+    - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: bankFiles.Array.data[0]
+      value: Cassette_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: bankFiles.Array.data[1]
+      value: Master Bank
+      objectReference: {fileID: 0}
+    - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: bankFiles.Array.data[2]
+      value: Master Bank.strings
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f236062a340c42644b0efd0d34e0e407, type: 2}
   m_IsPrefabParent: 0
@@ -4312,7 +4327,7 @@ MonoBehaviour:
   corruptionAmount: 0
   corruptions: []
   pitchInformationList:
-  - maxDistortion: 50
+  - maxDistortion: 40
     currentDistortion: 0
     clearThreshold: 50
     segmentID: 1
@@ -4634,7 +4649,7 @@ Prefab:
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -4649,7 +4664,7 @@ Prefab:
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.data[2].beats.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4097626866754786, guid: 217ff3c6edad08746800892c4eab6f54, type: 2}
       propertyPath: m_LocalPosition.x
@@ -4816,12 +4831,12 @@ Prefab:
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.data[2].beats.Array.data[0]
-      value: 4200
+      value: 52
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.data[2].beats.Array.data[1]
-      value: 4600
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -4836,7 +4851,7 @@ Prefab:
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.data[2].okayRange
-      value: 200
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -4851,7 +4866,7 @@ Prefab:
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: drumInformationList.Array.data[2].maxDistortion
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -5009,6 +5024,16 @@ Prefab:
         type: 2}
       propertyPath: segments.Array.data[2].stop
       value: 390
+      objectReference: {fileID: 0}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[2].clearThreshold
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
+        type: 2}
+      propertyPath: drumInformationList.Array.data[2].segmentID
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 217ff3c6edad08746800892c4eab6f54, type: 2}
