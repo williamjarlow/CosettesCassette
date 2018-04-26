@@ -966,7 +966,7 @@ MeshFilter:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 145553070}
-  m_Mesh: {fileID: 4300022, guid: 735b5ef709e79544a88334d206382fab, type: 3}
+  m_Mesh: {fileID: 4300022, guid: 287c8488c01703d4692ae85a3274f86a, type: 3}
 --- !u!1 &152183464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1778,7 @@ Animator:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 363317231}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 6ff1bf382a74cb04dad43107de09572b, type: 3}
+  m_Avatar: {fileID: 9000000, guid: d6b78d5079f3d7042bb1e585c27efde1, type: 3}
   m_Controller: {fileID: 9100000, guid: be76df3b822ace54eb45b75a5ad7dc81, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -11555,6 +11555,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1403364531}
+        m_MethodName: PlayAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1083344556
@@ -13249,6 +13260,8 @@ MonoBehaviour:
   leftWheel: {fileID: 563707983}
   rightRotator: {fileID: 346344774}
   leftRotator: {fileID: 616680857}
+  Cassette: {fileID: 363317231}
+  Lid: {fileID: 1700430267}
 --- !u!95 &1403364532
 Animator:
   serializedVersion: 3
@@ -21607,6 +21620,7 @@ GameObject:
   - component: {fileID: 1700430268}
   - component: {fileID: 1700430270}
   - component: {fileID: 1700430269}
+  - component: {fileID: 1700430271}
   m_Layer: 0
   m_Name: Animatoin00:Walkman_Lid
   m_TagString: Untagged
@@ -21671,6 +21685,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1700430267}
   m_Mesh: {fileID: 4300020, guid: 735b5ef709e79544a88334d206382fab, type: 3}
+--- !u!95 &1700430271
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1700430267}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 2efccbd0585a2564c81fa115a30f8611, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0d2fa8cde459cec469336d34cd4b0b8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1718787021
 GameObject:
   m_ObjectHideFlags: 0
