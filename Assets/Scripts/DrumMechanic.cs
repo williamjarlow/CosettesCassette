@@ -65,19 +65,6 @@ public class DrumMechanic : MonoBehaviour {
 		Debug.Log("subSound: " + result);
     }
 
-    // Loading the kick sound
-    /*public void LoadKick()
-    {
-        result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
-        Debug.Log("info " + result);
-        kickInfo.mode = FMOD.MODE.CREATESAMPLE;
-        Debug.Log("mode " + result);
-
-        result = audioManager.lowLevelSys.createSound(kickInfo.name_or_data, kickInfo.mode, ref kickInfo.exinfo, out kickSound);
-        Debug.Log(" *** Create sound result *** --> " + result);
-        result = kickSound.getSubSound(0, out kickSubSound);
-        Debug.Log("subSound: " + result);
-    }*/
 
     void FixedUpdate()
     {
@@ -102,7 +89,7 @@ public class DrumMechanic : MonoBehaviour {
             }
         }
 
-        else if(recording == false && !isPlaying)
+        else if(recording == false && !isPlaying && !audioManager.switchedToAudioLog)
         {
             // Loop through the corrupted segments
             for(int i = 0; i < overallCorruption.durations.Count; i++)
