@@ -16,10 +16,13 @@ public class PitchCorruption : CorruptionBaseClass {
     [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
 
     const float startingScore = 100;
+    const int positionalDivision = 5; //This constant represents the disparity between the maximum value of the slider, 
+    // the value of the pitch indicator's position and 
 
     float punishment;
     float totalSeconds;
     float score;
+    Vector3 startingPosition;
 
     [SerializeField] GameObject pitchIndicator;
     GameObject pitchIndicatorInstance;
@@ -47,25 +50,11 @@ public class PitchCorruption : CorruptionBaseClass {
         if ((audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop ) && !cleared) //If player is inside a corrupted area
         {
-            if (!inSegment)
+            if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.
             {
                 EnterSegment();
             }
-            if (index < nodes.Count)
-            {
-                if (animationDone)
-                {
-                    MovePitchObject();
-                }
-                if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * 10) + mercyRange && pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * 10) - mercyRange)
-                    audioPitch.SetPitch(0, PitchType.All);
-                else
-                {
-                    audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 10), PitchType.All);
-                    score -= (punishment * Time.deltaTime);
-                }
-            }
-
+            RecordPitch();
         }
         else if (inSegment) //If player leaves corrupted area
         {
@@ -75,15 +64,15 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
-        score = startingScore;
-        totalSeconds = 0;
+        score = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
+        totalSeconds = 0;   //Amount of time that the entire corruption should take. This is what is used to calculate how punished the player will be.
         foreach(PitchNode node in nodes)
         {
             totalSeconds += node.seconds;
         }
         punishment = score / totalSeconds;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform);
+        pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
         base.EnterSegment();
     }
 
@@ -94,10 +83,30 @@ public class PitchCorruption : CorruptionBaseClass {
         corruptionClearedPercent = score;
         innerDistortion = 0;
         index = 0;
-        StopCoroutine(lastCoroutine);
+        StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
         base.ExitSegment();
+    }
+
+    void RecordPitch()
+    {
+        if (index < nodes.Count) //while there are more nodes to visit in the node list
+        {
+            if (animationDone) //if the current animation is done, start a new one.
+            {
+                MovePitchObject();
+            }
+            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / 2)) + mercyRange && 
+                pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / 2) - mercyRange))
+                audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
+            else
+            {
+                audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 
+                (pitchSlider.maxValue/2)), PitchType.All);
+                score -= (punishment * Time.deltaTime); //If the player isn't within acceptable margin, mess the pitch up accordingly.
+            }
+        }
     }
 
     void MovePitchObject()

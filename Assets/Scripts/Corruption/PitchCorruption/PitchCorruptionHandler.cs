@@ -40,8 +40,9 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
         overallCorruption = GetComponent<OverallCorruption>();
         Assert.IsNotNull(overallCorruption, "Please make sure that the PitchCorruptionHandler script is on the same object as the OverallCorruption script.");
         
-		foreach(PitchInformation pitchInformation in pitchInformationList) //Set starting values for corruption
-        {
+		foreach(PitchInformation pitchInformation in pitchInformationList) //Set starting values for corruption.
+        { // All values for each individual pitch corruption gets transferred from the inspector values. The inspector uses the
+          // pitchInformation class at the top of the script because you cannot directly manipulate objects that aren't instantiated yet.
             GameObject go = Instantiate(pitchCorruptionPrefab, gameObject.transform);
             PitchCorruption pitchCorruption = go.GetComponent<PitchCorruption>();
             corruptions.Add(pitchCorruption);
@@ -51,7 +52,9 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
             pitchCorruption.clearThreshold = pitchInformation.clearThreshold;
             pitchCorruption.segmentID = pitchInformation.segmentID;
-            if(pitchInformation.randomizeNodes)
+
+            if(pitchInformation.randomizeNodes) //This code randomizes the nodes rather than use the nodes specified in the inspector.
+                //Useful for testing.
             {
                 int nodesCount = pitchInformation.nodes.Count;
                 pitchInformation.nodes.Clear();

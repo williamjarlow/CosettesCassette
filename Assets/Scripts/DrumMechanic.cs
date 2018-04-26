@@ -20,14 +20,11 @@ public class DrumMechanic : MonoBehaviour {
     private FMOD.ChannelGroup kickChannelGroup;
     private FMOD.Channel kickChannel;
 
-    [HideInInspector]
-    public bool recording = false;
     private bool isPlaying;
     [HideInInspector] public bool gaveInput = false;
 
     [SerializeField] private int timeStamp;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
-    private int currentSegmentIndex;    // Current segment index currently recording
 
     // ** TEMPORARY while FMOD is not fixed ** //
     private AudioSource audioSource;
@@ -52,9 +49,6 @@ public class DrumMechanic : MonoBehaviour {
        // audioSource = GetComponent<AudioSource>();
        // AudioSettings.SetDSPBufferSize(256, 2);
 
-        // Set the drum segment's recording type to 'DRUMS'
-        overallCorruption.durations[currentSegmentIndex].recordingType = Duration.RecordingType.DRUMS;
-
 		result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
 		Debug.Log("info " + result);
 		kickInfo.mode = FMOD.MODE.CREATESAMPLE;
@@ -65,26 +59,13 @@ public class DrumMechanic : MonoBehaviour {
 		Debug.Log("subSound: " + result);
     }
 
-    // Loading the kick sound
-    /*public void LoadKick()
-    {
-        result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
-        Debug.Log("info " + result);
-        kickInfo.mode = FMOD.MODE.CREATESAMPLE;
-        Debug.Log("mode " + result);
-
-        result = audioManager.lowLevelSys.createSound(kickInfo.name_or_data, kickInfo.mode, ref kickInfo.exinfo, out kickSound);
-        Debug.Log(" *** Create sound result *** --> " + result);
-        result = kickSound.getSubSound(0, out kickSubSound);
-        Debug.Log("subSound: " + result);
-    }*/
 
     void FixedUpdate()
     {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
 
-        if (recording && overallCorruption.durations[currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
+        if (GameManager.Instance.recording && overallCorruption.durations[GameManager.Instance.currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
         {
             // If we have started the track and there is some form of input
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
@@ -93,7 +74,7 @@ public class DrumMechanic : MonoBehaviour {
                 result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
                 Debug.Log("Kick: " + result);
 
-                overallCorruption.durations[currentSegmentIndex].AddDrumRecordings(timeStamp);
+                overallCorruption.durations[GameManager.Instance.currentSegmentIndex].AddDrumRecordings(timeStamp);
                 isPlaying = true;
                 gaveInput = true;
 
@@ -102,7 +83,7 @@ public class DrumMechanic : MonoBehaviour {
             }
         }
 
-        else if(recording == false && !isPlaying)
+        else if(GameManager.Instance.recording == false && !isPlaying && !audioManager.switchedToAudioLog)
         {
             // Loop through the corrupted segments
             for(int i = 0; i < overallCorruption.durations.Count; i++)
@@ -135,9 +116,9 @@ public class DrumMechanic : MonoBehaviour {
     {
         // If we exited the corrupted segment, stop recording
         //if (timeStamp < overallCorruption.durations[currentSegmentIndex].start || timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
-        if (timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
+        if (timeStamp > overallCorruption.durations[GameManager.Instance.currentSegmentIndex].stop)
         {
-            Listen();
+            GameManager.Instance.Listen();
         }
     }
 
@@ -148,94 +129,7 @@ public class DrumMechanic : MonoBehaviour {
     }
 
 
-    public void Listen()
-    {
-        buttonDisabler.EnableButtons();
-        recording = false;
-    }
-
-    public void Record(GameObject confirmationObj)
-    {
-        FindClosestSegment();
-
-        if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].GetDrumRecordings().Count == 0)
-        {
-            // Snap to the nearest corrupted area
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
-
-            recording = true;
-            buttonDisabler.DisableButtons();
-        }
-
-        // If there is the current timeline position is not 0 and is inside a segment and there IS a previous recording at segment [i]
-        else if( timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].GetDrumRecordings().Count > 0)
-        {
-            confirmationObj.SetActive(true);
-        }
-
-    }
-
-    private void FindClosestSegment()
-    {
-        // Declare an int array with the same size as the number of corrupted segments
-        int[] timelineDifference = new int[overallCorruption.durations.Count];
-
-        for (int i = 0; i < overallCorruption.durations.Count; i++)
-        {
-            // Find the distance between start or endpoint of the segment
-            if(timeStamp > 0 && timeStamp < overallCorruption.durations[i].start)
-            {
-                timelineDifference[i] = Mathf.Abs(timeStamp - overallCorruption.durations[i].start);           
-            }
-
-            else if(timeStamp > 0 && timeStamp > overallCorruption.durations[i].stop)
-            {
-                timelineDifference[i] = Mathf.Abs(timeStamp - overallCorruption.durations[i].stop);
-            }
-        }
-        
-        int closestSegment = timelineDifference[0];
-        int closestSegmentIndex = 0;
-
-        // Find the closest segment by looping through the array and comparing the elements
-        for (int i = 0; i < timelineDifference.Length; i++)
-        {
-
-            if (closestSegment > timelineDifference[i])
-            {
-                closestSegment = timelineDifference[i];
-                closestSegmentIndex = i;
-            }
-                
-        }
-
-        // Set the current segment index to the closest one
-        currentSegmentIndex = closestSegmentIndex;
-    }
-
-
-    // If 'YES' is pressed during confirmation --> Delete previous recordings, start recording and disable the confirmation window
-    public void YesConfirmation(GameObject confirmationObj)
-    {
-        // If we are at the music cassette 
-        if (!audioManager.switchedToAudioLog)
-        {
-            confirmationObj.SetActive(false);
-            buttonDisabler.DisableButtons();
-
-            // Snap to the current segment start, delete previous recordings, start recording
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
-            overallCorruption.durations[currentSegmentIndex].ClearRecordings();
-            recording = true;
-        }
-
-    }
-
-    // If 'NO' is pressed during confirmation --> disable the confirmation window
-    public void NoConfirmation(GameObject confirmationObj)
-    {
-        confirmationObj.SetActive(false);
-    }
+ 
 
     
 
@@ -324,4 +218,4 @@ public class DrumMechanic : MonoBehaviour {
 
     */
 
-            }
+}

@@ -8,22 +8,23 @@ public class StickerPrefs : MonoBehaviour {
 
     [SerializeField] private string name;
     [SerializeField] private string description;
-    [SerializeField] private bool unlocked;
     [SerializeField] private int points;
     [SerializeField] private Sprite notCompleted;
     [SerializeField] private Sprite completed;
     [SerializeField] private GameObject stickerRef;
     [SerializeField] private Image imageRef;
     [SerializeField] private StickerManager managerRef;
-
-    private Dictionary<string, Sticker> stickersDictionary = new Dictionary<string, Sticker>();
-    private StickerManager stickman;
+    
 
 
     // Use this for initialization
     void Awake () {
         Sticker newSticker = new Sticker(name, description, points, stickerRef, imageRef, notCompleted, completed);
 
+        //This line HAS TO be run BEFORE the sticker menu is disabled in StickerManager script
+        //All stickers are a part of their category in the sticker menu, if they dont get instantiated before the
+        //sticker menu is disabled the stickers wont get added to the stickers dictionary in StickerManager, 
+        //this pretty much fucks everything up so dont do this
         managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
     }
 }
@@ -74,8 +75,11 @@ public class Sticker
 
     private GameObject stickerRef;
     private Image imageRef;
+
+    //Accessed from save system
     public bool loaded;
 
+    //Sticker constructor
     public Sticker(string name, string description, int points, GameObject stickerRef, Image imageRef, Sprite notCompleted, Sprite completed)
     {
         this.stickerName = name;
@@ -88,6 +92,7 @@ public class Sticker
         this.stickerCompleted = completed;
     }
 
+    //Earning stickers requires us to change the sprite in image to show that we have earned it
     public bool EarnSticker()
     {
         if (!stickerUnlocked)
@@ -99,6 +104,7 @@ public class Sticker
         return false;
     }
 
+    //Load stickers, set the correct image sprite in sticker album
     public void SetLoadedSticker()
     {
         if (this.loaded == true)

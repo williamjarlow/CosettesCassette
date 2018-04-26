@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour {
     [HideInInspector] public bool switchedToAudioLog = false;
     private bool startedMusic = false;
     private bool pausedMusic = false;
-
+	private bool haveDSP = false;
 
     void Awake ()
 	{
@@ -69,36 +69,27 @@ public class AudioManager : MonoBehaviour {
 
         audioDistortion = GetComponent<AudioDistortion>();
 		drumMechanic = FindObjectOfType<DrumMechanic>();
-
-		GetDSP ();
 	}
 		
     public void AudioPlayMusic ()
     {
-        if (!switchedToAudioLog)
+        if(!switchedToAudioLog)
 			result = musicEventDesc.createInstance(out gameMusicEv);
 
-
-        if (switchedToAudioLog)
-            result = logEventDesc.createInstance(out gameMusicEv);
+        if(switchedToAudioLog)
+			result = logEventDesc.createInstance(out gameMusicEv);
 
         result = gameMusicEv.start();
 
-		//drumMechanic.LoadKick ();
-		//StartCoroutine (GetDSP());
-
-		FMOD.Studio.PLAYBACK_STATE state;
-		result = gameMusicEv.getPlaybackState (out state);
+		if (!haveDSP) {
+			StartCoroutine (GetDSP ());
+			haveDSP = true;
+		}
     }
 
 	public void AudioStopMusic ()
     {
         result = gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-		Debug.Log ("stop: " + result);
-
-		FMOD.Studio.PLAYBACK_STATE state;
-		result = gameMusicEv.getPlaybackState (out state);
-		Debug.Log ("playback state: " + state);
     }
 
 	public void AudioPauseMusic ()
@@ -142,31 +133,54 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-	private void GetDSP()
+	private IEnumerator GetDSP()
 	{
+		FMOD.Studio.PLAYBACK_STATE state;
+
+		gameMusicEv.getPlaybackState (out state);
+
+		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
+		{
+			gameMusicEv.getPlaybackState (out state);
+			print("waiting for music to start");
+			yield return null;
+		}
+
 		FMOD.ChannelGroup musicChanGroup;
 		FMOD.ChannelGroup musicChanSubGroup;
 
 		FMOD.DSPConnection DSPCon;
 
-		//yield return new WaitForSeconds(0.5f); // Gives event time to load (better solution needed)
 		result = gameMusicEv.getChannelGroup (out musicChanGroup);
-
+		//print ("group: " + result);
 		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
+		//print ("sub group: " + result);
 		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP); // 3 carries channels of instrument tracks, 0 is the sum track
+		//print ("sub group dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon); // adding effects in studio messes up 4 and beyond
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+		//print ("dsp: " + result);
 		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+		//print ("dsp: " + result);
 
-		//in DSP 3 of subgroup
-		//0 = chords
-		//1 = vocals
-		//2 = drums
-		//3 = bass
-		//4 = lead
-	}
+        pitchChordsDSP.setBypass(false);
+        pitchVocalsDSP.setBypass(false);
+        pitchDrumsDSP.setBypass(false);
+        pitchBassDSP.setBypass(false);
+        pitchLeadDSP.setBypass(false);
+
+        //in DSP 3 of subgroup
+        //0 = chords
+        //1 = vocals
+        //2 = drums
+        //3 = bass
+        //4 = lead
+    }
 
     public float GetTrackLength()
     {
@@ -192,8 +206,6 @@ public class AudioManager : MonoBehaviour {
 
     public void toggleTapeSide()
     {
-        AudioStopMusic();
-        startedMusic = false;
         switchedToAudioLog = !switchedToAudioLog;
     }
 

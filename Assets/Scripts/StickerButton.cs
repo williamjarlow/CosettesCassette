@@ -12,12 +12,11 @@ public class StickerButton : MonoBehaviour {
 
     private Image sprite;
 
-    // Use this for initialization
     void Awake () {
 	}
-	
-	// Update is called once per frame
-	public void OnClick ()
+
+    //Simply switch the visual A E S T H E T I C S of the category button.
+    public void OnClick ()
     {
         sprite = GetComponent<Image>();
         if (sprite.sprite == neutral)
