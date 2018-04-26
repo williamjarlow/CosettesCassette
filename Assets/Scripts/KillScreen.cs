@@ -29,4 +29,12 @@ public class KillScreen : MonoBehaviour {
         transform.GetChild(1).gameObject.SetActive(true);
         GetComponent<Text>().enabled = true;
     }
+
+    public void ShutdownWinning()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(false);
+        GetComponent<Text>().enabled = false;
+    }
+
 }
