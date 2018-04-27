@@ -18,11 +18,14 @@ public class AudioTimeline : MonoBehaviour
     private int temp;
 
     [Header("Threshold accepted before we slow down the slider")]
-    [SerializeField] private float maxSpeedThresholdInMs = 6000;
+    [SerializeField]
+    private float maxSpeedThresholdInMs = 6000;
 
     [Header("Speed values for slider movement")]
-    [SerializeField] private float fastSpeedInMs = 20000;
-    [SerializeField] private float slowSpeedInMs = 1500;
+    [SerializeField]
+    private float fastSpeedInMs = 20000;
+    [SerializeField]
+    private float slowSpeedInMs = 1500;
 
     private bool holding = false;
     private float sliderValueAtPush = 0;
@@ -53,15 +56,16 @@ public class AudioTimeline : MonoBehaviour
 
     void Update()
     {
-        if (!holding)
+        timelineSlider.interactable = true;
+        if (!holding || GameManager.Instance.recording)
         {
             ChangeOnPlaying();
         }
-
-        if (holding)
+        else if (holding)
         {
             HoldChange();
         }
+
     }
 
     public void ChangeTimeline()
@@ -72,38 +76,42 @@ public class AudioTimeline : MonoBehaviour
     // Manually change the slider with touch
     public void HoldChange()
     {
-        // Stop player from breaking song by forcing it to play the exact same moment over and over again.
-        if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
-            return;
+        if (!GameManager.Instance.recording)
+        {
+            // Stop player from breaking song by forcing it to play the exact same moment over and over again.
+            if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
+                return;
 
-        if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
-            sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
+            if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
+                sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
 
-        else if (sliderValueAtPush < valuePushedOn)
-            sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
-
-
-        if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
-            sliderValueAtPush -= fastSpeedInMs * Time.deltaTime;
-
-        else if (sliderValueAtPush > valuePushedOn)
-            sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
+            else if (sliderValueAtPush < valuePushedOn)
+                sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
 
 
-        timelineSlider.value = sliderValueAtPush;
-        audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
+            if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
+                sliderValueAtPush -= fastSpeedInMs * Time.deltaTime;
 
-        // Update mask according to timeline bar
-        timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
+            else if (sliderValueAtPush > valuePushedOn)
+                sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
+
+
+            timelineSlider.value = sliderValueAtPush;
+            audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
+
+            // Update mask according to timeline bar
+            timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
+        }
     }
 
     // Toggle hold.... 'Cause buttons
     public void ToggleHold()
     {
+        UpdateValues();
         if (!holding)
         {
-            valuePushedOn = timelineSlider.value;
-            timelineMaskParent.SetActive(true);
+            if (!GameManager.Instance.recording)
+                timelineMaskParent.SetActive(true);
             holding = true;
             return;
         }

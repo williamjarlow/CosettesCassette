@@ -17,8 +17,8 @@ public class ButtonDisabler : MonoBehaviour {
 
 	void Start ()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        drumMechanic = GameObject.FindObjectOfType<DrumMechanic>();
+        audioManager = GameManager.Instance.audioManager;
+        drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
         Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable when recording)");
 	}
 	
