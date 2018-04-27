@@ -18,7 +18,11 @@ public class PitchCorruption : CorruptionBaseClass {
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
 
-    float punishment;
+    float savedTime;
+
+    float totalTime; //The total amount of time measured in seconds
+    float hitTime; //The amount of time the player was in the zone in seconds
+
     float totalSeconds;
     float score;
     Vector3 startingPosition;
@@ -46,8 +50,8 @@ public class PitchCorruption : CorruptionBaseClass {
 	// Update is called once per frame
 	void Update () {
 
-        if ((audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop ) /*&& !cleared*/) //If player is inside a corrupted area
+        if (audioManager.GetTimeLinePosition() > duration.start &&
+            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
             if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.
             {
@@ -63,13 +67,11 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
+        hitTime = 0;
+        totalTime = (duration.stop - duration.start)/1000;
+        index = 0;
+        animationDone = true;
         score = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
-        totalSeconds = 0;   //Amount of time that the entire corruption should take. This is what is used to calculate how punished the player will be.
-        foreach(PitchNode node in nodes)
-        {
-            totalSeconds += node.seconds;
-        }
-        punishment = score / totalSeconds;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
         base.EnterSegment();
@@ -77,9 +79,13 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void ExitSegment()
     {
-        if (score < 0)
+        if(totalTime != 0)
+            score = (hitTime / totalTime)*100;
+        else
             score = 0;
+
         corruptionClearedPercent = score;
+        savedTime = hitTime;
         innerDistortion = 0;
         index = 0;
         StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
@@ -96,14 +102,19 @@ public class PitchCorruption : CorruptionBaseClass {
             {
                 MovePitchObject();
             }
-            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax)) + mercyRange && 
+            if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax)) + mercyRange &&
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
+            {
                 audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
+                if (GameManager.Instance.recording)
+                    hitTime += Time.deltaTime;
+            }
             else
             {
-                audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y * 
-                (pitchSlider.maxValue/pitchIndicatorMax)), PitchType.All);
-                score -= (punishment * Time.deltaTime); //If the player isn't within acceptable margin, mess the pitch up accordingly.
+                audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y *
+                (pitchSlider.maxValue / pitchIndicatorMax)), PitchType.All);
+                if (!GameManager.Instance.recording)
+                    hitTime = savedTime; //If player isn't recording, don't change score.
             }
         }
     }

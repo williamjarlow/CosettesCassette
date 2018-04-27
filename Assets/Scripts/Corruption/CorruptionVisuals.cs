@@ -33,7 +33,7 @@ public class CorruptionVisuals : MonoBehaviour {
     public void SetCorruptionPosition(int corruptionStartPoint, int corruptionEndPoint)
     {
         // Initialize variables
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameManager.Instance.audioManager;
         corruptedAreaRectTransform = gameObject.GetComponent<RectTransform>();
         originalCorruptedRectWidth = corruptedAreaRectTransform.rect.width;
         timelineRectTransform = gameObject.transform.parent.GetComponent<RectTransform>();

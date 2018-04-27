@@ -16,6 +16,8 @@ public class GameManager : Singleton<GameManager> {
     public GameObject uiHandler;
     public GameObject pitchSlider;
 
+    const int timelineOffset = 100;
+
     [HideInInspector] public bool LevelCleared;
     [HideInInspector] public bool recording;
 
@@ -137,7 +139,7 @@ public class GameManager : Singleton<GameManager> {
             buttonDisabler.DisableButtons();
 
             // Snap to the current segment start, delete previous recordings, start recording
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start - timelineOffset); //Slight offset to make sure that corruption gets entered properly
             overallCorruption.durations[currentSegmentIndex].ClearRecordings();
             recording = true;
         }

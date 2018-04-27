@@ -13,7 +13,7 @@ public class CorruptionVisual_TEST : MonoBehaviour {
 
 	void Start ()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameManager.Instance.audioManager;
         //pixelTrackLength = (int)audioManager.GetTrackLength() / 
             //32000 / 1000 = 32
 	}

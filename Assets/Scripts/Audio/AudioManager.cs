@@ -77,7 +77,7 @@ public class AudioManager : MonoBehaviour {
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 
         audioDistortion = GetComponent<AudioDistortion>();
-		drumMechanic = FindObjectOfType<DrumMechanic>();
+		drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
 	}
 		
     public void AudioPlayMusic ()

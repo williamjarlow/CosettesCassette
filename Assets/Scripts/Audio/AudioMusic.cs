@@ -11,6 +11,6 @@ public class AudioMusic : MonoBehaviour {
 
     private void Start()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        audioManager = GameManager.Instance.audioManager;
     }
 }
