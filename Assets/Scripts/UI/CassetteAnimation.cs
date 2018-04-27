@@ -12,6 +12,8 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private SkinnedMeshRenderer leftRotator;
     [SerializeField] private GameObject Cassette;
     [SerializeField] private GameObject Lid;
+    [SerializeField] private float CassetteMoveDelay;
+    [SerializeField] private int lidClosingDelay;
     void Start ()
     {
         audioManager = GameManager.Instance.audioManager;
@@ -38,7 +40,19 @@ public class CassetteAnimation : MonoBehaviour {
     }
     public void PlayAnimation()
     {
-        Cassette.GetComponent<Animator>().SetBool("Run", true);
+        
         Lid.GetComponent<Animator>().SetBool("Run", true);
+        StartCoroutine(LidOpening());
     }
+    private IEnumerator LidOpening ()
+    {
+
+        yield return new WaitForSeconds(CassetteMoveDelay);
+        Cassette.GetComponent<Animator>().SetBool("Run", true);
+        yield return new WaitForSeconds(lidClosingDelay);
+        Lid.GetComponent<Animator>().SetBool("Run", false);
+        
+    }
+    
 }
+    
