@@ -248,6 +248,8 @@ public class AudioManager : MonoBehaviour {
 
     public void toggleTapeSide()
     {
+        AudioStopMusic();
+        startedMusic = false;
         switchedToAudioLog = !switchedToAudioLog;
     }
 
