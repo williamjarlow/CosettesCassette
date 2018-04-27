@@ -19,16 +19,25 @@ public class AudioManager : MonoBehaviour {
 
 	[FMODUnity.EventRef]
     public FMOD.Studio.EventInstance gameMusicEv;
-	private FMOD.Studio.EventDescription musicEventDesc;
+    private FMOD.Studio.EventInstance skipEv;
+    private FMOD.Studio.EventInstance segmentClearEvent;
+    private FMOD.Studio.EventInstance levelClearEvent;
+    private FMOD.Studio.EventDescription musicEventDesc;
 	private FMOD.Studio.EventDescription logEventDesc;
+    private FMOD.Studio.EventDescription skipEventDesc;
+    private FMOD.Studio.EventDescription segmentClearEventDesc;
+    private FMOD.Studio.EventDescription levelClearEventDesc;
 
-	private AudioDistortion audioDistortion;
+
+    private AudioDistortion audioDistortion;
 	private DrumMechanic drumMechanic;
 
     private int trackLength;
 
     [SerializeField] private string musicPath;
     [SerializeField] private string audioLogPath;
+    [SerializeField] private string levelClearPath;
+    [SerializeField] private string segmentClearPath;
     public string bassDrumKey;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01'")]
@@ -132,6 +141,39 @@ public class AudioManager : MonoBehaviour {
             startedMusic = true;
         }
     }
+
+    public void PlaySkip()
+    {
+        systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
+        skipEventDesc.createInstance(out skipEv);
+        skipEv.setParameterValue("skip_click", 0);
+        skipEv.start();
+    }
+
+    public void StopPlayingSkip()
+    {
+        skipEv.setParameterValue("skip_click", 1);
+    }
+
+    public void SetSkipPitch(float speed)
+    {
+        skipEv.setParameterValue("skip_pitch", speed);
+    }
+
+    public void PlaySegmentClear()
+    {
+        systemObj.getEvent(segmentClearPath, out segmentClearEventDesc);
+        segmentClearEventDesc.createInstance(out segmentClearEvent);
+        segmentClearEvent.start();
+    }
+
+    public void PlayWinSound()
+    {
+        systemObj.getEvent(levelClearPath, out levelClearEventDesc);
+        levelClearEventDesc.createInstance(out levelClearEvent);
+        levelClearEvent.start();
+    }
+
 
 	private IEnumerator GetDSP()
 	{

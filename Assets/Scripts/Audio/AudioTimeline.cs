@@ -23,6 +23,7 @@ public class AudioTimeline : MonoBehaviour
     [Header("Speed values for slider movement")]
     [SerializeField] private float fastSpeedInMs = 20000;
     [SerializeField] private float slowSpeedInMs = 1500;
+    /*[HideInInspector]*/ public float currentSpeed;
 
     private bool holding = false;
     private float sliderValueAtPush = 0;
@@ -78,9 +79,11 @@ public class AudioTimeline : MonoBehaviour
 
         if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
             sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
+            
 
         else if (sliderValueAtPush < valuePushedOn)
             sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
+            
 
 
         if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
@@ -90,7 +93,9 @@ public class AudioTimeline : MonoBehaviour
             sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
 
 
+
         timelineSlider.value = sliderValueAtPush;
+        currentSpeed = Mathf.Abs(sliderValueAtPush);
         audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
 
         // Update mask according to timeline bar
@@ -114,7 +119,8 @@ public class AudioTimeline : MonoBehaviour
             holding = false;
             return;
         }
-    }
+
+}
 
     // Sliders are stupid and the value is changed BEFORE running code on click events. So current value of slider needs to be saved in order to update slider correctly from original position.
     public void SaveValue()
@@ -135,4 +141,5 @@ public class AudioTimeline : MonoBehaviour
         audioManager.gameMusicEv.getTimelinePosition(out temp);
         timelineSlider.value = temp;
     }
+
 }

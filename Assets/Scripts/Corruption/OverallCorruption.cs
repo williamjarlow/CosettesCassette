@@ -90,6 +90,26 @@ public class OverallCorruption : MonoBehaviour {
             Debug.Log("Overall corruption: " + overallCorruption  + "%");
             Debug.Log("Overall distortion: " + overallDistortion + "%");
         }
+
+        // Set the current segment to cleared
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            corruptions[GameManager.Instance.currentSegmentIndex].corruptionClearedPercent = 100;
+            UpdateCorruptionAmount();
+        }
+
+        // Win the game
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            //bool levelCleared = true;
+            foreach (CorruptionBaseClass corruption in corruptions)
+            {
+                corruption.corruptionClearedPercent = 100;
+                corruption.cleared = true;
+            }
+
+            UpdateCorruptionAmount();
+        }
 	}
 
     public void UpdateCorruptionAmount()
@@ -120,6 +140,7 @@ public class OverallCorruption : MonoBehaviour {
             if (corruptionCleared)
             {
                 corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                GameManager.Instance.audioManager.PlaySegmentClear();
             }
         }
         bool levelCleared = true;
@@ -132,6 +153,8 @@ public class OverallCorruption : MonoBehaviour {
         {
             GameManager.Instance.LevelCleared = true;
             GameObject.FindGameObjectWithTag("Temporary").GetComponent<KillScreen>().Winning();
+            Debug.Log("Winning!");
+            GameManager.Instance.audioManager.PlayWinSound();
         }
     } 
 
