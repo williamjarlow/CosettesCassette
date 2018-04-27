@@ -47,7 +47,6 @@ public class PitchCorruptionHandler : CorruptionHandlerBaseClass {
             PitchCorruption pitchCorruption = go.GetComponent<PitchCorruption>();
             corruptions.Add(pitchCorruption);
             pitchCorruption.maxDistortion = pitchInformation.maxDistortion;
-            pitchCorruption.duration = overallCorruption.durations[pitchInformation.segmentID];
             pitchCorruption.pitchSlider = pitchInformation.pitchSlider;
             pitchCorruption.mercyRange = pitchInformation.mercyRange;
             pitchCorruption.clearThreshold = pitchInformation.clearThreshold;
