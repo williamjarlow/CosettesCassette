@@ -68,7 +68,17 @@ public class PitchCorruption : CorruptionBaseClass {
     public override void EnterSegment()
     {
         hitTime = 0;
-        totalTime = (duration.stop - duration.start)/1000;
+        float totalNodeTime = 0;
+        foreach(PitchNode node in nodes)
+        {
+            totalNodeTime += node.seconds;
+        }
+
+        if ((duration.stop - duration.start) / 1000 < totalNodeTime)
+            totalTime = (duration.stop - duration.start) / 1000;
+        else
+            totalTime = totalNodeTime;
+
         index = 0;
         animationDone = true;
         score = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
@@ -79,8 +89,12 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void ExitSegment()
     {
-        if(totalTime != 0)
-            score = (hitTime / totalTime)*100;
+        if (totalTime != 0)
+        {
+            score = (hitTime / totalTime) * 100;
+            if (score > 100)
+                score = 100;
+        }
         else
             score = 0;
 
@@ -108,6 +122,8 @@ public class PitchCorruption : CorruptionBaseClass {
                 audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
                 if (GameManager.Instance.recording)
                     hitTime += Time.deltaTime;
+                else
+                    hitTime = savedTime;
             }
             else
             {
