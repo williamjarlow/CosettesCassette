@@ -60,8 +60,8 @@ public class AudioManager : MonoBehaviour {
 
     [HideInInspector] public bool switchedToAudioLog = false;
     private bool startedMusic = false;
-    private bool pausedMusic = false;
-	private bool haveDSP = false;
+    [HideInInspector] public bool pausedMusic = true;
+    private bool haveDSP = false;
 
     void Awake ()
 	{
@@ -177,6 +177,7 @@ public class AudioManager : MonoBehaviour {
         {
             AudioPlayMusic();
             startedMusic = true;
+            pausedMusic = false;
         }
     }
 

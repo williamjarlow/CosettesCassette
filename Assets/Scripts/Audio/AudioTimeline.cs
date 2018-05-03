@@ -27,6 +27,14 @@ public class AudioTimeline : MonoBehaviour
     [SerializeField]
     private float slowSpeedInMs = 1500;
 
+    [Header("Speed values for cassette animation, if used")]
+    public float cassetteNormalSpeed = 50;
+    public float cassetteSlowSpeed = 200;
+    public float cassetteFastSpeed = 500;
+    [HideInInspector] public bool movingSlow = false;
+    [HideInInspector] public bool movingFast = false;
+    [HideInInspector] public bool movingForward = true;
+
     private bool holding = false;
     private float sliderValueAtPush = 0;
     private float valuePushedOn = 0;
@@ -76,24 +84,54 @@ public class AudioTimeline : MonoBehaviour
     // Manually change the slider with touch
     public void HoldChange()
     {
-        if (!GameManager.Instance.recording)
+        if (!GameManager.Instance.recording)        // FIXA SWITCH ISTÄLLET, SATANS JÄVLA IF
         {
             // Stop player from breaking song by forcing it to play the exact same moment over and over again.
             if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
+            {
+                movingForward = true;
+                movingSlow = false;
+                movingFast = false;
                 return;
+            }
 
             if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
+            {
+                movingSlow = false;
+                movingFast = true;
+                movingForward = true;
                 sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
+            }
+
 
             else if (sliderValueAtPush < valuePushedOn)
+            {
                 sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
+                movingSlow = true;
+                movingFast = false;
+                movingForward = true;
+            }
+                
 
 
             if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
+            {
                 sliderValueAtPush -= fastSpeedInMs * Time.deltaTime;
+                movingSlow = false;
+                movingFast = true;
+                movingForward = false;
+            }
+                
 
             else if (sliderValueAtPush > valuePushedOn)
+            {
+                movingSlow = true;
+                movingFast = false;
+                movingForward = false;
                 sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
+
+            }
+                
 
 
             timelineSlider.value = sliderValueAtPush;
@@ -120,6 +158,9 @@ public class AudioTimeline : MonoBehaviour
         {
             timelineMaskParent.SetActive(false);
             holding = false;
+            movingSlow = false;
+            movingFast = false;
+            movingForward = true;
             return;
         }
     }
