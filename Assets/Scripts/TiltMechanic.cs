@@ -22,6 +22,8 @@ public class TiltMechanic : MonoBehaviour {
 	void Update () {
         //am.musicChanSubGroup.setPan(moveMusic);
         float x = Input.acceleration.x;
+        am.musicChanGroup.setPan(0);
+        am.musicChanSubGroup.setPan(0);
         //float x = 0;
         //if (Input.GetKey("left"))
         //{
