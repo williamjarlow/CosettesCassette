@@ -7,12 +7,16 @@ using UnityEngine.Assertions;
 public class AudioManager : MonoBehaviour {
 
 	private FMOD.RESULT result;
+
+	//System objects
 	public FMOD.Studio.System systemObj;
 	public FMOD.System lowLevelSys;
 
+	//Channel groups
 	public FMOD.ChannelGroup musicChanGroup;
 	public FMOD.ChannelGroup musicChanSubGroup;
 
+	//DSPs
 	public FMOD.DSP musicChanSubGroupDSP;
 	public FMOD.DSP pitchChordsDSP;
 	public FMOD.DSP pitchVocalsDSP;
@@ -20,11 +24,14 @@ public class AudioManager : MonoBehaviour {
 	public FMOD.DSP pitchBassDSP;
 	public FMOD.DSP pitchLeadDSP;
 
+	//Event instances
 	public FMOD.Studio.EventInstance gameMusicEv;
 	private FMOD.Studio.EventInstance skipEv;
 	private FMOD.Studio.EventInstance segmentClearEvent;
 	private FMOD.Studio.EventInstance levelClearEvent;
 	private FMOD.Studio.EventInstance playerFadeEv;
+
+	//Event descriptions
 	private FMOD.Studio.EventDescription musicEventDesc;
 	private FMOD.Studio.EventDescription logEventDesc;
 	private FMOD.Studio.EventDescription skipEventDesc;
@@ -32,11 +39,7 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.EventDescription levelClearEventDesc;
 	private FMOD.Studio.EventDescription playerFadeEventDesc;
 
-	private AudioDistortion audioDistortion;
-	private DrumMechanic drumMechanic;
-
-    private int trackLength;
-
+	//Event paths
 	[FMODUnity.EventRef]
 	[SerializeField] private string musicPath;
 	[FMODUnity.EventRef]
@@ -46,7 +49,10 @@ public class AudioManager : MonoBehaviour {
 	[FMODUnity.EventRef]
 	[SerializeField] private string segmentClearPath;
 
+	//Audio table keys
     public string bassDrumKey;
+
+	private int trackLength;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01'")]
     [SerializeField] private List<string> bankFiles;
@@ -85,21 +91,15 @@ public class AudioManager : MonoBehaviour {
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 
-        audioDistortion = GetComponent<AudioDistortion>();
-		drumMechanic = FindObjectOfType<DrumMechanic>();
-
-		//play "insertCassette" event
-		FMOD.Studio.EventDescription insertCassetteEventDesc;
-		FMOD.Studio.EventInstance insertCassetteEv;
-		systemObj.getEvent ("event:/SFX/insertCassette", out insertCassetteEventDesc);
-		insertCassetteEventDesc.createInstance (out insertCassetteEv);
-		insertCassetteEv.start ();
-		insertCassetteEv.release ();
+		//play "insertCassette" sound
+		PlayInsertSound();
 	}
 		
     public void AudioPlayMusic ()
     {
-		if (!switchedToAudioLog) {
+		//"music" event is assigned to "gameMusicEv"
+		if (!switchedToAudioLog)
+		{
 			result = musicEventDesc.createInstance (out gameMusicEv);
 
 			//play "playerFade" event
@@ -109,13 +109,14 @@ public class AudioManager : MonoBehaviour {
 			playerFadeEv.release ();
 		}
 
+		//audio log event is assigned to "gameMusicEv"
         if(switchedToAudioLog)
 			logEventDesc.createInstance(out gameMusicEv);
 
         gameMusicEv.start();
 
 		//assigns DSPs if they haven't been assigned already
-//		if (!haveDSP) 
+		if (!haveDSP) 
 		{
 			StartCoroutine (GetDSP ());
 			haveDSP = true;
@@ -199,20 +200,32 @@ public class AudioManager : MonoBehaviour {
 		skipEv.release ();
 	}
 
-	public void PlaySegmentClear()
+	public void PlaySegmentClear(float score)
 	{
 		systemObj.getEvent(segmentClearPath, out segmentClearEventDesc);
 		segmentClearEventDesc.createInstance(out segmentClearEvent);
+		segmentClearEvent.setParameterValue ("zone_clear_score", score);
 		segmentClearEvent.start();
 		segmentClearEvent.release ();
 	}
 
-	public void PlayWinSound()
+	public void PlayWinSound(float score)
 	{
 		systemObj.getEvent(levelClearPath, out levelClearEventDesc);
 		levelClearEventDesc.createInstance(out levelClearEvent);
+		levelClearEvent.setParameterValue ("stage_clear_score", score);
 		levelClearEvent.start();
 		levelClearEvent.release ();
+	}
+
+	public void PlayInsertSound ()
+	{
+		FMOD.Studio.EventDescription insertCassetteEventDesc;
+		FMOD.Studio.EventInstance insertCassetteEv;
+		systemObj.getEvent ("event:/SFX/insertCassette", out insertCassetteEventDesc);
+		insertCassetteEventDesc.createInstance (out insertCassetteEv);
+		insertCassetteEv.start ();
+		insertCassetteEv.release ();
 	}
 
 	private IEnumerator GetDSP()
@@ -221,6 +234,7 @@ public class AudioManager : MonoBehaviour {
 
 		gameMusicEv.getPlaybackState (out state);
 
+		//waits for "gameMusicEv" to start before trying to get DSPs
 		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
 		{
 			gameMusicEv.getPlaybackState (out state);
@@ -230,17 +244,14 @@ public class AudioManager : MonoBehaviour {
 		
 		FMOD.DSPConnection DSPCon;
 
-		result = gameMusicEv.getChannelGroup (out musicChanGroup);
-		print ("group: " + result);
-		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
-		print ("sub group: " + result);
-		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP); // 3 carries channels of instrument tracks, 0 is the sum track
-		print ("sub group dsp: " + result);
-		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon); // adding effects in studio messes up 4 and beyond
-		result = musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
-		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+		gameMusicEv.getChannelGroup (out musicChanGroup);
+		musicChanGroup.getGroup (0, out musicChanSubGroup);
+		musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP); // 3 carries channels of instrument tracks, 0 is the sum track
+		musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon); // adding effects in studio messes up 4 and beyond
+		musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
+		musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
+		musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+		musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
 
 		// *** TEMP ***
 		pitchChordsDSP.setBypass(false);
@@ -287,8 +298,8 @@ public class AudioManager : MonoBehaviour {
     private void OnDestroy()
     {
 		//Destroy FMOD system objects (safety precaution, likely not needed anymore)
+		lowLevelSys.release();
         systemObj.release();
-        lowLevelSys.release();
     }
 
 
