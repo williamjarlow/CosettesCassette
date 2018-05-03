@@ -297,9 +297,10 @@ public class AudioManager : MonoBehaviour {
 
     private void OnDestroy()
     {
-		//Destroy FMOD system objects (safety precaution, likely not needed anymore)
-		lowLevelSys.release();
-        systemObj.release();
+	//Destroy FMOD system objects (safety precaution, likely not needed anymore)
+	systemObj.release();
+	lowLevelSys.release();
+        
     }
 
 
