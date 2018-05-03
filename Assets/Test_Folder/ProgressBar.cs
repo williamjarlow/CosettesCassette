@@ -46,10 +46,12 @@ public class ProgressBar : MonoBehaviour {
 
 	void Update ()
     {
+        /*
         progressBarFiller.fillAmount = gameManager.posInSong/ gameManager.lengthOfSong;
 
         cassetteWheelLeft.SetBlendShapeWeight(0, (gameManager.posInSong / gameManager.lengthOfSong)*100);       // Have to go *100 'cause weight is in percentage.
         cassetteWheelRight.SetBlendShapeWeight(0, 100 - ((gameManager.posInSong / gameManager.lengthOfSong) * 100));       // Have to go *100 'cause weight is in percentage.
+        */
 
         cassetteWheelLeft.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));
         cassetteWheelRight.transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z - 1));

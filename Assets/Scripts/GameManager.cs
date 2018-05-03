@@ -24,14 +24,11 @@ public class GameManager : Singleton<GameManager> {
     private ButtonDisabler buttonDisabler;
 
     [HideInInspector] public float pitch;
-    [HideInInspector] public float posInSong;
-    [HideInInspector] public float lengthOfSong;
+    [HideInInspector] public int lengthOfSong;
     [HideInInspector] public int currentSegmentIndex;
     [HideInInspector] public int timeStamp;
-
-    public int closestSegmentBehind;
-    public int closestSegmentInFront;
-
+    [Header("How far into the corrupted area we are allowed without snapping to earlier segment")]
+    [SerializeField] private int allowedProgressIntoBarInMs = 5000;
 
     public instruments currentInstrument = instruments.drums;
 
@@ -165,10 +162,13 @@ public class GameManager : Singleton<GameManager> {
     public void SnapToClosestSegmentInFront()
     {   
         FindClosestSegment();
-        if (currentSegmentIndex == 0)
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);       // BUGFIX THIS. Currently jumping past first segment
-        if (currentSegmentIndex == overallCorruption.segments.Count - 1)
-            audioManager.gameMusicEv.setTimelinePosition((int)lengthOfSong);
+        if (currentSegmentIndex == overallCorruption.durations.Count - 1)
+        {
+            audioManager.gameMusicEv.setTimelinePosition(lengthOfSong);
+            return;
+        }
+        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start > audioManager.GetTimeLinePosition())
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
         else
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);
     }
@@ -176,11 +176,23 @@ public class GameManager : Singleton<GameManager> {
     public void SnapToClosestSegmentBehind()
     {
         FindClosestSegment();
-        if (currentSegmentIndex == 0)
+        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs > audioManager.GetTimeLinePosition())
+        {
             audioManager.gameMusicEv.setTimelinePosition(0);
+            return;
+        }
+        else if (currentSegmentIndex == 0)
+        {
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            return;
+        }
+
+        if (currentSegmentIndex == overallCorruption.durations.Count - 1 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition())
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+        if (currentSegmentIndex != 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition())
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
         else
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);
-
     }
 
 
