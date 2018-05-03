@@ -14,8 +14,8 @@ public class TiltMechanic : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         am = audioMan.GetComponent<AudioManager>();
-        am.musicChanGroup.setPan(0);
-        am.musicChanSubGroup.setPan(0);
+        am.musicChanGroup.setPan(-1);
+        am.musicChanSubGroup.setPan(-1);
     }
 	
 	// Update is called once per frame
