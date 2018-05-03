@@ -20,21 +20,24 @@ public class OverallCorruption : MonoBehaviour {
 
     // The list of beats
     public List<Duration> segments;
-    [Range(1, 200)]
-    public int bpm;
-    const int beatsToMsConversion = 15000;
 
     [HideInInspector]
-    public int bpmInMs;
+    // The list of beats converted to milliseconds
+    public List<Duration> durations;
+
+    [Range(1, 200)]
+    public int bpm;
+    const int beatsToMsConversion = 15000; //60000 = 1 minute in milliseconds, divided by four to make sixteenth notes.
+
+    [HideInInspector]
+    public int bpmInMs; 
 
     [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
 
     [HideInInspector] public float overallCorruption;
     [HideInInspector] public float overallDistortion;
 
-    [HideInInspector]
-    // The list of beats converted to milliseconds
-    public List<Duration> durations;
+    
 
     AudioDistortion audioDistortion;
     List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();

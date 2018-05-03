@@ -13,6 +13,10 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [Header("ID of segment in 'Game Manager'")]
     public int segmentID;
 
+    [TextArea]
+    [SerializeField]
+    string notes;
+
     [HideInInspector] public Duration duration;
     [HideInInspector] public float corruptionClearedPercent;
     [HideInInspector] public float innerDistortion;

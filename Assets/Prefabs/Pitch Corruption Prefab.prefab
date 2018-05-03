@@ -51,15 +51,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistortion: 0
+  currentDistortion: 0
+  clearThreshold: 0
+  segmentID: 0
+  notes: "Add the pitch corruption prefab as a child of corruption handler whenever
+    you wish to create a new pitch corruption\n segment."
   duration:
     start: 0
     stop: 0
   corruptionClearedPercent: 0
   innerDistortion: 0
-  maxDistortion: 0
   inSegment: 0
-  mercyRange: 0
-  pitchSlider: {fileID: 0}
+  cleared: 0
   nodes: []
+  pitchSlider: {fileID: 0}
+  mercyRange: 0
+  rGoalRange: {x: -2, y: 2}
+  rTravelTimeRange: {x: 1, y: 1}
+  randomizeNodes: 0
   pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
     type: 2}

@@ -49,7 +49,6 @@ public class DrumCorruption : CorruptionBaseClass
     [HideInInspector]
     bool firstBeat = false;
 
-    AudioDistortion audioDistortion;
     AudioManager audioManager;
 
     [Header("Visual input for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
@@ -60,7 +59,6 @@ public class DrumCorruption : CorruptionBaseClass
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
-        audioDistortion = GameManager.Instance.audioDistortion;
         drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
         overallCorruption = GameManager.Instance.overallCorruption;
         if (visualInput != null)

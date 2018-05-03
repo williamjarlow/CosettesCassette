@@ -17,7 +17,9 @@ public class PitchCorruption : CorruptionBaseClass {
     public Slider pitchSlider;
     public float mercyRange;
 
+    [Header ("Randomness variables")] [Tooltip ("Set the values of rGoalRange between -2 and 2. The x value has to be lower than the y value.")]
     public Vector2 rGoalRange = new Vector2(-2, 2);
+    [Tooltip("Set the values of rTravelTimeRange between 1 and 3. The x value has to be lower than the y value.")]
     public Vector2 rTravelTimeRange = new Vector2(1, 3);
 
     [Header("Random generation of pitch nodes")]
