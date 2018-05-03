@@ -771,12 +771,12 @@ Prefab:
     - target: {fileID: 224943143732643388, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: -716.15
+      value: -8880.903
       objectReference: {fileID: 0}
     - target: {fileID: 224943143732643388, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 460
+      value: 5052.6733
       objectReference: {fileID: 0}
     - target: {fileID: 224943143732643388, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
@@ -811,7 +811,7 @@ Prefab:
     - target: {fileID: 224943143732643388, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 243.85
+      value: 243.84961
       objectReference: {fileID: 0}
     - target: {fileID: 224943143732643388, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
@@ -941,7 +941,7 @@ Prefab:
     - target: {fileID: 224216370678734088, guid: ed68a35390cc44e4c843a9935d700be2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -280.25308
+      value: -280.25305
       objectReference: {fileID: 0}
     - target: {fileID: 1722041080644596, guid: ed68a35390cc44e4c843a9935d700be2, type: 2}
       propertyPath: m_IsActive
@@ -22943,7 +22943,7 @@ GameObject:
   - component: {fileID: 1307687118}
   - component: {fileID: 1307687119}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TiltMechanic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22974,7 +22974,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveMusic: 1
+  moveSpeed: 0.01
   audioMan: {fileID: 1313330321}
+  temp: 0
 --- !u!1 &1313330321 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1986457720149012, guid: f236062a340c42644b0efd0d34e0e407,
@@ -28432,6 +28434,11 @@ MonoBehaviour:
     mercyRange: 155
     rGoalRange: {x: -2, y: 2}
     rTravelTimeRange: {x: 2, y: 2}
+    duration:
+      start: 0
+      stop: 0
+      drumRecordings: 
+      <recordingType>k__BackingField: 0
     randomizeNodes: 1
   - maxDistortion: 70
     currentDistortion: 0
@@ -28452,6 +28459,11 @@ MonoBehaviour:
     mercyRange: 155
     rGoalRange: {x: -2, y: 2}
     rTravelTimeRange: {x: 2, y: 2}
+    duration:
+      start: 0
+      stop: 0
+      drumRecordings: 
+      <recordingType>k__BackingField: 0
     randomizeNodes: 1
   - maxDistortion: 70
     currentDistortion: 0
@@ -28492,9 +28504,15 @@ MonoBehaviour:
     mercyRange: 155
     rGoalRange: {x: -2, y: 2}
     rTravelTimeRange: {x: 1, y: 1}
+    duration:
+      start: 0
+      stop: 0
+      drumRecordings: 
+      <recordingType>k__BackingField: 0
     randomizeNodes: 1
   pitchCorruptionPrefab: {fileID: 1312742080630916, guid: daada61ace94abe46ad6c26817817724,
     type: 2}
+  overallCorruption: {fileID: 0}
 --- !u!114 &1661018977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28512,6 +28530,7 @@ MonoBehaviour:
   drumInformationList: []
   drumCorruptionPrefab: {fileID: 1842557394649244, guid: 68a1c56d062bc5c4791b46e6992b8a16,
     type: 2}
+  overallCorruption: {fileID: 0}
 --- !u!1 &1670225020
 GameObject:
   m_ObjectHideFlags: 0
