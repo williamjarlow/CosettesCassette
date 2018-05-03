@@ -29,7 +29,7 @@ public class UIMechanicChanger : MonoBehaviour {
     public void ChangeCurrentImage(string sentInstrument)
     {
         gameObject.GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
-        GameManager.Instance.CurrentInstrument = (instruments)System.Enum.Parse(typeof(instruments), sentInstrument);
+        GameManager.Instance.SelectedInstrument = (instruments)System.Enum.Parse(typeof(instruments), sentInstrument);
         mechanics.SetActive(false);
         showingMechanics = !showingMechanics;
     }

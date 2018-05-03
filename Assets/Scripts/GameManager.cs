@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager> {
     [Header("How far into the corrupted area we are allowed without snapping to earlier segment")]
     [SerializeField] private int allowedProgressIntoBarInMs = 5000;
 
-    public instruments currentInstrument = instruments.drums;
+    public instruments selectedInstrument = instruments.drums;
 
     
 
@@ -47,9 +47,9 @@ public class GameManager : Singleton<GameManager> {
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
     }
 
-    public instruments CurrentInstrument{
-        get { return currentInstrument; }
-        set { currentInstrument = value; }
+    public instruments SelectedInstrument {
+        get { return selectedInstrument; }
+        set { selectedInstrument = value; }
     }
 
     private void Update()
