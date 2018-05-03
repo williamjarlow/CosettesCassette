@@ -16,8 +16,6 @@ public class DrumCorruption : CorruptionBaseClass
 
     DrumMechanic drumMechanic;
 
-    DrumCorruptionHandler drumCorruptionHandler;
-
     [SerializeField]
     [Range(1, 1)]
     [Header("Value/Penalty per hit/miss")]
@@ -34,13 +32,13 @@ public class DrumCorruption : CorruptionBaseClass
     [Tooltip("This value decides how impactful a miss will be. A perfect gives a value of 1.")]
     float missPenalty;
 
-    [HideInInspector]
+    [Header("Beat corruption placement.")]
+    [Tooltip("16 = 1 bar. 4 = perfectly on beat.")]
     public List<int> beats;
 
-    [HideInInspector]
-    public int okayRange;
-    [HideInInspector]
+    [Header("Ranges in milliseconds")]
     public int perfectRange;
+    public int okayRange;
 
     int index = 0;  /*Index increases only if a hit has been detected, or if a note is not hit at all.
     It does not increase if a note is hit outside of the okay/perfect ranges. 
@@ -80,6 +78,11 @@ public class DrumCorruption : CorruptionBaseClass
         Assert.IsTrue(okayRange >= 0 && perfectRange >= 0, "The DrumCorruption script will not work properly with a negative okayRange or perfectRange");
         Assert.IsTrue(missPenalty <= 0, "Setting missPenalty to anything higher than 0 will reward the player for missing the beat.");
         Assert.IsTrue(hitValue >= 0, "Setting hitvalue to anything lower than 0 will punish the player for hitting the beat.");
+
+        for (int i=0; i< beats.Count; i++)
+        {
+            beats[i] *= overallCorruption.bpmInMs; //Convert beats back to milliseconds.
+        }
     }
 
     void Update() //All of everything gets done in Update.

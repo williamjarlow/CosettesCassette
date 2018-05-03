@@ -36,7 +36,6 @@ public class OverallCorruption : MonoBehaviour {
     // The list of beats converted to milliseconds
     public List<Duration> durations;
 
-    List<CorruptionHandlerBaseClass> corruptionHandlers;
     AudioDistortion audioDistortion;
     List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
@@ -47,7 +46,6 @@ public class OverallCorruption : MonoBehaviour {
     private List<GameObject> corruptedAreaList = new List<GameObject>();
 
     void Awake () {
-        corruptionHandlers = new List<CorruptionHandlerBaseClass>(GetComponents<CorruptionHandlerBaseClass>());
 
         bpmInMs = ConvertBpmToMs(bpm);
 
@@ -63,10 +61,7 @@ public class OverallCorruption : MonoBehaviour {
     {
         audioDistortion = GameManager.Instance.audioDistortion;
 
-        foreach (CorruptionHandlerBaseClass corruptionHandler in corruptionHandlers)
-        {
-            corruptions.AddRange(corruptionHandler.corruptions);
-        }
+        corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
         Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
 

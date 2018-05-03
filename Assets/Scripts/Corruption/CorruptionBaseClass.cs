@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class CorruptionBaseClass : MonoBehaviour {
+
+    [Range(0, 100)]
+    public float maxDistortion;
+    [HideInInspector]
+    public float currentDistortion;
+    [Range(0, 100)]
+    public int clearThreshold;
+    [Header("ID of segment in 'Game Manager'")]
+    public int segmentID;
+
     [HideInInspector] public Duration duration;
     [HideInInspector] public float corruptionClearedPercent;
     [HideInInspector] public float innerDistortion;
-    [HideInInspector] public float maxDistortion;
-    [HideInInspector] public float clearThreshold;
     [HideInInspector] public bool inSegment;
     [HideInInspector] public bool cleared;
-    [HideInInspector] public int segmentID;
 
     public virtual void EnterSegment()
     {

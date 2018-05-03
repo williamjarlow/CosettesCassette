@@ -11,9 +11,17 @@ public class PitchNode
 }
 
 public class PitchCorruption : CorruptionBaseClass {
-    [HideInInspector] public float mercyRange;
-    [HideInInspector] public Slider pitchSlider;
-    [HideInInspector] public List<PitchNode> nodes = new List<PitchNode>();
+    [Header("Pitch nodes")]
+    public List<PitchNode> nodes = new List<PitchNode>();
+
+    public Slider pitchSlider;
+    public float mercyRange;
+
+    public Vector2 rGoalRange = new Vector2(-2, 2);
+    public Vector2 rTravelTimeRange = new Vector2(1, 3);
+
+    [Header("Random generation of pitch nodes")]
+    public bool randomizeNodes;
 
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
@@ -38,13 +46,35 @@ public class PitchCorruption : CorruptionBaseClass {
     private OverallCorruption overallCorruption;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         audioPitch = GameManager.Instance.audioPitch;
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
-
         // Set the pitch segments to the recording type PITCH 
         overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
+
+        if (randomizeNodes) //This code randomizes the nodes rather than use the nodes specified in the inspector.
+                            //Useful for testing.
+        {
+            int nodesCount = nodes.Count;
+            nodes.Clear();
+            for (int i = 0; i < nodesCount; i++)
+            {
+                nodes.Add(new PitchNode());
+                if (i == 0)
+                {
+                    nodes[i].seconds = 1;
+                    nodes[i].position = new Vector3(gameObject.transform.localPosition.x, 0, gameObject.transform.localPosition.z);
+                }
+                else
+                {
+                    nodes[i].seconds = Random.Range(rTravelTimeRange.x, rTravelTimeRange.y);
+                    nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(rGoalRange.x, rGoalRange.y), gameObject.transform.localPosition.z);
+                }
+            }
+        }
+        duration = overallCorruption.durations[segmentID];
     }
 	
 	// Update is called once per frame
