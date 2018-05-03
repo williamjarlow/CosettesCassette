@@ -15,6 +15,7 @@ public class TiltMechanic : MonoBehaviour {
 	void Start () {
         am = audioMan.GetComponent<AudioManager>();
         am.musicChanGroup.setPan(0);
+        am.musicChanSubGroup.setPan(0);
     }
 	
 	// Update is called once per frame
@@ -35,15 +36,15 @@ public class TiltMechanic : MonoBehaviour {
         //    x = 0;
         //}
 
-        if (x < -0.1f)
-        {
-            am.musicChanSubGroup.setPan(Mathf.Clamp(temp - moveSpeed, -1, 1));
-            temp = Mathf.Clamp(temp - moveSpeed, -1, 1);
-        }
-        else if (x > 0.1f)
-        {
-            am.musicChanSubGroup.setPan(Mathf.Clamp(temp + moveSpeed, -1, 1));
-            temp = Mathf.Clamp(temp + moveSpeed, -1, 1);
-        }
+        //if (x < -0.1f)
+        //{
+        //    am.musicChanSubGroup.setPan(Mathf.Clamp(temp - moveSpeed, -1, 1));
+        //    temp = Mathf.Clamp(temp - moveSpeed, -1, 1);
+        //}
+        //else if (x > 0.1f)
+        //{
+        //    am.musicChanSubGroup.setPan(Mathf.Clamp(temp + moveSpeed, -1, 1));
+        //    temp = Mathf.Clamp(temp + moveSpeed, -1, 1);
+        //}
     }
 }
