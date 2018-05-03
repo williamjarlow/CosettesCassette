@@ -32,10 +32,10 @@ public class CassetteAnimation : MonoBehaviour {
 
         if(cassetteAnimation)
         {
-            rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
-            leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
-            rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
-            leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
+            //rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
+            //leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - 1));
+            rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
+            leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + 1));
         }
     }
     public void PlayAnimation()
