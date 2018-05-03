@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingStuff : MonoBehaviour {
+public class NoteSpawn : MonoBehaviour {
 
 
-    public Vector3 gravity;
-    //public Rigidbody rb;
+    private Vector3 gravity;
     [SerializeField] private GameObject ducks;
     [SerializeField] private int duckAmount;
-    //[SerializeField] private GameObject canvas;
-    //[SerializeField] private GameObject spawn;
     [SerializeField] private float speed;
+    [SerializeField] private float randomminx;
+    [SerializeField] private float randommaxx;
+    [SerializeField] private float BS;
+
 
     // Use this for initialization
     void Start ()
     {
-        
+        gravity.y = transform.position.y;
+        StartCoroutine(DuckWait());
 
-        //rb = GetComponent<Rigidbody>();
-        //rb.AddForce(gravity, ForceMode.Impulse);
-        Fill();
 
     }
 
@@ -33,14 +32,17 @@ public class FlyingStuff : MonoBehaviour {
 
     public void Fill()
     {
-        //duckies = new GameObject[ducks.Length];
+            gravity.x = Random.Range(randomminx, randommaxx);
+            ducks = Instantiate(ducks, new Vector3(gravity.x,gravity.y,0), Quaternion.identity);
+            ducks.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);    
+    }
+
+    IEnumerator DuckWait()
+    {
         for (int i = 0; i < duckAmount; i++)
         {
-            gravity.x = Random.Range(-5, 5);
-            gravity.y = Random.Range(-5, 5);
-            ducks = Instantiate(ducks, new Vector3(gravity.x,gravity.y,0), Quaternion.identity);//spawn.GetComponent<Transform>().transform);//canvas.GetComponent<Canvas>().transform);
-            ducks.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);    
-            //duckies[i].transform.parent = GameObject.Find("Canvas").transform;
+            yield return new WaitForSeconds(BS);
+            Fill();
         }
     }
 
