@@ -61,7 +61,6 @@ public class AudioManager : MonoBehaviour {
     [HideInInspector] public bool switchedToAudioLog = false;
     private bool startedMusic = false;
     [HideInInspector] public bool pausedMusic = true;
-    private bool haveDSP = false;
 
     void Awake ()
 	{
@@ -115,12 +114,9 @@ public class AudioManager : MonoBehaviour {
 
         gameMusicEv.start();
 
-		//assigns DSPs if they haven't been assigned already
-		if (!haveDSP) 
-		{
+        //assigns DSPs if starting music and they haven't been assigned already
+        if (!startedMusic & !switchedToAudioLog) 
 			StartCoroutine (GetDSP ());
-			haveDSP = true;
-		}
     }
 
 	public void AudioStopMusic ()
@@ -129,11 +125,12 @@ public class AudioManager : MonoBehaviour {
 		gameMusicEv.release ();
 
 		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+
+        startedMusic = false;
     }
 
 	public void AudioPauseMusic ()
     {
-		//play "pause" event
 		FMOD.Studio.EventDescription pauseEventDesc;
 	 	FMOD.Studio.EventInstance pauseEv;
 		systemObj.getEvent ("event:/Interface/Playback/pause", out pauseEventDesc);
@@ -148,7 +145,6 @@ public class AudioManager : MonoBehaviour {
 
 	public void AudioUnpauseMusic ()
     {
-		//play "play" event
 		FMOD.Studio.EventDescription playEventDesc;
 		FMOD.Studio.EventInstance playEv;
 		systemObj.getEvent ("event:/Interface/Playback/play", out playEventDesc);
@@ -163,14 +159,14 @@ public class AudioManager : MonoBehaviour {
     {
         if (startedMusic && !pausedMusic)
         {
-            pausedMusic = true;
             AudioPauseMusic();
+            pausedMusic = true;
         }
 
         else if (startedMusic && pausedMusic)
         {
-            pausedMusic = false;
             AudioUnpauseMusic();
+            pausedMusic = false;
         }
 
         if (!startedMusic)
@@ -229,7 +225,28 @@ public class AudioManager : MonoBehaviour {
 		insertCassetteEv.release ();
 	}
 
-	private IEnumerator GetDSP()
+    public void PlayEjectSound()
+    {
+        FMOD.Studio.EventDescription ejectEventDesc;
+        FMOD.Studio.EventInstance ejectEv;
+        systemObj.getEvent("event:/Interface/Playback/eject", out ejectEventDesc);
+        ejectEventDesc.createInstance(out ejectEv);
+        ejectEv.start();
+        ejectEv.release();
+    }
+
+    //work in progress
+    /*public void PlaySnapSound()
+    {
+        FMOD.Studio.EventDescription snapEventDesc;
+        FMOD.Studio.EventInstance snapEv;
+        systemObj.getEvent("event:/Interface/Playback/snap", out snapEventDesc);
+        snapEventDesc.createInstance(out snapEv);
+        snapEv.start();
+        snapEv.release();
+    }*/
+
+    private IEnumerator GetDSP()
 	{
 		FMOD.Studio.PLAYBACK_STATE state;
 
@@ -298,10 +315,9 @@ public class AudioManager : MonoBehaviour {
 
     private void OnDestroy()
     {
-	//Destroy FMOD system objects (safety precaution, likely not needed anymore)
-	systemObj.release();
-	lowLevelSys.release();
-        
+        //release FMOD system objects (safety precaution, likely not needed anymore). "systemObj" has to be released first.
+        systemObj.release();
+	    lowLevelSys.release();
     }
 
 

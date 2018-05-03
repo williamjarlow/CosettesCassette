@@ -55,12 +55,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicPath: event:/Music/Cassette_01/music
   audioLogPath: event:/Logs/log_01
-  bassDrumPath: 
+  levelClearPath: snapshot:/Pitch Corruption/corr_pitch_01
+  segmentClearPath: event:/SFX/ZoneClear/zone_clear_01
+  bassDrumKey: cassette_01_kick
   bankFiles:
-  - Cassette_01.bank
-  - Master Bank.bank
-  - Master Bank.strings.bank
+  - Cassette_01
+  - Master Bank
+  - Master Bank.strings
   switchedToAudioLog: 0
+  pausedMusic: 1
 --- !u!114 &114660314149128492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,6 +93,12 @@ MonoBehaviour:
   maxSpeedThresholdInMs: 6000
   fastSpeedInMs: 20000
   slowSpeedInMs: 1500
+  cassetteNormalSpeed: 50
+  cassetteSlowSpeed: 200
+  cassetteFastSpeed: 500
+  movingSlow: 0
+  movingFast: 0
+  movingForward: 1
   MoreNotes: "To get the mask working correctly the Hidden Timeline Images prefab
     needs to be a child object to the Timeline Slider \n Mask should start inactivated
     as we only want it to show when touching the timeline bar."
