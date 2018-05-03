@@ -9,30 +9,28 @@ public class NoteSpawn : MonoBehaviour {
     [SerializeField] private GameObject ducks;
     [SerializeField] private int duckAmount;
     [SerializeField] private float speed;
-    [SerializeField] private float randomminx;
-    [SerializeField] private float randommaxx;
-    [SerializeField] private float BS;
+    [SerializeField] private float randomMinX;
+    [SerializeField] private float randomMaxX;
+    [SerializeField] private float spawnTime;
 
 
     // Use this for initialization
     void Start ()
     {
         gravity.y = transform.position.y;
+        SpawnNotes();
         StartCoroutine(DuckWait());
-
-
     }
 
     // Update is called once per frame
     void Update ()
     {
         
-        
     }
 
-    public void Fill()
+    public void SpawnNotes()
     {
-            gravity.x = Random.Range(randomminx, randommaxx);
+            gravity.x = Random.Range(randomMinX, randomMaxX);
             ducks = Instantiate(ducks, new Vector3(gravity.x,gravity.y,0), Quaternion.identity);
             ducks.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);    
     }
@@ -41,8 +39,8 @@ public class NoteSpawn : MonoBehaviour {
     {
         for (int i = 0; i < duckAmount; i++)
         {
-            yield return new WaitForSeconds(BS);
-            Fill();
+            yield return new WaitForSeconds(spawnTime);
+            SpawnNotes();
         }
     }
 

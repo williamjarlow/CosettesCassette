@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class CorruptionTemplate : CorruptionBaseClass
+public class NotesHuntCorruption : CorruptionBaseClass
 {
     AudioManager audioManager;
 
@@ -15,7 +15,7 @@ public class CorruptionTemplate : CorruptionBaseClass
     void Update()
     {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop && 
+            audioManager.GetTimeLinePosition() < duration.stop &&
             corruptionClearedPercent < clearThreshold) //If player is inside a corrupted segment
         {
             if (inSegment == false) //If player just entered the segment
@@ -34,10 +34,10 @@ public class CorruptionTemplate : CorruptionBaseClass
     }
 
     public override void EnterSegment()
-    { 
+    {
         //This function gets called upon when entering the segment
         inSegment = true;
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); 
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
     }
 
@@ -62,3 +62,4 @@ public class CorruptionTemplate : CorruptionBaseClass
         //You can use this function to reset any conditions that need to be reset upon leaving a segment.
     }
 }
+

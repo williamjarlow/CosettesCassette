@@ -139,6 +139,7 @@ Transform:
   m_Children:
   - {fileID: 1931723801}
   - {fileID: 2025249566}
+  - {fileID: 1225187347}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -310,6 +311,8 @@ MonoBehaviour:
   lengthOfSong: 0
   currentSegmentIndex: 0
   timeStamp: 0
+  closestSegmentBehind: 0
+  closestSegmentInFront: 0
   currentInstrument: 0
 --- !u!114 &599771681 stripped
 MonoBehaviour:
@@ -531,6 +534,52 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1489952864}
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &1225187346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1225187347}
+  - component: {fileID: 1225187348}
+  m_Layer: 0
+  m_Name: DuckHunt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1225187347
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1225187346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 149361544}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225187348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1225187346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e21bb54695a304382c7e1ef739c1c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: {x: 0, y: 0, z: 0}
+  ducks: {fileID: 1848067483778662, guid: 0d27d881572ec2e4db0025138a087dbf, type: 2}
+  duckAmount: 3
+  speed: 0
+  randomMax: 5
+  randomMin: -5
 --- !u!224 &1419187409 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224923744931183462, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
@@ -777,7 +826,7 @@ Prefab:
     - target: {fileID: 224601842357146770, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 223169730228929020, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
         type: 2}
@@ -1147,42 +1196,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2e1686e994190449b4c9c784b37b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distortionAmount: 0
-  corruptionAmount: 0
-  corruptions: []
-  pitchInformationList:
-  - maxDistortion: 31.5
-    currentDistortion: 0
-    clearThreshold: 52
-    segmentID: 3
-    nodes:
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    - position: {x: 0, y: 0, z: 0}
-      seconds: 0
-    pitchSlider: {fileID: 1216849507}
-    mercyRange: 5
-    rGoalRange: {x: -2, y: 2}
-    rTravelTimeRange: {x: 1, y: 3}
-    randomizeNodes: 1
-  pitchCorruptionPrefab: {fileID: 1312742080630916, guid: daada61ace94abe46ad6c26817817724,
-    type: 2}
 --- !u!1 &1822200672
 GameObject:
   m_ObjectHideFlags: 0
