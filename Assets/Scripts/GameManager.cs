@@ -162,37 +162,37 @@ public class GameManager : Singleton<GameManager> {
     public void SnapToClosestSegmentInFront()
     {   
         FindClosestSegment();
-        if (currentSegmentIndex == overallCorruption.durations.Count - 1)
+        if (currentSegmentIndex == overallCorruption.durations.Count - 1)       // If last segment is closest
         {
-            audioManager.gameMusicEv.setTimelinePosition(lengthOfSong);
+            audioManager.gameMusicEv.setTimelinePosition(lengthOfSong);         // Snap to end of song
             return;
         }
-        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start > audioManager.GetTimeLinePosition())
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start > audioManager.GetTimeLinePosition()) // If first segment is closest and timeline is before that segment
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                    // Snap to start of first segment
         else
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);                // In all other cases, snap to next segment
     }
 
     public void SnapToClosestSegmentBehind()
     {
         FindClosestSegment();
-        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs > audioManager.GetTimeLinePosition())
+        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs > audioManager.GetTimeLinePosition()) // If first segment is closest and we are less than "allowedProgressIntoBarInMs" into the segment
         {
-            audioManager.gameMusicEv.setTimelinePosition(0);
+            audioManager.gameMusicEv.setTimelinePosition(0);                                                                                                      // Snap to beginning of song
             return;
         }
-        else if (currentSegmentIndex == 0)
+        else if (currentSegmentIndex == 0)                                                                                                                        // Else, if first segment
         {
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                                                 // Snap to start of first segment
             return;
         }
-
+                                                                                                                                                                  // If last segment is closest and we are less than "allowedProgressIntoBarInMs" into the segment
         if (currentSegmentIndex == overallCorruption.durations.Count - 1 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition())
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
-        if (currentSegmentIndex != 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition())
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                                                 // Snap to start of last segment
+        if (currentSegmentIndex != 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition()) // If any other segment except first or last and we are less than "allowedProgressIntoBarInMs" into the segment
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                                                 // Snap to start of that segment
         else
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);                                             // Else, snap to start of earlier segment
     }
 
 

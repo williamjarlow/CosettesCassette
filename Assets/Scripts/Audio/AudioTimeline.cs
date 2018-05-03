@@ -84,54 +84,25 @@ public class AudioTimeline : MonoBehaviour
     // Manually change the slider with touch
     public void HoldChange()
     {
-        if (!GameManager.Instance.recording)        // FIXA SWITCH ISTÄLLET, SATANS JÄVLA IF
+        if (!GameManager.Instance.recording)
         {
             // Stop player from breaking song by forcing it to play the exact same moment over and over again.
             if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
             {
-                movingForward = true;
-                movingSlow = false;
-                movingFast = false;
+                DecideSpeedAndDirection("moveNormal");
                 return;
             }
-
             if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
-            {
-                movingSlow = false;
-                movingFast = true;
-                movingForward = true;
-                sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
-            }
-
+                DecideSpeedAndDirection("fastForward");
 
             else if (sliderValueAtPush < valuePushedOn)
-            {
-                sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
-                movingSlow = true;
-                movingFast = false;
-                movingForward = true;
-            }
-                
-
+                DecideSpeedAndDirection("slowForward");
 
             if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
-            {
-                sliderValueAtPush -= fastSpeedInMs * Time.deltaTime;
-                movingSlow = false;
-                movingFast = true;
-                movingForward = false;
-            }
-                
+                DecideSpeedAndDirection("fastBackwards");
 
             else if (sliderValueAtPush > valuePushedOn)
-            {
-                movingSlow = true;
-                movingFast = false;
-                movingForward = false;
-                sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
-
-            }
-                
+                DecideSpeedAndDirection("slowBackwards");
 
 
             timelineSlider.value = sliderValueAtPush;
@@ -154,7 +125,7 @@ public class AudioTimeline : MonoBehaviour
             return;
         }
 
-        if (holding)
+        if (holding)    // Reset all values, bools are for CassetteAnimation
         {
             timelineMaskParent.SetActive(false);
             holding = false;
@@ -162,6 +133,47 @@ public class AudioTimeline : MonoBehaviour
             movingFast = false;
             movingForward = true;
             return;
+        }
+    }
+
+    private void DecideSpeedAndDirection(string speedAndDirection)
+    {
+        // Set values depending on where we are touching on the timeline
+        switch (speedAndDirection)
+        {
+            case "fastForward":
+                sliderValueAtPush += fastSpeedInMs * Time.deltaTime;
+                movingSlow = false;
+                movingFast = true;
+                movingForward = true;
+                break;
+
+            case "slowForward":
+                sliderValueAtPush += slowSpeedInMs * Time.deltaTime;
+                movingSlow = true;
+                movingFast = false;
+                movingForward = true;
+                break;
+
+            case "fastBackwards":
+                sliderValueAtPush -= fastSpeedInMs * Time.deltaTime;
+                movingSlow = false;
+                movingFast = true;
+                movingForward = false;
+                break;
+
+            case "slowBackwards":
+                sliderValueAtPush -= slowSpeedInMs * Time.deltaTime;
+                movingSlow = true;
+                movingFast = false;
+                movingForward = false;
+                break;
+
+            default:
+                movingForward = true;
+                movingSlow = false;
+                movingFast = false;
+                break;
         }
     }
 

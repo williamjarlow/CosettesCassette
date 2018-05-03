@@ -32,41 +32,57 @@ public class CassetteAnimation : MonoBehaviour {
         leftWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
         rightWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
 
-        if(cassetteAnimation && !audioManager.pausedMusic)           // FIXA SWITCH ISTÄLLET, SATANS JÄVLA IF. Kanske fixa en listener istället. Mycket konstant lyssnande på ändringar.
+        if (cassetteAnimation && !audioManager.pausedMusic)
+            CheckSongSpeed();
+    }
+
+    private void CheckSongSpeed()
+    {
+        // Moving fast forward
+        if (audioTimeline.movingFast && audioTimeline.movingForward)
+            RotationControl("fastForward");
+        // Moving fast backwards
+        if (audioTimeline.movingFast && !audioTimeline.movingForward)
+            RotationControl("fastBackwards");
+        // Moving slow forward
+        if (audioTimeline.movingSlow && audioTimeline.movingForward)
+            RotationControl("slowForward");
+        // Moving slow backwards
+        if (audioTimeline.movingSlow && !audioTimeline.movingForward)
+            RotationControl("slowBackwards");
+        // Moving forward normally
+        if (!audioTimeline.movingSlow && !audioTimeline.movingFast)
+            RotationControl("moveNormal");
+    }
+
+    private void RotationControl(string kindOfRotation)
+    {
+        switch (kindOfRotation)
         {
-            // Moving fast forward
-            if (audioTimeline.movingFast && audioTimeline.movingForward)
-            {
+            case "fastForward":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-            }
-            // Moving fast backwards
-            if (audioTimeline.movingFast && !audioTimeline.movingForward)
-            {
+                break;
+
+            case "fastBackwards":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-            }
-            // Moving slow forward
-            if (audioTimeline.movingSlow && audioTimeline.movingForward)
-            {
+                break;
+
+            case "slowForward":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-            }
-            // Moving slow backwards
-            if (audioTimeline.movingSlow && !audioTimeline.movingForward)
-            {
+                break;
+
+            case "slowBackwards":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-            }
-            // Moving forward normally
-            if (!audioTimeline.movingSlow && !audioTimeline.movingFast)
-            {
+                break;
+
+            default:
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
-            }
-
-
-
+                break;
         }
     }
     public void PlayAnimation()
