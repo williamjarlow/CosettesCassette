@@ -29,6 +29,9 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector] public int currentSegmentIndex;
     [HideInInspector] public int timeStamp;
 
+    public int closestSegmentBehind;
+    public int closestSegmentInFront;
+
 
     public instruments currentInstrument = instruments.drums;
 
@@ -69,8 +72,8 @@ public class GameManager : Singleton<GameManager> {
             // If there are no previous recordings, start recording
             if(timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == false)
             {
-                // Snap to the nearest corrupted area
-                audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+            // Snap to the nearest corrupted area
+                SnapToClosestSegment();
                 Debug.Log("Snapped and started recording");
 
                 recording = true;
@@ -153,6 +156,32 @@ public class GameManager : Singleton<GameManager> {
         buttonDisabler.EnableButtons();
     }
 
+    public void SnapToClosestSegment()
+    {
+        FindClosestSegment();
+        audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+    }
+
+    public void SnapToClosestSegmentInFront()
+    {   
+        FindClosestSegment();
+        if (currentSegmentIndex == 0)
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);       // BUGFIX THIS. Currently jumping past first segment
+        if (currentSegmentIndex == overallCorruption.segments.Count - 1)
+            audioManager.gameMusicEv.setTimelinePosition((int)lengthOfSong);
+        else
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);
+    }
+
+    public void SnapToClosestSegmentBehind()
+    {
+        FindClosestSegment();
+        if (currentSegmentIndex == 0)
+            audioManager.gameMusicEv.setTimelinePosition(0);
+        else
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);
+
+    }
 
 
 }

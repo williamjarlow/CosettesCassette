@@ -143,4 +143,5 @@ public class AudioTimeline : MonoBehaviour
         audioManager.gameMusicEv.getTimelinePosition(out temp);
         timelineSlider.value = temp;
     }
+
 }
