@@ -8,11 +8,16 @@ public class PitchNode
 {
     public Vector3 position = new Vector3();
     public float seconds = 0;
+    public float mercyRange;
 }
 
 public class PitchCorruption : CorruptionBaseClass {
     [Header("Pitch nodes")]
     public List<PitchNode> nodes = new List<PitchNode>();
+
+    public float lineSpeed;
+
+    LineRenderer lineRenderer;
 
     public Slider pitchSlider;
     public float mercyRange;
@@ -33,7 +38,6 @@ public class PitchCorruption : CorruptionBaseClass {
     float totalTime; //The total amount of time measured in seconds
     float hitTime; //The amount of time the player was in the zone in seconds
 
-    float totalSeconds;
     float score;
     Vector3 startingPosition;
 
@@ -50,6 +54,7 @@ public class PitchCorruption : CorruptionBaseClass {
     // Use this for initialization
     void Start()
     {
+        lineRenderer = GetComponent<LineRenderer>();
         audioPitch = GameManager.Instance.audioPitch;
         audioManager = GameManager.Instance.audioManager;
         overallCorruption = GameManager.Instance.overallCorruption;
@@ -90,11 +95,54 @@ public class PitchCorruption : CorruptionBaseClass {
                 EnterSegment();
             }
             RecordPitch();
+            MoveLine();
         }
         else if (inSegment) //If player leaves corrupted area
         {
             ExitSegment();
         }
+    }
+
+    void GenerateLine()
+    {
+        /*AnimationCurve curve = new AnimationCurve();
+        float secondsSoFar = 0;
+        for(int i = 0; i < nodes.Count; i++)
+        {
+            curve.AddKey(secondsSoFar / totalTime, nodes[i].mercyRange / 10);
+            secondsSoFar += nodes[i].seconds;
+        }
+
+        lineRenderer.widthCurve = curve;*/
+
+        lineRenderer.positionCount = nodes.Count + 2;
+        Vector3 newPosition;
+        for (int i = 0; i <= nodes.Count + 1; i++)
+        {
+            if (i == 0)
+                newPosition = new Vector3(nodes[i].position.x - nodes[i].seconds * i * lineSpeed, nodes[i].position.y, nodes[i].position.z);
+            else if (i == nodes.Count + 1)
+                newPosition = new Vector3(nodes[i - 2].position.x - nodes[i - 2].seconds * i * 100, nodes[i - 2].position.y, nodes[i - 2].position.z);
+            else
+                newPosition = new Vector3(nodes[i - 1].position.x - nodes[i - 1].seconds * i * lineSpeed, nodes[i - 1].position.y, nodes[i - 1].position.z);
+            
+            lineRenderer.SetPosition(i, newPosition); // Create the points in the line
+        }
+    }
+    void MoveLine()
+    {
+        Vector3[] positions = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(positions);
+        for (int i = 0; i < lineRenderer.positionCount; i++)
+        {
+            positions[i] = new Vector3(positions[i].x + Time.deltaTime * lineSpeed, positions[i].y, positions[i].z);
+        }
+        lineRenderer.SetPositions(positions);
+    }
+
+    void DestroyLine()
+    {
+        lineRenderer.positionCount = 0;
     }
 
     public override void EnterSegment()
@@ -106,7 +154,7 @@ public class PitchCorruption : CorruptionBaseClass {
             totalNodeTime += node.seconds;
         }
 
-        if ((duration.stop - duration.start) / 1000 < totalNodeTime)
+        if ((duration.stop - duration.start) / 1000 < totalNodeTime) //testing purposes only, remove upon implementation.
             totalTime = (duration.stop - duration.start) / 1000;
         else
             totalTime = totalNodeTime;
@@ -116,6 +164,7 @@ public class PitchCorruption : CorruptionBaseClass {
         score = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
+        GenerateLine();
         base.EnterSegment();
     }
 
@@ -137,6 +186,7 @@ public class PitchCorruption : CorruptionBaseClass {
         StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
+        DestroyLine();
         base.ExitSegment();
     }
 
