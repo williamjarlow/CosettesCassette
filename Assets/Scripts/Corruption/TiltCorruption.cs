@@ -58,7 +58,7 @@ public class TiltCorruption : CorruptionBaseClass
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         if (GameManager.Instance.recording)
             corruptionClearedPercent = 0;
-        tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab);
+        tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, gameObject.transform);
         score = startingScore;
         base.EnterSegment();
     }
