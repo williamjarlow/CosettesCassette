@@ -5,6 +5,11 @@ using UnityEngine.Assertions;
 
 public class TiltCorruption : CorruptionBaseClass
 {
+    const int startingScore = 100;
+    float score;
+    [SerializeField] [Range(0, 1)]
+    float punishment;
+
     [SerializeField]
     private float mercyRange;
     [SerializeField]
@@ -58,6 +63,7 @@ public class TiltCorruption : CorruptionBaseClass
         if (GameManager.Instance.recording)
             corruptionClearedPercent = 0;
         tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab);
+        score = startingScore;
         base.EnterSegment();
     }
 
@@ -118,13 +124,18 @@ public class TiltCorruption : CorruptionBaseClass
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos + moveSpeed, -1, 1));
             soundPos = Mathf.Clamp(soundPos + moveSpeed, -1, 1);
         }
-        if(soundPos - mercyRange < 0 && soundPos + mercyRange > 0)
+        if(soundPos - mercyRange > 0 || soundPos + mercyRange < 0)
         {
-            corruptionClearedPercent += 0.3f;
+            score -= punishment;
         }
 
         tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos*5, 0, 0);
 
+    }
+
+    public override void GradeScore()
+    {
+        corruptionClearedPercent = score;
     }
 
     void ResetConditions()
