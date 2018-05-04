@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TiltMechanic : MonoBehaviour {
-
-    [SerializeField] private float moveMusic;
+    
     [SerializeField] private float moveSpeed;
     [SerializeField] GameObject audioMan;
     private AudioManager am;
     private bool setPan = false;
-    [SerializeField] private float temp = 0;
+    private float soundPos = 0;
     FMOD.RESULT result;
     FMOD.Studio.PLAYBACK_STATE state;
 
     // Use this for initialization
     void Start () {
         am = audioMan.GetComponent<AudioManager>();
-
     }
 	
 	// Update is called once per frame
@@ -37,7 +35,7 @@ public class TiltMechanic : MonoBehaviour {
         }
         //am.musicChanSubGroup.setPan(moveMusic);
         float x = Input.acceleration.x;
-        
+
         //float x = 0;
         //if (Input.GetKey("left"))
         //{
@@ -54,13 +52,13 @@ public class TiltMechanic : MonoBehaviour {
 
         if (x < -0.1f)
         {
-            am.musicChanSubGroup.setPan(Mathf.Clamp(temp - moveSpeed, -1, 1));
-            temp = Mathf.Clamp(temp - moveSpeed, -1, 1);
+            am.musicChanSubGroup.setPan(Mathf.Clamp(soundPos - moveSpeed, -1, 1));
+            soundPos = Mathf.Clamp(soundPos - moveSpeed, -1, 1);
         }
         else if (x > 0.1f)
         {
-            am.musicChanSubGroup.setPan(Mathf.Clamp(temp + moveSpeed, -1, 1));
-            temp = Mathf.Clamp(temp + moveSpeed, -1, 1);
+            am.musicChanSubGroup.setPan(Mathf.Clamp(soundPos + moveSpeed, -1, 1));
+            soundPos = Mathf.Clamp(soundPos + moveSpeed, -1, 1);
         }
     }
 }
