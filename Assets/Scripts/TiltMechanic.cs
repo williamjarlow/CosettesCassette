@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TiltMechanic : MonoBehaviour {
     
+    [Range(0, 0.1f)]
     [SerializeField] private float moveSpeed;
-    [SerializeField] GameObject audioMan;
     private AudioManager am;
     private bool setPan = false;
     private float soundPos = 0;
@@ -14,7 +14,7 @@ public class TiltMechanic : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        am = audioMan.GetComponent<AudioManager>();
+        am = GameManager.Instance.audioManager;
     }
 	
 	// Update is called once per frame
@@ -34,21 +34,21 @@ public class TiltMechanic : MonoBehaviour {
             setPan = false;
         }
         //am.musicChanSubGroup.setPan(moveMusic);
-        float x = Input.acceleration.x;
+        //float x = Input.acceleration.x;
 
-        //float x = 0;
-        //if (Input.GetKey("left"))
-        //{
-        //    x = -1;
-        //}
-        //else if (Input.GetKey("right"))
-        //{
-        //    x = 1;
-        //}
-        //else
-        //{
-        //    x = 0;
-        //}
+        float x = 0;
+        if (Input.GetKey("left"))
+        {
+            x = -1;
+        }
+        else if (Input.GetKey("right"))
+        {
+            x = 1;
+        }
+        else
+        {
+            x = 0;
+        }
 
         if (x < -0.1f)
         {
