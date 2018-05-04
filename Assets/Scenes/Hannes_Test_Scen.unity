@@ -149,7 +149,17 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4203985475652908, guid: 68a1c56d062bc5c4791b46e6992b8a16, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114693677444365012, guid: 68a1c56d062bc5c4791b46e6992b8a16,
+        type: 2}
+      propertyPath: clearThreshold
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114693677444365012, guid: 68a1c56d062bc5c4791b46e6992b8a16,
+        type: 2}
+      propertyPath: segmentID
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68a1c56d062bc5c4791b46e6992b8a16, type: 2}
@@ -614,13 +624,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46674d8f14a7604cad0a59d856ae2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notePrefab: {fileID: 1848067483778662, guid: 0d27d881572ec2e4db0025138a087dbf, type: 2}
-  noteAmount: 4
-  speed: 1
-  xSpawnRandomMin: -5
-  xSpawnRandomMax: 5
-  spawnInterval: 1
-  rayLength: 100
 --- !u!1001 &1341216776
 Prefab:
   m_ObjectHideFlags: 0
@@ -1767,7 +1770,7 @@ Prefab:
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[0].start
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114939071933341766, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -2097,4 +2100,71 @@ Prefab:
       objectReference: {fileID: 1216849505}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 660aec3712e9fc24fbd150b30b2bc378, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2123651919
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1788661190}
+    m_Modifications:
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: segmentID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[2].spawnTime
+      value: 11000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[3].noteType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[3].spawnTime
+      value: 12000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[4].spawnTime
+      value: 13000
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
   m_IsPrefabParent: 0

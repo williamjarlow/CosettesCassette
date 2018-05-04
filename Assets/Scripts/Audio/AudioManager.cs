@@ -256,7 +256,6 @@ public class AudioManager : MonoBehaviour {
 		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
 		{
 			gameMusicEv.getPlaybackState (out state);
-			print("waiting for music to start");
 			yield return null;
 		}
 		
