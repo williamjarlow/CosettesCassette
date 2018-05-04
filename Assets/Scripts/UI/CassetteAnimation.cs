@@ -16,12 +16,14 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private GameObject lid;
     [SerializeField] private float cassetteMoveDelay;
     [SerializeField] private int lidClosingDelay;
+    [SerializeField] private int startClosingDelay;
 
     void Start ()
     {
+        StartCoroutine(LidClosing());
         audioManager = GameManager.Instance.audioManager;
         audioTimeline = GameManager.Instance.audioManager.GetComponent<AudioTimeline>();
-
+        
         Debug.Assert(rightWheel != null, "Right wheel is not attached to the script");
         Debug.Assert(leftWheel != null, "Left wheel is not attached to the script");
         Debug.Assert(rightRotator != null, "Right wheel is not attached to the script");
@@ -38,7 +40,9 @@ public class CassetteAnimation : MonoBehaviour {
 
         if (cassetteAnimation && !audioManager.pausedMusic)
             CheckSongSpeed();
+        
     }
+
 
     private void CheckSongSpeed()
     {
@@ -106,11 +110,24 @@ public class CassetteAnimation : MonoBehaviour {
     }
     private IEnumerator LidOpening ()
     {
+        
         yield return new WaitForSeconds(cassetteMoveDelay);
+        cassetteToRotate.SetActive(false);
+        cassetteToAnimate.SetActive(true);
+        cassetteToAnimate.GetComponent<Animator>().SetBool("Intro", true);
         cassetteToAnimate.GetComponent<Animator>().SetBool("Run", true);
         yield return new WaitForSeconds(lidClosingDelay);
         lid.GetComponent<Animator>().SetBool("Run", false);
+        cassetteToAnimate.SetActive(false);
+        cassetteToRotate.SetActive(true);
+        
     }
-    
+    private IEnumerator LidClosing()
+    {
+        yield return new WaitForSeconds(startClosingDelay);
+        
+        cassetteToAnimate.SetActive(false);
+        cassetteToRotate.SetActive(true);
+    }
 }
     
