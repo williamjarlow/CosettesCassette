@@ -28,7 +28,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
     [SerializeField] private float speed;
     [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
     [Tooltip("Maximum x spawn coordinate")] [SerializeField] private float xSpawnRandomMax;
-    private float timeStamp;
+    [SerializeField] private float timeStamp;
     private float spawnCooldown = 0.05f;
 
     public enum NoteType { CORRECT, INCORRECT };
