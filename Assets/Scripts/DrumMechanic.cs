@@ -98,8 +98,6 @@ public class DrumMechanic : MonoBehaviour {
                         if(timeStamp <= overallCorruption.durations[i].GetDrumRecordings()[j] + tolerance / 2 && timeStamp >= overallCorruption.durations[i].GetDrumRecordings()[j] - tolerance / 2)
                         {
                             result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
-                            Debug.Log("kick recording: " + result);
-                            //audioSource.Play();
                             isPlaying = true;
                             StartCoroutine(ResetPlayed());
                         }

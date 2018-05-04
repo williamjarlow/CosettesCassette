@@ -38,7 +38,8 @@ public class OverallCorruption : MonoBehaviour {
 	[HideInInspector] public float overallDistortion;
 
 	AudioDistortion audioDistortion;
-	List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
+	[HideInInspector] public List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
+
 
 	// ** Corrupted Area** //
 	[SerializeField]
@@ -47,7 +48,6 @@ public class OverallCorruption : MonoBehaviour {
 	private List<GameObject> corruptedAreaList = new List<GameObject>();
 
 	void Awake () {
-
 		bpmInMs = ConvertBpmToMs(bpm);
 
 		for (int i = 0; i < segments.Count; i++)
