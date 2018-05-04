@@ -5,27 +5,23 @@ using UnityEngine.Assertions;
 
 public class TiltCorruption : CorruptionBaseClass
 {
-    const int startingScore = 100;
-    float score;
-    [SerializeField] [Range(0, 1)]
-    float punishment;
-
-    [SerializeField]
-    private float mercyRange;
-    [SerializeField]
-    GameObject tiltIndicatorPrefab;
-    [Range(0, 0.1f)]
-    [SerializeField]
-    private float moveSpeed;
-    private AudioManager audioManager;
+    [SerializeField] [Range(0, 1)] private float punishment;
+    [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
+    [SerializeField] [Range(0, 1)] private float mercyRange;
+    [Tooltip("Decides how quickly the sound will offset. Lower value equals faster offset")]
+    [SerializeField] [Range(1, 500)] private float offsetModifier;
+    [SerializeField] private GameObject tiltIndicatorPrefab;
     private bool setPan = false;
     private float soundPos = 0;
-    FMOD.RESULT result;
+    private float score;
+    private const int startingScore = 100;
     FMOD.Studio.PLAYBACK_STATE state;
 
-    GameObject tiltIndicatorInstance;
+    private GameObject tiltIndicatorInstance;
 
-    OverallCorruption overallCorruption;
+    private AudioManager audioManager;
+
+    private OverallCorruption overallCorruption;
 
     void Start()
     {
@@ -96,14 +92,25 @@ public class TiltCorruption : CorruptionBaseClass
             audioManager.musicChanSubGroup.setPan(0);
             setPan = false;
         }
-        //am.musicChanSubGroup.setPan(moveMusic);
+
         float x = Input.acceleration.x;
-        if(soundPos + 0.05 > 0 && soundPos - 0.05 <= 0) //Replace this
+        if(soundPos + 0.03f > 0 && soundPos - 0.03f <= 0)
         {
-            soundPos += Random.Range(-0.03f, 0.03f); //Replace this
+            if(soundPos > 0)
+            {
+                soundPos += Random.Range(0, 0.01f);
+            }
+            else if(soundPos < 0)
+            {
+                soundPos += Random.Range(-0.01f, 0);
+            }
+            else
+            {
+                soundPos += Random.Range(-0.03f, 0.03f);
+            }
         }
 
-        soundPos += soundPos / 100; //Replace this
+        soundPos += soundPos / offsetModifier;
         soundPos = Mathf.Clamp(soundPos, -1, 1);
         if (Input.GetKey("left"))
         {
