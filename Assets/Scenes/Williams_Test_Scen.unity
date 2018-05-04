@@ -276,13 +276,11 @@ MonoBehaviour:
   LevelCleared: 0
   recording: 0
   pitch: 0
-  posInSong: 0
   lengthOfSong: 0
   currentSegmentIndex: 0
   timeStamp: 0
-  closestSegmentBehind: 0
-  closestSegmentInFront: 0
-  currentInstrument: 0
+  allowedProgressIntoBarInMs: 5000
+  selectedInstrument: 0
 --- !u!1001 &568352214
 Prefab:
   m_ObjectHideFlags: 0
@@ -367,6 +365,54 @@ GameObject:
   m_PrefabParentObject: {fileID: 1954715155264464, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
     type: 2}
   m_PrefabInternal: {fileID: 1489952864}
+--- !u!1001 &952082752
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1788661190}
+    m_Modifications:
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -30.50928
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: tiltIndicatorPrefab
+      value: 
+      objectReference: {fileID: 1381994805003684, guid: e397f0b461b535b4aac378dc216b62f2,
+        type: 2}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &983012530 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114125584847717968, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
@@ -1712,6 +1758,31 @@ Prefab:
       propertyPath: pitchSlider
       value: 
       objectReference: {fileID: 1216849507}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: maxDistortion
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: lineSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: nodes.Array.data[0].position.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: nodes.Array.data[1].position.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: randomizeNodes
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: daada61ace94abe46ad6c26817817724, type: 2}
   m_IsPrefabParent: 0

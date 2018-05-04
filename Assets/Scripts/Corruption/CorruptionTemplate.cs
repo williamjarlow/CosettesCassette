@@ -6,17 +6,19 @@ using UnityEngine.Assertions;
 public class CorruptionTemplate : CorruptionBaseClass
 {
     AudioManager audioManager;
+    OverallCorruption overallCorruption;
 
     void Start()
     {
+        overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
+        duration = overallCorruption.durations[segmentID];
     }
 
     void Update()
     {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
-            audioManager.GetTimeLinePosition() < duration.stop && 
-            corruptionClearedPercent < clearThreshold) //If player is inside a corrupted segment
+            audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
             if (inSegment == false) //If player just entered the segment
             {
@@ -37,7 +39,9 @@ public class CorruptionTemplate : CorruptionBaseClass
     { 
         //This function gets called upon when entering the segment
         inSegment = true;
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100)); 
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        if (GameManager.Instance.recording)
+            corruptionClearedPercent = 0;
         base.EnterSegment();
     }
 
@@ -47,6 +51,7 @@ public class CorruptionTemplate : CorruptionBaseClass
         inSegment = false;
         if (GameManager.Instance.recording)
             GradeScore();
+        corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
         base.ExitSegment();
         ResetConditions();
