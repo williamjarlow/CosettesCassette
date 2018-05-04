@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+// ** Written by Hannes Gustafsson and William Jarlow ** // 
+
 public class NotesHuntCorruption : CorruptionBaseClass
 {
     [System.Serializable]
@@ -18,18 +20,23 @@ public class NotesHuntCorruption : CorruptionBaseClass
     private OverallCorruption overallCorruption;
     [SerializeField] private GameObject correctNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
-    [SerializeField] private int noteAmount;
-    [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] [SerializeField] private int tolerance = 30;
+    [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] private int tolerance = 30;
+    private float maxPoints;
+    private float currentPoints;
+    [SerializeField] private int correctNotePoints;
+    [SerializeField] private int incorrectNotePoints;
     [SerializeField] private float speed;
-    [SerializeField] private float timeStamp;
-    private float spawnCooldown = 0.05f;
     [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
     [Tooltip("Maximum x spawn coordinate")] [SerializeField] private float xSpawnRandomMax;
+    private float timeStamp;
+    private float spawnCooldown = 0.05f;
 
     public enum NoteType { CORRECT, INCORRECT };
-
     // The list of notes the designers will spawn
     public List<Notes> notesList;
+
+                // ** TODO ** //
+    // 1. Fix corruption calculation in ExitSegment()
 
     void Start()
     {
@@ -37,6 +44,26 @@ public class NotesHuntCorruption : CorruptionBaseClass
         overallCorruption = GameManager.Instance.overallCorruption;
 
         duration = overallCorruption.durations[segmentID];
+
+        // Initialize points
+        correctNotePrefab.GetComponent<NoteMovement>().points = correctNotePoints;
+        incorrectNotePrefab.GetComponent<NoteMovement>().points = incorrectNotePoints;
+
+        for (int i = 0; i < notesList.Count; i++)
+        {
+            if (notesList[i].noteType == NoteType.CORRECT)
+            {
+                notesList[i].points = correctNotePoints;
+                maxPoints += notesList[i].points;
+            }
+                
+
+            else if (notesList[i].noteType == NoteType.INCORRECT)
+            {
+                notesList[i].points = incorrectNotePoints;
+            }
+                
+        }
     }
 
     void Update()
@@ -72,9 +99,11 @@ public class NotesHuntCorruption : CorruptionBaseClass
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
+                // If an object was hit
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     // Add/remove points
+                    currentPoints += hit.transform.gameObject.GetComponent<NoteMovement>().points;
                     Destroy(hit.transform.gameObject);
                 }
             }
@@ -85,9 +114,11 @@ public class NotesHuntCorruption : CorruptionBaseClass
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+                // If an object was hit
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     // Add/remove points
+                    currentPoints += hit.transform.gameObject.GetComponent<NoteMovement>().points;
                     Destroy(hit.transform.gameObject);
                 }
             }
@@ -108,7 +139,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
     {
         //This function gets called upon when leaving the segment
         inSegment = false;
-        if (GameManager.Instance.recording)
+        //if (GameManager.Instance.recording)
             GradeScore();
         innerDistortion = 0;
         base.ExitSegment();
@@ -117,14 +148,19 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        corruptionClearedPercent = 100;
+        if((currentPoints / maxPoints) > clearThreshold)
+            corruptionClearedPercent = 100;
+
+        else
+        {
+            corruptionClearedPercent = (currentPoints / maxPoints) * 100;
+        }
     }
 
     void ResetConditions()
     {
         //You can use this function to reset any conditions that need to be reset upon leaving a segment.
 
-        // 
     }
 
     private void SpawnNotes()

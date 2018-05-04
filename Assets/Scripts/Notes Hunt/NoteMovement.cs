@@ -7,7 +7,7 @@ public class NoteMovement : MonoBehaviour {
     [SerializeField] private float msDecider;
     [SerializeField] private float randomMS;
     [SerializeField] private float speed;
-
+    [HideInInspector] public int points;
 	// Use this for initialization
 	void Start ()
     {
@@ -38,7 +38,7 @@ public class NoteMovement : MonoBehaviour {
 
     void Left()
     {
-        transform.position = new Vector3(-Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
+        //transform.position = new Vector3(-Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
 
     }
 
