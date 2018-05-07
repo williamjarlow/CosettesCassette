@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector] public OverallCorruption overallCorruption;
     [HideInInspector] public AudioPitch audioPitch;
     public GameObject drumMechanic;
+    public GameObject pitchMechanic;
     public AudioManager audioManager;
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
@@ -55,6 +56,8 @@ public class GameManager : Singleton<GameManager> {
     private void Update()
     {
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
+        if (audioManager.switchedToAudioLog)
+            DisableABunchOfShit();
     }
 
 
@@ -195,6 +198,12 @@ public class GameManager : Singleton<GameManager> {
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);                                             // Else, snap to start of earlier segment
     }
 
+    void DisableABunchOfShit()
+    {
+        drumMechanic.SetActive(false);
+        pitchMechanic.SetActive(false);
+        corruptionHandler.SetActive(false);
+    }
 
 }
 
