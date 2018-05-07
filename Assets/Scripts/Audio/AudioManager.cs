@@ -115,8 +115,6 @@ public class AudioManager : MonoBehaviour {
         //assigns DSPs if starting music and they haven't been assigned already
         if (!startedMusic & !switchedToAudioLog) 
 			StartCoroutine (GetDSP ());
-
-		MuteSFX (true);
     }
 
 	public void AudioStopMusic ()
@@ -199,9 +197,9 @@ public class AudioManager : MonoBehaviour {
 
 	public void PlaySegmentClear(float score)
 	{
-		systemObj.getEvent("event:/SFX/zoneClear", out segmentClearEventDesc);
+		systemObj.getEvent("event:/SFX/segment_clear", out segmentClearEventDesc);
 		segmentClearEventDesc.createInstance(out segmentClearEvent);
-		segmentClearEvent.setParameterValue ("zone_clear_score", score);
+		segmentClearEvent.setParameterValue ("segment_clear_score", score);
 		segmentClearEvent.start();
 		segmentClearEvent.release ();
 	}
