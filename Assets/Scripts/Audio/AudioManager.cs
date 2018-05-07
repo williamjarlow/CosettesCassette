@@ -117,6 +117,8 @@ public class AudioManager : MonoBehaviour {
         //assigns DSPs if starting music and they haven't been assigned already
         if (!startedMusic & !switchedToAudioLog) 
 			StartCoroutine (GetDSP ());
+
+		MuteSFX (true);
     }
 
 	public void AudioStopMusic ()
@@ -234,9 +236,8 @@ public class AudioManager : MonoBehaviour {
         ejectEv.start();
         ejectEv.release();
     }
-
-    //work in progress
-    /*public void PlaySnapSound()
+		
+    public void PlaySnapSound()
     {
         FMOD.Studio.EventDescription snapEventDesc;
         FMOD.Studio.EventInstance snapEv;
@@ -244,7 +245,17 @@ public class AudioManager : MonoBehaviour {
         snapEventDesc.createInstance(out snapEv);
         snapEv.start();
         snapEv.release();
-    }*/
+    }
+
+	public void MuteSFX(bool mute)
+	{
+		FMOD.Studio.Bus sfxBus;
+
+		systemObj.getBus ("bus:/SFX", out sfxBus);
+		sfxBus.setMute (mute);
+		systemObj.getBus ("bus:/Interface", out sfxBus);
+		sfxBus.setMute (mute);
+	}
 
     private IEnumerator GetDSP()
 	{
