@@ -198,7 +198,8 @@ public class GameManager : Singleton<GameManager> {
     void DisableABunchOfShit()
     {
         drumMechanic.SetActive(false);
-
+        pitchMechanic.SetActive(false);
+        corruptionHandler.SetActive(false);
     }
 }
 
