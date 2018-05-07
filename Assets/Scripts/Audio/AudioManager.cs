@@ -46,8 +46,6 @@ public class AudioManager : MonoBehaviour {
 	[SerializeField] private string audioLogPath;
 	[FMODUnity.EventRef]
 	[SerializeField] private string levelClearPath;
-	[FMODUnity.EventRef]
-	[SerializeField] private string segmentClearPath;
 
 	//Audio table keys
     public string bassDrumKey;
@@ -201,7 +199,7 @@ public class AudioManager : MonoBehaviour {
 
 	public void PlaySegmentClear(float score)
 	{
-		systemObj.getEvent(segmentClearPath, out segmentClearEventDesc);
+		systemObj.getEvent("event:/SFX/zoneClear", out segmentClearEventDesc);
 		segmentClearEventDesc.createInstance(out segmentClearEvent);
 		segmentClearEvent.setParameterValue ("zone_clear_score", score);
 		segmentClearEvent.start();
