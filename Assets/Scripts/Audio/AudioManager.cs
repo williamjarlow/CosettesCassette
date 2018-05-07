@@ -181,7 +181,6 @@ public class AudioManager : MonoBehaviour {
 		skipEventDesc.createInstance(out skipEv);
 		skipEv.setParameterValue("skip_click", 0);
 		skipEv.start();
-		print (result);
 	}
 
 	public void SetSkipPitch(float speed)
