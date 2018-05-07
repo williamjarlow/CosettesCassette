@@ -34,9 +34,12 @@ public class NotesHuntCorruption : CorruptionBaseClass
     public enum NoteType { CORRECT, INCORRECT };
     // The list of notes the designers will spawn
     public List<Notes> notesList;
+    // The list of notes (the game object) to destroy when exiting segment
+    public List<GameObject> destroyList;
 
                 // ** TODO ** //
-    // 1. Fix corruption calculation in ExitSegment()
+    // 1. Fix being able to replay the segment
+    // 2. Save the best attempt
 
     void Start()
     {
@@ -89,7 +92,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
         timeStamp = GameManager.Instance.audioManager.GetTimeLinePosition();
 
         // If we are in the current segment
-        if (inSegment)
+        if (inSegment && GameManager.Instance.recording)
         {
             SpawnNotes();
 
@@ -127,42 +130,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
         
     }
 
-    public override void EnterSegment()
-    {
-        //This function gets called upon when entering the segment
-        inSegment = true;
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        base.EnterSegment();
-    }
-
-    public override void ExitSegment()
-    {
-        //This function gets called upon when leaving the segment
-        inSegment = false;
-        //if (GameManager.Instance.recording)
-            GradeScore();
-        innerDistortion = 0;
-        base.ExitSegment();
-        ResetConditions();
-    }
-
-    public override void GradeScore()
-    {
-        if((currentPoints / maxPoints) > clearThreshold)
-            corruptionClearedPercent = 100;
-
-        else
-        {
-            corruptionClearedPercent = (currentPoints / maxPoints) * 100;
-        }
-    }
-
-    void ResetConditions()
-    {
-        //You can use this function to reset any conditions that need to be reset upon leaving a segment.
-
-    }
-
     private void SpawnNotes()
     {
         // Loop through the list of notes
@@ -175,27 +142,89 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
                 if (notesList[i].noteType == NoteType.CORRECT && !notesList[i].hasSpawned)
                 {
-                    // Spawn the correct note and set it's speed
+                    // Spawn the correct note
                     notesList[i].hasSpawned = true;
                     spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
-                    spawnedNote.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);
+                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
+                    destroyList.Add(spawnedNote);
                 }
 
                 else if(notesList[i].noteType == NoteType.INCORRECT && !notesList[i].hasSpawned)
                 {
-                    // Spawn the correct note and set it's speed
+                    // Spawn the correct note
                     notesList[i].hasSpawned = true;
                     spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
-                    spawnedNote.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);
+                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
+                    destroyList.Add(spawnedNote);
                 }
             }
         }
+    }
+
+    private void DestroyNotes()
+    {
+        for(int i = 0; i < destroyList.Count; i++)
+        {
+            if (destroyList[i] != null)
+                Destroy(destroyList[i].transform.gameObject);
+        }
+
+        destroyList.Clear();
     }
 
     private IEnumerator SpawnCooldown()
     {
         yield return new WaitForSeconds(spawnCooldown);
         SpawnNotes();
+    }
+
+    public override void EnterSegment()
+    {
+        // Reset the conditions, i.e destroy notes to be able to replay
+        ResetConditions();
+
+        inSegment = true;
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        base.EnterSegment();
+
+        Debug.Log("enter segment ");
+    }
+
+    public override void ExitSegment()
+    {
+        //This function gets called upon when leaving the segment
+        inSegment = false;
+        GradeScore();
+        innerDistortion = 0;
+
+        DestroyNotes();
+
+        base.ExitSegment();
+
+        // Reset conditions, i.e destroy notes to improve performance
+        ResetConditions();
+    }
+
+    public override void GradeScore()
+    {
+        if ((currentPoints / maxPoints) > clearThreshold)
+            corruptionClearedPercent = 100;
+
+        else
+        {
+            corruptionClearedPercent = (currentPoints / maxPoints) * 100;
+        }
+    }
+
+    void ResetConditions()
+    {
+        //You can use this function to reset any conditions that need to be reset upon leaving a segment.
+        for(int i = 0; i < notesList.Count; i++)
+        {
+            notesList[i].hasSpawned = false;
+        }
+
+        DestroyNotes();
     }
 }
 

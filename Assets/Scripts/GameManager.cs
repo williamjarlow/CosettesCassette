@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public enum instruments { drums, synth, vocals, guitar, bass, pitch };
-public class GameManager : Singleton<GameManager> {
+public class GameManager : Singleton<GameManager>
+{
 
     [HideInInspector] public AudioDistortion audioDistortion;
     [HideInInspector] public OverallCorruption overallCorruption;
@@ -29,13 +30,17 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector] public int currentSegmentIndex;
     [HideInInspector] public int timeStamp;
     [Header("How far into the corrupted area we are allowed without snapping to earlier segment")]
-    [SerializeField] private int allowedProgressIntoBarInMs = 5000;
+    [SerializeField]
+    private int allowedProgressIntoBarInMs = 5000;
+
+    // Tolerance to make sure we run certain functions for entering a segment
+    private const int tolerance = 50;
 
     public instruments selectedInstrument = instruments.drums;
 
-    
 
-	void Awake ()
+
+    void Awake()
     {
         audioDistortion = audioManager.GetComponent<AudioDistortion>();
         audioPitch = audioManager.GetComponent<AudioPitch>();
@@ -48,43 +53,23 @@ public class GameManager : Singleton<GameManager> {
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
     }
 
-    public instruments SelectedInstrument {
+    public instruments SelectedInstrument
+    {
         get { return selectedInstrument; }
         set { selectedInstrument = value; }
-    }
-
-    private void Update()
-    {
-        audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
-        if (audioManager.switchedToAudioLog)
-            DisableABunchOfShit();
     }
 
 
     // ** General functions for different mechanics ** //
 
-    public void Record(GameObject confirmationObj)
+    public void Record()
     {
-        FindClosestSegment();
+        // Find and jump to the closest segment
+        SnapToClosestSegment();
 
-        // Loop through the lists of recordings in the current segment
-        
-            // If there are no previous recordings, start recording
-            if(timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == false)
-            {
-            // Snap to the nearest corrupted area
-                SnapToClosestSegment();
-                Debug.Log("Snapped and started recording");
-
-                recording = true;
-                buttonDisabler.DisableButtons();
-            }
-
-            // If there are previous recordings, display the prompt window
-            else if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == true)
-            {
-                confirmationObj.SetActive(true);
-            }
+        // Start recording and disable buttons
+        recording = true;
+        buttonDisabler.DisableButtons();
     }
 
     public void Listen()
@@ -159,11 +144,13 @@ public class GameManager : Singleton<GameManager> {
     public void SnapToClosestSegment()
     {
         FindClosestSegment();
-        audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);
+
+        // Tolerance to make sure we run certain functions for entering a segment
+        audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start - tolerance);
     }
 
     public void SnapToClosestSegmentInFront()
-    {   
+    {
         FindClosestSegment();
         if (currentSegmentIndex == overallCorruption.durations.Count - 1)       // If last segment is closest
         {
@@ -189,7 +176,7 @@ public class GameManager : Singleton<GameManager> {
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                                                 // Snap to start of first segment
             return;
         }
-                                                                                                                                                                  // If last segment is closest and we are less than "allowedProgressIntoBarInMs" into the segment
+        // If last segment is closest and we are less than "allowedProgressIntoBarInMs" into the segment
         if (currentSegmentIndex == overallCorruption.durations.Count - 1 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition())
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                                                 // Snap to start of last segment
         if (currentSegmentIndex != 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs < audioManager.GetTimeLinePosition()) // If any other segment except first or last and we are less than "allowedProgressIntoBarInMs" into the segment
@@ -198,7 +185,34 @@ public class GameManager : Singleton<GameManager> {
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);                                             // Else, snap to start of earlier segment
     }
 
-    void DisableABunchOfShit()
+
+    // ** OLD Recording button ** //
+    // A confirmation is no longer needed and thus this function should not be needed
+    public void LegacyRecord(GameObject confirmationObj)
+    {
+        FindClosestSegment();
+
+        // Loop through the lists of recordings in the current segment
+
+        // If there are no previous recordings, start recording
+        if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == false)
+        {
+            // Snap to the nearest corrupted area
+            SnapToClosestSegment();
+            Debug.Log("Snapped and started recording");
+
+            recording = true;
+            buttonDisabler.DisableButtons();
+        }
+
+        // If there are previous recordings, display the prompt window
+        else if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == true)
+        {
+            confirmationObj.SetActive(true);
+        }
+    }
+
+    void DisableMechanics()
     {
         drumMechanic.SetActive(false);
         pitchMechanic.SetActive(false);
@@ -206,6 +220,10 @@ public class GameManager : Singleton<GameManager> {
     }
 
 }
+
+
+
+
 
 
 /*    public void Record(GameObject confirmationObj)
