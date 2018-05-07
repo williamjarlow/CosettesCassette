@@ -13,7 +13,7 @@ public class NoteMovement : MonoBehaviour {
     {
 
         msDecider = transform.position.x;
-        randomMS = Random.Range(0, 7);
+        randomMS = Random.Range(0.1f, 7);
 
     }
 	
@@ -31,19 +31,22 @@ public class NoteMovement : MonoBehaviour {
         }
         else
         {
-            this.GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up * speed);
         }
 
     }
 
     void Left()
     {
-        //transform.position = new Vector3(-Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
+        transform.Translate(Vector3.up * speed);
+
+        transform.position = new Vector3(-Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
 
     }
 
     void Right()
     {
+        transform.Translate(Vector3.up * speed);
+
         transform.position = new Vector3(Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
 
     }

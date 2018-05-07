@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 public class TiltCorruption : CorruptionBaseClass
 {
+    [SerializeField] private int levelIndex;
     [SerializeField] [Range(0, 1)] private float punishment;
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
     [SerializeField] [Range(0, 1)] private float mercyRange;
@@ -23,11 +24,15 @@ public class TiltCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
+    private SaveSegmentStruct saveStruct;
+
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
+        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
+        corruptionClearedPercent = saveStruct.points;
     }
 
     void Update()
@@ -73,6 +78,14 @@ public class TiltCorruption : CorruptionBaseClass
         innerDistortion = 0;
         audioManager.musicChanSubGroup.setPan(0);
         Destroy(tiltIndicatorInstance);
+
+        if (corruptionClearedPercent > saveStruct.points)
+        {
+            saveStruct.points = corruptionClearedPercent;
+            saveStruct.exists = true;
+            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+        }
+
         base.ExitSegment();
         ResetConditions();
     }

@@ -5,7 +5,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveSystem : MonoBehaviour
+public class SaveSystem : Singleton<SaveSystem>
 {
     public static SaveSystem saveSystem;
 
@@ -53,7 +53,7 @@ public class SaveSystem : MonoBehaviour
                 {
                     SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
                     emptyStruct.exists = true;
-                    data.segmentSave.Add(new List<SaveSegmentStruct> { emptyStruct });
+                    data.segmentSave[levelIndex][segmentIndex] = emptyStruct;
                     goto CreateSaveState;
                 }
                 else
@@ -118,18 +118,22 @@ public class SaveSystem : MonoBehaviour
     }
 
     //WIP
-    public void Load()
+    public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
         if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
+
+            load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
+
             file.Close();
 
             //Needs Completed Levels to implement
-
+            return load;
         }
+        return load;
     }
     
     //Clears the earned stickers, unsure whether we want to use this later or not. 
@@ -154,6 +158,29 @@ public class SaveSystem : MonoBehaviour
         {
             SaveStickers(stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].Name, false);
         }
+    }
+
+    //Clears all saved segment data, unsure whether we want to use this later or not. 
+    //This is currently only used for testing the stickers.
+    public void ClearSegments()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+        //data = (PlayerData)bf.Deserialize(file);
+
+        SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+        emptyStruct.points = 0;
+        for (int i = 0; i < data.segmentSave.Count; i++)
+        {
+            for(int j = 0; j < data.segmentSave[i].Count; j++)
+            {
+                data.segmentSave[i][j] = emptyStruct;
+            }
+        }
+
+        bf.Serialize(file, data);
+        file.Close();
+
     }
 }
 
