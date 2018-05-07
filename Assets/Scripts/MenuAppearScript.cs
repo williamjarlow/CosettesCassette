@@ -80,13 +80,13 @@ public class MenuAppearScript : MonoBehaviour
         if (!isShowing)
         {
             ShowPauseScreen();
-            GameManager.Instance.audioManager.AudioUnpauseMusic();
+            //GameManager.Instance.audioManager.AudioUnpauseMusic();
         }
 
         else if (isShowing)
         {
             HidePauseScreen();
-            GameManager.Instance.audioManager.AudioPauseMusic();
+            //GameManager.Instance.audioManager.AudioPauseMusic();
         }
     }
 
