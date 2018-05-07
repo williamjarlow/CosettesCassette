@@ -33,7 +33,6 @@ public class TiltCorruption : CorruptionBaseClass
         duration = overallCorruption.durations[segmentID];
         saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
         corruptionClearedPercent = saveStruct.points;
-        print(corruptionClearedPercent);
     }
 
     void Update()
@@ -79,9 +78,14 @@ public class TiltCorruption : CorruptionBaseClass
         innerDistortion = 0;
         audioManager.musicChanSubGroup.setPan(0);
         Destroy(tiltIndicatorInstance);
-        saveStruct.points = corruptionClearedPercent;
-        saveStruct.exists = true;
-        SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+
+        if (corruptionClearedPercent > saveStruct.points)
+        {
+            saveStruct.points = corruptionClearedPercent;
+            saveStruct.exists = true;
+            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+        }
+
         base.ExitSegment();
         ResetConditions();
     }

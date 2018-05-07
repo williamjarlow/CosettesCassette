@@ -51,6 +51,9 @@ public class PitchCorruption : CorruptionBaseClass {
 
     private OverallCorruption overallCorruption;
 
+    [SerializeField] private int levelIndex;
+    private SaveSegmentStruct saveStruct;
+
     // Use this for initialization
     void Start()
     {
@@ -82,6 +85,8 @@ public class PitchCorruption : CorruptionBaseClass {
             }
         }
         duration = overallCorruption.durations[segmentID];
+        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
+        corruptionClearedPercent = saveStruct.points;
     }
 	
 	// Update is called once per frame
@@ -186,6 +191,14 @@ public class PitchCorruption : CorruptionBaseClass {
         StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
+
+        if (corruptionClearedPercent > saveStruct.points)
+        {
+            saveStruct.points = corruptionClearedPercent;
+            saveStruct.exists = true;
+            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+        }
+
         DestroyLine();
         base.ExitSegment();
     }
