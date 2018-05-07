@@ -175,4 +175,9 @@ public class OverallCorruption : MonoBehaviour {
 		return Mathf.RoundToInt(beatsToMsConversion / bpm);
 	}
 
+    void IndicateStartOfSegment()
+    {
+
+    }
+
 }

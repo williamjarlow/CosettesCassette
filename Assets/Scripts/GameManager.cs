@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager> {
     [HideInInspector] public OverallCorruption overallCorruption;
     [HideInInspector] public AudioPitch audioPitch;
     public GameObject drumMechanic;
+    public GameObject pitchMechanic;
     public AudioManager audioManager;
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
@@ -76,7 +77,6 @@ public class GameManager : Singleton<GameManager> {
                 recording = true;
                 buttonDisabler.DisableButtons();
             }
-
             // If there are previous recordings, display the prompt window
             else if (timeStamp > 0 && overallCorruption.durations[currentSegmentIndex].HasRecordings() == true)
             {
@@ -195,8 +195,13 @@ public class GameManager : Singleton<GameManager> {
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex - 1].start);                                             // Else, snap to start of earlier segment
     }
 
+    void DisableABunchOfShit()
+    {
+        drumMechanic.SetActive(false);
 
+    }
 }
+
 
 
 /*    public void Record(GameObject confirmationObj)
