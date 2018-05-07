@@ -47,6 +47,9 @@ public class OverallCorruption : MonoBehaviour {
 	private GameObject corruptedArea;
 	private List<GameObject> corruptedAreaList = new List<GameObject>();
 
+    // Win object
+    [SerializeField] private KillScreen winObject;
+
 	void Awake () {
 		bpmInMs = ConvertBpmToMs(bpm);
 
@@ -63,6 +66,8 @@ public class OverallCorruption : MonoBehaviour {
 		audioDistortion = GameManager.Instance.audioDistortion;
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
+
+        winObject = winObject.GetComponent<KillScreen>();
 
 		Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
 
@@ -111,15 +116,18 @@ public class OverallCorruption : MonoBehaviour {
 	public void UpdateCorruptionAmount()
 	{
 		overallCorruption = 0;
-		foreach (CorruptionBaseClass corruption in corruptions)
+		for (int i = 0; i < corruptions.Count; i++)
 		{
-			overallCorruption += (100 - corruption.corruptionClearedPercent) / corruptions.Count;
-			if (corruption.corruptionClearedPercent >= corruption.clearThreshold)
+			overallCorruption += (100 - corruptions[i].corruptionClearedPercent) / corruptions.Count;
+			if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold && !corruptions[i].cleared)
 			{
-				corruption.cleared = true;
-			}
+                corruptions[i].cleared = true;
+                //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                GameManager.Instance.audioManager.PlaySegmentClear(0f);
+            }
 			else
-				corruption.cleared = false;
+				corruptions[i].cleared = false;
 		}
 		for (int i = 0; i < segments.Count; i++)
 		{
@@ -135,8 +143,7 @@ public class OverallCorruption : MonoBehaviour {
 			}
 			if (corruptionCleared)
 			{
-				corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
-				GameManager.Instance.audioManager.PlaySegmentClear(0f);
+
 			}
 		}
 		bool levelCleared = true;
@@ -148,7 +155,7 @@ public class OverallCorruption : MonoBehaviour {
 		if(levelCleared == true)
 		{
 			GameManager.Instance.LevelCleared = true;
-			GameObject.FindGameObjectWithTag("Temporary").GetComponent<KillScreen>().Winning();
+			winObject.Winning();
 			Debug.Log("Winning!");
 			GameManager.Instance.audioManager.PlayWinSound(0f);
 		}
