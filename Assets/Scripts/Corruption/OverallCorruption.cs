@@ -67,7 +67,7 @@ public class OverallCorruption : MonoBehaviour {
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
-        winObject = winObject.GetComponent<KillScreen>();
+        //winObject = winObject.GetComponent<KillScreen>();
 
 		Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
 
@@ -181,5 +181,4 @@ public class OverallCorruption : MonoBehaviour {
 	{
 		return Mathf.RoundToInt(beatsToMsConversion / bpm);
 	}
-
 }
