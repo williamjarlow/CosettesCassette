@@ -53,6 +53,11 @@ public class GameManager : Singleton<GameManager>
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
     }
 
+    private void Update()
+    {
+        timeStamp = (int)audioManager.GetTimeLinePosition();
+    }
+
     public instruments SelectedInstrument
     {
         get { return selectedInstrument; }
@@ -82,6 +87,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Declare an int array with the same size as the number of corrupted segments
         int[] timelineDifference = new int[overallCorruption.durations.Count];
+        print("Amount in list " + overallCorruption.durations.Count);
 
         for (int i = 0; i < overallCorruption.durations.Count; i++)
         {
@@ -103,7 +109,6 @@ public class GameManager : Singleton<GameManager>
         // Find the closest segment by looping through the array and comparing the elements
         for (int i = 0; i < timelineDifference.Length; i++)
         {
-
             if (closestSegment > timelineDifference[i])
             {
                 closestSegment = timelineDifference[i];
@@ -157,10 +162,11 @@ public class GameManager : Singleton<GameManager>
             audioManager.gameMusicEv.setTimelinePosition(lengthOfSong);         // Snap to end of song
             return;
         }
-        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start > audioManager.GetTimeLinePosition()) // If first segment is closest and timeline is before that segment
+        if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start > audioManager.GetTimeLinePosition())
+                                                                                                                                     // If first segment is closest and timeline is before that segment
             audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start);                    // Snap to start of first segment
         else
-            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);                // In all other cases, snap to next segment
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex + 1].start);                // In all other cases, snap to next segment    
     }
 
     public void SnapToClosestSegmentBehind()
