@@ -40,13 +40,14 @@ public class TiltCorruption : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-            if (inSegment == false) //If player just entered the segment
-            {
-                EnterSegment();
-            }
+
 
             if (GameManager.Instance.recording) //If recording
             {
+                if (inSegment == false) //If player just entered the segment
+                {
+                    EnterSegment();
+                }
                 RecordSegment();
             }
         }

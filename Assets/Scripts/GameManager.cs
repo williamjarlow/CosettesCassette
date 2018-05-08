@@ -87,7 +87,6 @@ public class GameManager : Singleton<GameManager>
     {
         // Declare an int array with the same size as the number of corrupted segments
         int[] timelineDifference = new int[overallCorruption.durations.Count];
-        print("Amount in list " + overallCorruption.durations.Count);
 
         for (int i = 0; i < overallCorruption.durations.Count; i++)
         {

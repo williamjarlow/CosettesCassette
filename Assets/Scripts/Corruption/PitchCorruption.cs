@@ -57,6 +57,7 @@ public class PitchCorruption : CorruptionBaseClass {
     // Use this for initialization
     void Start()
     {
+        pitchSlider.gameObject.SetActive(false);
         lineRenderer = GetComponent<LineRenderer>();
         audioPitch = GameManager.Instance.audioPitch;
         audioManager = GameManager.Instance.audioManager;
@@ -155,6 +156,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
+        pitchSlider.gameObject.SetActive(true);
         hitTime = 0;
         float totalNodeTime = 0;
         foreach(PitchNode node in nodes)
@@ -178,6 +180,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void ExitSegment()
     {
+        pitchSlider.gameObject.SetActive(false);
         if (totalTime != 0)
         {
             score = (hitTime / totalTime) * 100;
