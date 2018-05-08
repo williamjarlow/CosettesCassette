@@ -266,15 +266,33 @@ public class AudioManager : MonoBehaviour {
 		}
 		
 		FMOD.DSPConnection DSPCon;
+		//FMOD.DSP_TYPE type;
 
 		gameMusicEv.getChannelGroup (out musicChanGroup);
-		musicChanGroup.getGroup (0, out musicChanSubGroup);
-		musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP); // 3 carries channels of instrument tracks, 0 is the sum track
-		musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon); // adding effects in studio messes up 4 and beyond
-		musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
-		musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-		musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-		musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+		result = musicChanGroup.getGroup (1, out musicChanSubGroup);
+		//print ("Get subgroup: " + result);
+		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
+		//print ("Get subgroup DSP: " + result);
+		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
+		/*pitchChordsDSP.getType (out type);
+		print (result);
+		print (type);*/
+		result = musicChanSubGroupDSP.getInput (1, out pitchLeadDSP, out DSPCon);
+		/*pitchVocalsDSP.getType (out type);
+		print (result);
+		print (type);*/
+		result = musicChanSubGroupDSP.getInput (5, out pitchBassDSP, out DSPCon);
+		/*pitchDrumsDSP.getType (out type);
+		print (result);
+		print (type);*/
+		result = musicChanSubGroupDSP.getInput (3, out pitchVocalsDSP, out DSPCon);
+		/*pitchBassDSP.getType (out type);
+		print (result);
+		print (type);*/
+		result = musicChanSubGroupDSP.getInput (4, out pitchDrumsDSP, out DSPCon);
+		/*pitchLeadDSP.getType (out type);
+		print (result);
+		print (type);*/
 
 		// *** TEMP ***
 		pitchChordsDSP.setBypass(false);
@@ -282,13 +300,6 @@ public class AudioManager : MonoBehaviour {
 		pitchDrumsDSP.setBypass(false);
 		pitchBassDSP.setBypass(false);
 		pitchLeadDSP.setBypass(false);
-
-		//in DSP 3 of subgroup
-		//0 = chords
-		//1 = vocals
-		//2 = drums
-		//3 = bass
-		//4 = lead
 	}
 
     public float GetTrackLength()
