@@ -6,14 +6,17 @@ public class NoteMovement : MonoBehaviour {
 
     [SerializeField] private float msDecider;
     [SerializeField] private float randomMS;
+    [SerializeField] private float moveFrom;
+    [SerializeField] private float moveTo;
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
-	// Use this for initialization
-	void Start ()
+
+    // Use this for initialization
+    void Start ()
     {
 
         msDecider = transform.position.x;
-        randomMS = Random.Range(0.1f, 7);
+        randomMS = Random.Range(moveFrom, moveTo);
 
     }
 	
