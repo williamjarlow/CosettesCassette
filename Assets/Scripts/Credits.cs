@@ -24,12 +24,24 @@ public class Credits : MonoBehaviour {
     public bool audiolog = false;
     [SerializeField] private string creditsOrAudiolog;
     [SerializeField] private float waitforit;
+    [SerializeField] private float delay;
+    public bool showpicture = false;
+
+
+
 
 
     // Use this for initialization
     void Start ()
     {
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
+
+        //insert load here
+
+        if (showpicture == true)
+        {
+            AudiologPic.CrossFadeAlpha(0, 0.0f, false);
+        }
         KS = winning.GetComponent<KillScreen>();
         //audiolog = GameManager.Instance.GetComponent<AudioManager>().switchedToAudioLog;
         audioManager = AudioManagerz.GetComponent<AudioManager>();
@@ -44,14 +56,19 @@ public class Credits : MonoBehaviour {
     {
         if (creditsOrAudiolog == "Audiolog" && audiolog ==true)
         {
-            /*print("works");
             audioPos = audioManager.GetTimeLinePosition();
             audioP = audioPos / audiolength;
             currentPos = audioP * endOfTheLine;
             Vector3 temp2 = transform.localPosition;
             temp2.y = currentPos - origPos;
             transform.localPosition = temp2;
-            */
+            if (currentPos > waitforit && showpicture == false)
+            {
+                Fade();
+                showpicture = true;
+                //insert save here
+            }
+
 
         }
         else if (creditsOrAudiolog == "Credits" && music == true)
@@ -90,7 +107,7 @@ public class Credits : MonoBehaviour {
     IEnumerator Audiopic()
     {
 
-        yield return new WaitForSeconds(waitforit);
+        yield return new WaitForSeconds(delay);
         AudiologPic.CrossFadeAlpha(1, 1.0f, false);
     }
 
