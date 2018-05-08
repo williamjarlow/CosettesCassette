@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class TiltCorruption : CorruptionBaseClass
 {
-    [SerializeField] private int levelIndex;
     [SerializeField] [Range(0, 1)] private float punishment;
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
     [SerializeField] [Range(0, 1)] private float mercyRange;
@@ -31,7 +31,7 @@ public class TiltCorruption : CorruptionBaseClass
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
+        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         corruptionClearedPercent = saveStruct.points;
     }
 
@@ -83,7 +83,7 @@ public class TiltCorruption : CorruptionBaseClass
         {
             saveStruct.points = corruptionClearedPercent;
             saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         }
 
         base.ExitSegment();
