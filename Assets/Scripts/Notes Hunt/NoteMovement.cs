@@ -4,53 +4,47 @@ using UnityEngine;
 
 public class NoteMovement : MonoBehaviour {
 
-    [SerializeField] private float msDecider;
+
     [SerializeField] private float randomMS;
-    [SerializeField] private float moveFrom;
-    [SerializeField] private float moveTo;
+    [SerializeField] private float edge;
+    private Vector3 bounce;
+    private bool bouncy = true;
     [HideInInspector] public float speed;
+    [HideInInspector] public float speedx = 0.1f;
     [HideInInspector] public int points;
-
-    // Use this for initialization
-    void Start ()
+	// Use this for initialization
+	void Start ()
     {
+        bounce = this.transform.localPosition;
+        randomMS = Random.Range(2, 4);
 
-        msDecider = transform.position.x;
-        randomMS = Random.Range(moveFrom, moveTo);
-
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-
-        if (msDecider < 0)
-        {
-            Left();
-        }
-        else if (msDecider > 0)
-        {
-            Right();
-        }
-        else
-        {
-        }
 
     }
 
-    void Left()
+    // Update is called once per frame
+    void Update ()
     {
         transform.Translate(Vector3.up * speed);
 
-        transform.position = new Vector3(-Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
+        if (bouncy == true )
+        {
+            transform.Translate(Vector3.left * speedx);
+
+            if(this.transform.localPosition.x < bounce.x - randomMS || this.transform.localPosition.x < -edge)
+            {
+                bouncy = false;
+            }
+        }
+        else if (bouncy == false)
+        {
+            transform.Translate(Vector3.right * speedx);
+
+            if (this.transform.localPosition.x > bounce.x + randomMS || this.transform.localPosition.x > edge)
+            {
+                bouncy = true;
+            }
+        }
 
     }
 
-    void Right()
-    {
-       transform.Translate(Vector3.up * speed);
-
-        transform.position = new Vector3(Mathf.PingPong(Time.time, randomMS), transform.position.y, transform.position.z);
-
-    }
 }
