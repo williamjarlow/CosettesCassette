@@ -120,6 +120,7 @@ public class CassetteAnimation : MonoBehaviour {
         lid.GetComponent<Animator>().SetBool("Run", false);
         cassetteToAnimate.SetActive(false);
         cassetteToRotate.SetActive(true);
+        cassetteToRotate.transform.Rotate(0,180,0);
         
     }
     private IEnumerator LidClosing()
