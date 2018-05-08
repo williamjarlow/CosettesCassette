@@ -64,7 +64,6 @@ public class AudioTimeline : MonoBehaviour
 
     void Update()
     {
-        timelineSlider.interactable = true;
         if (!holding || GameManager.Instance.recording)
         {
             ChangeOnPlaying();
@@ -73,7 +72,6 @@ public class AudioTimeline : MonoBehaviour
         {
             HoldChange();
         }
-
     }
 
     public void ChangeTimeline()
