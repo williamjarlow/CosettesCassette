@@ -120,7 +120,7 @@ public class SaveSystem : Singleton<SaveSystem>
     //WIP
     public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat") && data.segmentSave.Count != 0)
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
@@ -129,9 +129,7 @@ public class SaveSystem : Singleton<SaveSystem>
             load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
 
             file.Close();
-
             //Needs Completed Levels to implement
-            return load;
         }
         return load;
     }
