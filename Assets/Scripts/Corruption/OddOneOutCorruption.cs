@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 
-public class CorruptionTemplate : CorruptionBaseClass
+public class OddOneOutCorruption : CorruptionBaseClass
 {
     AudioManager audioManager;
     OverallCorruption overallCorruption;
+    [SerializeField]
+    List<string> lyrics = new List<string>();
+    [SerializeField]
+    GameObject lyricPagePrefab;
+    List<GameObject> lyricPageInstances = new List<GameObject>();
 
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
+        clearThreshold = 99;
     }
 
     void Update()
@@ -27,6 +34,7 @@ public class CorruptionTemplate : CorruptionBaseClass
 
             if (GameManager.Instance.recording) //If recording
             {
+
             }
         }
         else if (inSegment) //If player leaves the segment area
@@ -36,8 +44,13 @@ public class CorruptionTemplate : CorruptionBaseClass
     }
 
     public override void EnterSegment()
-    { 
+    {
         //This function gets called upon when entering the segment
+        for (int i = 0; i < lyrics.Count; i++)
+        {
+            lyricPageInstances.Add(Instantiate(lyricPagePrefab, gameObject.transform));
+            lyricPageInstances[i].GetComponent<Text>().text = lyrics[i];
+        }
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         if (GameManager.Instance.recording)
@@ -49,6 +62,8 @@ public class CorruptionTemplate : CorruptionBaseClass
     {
         //This function gets called upon when leaving the segment
         inSegment = false;
+        foreach (GameObject lyricPage in lyricPageInstances)
+            Destroy(lyricPage);
         if (GameManager.Instance.recording)
             GradeScore();
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
@@ -59,7 +74,7 @@ public class CorruptionTemplate : CorruptionBaseClass
 
     public override void GradeScore()
     {
-
+        corruptionClearedPercent = 100;
     }
 
     void ResetConditions()
