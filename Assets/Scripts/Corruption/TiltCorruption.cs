@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class TiltCorruption : CorruptionBaseClass
 {
-    [SerializeField] private int levelIndex;
     [SerializeField] [Range(0, 1)] private float punishment;
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
     [SerializeField] [Range(0, 1)] private float mercyRange;
-    [Tooltip("Decides how quickly the sound will offset. Lower value equals faster offset")]
+    [Tooltip("Decides how quickly the sound will offset. ¨Higher value equals faster offset")]
     [SerializeField] [Range(1, 500)] private float offsetModifier;
     [SerializeField] private GameObject tiltIndicatorPrefab;
     private bool setPan = false;
@@ -31,7 +31,7 @@ public class TiltCorruption : CorruptionBaseClass
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
+        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         corruptionClearedPercent = saveStruct.points;
     }
 
@@ -83,7 +83,7 @@ public class TiltCorruption : CorruptionBaseClass
         {
             saveStruct.points = corruptionClearedPercent;
             saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         }
 
         base.ExitSegment();
@@ -107,15 +107,15 @@ public class TiltCorruption : CorruptionBaseClass
         }
 
         float x = Input.acceleration.x;
-        if(soundPos + 0.03f > 0 && soundPos - 0.03f <= 0)
+        if (soundPos + 0.06f > 0 && soundPos - 0.06f <= 0)
         {
-            if(soundPos > 0)
+            if (soundPos > 0)
             {
-                soundPos += Random.Range(0, 0.01f);
+                soundPos += Random.Range(0, 0.02f);
             }
-            else if(soundPos < 0)
+            else if (soundPos < 0)
             {
-                soundPos += Random.Range(-0.01f, 0);
+                soundPos += Random.Range(-0.02f, 0);
             }
             else
             {
@@ -123,7 +123,7 @@ public class TiltCorruption : CorruptionBaseClass
             }
         }
 
-        soundPos += soundPos / offsetModifier;
+        soundPos += soundPos * offsetModifier / 100;
         soundPos = Mathf.Clamp(soundPos, -1, 1);
         if (Input.GetKey("left"))
         {
@@ -144,12 +144,12 @@ public class TiltCorruption : CorruptionBaseClass
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos + moveSpeed, -1, 1));
             soundPos = Mathf.Clamp(soundPos + moveSpeed, -1, 1);
         }
-        if(soundPos - mercyRange > 0 || soundPos + mercyRange < 0)
+        if (soundPos - mercyRange > 0 || soundPos + mercyRange < 0)
         {
             score -= punishment;
         }
 
-        tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos*5, 0, 0);
+        tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5, 0, 0);
 
     }
 

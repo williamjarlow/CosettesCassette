@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -50,8 +51,7 @@ public class PitchCorruption : CorruptionBaseClass {
     bool animationDone = true;
 
     private OverallCorruption overallCorruption;
-
-    [SerializeField] private int levelIndex;
+    
     private SaveSegmentStruct saveStruct;
 
     // Use this for initialization
@@ -85,7 +85,7 @@ public class PitchCorruption : CorruptionBaseClass {
             }
         }
         duration = overallCorruption.durations[segmentID];
-        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, levelIndex, segmentID);
+        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         corruptionClearedPercent = saveStruct.points;
     }
 	
@@ -199,7 +199,7 @@ public class PitchCorruption : CorruptionBaseClass {
         {
             saveStruct.points = corruptionClearedPercent;
             saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, levelIndex, segmentID);
+            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         }
 
         DestroyLine();
