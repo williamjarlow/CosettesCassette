@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour {
     [SerializeField] GameObject UITarget;
-
+    
     [SerializeField] private bool isDual;
+    [Header("Settings for DualButtons")]
+    [SerializeField] Material unselectedMaterial;
+    [SerializeField] Material selectedMaterial;
     [SerializeField] GameObject UITargetDual;
     private enum buttonstates { Up, Down, Moving }
     buttonstates buttonstate;
@@ -31,6 +34,7 @@ public class ButtonController : MonoBehaviour {
         {
             //Move buttons up or down
             case buttonstates.Up:
+                gameObject.GetComponent<MeshRenderer>().material = unselectedMaterial;
                 break;
             case buttonstates.Moving:
                 if (startingPos)
@@ -47,6 +51,7 @@ public class ButtonController : MonoBehaviour {
             case buttonstates.Down:
                 if (!isDual)
                 {
+                    gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
                     startingPos = false;
                     buttonstate = buttonstates.Moving;
                 }
