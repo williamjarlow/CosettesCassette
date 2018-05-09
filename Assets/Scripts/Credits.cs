@@ -26,6 +26,9 @@ public class Credits : MonoBehaviour {
     [SerializeField] private float waitforit;
     [SerializeField] private float delay;
     public bool showpicture = false;
+    public bool dontToggle = false;
+
+
 
 
 
@@ -37,7 +40,7 @@ public class Credits : MonoBehaviour {
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
 
         //insert load here
-
+        AudiologPic.enabled = false;
         if (showpicture == true)
         {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
@@ -93,14 +96,12 @@ public class Credits : MonoBehaviour {
     {
         if (audiolog == true)
         {
-
+            AudiologPic.enabled = true;
+            dontToggle = true;
             StartCoroutine(Audiopic());
             
         }
-        else
-        {
 
-        }
         
     }
 
@@ -109,6 +110,7 @@ public class Credits : MonoBehaviour {
 
         yield return new WaitForSeconds(delay);
         AudiologPic.CrossFadeAlpha(1, 1.0f, false);
+
     }
 
 }

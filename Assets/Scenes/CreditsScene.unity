@@ -1657,7 +1657,7 @@ Prefab:
     - target: {fileID: 114597916523605672, guid: 3b65b4b7596ad874091560ea9ce83b1f,
         type: 2}
       propertyPath: waitforit
-      value: 660
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 114597916523605672, guid: 3b65b4b7596ad874091560ea9ce83b1f,
         type: 2}
@@ -3329,6 +3329,8 @@ GameObject:
   - component: {fileID: 1143390709}
   - component: {fileID: 1143390711}
   - component: {fileID: 1143390710}
+  - component: {fileID: 1143390712}
+  - component: {fileID: 1143390713}
   m_Layer: 5
   m_Name: Audiolog Pic
   m_TagString: Untagged
@@ -3343,16 +3345,16 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143390708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 109.399994, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 109.400024, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 1323445676}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 109.4}
-  m_SizeDelta: {x: 558, y: 768}
+  m_AnchoredPosition: {x: 0, y: 109.399994}
+  m_SizeDelta: {x: 1488, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1143390710
 MonoBehaviour:
@@ -3387,6 +3389,74 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1143390708}
+--- !u!114 &1143390712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1143390708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1143390710}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1143390713}
+        m_MethodName: Zooming
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1143390713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1143390708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598fc627dfe43a34e998781094fe52b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPic: {fileID: 1143390710}
+  originalSize: {x: 0, y: 0, z: 0}
+  zoomSize: {x: 0, y: 0, z: 0}
+  zoomed: {x: 0, y: 0, z: 0}
+  increaseSize: 4
 --- !u!1 &1163142012 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1809763009724594, guid: 5b0e98cecdfd036409c0c11b7bd227da,
