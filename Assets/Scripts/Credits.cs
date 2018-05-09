@@ -26,7 +26,6 @@ public class Credits : MonoBehaviour {
     [SerializeField] private float waitforit;
     [SerializeField] private float delay;
     public bool showpicture = false;
-    public bool dontToggle = false;
 
 
 
@@ -97,7 +96,6 @@ public class Credits : MonoBehaviour {
         if (audiolog == true)
         {
             AudiologPic.enabled = true;
-            dontToggle = true;
             StartCoroutine(Audiopic());
             
         }
