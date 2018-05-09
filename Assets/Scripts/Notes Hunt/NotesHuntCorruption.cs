@@ -8,8 +8,8 @@ using UnityEngine.Assertions;
 public class NotesHuntCorruption : CorruptionBaseClass
 {
 
-    public enum NoteType { CORRECT, INCORRECT };
-    public enum NoteValue { SINGLE, DOUBLE };
+                // ** DISCLAIMER ** //
+    //  Curently the 'points' variable of the class 'Notes' has no use. Might be reworked in the future
 
     [System.Serializable]
     public class Notes
@@ -19,6 +19,10 @@ public class NotesHuntCorruption : CorruptionBaseClass
         [HideInInspector] public int points;  // The points that the player recieves when destroying the object. Public to be able to use multipliers for powerups, etc
         [HideInInspector] public bool hasSpawned;
     }
+
+
+    public enum NoteType { CORRECT, INCORRECT };
+    public enum NoteValue { SINGLE, DOUBLE };
 
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
@@ -34,7 +38,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
     [SerializeField] private int incorrectNotePoints;
     [SerializeField] private int amountOfNoteValues = 2;    // The amount of note values, for now double and single which equals to 2
     private float maxScore;
-    private float currentScore;
+    [SerializeField] private float currentScore;
     private float bestScore;
     private float spawnCooldown = 0.05f;
     [SerializeField] private float speed;
@@ -48,10 +52,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
     // The list of notes (the game object) to destroy when exiting segment
     [HideInInspector] public List<GameObject> destroyList;
 
-
-                // ** TODO ** //
-        // 1.   Fix setting the box collider size of notes
-
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
@@ -59,6 +59,12 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
         duration = overallCorruption.durations[segmentID];
 
+
+        // Initialize points
+        correctNotePrefab.GetComponent<NoteMovement>().points = correctNotePoints;
+        incorrectNotePrefab.GetComponent<NoteMovement>().points = incorrectNotePoints;
+
+        // Set points and calculate max points
         for (int i = 0; i < notesList.Count; i++)
         {
             if (notesList[i].noteType == NoteType.CORRECT)
