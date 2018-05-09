@@ -51,9 +51,6 @@ public class DrumCorruption : CorruptionBaseClass
 
     AudioManager audioManager;
 
-    [Header("Visual input for drums? Add it here. If not, don't worry, this shouldn't break anything!")]
-    [SerializeField] private VisualInput visualInput;
-
     private OverallCorruption overallCorruption;
 
     void Start()
@@ -61,8 +58,6 @@ public class DrumCorruption : CorruptionBaseClass
         audioManager = GameManager.Instance.audioManager;
         drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
         overallCorruption = GameManager.Instance.overallCorruption;
-        if (visualInput != null)
-            visualInput = GameObject.FindGameObjectWithTag("VisualInput").GetComponent<VisualInput>();      // Has to be found by tag unfortunately, but still has to be known that we want to use it, so has to be set in prefab
 
         for (int i = 0; i < beats.Count; i++)
         {
@@ -186,19 +181,13 @@ public class DrumCorruption : CorruptionBaseClass
             { //If within range to hit the beat "perfectly"
                 Debug.Log("Perfect, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
                 index++; //Index increases if a note was hit
-                if (visualInput != null)
-                    visualInput.ChangeColorOnTiming(Timing.perfect);
                 return Timing.perfect;
             }
             Debug.Log("Okay, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
             index++;//Index increases if a note was hit
-            if (visualInput != null)
-                visualInput.ChangeColorOnTiming(Timing.okay);
             return Timing.okay;
         }
         Debug.Log("Miss, " + (float)(audioManager.GetTimeLinePosition()) * 110f / 60000f);
-        if (visualInput != null)
-            visualInput.ChangeColorOnTiming(Timing.miss);
         return Timing.miss;
     }
 

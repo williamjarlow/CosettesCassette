@@ -14,27 +14,10 @@ public class VisualInput : MonoBehaviour
     [SerializeField] private float distanceFromCamera = 5;
     [Header("Trail effect")]
     [SerializeField] private float speed = 25;
-    [Header("Tap effect")]
-    [Header("The DrumCorruption prefab also needs extra information for this to work")]
-    [SerializeField] private bool useDrumCorruptionToMatchTiming;
-    [Header("Color of tap effect depending on timing of drumbeat")]
-    [SerializeField] private Color originalRippleColor;
-    [SerializeField] private Color okayRippleColor;
-    [SerializeField] private Color perfectRippleColor;
-
-
-
-
-    [SerializeField] private Color changedRippleColor;
-    
-
-
     private Vector3 origPosition = Vector3.zero;
 
-    private DrumMechanic drumMechanic;      // Fetch from GameManager later
 
-
-    // Temporary
+    // Temporary, used for testing purposes only
     ////
     [Header("For testing purposes, activate before starting")]
     [SerializeField] private bool workWithMouseInput = false;
@@ -43,21 +26,18 @@ public class VisualInput : MonoBehaviour
 
     void Start()
     {
-        // Temporary
+        // Temporary, used for testing purposes only
         ////
         if (workWithMouseInput)
             trailParticleEffect.SetActive(true);
         ////
-
-        if (GameManager.Instance.drumMechanic)
-            drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
     }
 
 
 
     void Update()
     {
-        // Temporary
+        // Temporary, used for testing purposes only
         ////
         if (workWithMouseInput)
             FollowMouse();
@@ -102,13 +82,6 @@ public class VisualInput : MonoBehaviour
                 foreach (Transform effect in touchParticleEffectPrefab.transform)                                             // Check for multiple particle effects and run them all once
                 {
                     GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
-
-                    if (useDrumCorruptionToMatchTiming && GameManager.Instance.recording)       // Info of recording state needs to be in GameManager. REMEMBER! SIMBA!
-                    {
-                        ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
-                        tempa.startColor = CatchColorChange();
-                    }
-
                     temp.GetComponent<ParticleSystem>().Play();
                     Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
                 }
@@ -122,7 +95,7 @@ public class VisualInput : MonoBehaviour
         }
     }
 
-    // Temporary
+    // Temporary, used for testing purposes only
     ////
     void FollowMouse()
     {
@@ -142,34 +115,11 @@ public class VisualInput : MonoBehaviour
             foreach (Transform effect in touchParticleEffectPrefab.transform)
             {
                 GameObject temp = Instantiate(effect.gameObject, worldPos, Quaternion.Euler(0, 0, 0));
-                
-                
-                if (useDrumCorruptionToMatchTiming && GameManager.Instance.recording)
-                {
-                    ParticleSystem.MainModule tempa = temp.GetComponent<ParticleSystem>().main;
-                    tempa.startColor = CatchColorChange();
-                }
-
                 temp.GetComponent<ParticleSystem>().Play();
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
             }
         }
     }
     ////
-
-    public void ChangeColorOnTiming(Timing timing)
-    {
-        if (timing == Timing.perfect)
-            changedRippleColor = perfectRippleColor;
-        if (timing == Timing.okay)
-            changedRippleColor = okayRippleColor;
-        else
-            changedRippleColor = originalRippleColor;            
-    }
-
-    private Color CatchColorChange()
-    {
-        return changedRippleColor;
-    }
 
 }
