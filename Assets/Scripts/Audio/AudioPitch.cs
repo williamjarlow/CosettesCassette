@@ -37,6 +37,7 @@ public class AudioPitch : MonoBehaviour {
                 audioManager.gameMusicEv.setParameterValue("pitch_drums", newPitch);
                 audioManager.gameMusicEv.setParameterValue("pitch_bass", newPitch);
                 audioManager.gameMusicEv.setParameterValue("pitch_lead", newPitch);
+
                 break;
             case PitchType.Chords:
                 audioManager.gameMusicEv.setParameterValue("pitch_chords", newPitch);
