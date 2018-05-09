@@ -49,9 +49,10 @@ public class ButtonController : MonoBehaviour {
                 }
                 break;
             case buttonstates.Down:
+                gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
                 if (!isDual)
                 {
-                    gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
+                    
                     startingPos = false;
                     buttonstate = buttonstates.Moving;
                 }
