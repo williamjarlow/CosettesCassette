@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class Zoom : MonoBehaviour {
 
     [SerializeField] private Image originalPic;
-    [SerializeField] private Vector3 originalSize;
-    [SerializeField] private Vector3 zoomSize;
-    [SerializeField] private Vector3 zoomed;
+    private Vector3 originalSize;
+    private Vector3 originalPos;
+    private Vector3 zoomSize;
+    [SerializeField] private Vector3 zoomPos;
+    private Vector3 zoomed;
     [SerializeField] private float increaseSize;
 
 
@@ -17,6 +19,7 @@ public class Zoom : MonoBehaviour {
     {
         
         originalSize = transform.localScale;
+        originalPos = transform.localPosition;
         zoomSize = originalSize;
 
     }
@@ -27,10 +30,12 @@ public class Zoom : MonoBehaviour {
         if (transform.localScale == originalSize)
         {
             zoomed = zoomSize * increaseSize;
+            transform.localPosition = zoomPos;
             transform.localScale = zoomed;
         }
         else if (transform.localScale == zoomed)
         {
+            transform.localPosition = originalPos;
             transform.localScale = originalSize;
         }
     }
