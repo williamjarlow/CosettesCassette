@@ -153,10 +153,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
             {
                 GameObject spawnedNote;
 
-                /*// Randomize the note value, i.e a double or single note
-                NoteValue noteValue = NoteValue.DOUBLE;
-                //noteValue = (NoteValue)Random.Range(0, amountOfNoteValues);*/
-
                 // Randomize the index of the sprite list. Since both sprite lists should be the same size it should not matter which list is chosen 
                 noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
 
@@ -250,8 +246,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
         inSegment = false;
         GradeScore();
         innerDistortion = 0;
-
-        DestroyNotes();
 
         base.ExitSegment();
 

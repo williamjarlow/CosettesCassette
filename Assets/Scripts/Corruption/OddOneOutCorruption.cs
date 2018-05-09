@@ -6,20 +6,17 @@ using UnityEngine.Assertions;
 
 public class OddOneOutCorruption : CorruptionBaseClass
 {
-    AudioManager audioManager;
-    OverallCorruption overallCorruption;
-    [SerializeField] [TextArea]
-    List<string> lyrics = new List<string>();
-    [SerializeField]
-    GameObject lyricPagePrefab;
-    List<GameObject> lyricPageInstances = new List<GameObject>();
+    private AudioManager audioManager;
+    private OverallCorruption overallCorruption;
+    [SerializeField] private List<string> lyrics = new List<string>();
+    [SerializeField] private GameObject lyricPagePrefab;
+    private List<GameObject> lyricPageInstances = new List<GameObject>();
 
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        clearThreshold = 99;
     }
 
     void Update()
