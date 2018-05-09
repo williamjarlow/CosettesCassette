@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PitchNode
 {
-    public Vector3 position = new Vector3();
+    public float position = 0;
     public float seconds = 0;
     public float mercyRange;
 }
@@ -30,6 +30,9 @@ public class PitchCorruption : CorruptionBaseClass {
 
     [Header("Random generation of pitch nodes")]
     public bool randomizeNodes;
+
+    [SerializeField] [Range(0, 5)]
+    float leadUp;
 
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
@@ -65,6 +68,11 @@ public class PitchCorruption : CorruptionBaseClass {
         // Set the pitch segments to the recording type PITCH 
         overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
 
+        PitchNode p = new PitchNode(); //Give the player some warning before corruption starts. 
+        p.position = 0;
+        p.seconds = leadUp;
+        nodes.Insert(0, p);
+
         if (randomizeNodes) //This code randomizes the nodes rather than use the nodes specified in the inspector.
                             //Useful for testing.
         {
@@ -76,12 +84,12 @@ public class PitchCorruption : CorruptionBaseClass {
                 if (i == 0)
                 {
                     nodes[i].seconds = 1;
-                    nodes[i].position = new Vector3(gameObject.transform.localPosition.x, 0, gameObject.transform.localPosition.z);
+                    nodes[i].position = 0;
                 }
                 else
                 {
                     nodes[i].seconds = Random.Range(rTravelTimeRange.x, rTravelTimeRange.y);
-                    nodes[i].position = new Vector3(gameObject.transform.localPosition.x, Random.Range(rGoalRange.x, rGoalRange.y), gameObject.transform.localPosition.z);
+                    nodes[i].position = Random.Range(rGoalRange.x, rGoalRange.y);
                 }
             }
         }
@@ -105,6 +113,8 @@ public class PitchCorruption : CorruptionBaseClass {
                 RecordPitch();
                 MoveLine();
             }
+            else
+                hitTime = savedTime; //If player isn't recording, don't change score.
         }
         else if (inSegment) //If player leaves corrupted area
         {
@@ -124,17 +134,18 @@ public class PitchCorruption : CorruptionBaseClass {
 
         lineRenderer.widthCurve = curve;*/
 
-        lineRenderer.positionCount = nodes.Count + 2;
+        lineRenderer.positionCount = nodes.Count + 1;
+        
         Vector3 newPosition;
-        for (int i = 0; i <= nodes.Count + 1; i++)
+        for (int i = 0; i <= nodes.Count; i++)
         {
             if (i == 0)
-                newPosition = new Vector3(nodes[i].position.x - nodes[i].seconds * i * lineSpeed, nodes[i].position.y, nodes[i].position.z);
-            else if (i == nodes.Count + 1)
-                newPosition = new Vector3(nodes[i - 2].position.x - nodes[i - 2].seconds * i * 100, nodes[i - 2].position.y, nodes[i - 2].position.z);
+                newPosition = new Vector3(0, 0);
+            //else if (i == 0)
+                //newPosition = new Vector3(-nodes[i].seconds * i * lineSpeed, nodes[i].position);
             else
-                newPosition = new Vector3(nodes[i - 1].position.x - nodes[i - 1].seconds * i * lineSpeed, nodes[i - 1].position.y, nodes[i - 1].position.z);
-            
+                newPosition = new Vector3(lineRenderer.GetPosition(i - 1).x - nodes[i-1].seconds * lineSpeed, nodes[i-1].position);
+
             lineRenderer.SetPosition(i, newPosition); // Create the points in the line
         }
     }
@@ -157,16 +168,19 @@ public class PitchCorruption : CorruptionBaseClass {
     public override void EnterSegment()
     {
         pitchSlider.gameObject.SetActive(true);
+        pitchSlider.value = 0;
         hitTime = 0;
         float totalNodeTime = 0;
+
         foreach(PitchNode node in nodes)
         {
             totalNodeTime += node.seconds;
         }
 
-        if ((duration.stop - duration.start) / 1000 < totalNodeTime) //testing purposes only, remove upon implementation.
-            totalTime = (duration.stop - duration.start) / 1000;
-        else
+
+        if ((duration.stop - duration.start) / 1000 < totalNodeTime) //Ensures that designers can't fuck up.
+            totalTime = (duration.stop - duration.start) / 1000;     //Check to see which one of total node time and segment 
+        else                                                         //duration is shortest. Use the shorter one.
             totalTime = totalNodeTime;
 
         index = 0;
@@ -221,24 +235,19 @@ public class PitchCorruption : CorruptionBaseClass {
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
                 audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
-                if (GameManager.Instance.recording)
-                    hitTime += Time.deltaTime;
-                else
-                    hitTime = savedTime;
+                hitTime += Time.deltaTime;
             }
             else
             {
                 audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y *
                 (pitchSlider.maxValue / pitchIndicatorMax)), PitchType.All);
-                if (!GameManager.Instance.recording)
-                    hitTime = savedTime; //If player isn't recording, don't change score.
             }
         }
     }
 
     void MovePitchObject()
     {
-        lastCoroutine = StartCoroutine(MoveOverSeconds(pitchIndicatorInstance, nodes[index].position, nodes[index].seconds));
+        lastCoroutine = StartCoroutine(MoveOverSeconds(pitchIndicatorInstance, new Vector3 (0, nodes[index].position), nodes[index].seconds));
     }
 
     public IEnumerator MoveOverSeconds(GameObject objectToMove, Vector3 end, float seconds)
