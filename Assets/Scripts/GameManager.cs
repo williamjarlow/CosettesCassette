@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
     public GameObject uiHandler;
+    public GameObject uiParent;
     public GameObject pitchSlider;
 
     const int timelineOffset = 100;

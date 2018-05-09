@@ -8,7 +8,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
 {
     AudioManager audioManager;
     OverallCorruption overallCorruption;
-    [SerializeField]
+    [SerializeField] [TextArea]
     List<string> lyrics = new List<string>();
     [SerializeField]
     GameObject lyricPagePrefab;
@@ -48,7 +48,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         //This function gets called upon when entering the segment
         for (int i = 0; i < lyrics.Count; i++)
         {
-            lyricPageInstances.Add(Instantiate(lyricPagePrefab, gameObject.transform));
+            lyricPageInstances.Add(Instantiate(lyricPagePrefab, GameManager.Instance.uiParent.transform) as GameObject);
             lyricPageInstances[i].GetComponent<Text>().text = lyrics[i];
         }
         inSegment = true;
