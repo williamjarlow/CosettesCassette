@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// ** Written by Hannes Gustafsson and William Jarlow ** // 
+// ** Written by Hannes Gustafsson ** // 
 
 public class NotesHuntCorruption : CorruptionBaseClass
 {
+
+                // ** DISCLAIMER ** //
+    //  Curently the 'points' variable of the class 'Notes' has no use. Might be reworked in the future
+
     [System.Serializable]
     public class Notes
     {
@@ -16,30 +20,37 @@ public class NotesHuntCorruption : CorruptionBaseClass
         [HideInInspector] public bool hasSpawned;
     }
 
+
+    public enum NoteType { CORRECT, INCORRECT };
+    public enum NoteValue { SINGLE, DOUBLE };
+
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
+
     [SerializeField] private GameObject correctNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
+    [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
+    [SerializeField] private Sprite[] correctNotesSprites = new Sprite[5];
+    [SerializeField] private Sprite[] incorrectNotesSprites = new Sprite[5];
+    private int noteSpriteIndex;    // Index to use when randomzing the sprite for the note
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] private int tolerance = 30;
-    private float maxPoints;
-    private float currentPoints;
     [SerializeField] private int correctNotePoints;
     [SerializeField] private int incorrectNotePoints;
+    [SerializeField] private int amountOfNoteValues = 2;    // The amount of note values, for now double and single which equals to 2
+    private float maxScore;
+    [SerializeField] private float currentScore;
+    private float bestScore;
+    private float spawnCooldown = 0.05f;
     [SerializeField] private float speed;
     [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
     [Tooltip("Maximum x spawn coordinate")] [SerializeField] private float xSpawnRandomMax;
     [SerializeField] private float timeStamp;
-    private float spawnCooldown = 0.05f;
+    
 
-    public enum NoteType { CORRECT, INCORRECT };
     // The list of notes the designers will spawn
     public List<Notes> notesList;
     // The list of notes (the game object) to destroy when exiting segment
-    public List<GameObject> destroyList;
-
-                // ** TODO ** //
-    // 1. Fix being able to replay the segment
-    // 2. Save the best attempt
+    [HideInInspector] public List<GameObject> destroyList;
 
     void Start()
     {
@@ -48,16 +59,18 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
         duration = overallCorruption.durations[segmentID];
 
+
         // Initialize points
         correctNotePrefab.GetComponent<NoteMovement>().points = correctNotePoints;
         incorrectNotePrefab.GetComponent<NoteMovement>().points = incorrectNotePoints;
 
+        // Set points and calculate max points
         for (int i = 0; i < notesList.Count; i++)
         {
             if (notesList[i].noteType == NoteType.CORRECT)
             {
                 notesList[i].points = correctNotePoints;
-                maxPoints += notesList[i].points;
+                maxScore += notesList[i].points;
             }
                 
 
@@ -105,8 +118,8 @@ public class NotesHuntCorruption : CorruptionBaseClass
                 // If an object was hit
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    // Add/remove points
-                    currentPoints += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                    // Add/remove points and destroy the hit object
+                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
                     Destroy(hit.transform.gameObject);
                 }
             }
@@ -120,8 +133,8 @@ public class NotesHuntCorruption : CorruptionBaseClass
                 // If an object was hit
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
-                    // Add/remove points
-                    currentPoints += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                    // Add/remove points and destroy the hit object
+                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
                     Destroy(hit.transform.gameObject);
                 }
             }
@@ -140,21 +153,58 @@ public class NotesHuntCorruption : CorruptionBaseClass
             {
                 GameObject spawnedNote;
 
+                // Randomize the index of the sprite list. Since both sprite lists should be the same size it should not matter which list is chosen 
+                noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
+
+                // Correct note
                 if (notesList[i].noteType == NoteType.CORRECT && !notesList[i].hasSpawned)
                 {
-                    // Spawn the correct note
+                    //Randomize the sprite
+                    noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
+
+                    // Spawn the correct randomized note
                     notesList[i].hasSpawned = true;
                     spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
+                    // Set the sprite according to the randomly generated sprite
+                    spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
+                    // Set the game object's speed according to the specified speed in this script
                     spawnedNote.GetComponent<NoteMovement>().speed = speed;
+
+                    // Save the box collider and sprite as variables
+                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+
+                    // Convert the sprite to world space units
+                    float pixelsPerUnit = sprite.pixelsPerUnit;
+                    // Set the box collider size according to the world space size + the added box collider size
+                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+
                     destroyList.Add(spawnedNote);
                 }
 
-                else if(notesList[i].noteType == NoteType.INCORRECT && !notesList[i].hasSpawned)
+                // Incorrect note
+                else if (notesList[i].noteType == NoteType.INCORRECT && !notesList[i].hasSpawned)
                 {
-                    // Spawn the correct note
+                    //Randomize the sprite
+                    noteSpriteIndex = Random.Range(0, incorrectNotesSprites.Length - 1);
+
+                    // Spawn the correct randomized note
                     notesList[i].hasSpawned = true;
                     spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
+                    // Set the sprite according to the randomly generated sprite
+                    spawnedNote.GetComponent<SpriteRenderer>().sprite = incorrectNotesSprites[noteSpriteIndex];
+                    // Set the game object's speed according to the specified speed in this script
                     spawnedNote.GetComponent<NoteMovement>().speed = speed;
+
+                    // Save the box collider and sprite as variables
+                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+
+                    // Convert the sprite to world space units
+                    float pixelsPerUnit = sprite.pixelsPerUnit;
+                    // Set the box collider size according to the world space size + the added box collider size
+                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+
                     destroyList.Add(spawnedNote);
                 }
             }
@@ -197,8 +247,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
         GradeScore();
         innerDistortion = 0;
 
-        DestroyNotes();
-
         base.ExitSegment();
 
         // Reset conditions, i.e destroy notes to improve performance
@@ -207,18 +255,22 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        if ((currentPoints / maxPoints) > clearThreshold)
+        // Save the player's best score
+        if (currentScore > bestScore)
+            bestScore = currentScore;
+
+        if ((bestScore / maxScore) > clearThreshold)
             corruptionClearedPercent = 100;
 
         else
         {
-            corruptionClearedPercent = (currentPoints / maxPoints) * 100;
+            corruptionClearedPercent = (bestScore / maxScore) * 100;
         }
     }
 
     void ResetConditions()
     {
-        //You can use this function to reset any conditions that need to be reset upon leaving a segment.
+        // Loop through the list of notes and set the hasSpawned bool to false. Then destroy all notes.
         for(int i = 0; i < notesList.Count; i++)
         {
             notesList[i].hasSpawned = false;

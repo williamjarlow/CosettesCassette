@@ -6,20 +6,17 @@ using UnityEngine.Assertions;
 
 public class OddOneOutCorruption : CorruptionBaseClass
 {
-    AudioManager audioManager;
-    OverallCorruption overallCorruption;
-    [SerializeField]
-    List<string> lyrics = new List<string>();
-    [SerializeField]
-    GameObject lyricPagePrefab;
-    List<GameObject> lyricPageInstances = new List<GameObject>();
+    private AudioManager audioManager;
+    private OverallCorruption overallCorruption;
+    [SerializeField] private List<string> lyrics = new List<string>();
+    [SerializeField] private GameObject lyricPagePrefab;
+    private List<GameObject> lyricPageInstances = new List<GameObject>();
 
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        clearThreshold = 99;
     }
 
     void Update()
@@ -48,7 +45,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         //This function gets called upon when entering the segment
         for (int i = 0; i < lyrics.Count; i++)
         {
-            lyricPageInstances.Add(Instantiate(lyricPagePrefab, gameObject.transform));
+            lyricPageInstances.Add(Instantiate(lyricPagePrefab, GameManager.Instance.uiParent.transform) as GameObject);
             lyricPageInstances[i].GetComponent<Text>().text = lyrics[i];
         }
         inSegment = true;

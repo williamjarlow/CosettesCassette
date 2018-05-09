@@ -48,19 +48,49 @@ public class CassetteAnimation : MonoBehaviour {
     {
         // Moving fast forward
         if (audioTimeline.movingFast && audioTimeline.movingForward)
+        {
+            if (audioManager.switchedToAudioLog)
+                RotationControl("fastBackwards");
+            else
             RotationControl("fastForward");
+        }
+
         // Moving fast backwards
         if (audioTimeline.movingFast && !audioTimeline.movingForward)
-            RotationControl("fastBackwards");
+        {
+            if (audioManager.switchedToAudioLog)
+                RotationControl("fastForward");
+            else
+                RotationControl("fastBackwards");
+        }
+
         // Moving slow forward
         if (audioTimeline.movingSlow && audioTimeline.movingForward)
-            RotationControl("slowForward");
+        {
+            if (audioManager.switchedToAudioLog)
+                RotationControl("slowBackwards");
+            else
+                RotationControl("slowForward");
+        }
+
         // Moving slow backwards
         if (audioTimeline.movingSlow && !audioTimeline.movingForward)
-            RotationControl("slowBackwards");
+        {
+            if (audioManager.switchedToAudioLog)
+                RotationControl("slowForward");
+            else
+                RotationControl("slowBackwards");
+        }
+
         // Moving forward normally
         if (!audioTimeline.movingSlow && !audioTimeline.movingFast)
-            RotationControl("moveNormal");
+        {
+            if (audioManager.switchedToAudioLog)
+                RotationControl("normalBackwards");
+            else
+                RotationControl("normal");
+        }
+
     }
 
     private void RotationControl(string kindOfRotation)
@@ -93,6 +123,13 @@ public class CassetteAnimation : MonoBehaviour {
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
+                break;
+
+            case "normalBackwards":
+                rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 break;
 
             default:
