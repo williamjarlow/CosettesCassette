@@ -118,8 +118,12 @@ public class OverallCorruption : MonoBehaviour {
 		overallCorruption = 0;
 		for (int i = 0; i < corruptions.Count; i++)
 		{
-			overallCorruption += (100 - corruptions[i].corruptionClearedPercent) / corruptions.Count;
-			if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold && !corruptions[i].cleared)
+            overallCorruption += (100 - corruptions[i].corruptionClearedPercent) / corruptions.Count;
+
+            // Set the alpha value according to corruption percentage of the segment
+            corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().SetAlpha(corruptions[i].corruptionClearedPercent);
+
+            if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold && !corruptions[i].cleared)
 			{
                 corruptions[i].cleared = true;
                 //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();

@@ -255,7 +255,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        currentScore = currentScore / maxScore;
+        currentScore = currentScore * 100 / maxScore;
         base.GradeScore();
     }
 
