@@ -64,4 +64,13 @@ public class CorruptionVisuals : MonoBehaviour {
         maskImage.color = repairedColor;
     }
 
+    public void SetAlpha(float corruptionPercentage)
+    {
+        // Convert percentage to alpha values
+        float temp = 255 / 100;
+        float output = corruptionPercentage * temp;
+
+        //maskImage.color.a = output;
+    }
+
 }

@@ -114,9 +114,13 @@ public class NotesHuntCorruption : CorruptionBaseClass
             // If an object was hit
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                // Add/remove points and destroy the hit object
-                currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                Destroy(hit.transform.gameObject);
+                // If we hit the note
+                if (hit.transform.gameObject.GetComponent<NoteMovement>() != null)
+                {
+                    // Add/remove points and destroy the hit object
+                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                    Destroy(hit.transform.gameObject);
+                }
             }
         }
 
@@ -129,9 +133,14 @@ public class NotesHuntCorruption : CorruptionBaseClass
             // If an object was hit
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-                // Add/remove points and destroy the hit object
-                currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                Destroy(hit.transform.gameObject);
+                // If we hit the note
+                if (hit.transform.gameObject.GetComponent<NoteMovement>() != null)
+                {
+                    // Add/remove points and destroy the hit object
+                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                    Destroy(hit.transform.gameObject);
+                }
+
             }
         }
     }
