@@ -5,18 +5,20 @@ using UnityEngine;
 public class NoteMovement : MonoBehaviour {
 
 
-    [SerializeField] private float randomMS;
+    private float randomMS;
     [SerializeField] private float edge;
+    [SerializeField] private float lowerBound;
+    [SerializeField] private float upperBound;
+    [SerializeField] private float speedx;
     private Vector3 bounce;
     private bool bouncy = true;
     [HideInInspector] public float speed;
-    [HideInInspector] public float speedx = 0.1f;
     [HideInInspector] public int points;
 	// Use this for initialization
 	void Start ()
     {
         bounce = this.transform.localPosition;
-        randomMS = Random.Range(2, 4);
+        randomMS = Random.Range(lowerBound, upperBound);
 
 
     }

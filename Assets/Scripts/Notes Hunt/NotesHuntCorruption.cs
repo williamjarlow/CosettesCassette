@@ -65,6 +65,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
         // Set points and calculate max points
         for (int i = 0; i < notesList.Count; i++)
         {
+            notesList[i].spawnTime *= GameManager.Instance.overallCorruption.bpmInMs;
             if (notesList[i].noteType == NoteType.CORRECT)
             {
                 notesList[i].points = correctNotePoints;
@@ -103,7 +104,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
     private void RecordSegment()
     {
         // ** Notes Hunt ** //
-        timeStamp = GameManager.Instance.audioManager.GetTimeLinePosition();
+        timeStamp = Mathf.Clamp(GameManager.Instance.audioManager.GetTimeLinePosition() - duration.start, 0, duration.stop - duration.start);
         SpawnNotes();
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
