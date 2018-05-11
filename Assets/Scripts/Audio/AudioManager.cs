@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour {
 	//Event instances
 	public FMOD.Studio.EventInstance gameMusicEv;
 	private FMOD.Studio.EventInstance skipEv;
-	private FMOD.Studio.EventInstance segmentClearEvent;
 	private FMOD.Studio.EventInstance levelClearEvent;
 	private FMOD.Studio.EventInstance playerFadeEv;
 
@@ -35,7 +34,6 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.EventDescription musicEventDesc;
 	private FMOD.Studio.EventDescription logEventDesc;
 	private FMOD.Studio.EventDescription skipEventDesc;
-	private FMOD.Studio.EventDescription segmentClearEventDesc;
 	private FMOD.Studio.EventDescription levelClearEventDesc;
 	private FMOD.Studio.EventDescription playerFadeEventDesc;
 
@@ -52,7 +50,7 @@ public class AudioManager : MonoBehaviour {
 
 	private int trackLength;
 
-    [Tooltip("Bank files to load, should only be the file name in the directory, eg. 'Cassette_01'")]
+    [Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
     [SerializeField] private List<string> bankFiles;
 	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
@@ -79,6 +77,7 @@ public class AudioManager : MonoBehaviour {
         // Required to be in Awake() because a lot of game objects ask for the track length in Start()
 		systemObj.getEvent(musicPath, out musicEventDesc);
         musicEventDesc.getLength(out trackLength);
+
 		//Get the event description of audio log
 		systemObj.getEvent (audioLogPath, out logEventDesc);
     }
@@ -194,11 +193,33 @@ public class AudioManager : MonoBehaviour {
 		skipEv.release ();
 	}
 
+	public void PlayRecordStart()
+	{
+		FMOD.Studio.EventDescription recordStartEventDesc;
+		FMOD.Studio.EventInstance recordStartEv;
+		systemObj.getEvent ("event:/Interface/Playback/record_start", out recordStartEventDesc);
+		recordStartEventDesc.createInstance (out recordStartEv);
+		recordStartEv.start ();
+		recordStartEv.release ();
+	}
+
+	public void PlayRecordStop()
+	{
+		FMOD.Studio.EventDescription recordStopEventDesc;
+		FMOD.Studio.EventInstance recordStopEv;
+		systemObj.getEvent ("event:/Interface/Playback/record_stop", out recordStopEventDesc);
+		recordStopEventDesc.createInstance (out recordStopEv);
+		recordStopEv.start ();
+		recordStopEv.release ();
+	}
+
 	public void PlaySegmentClear(float score)
 	{
+		FMOD.Studio.EventDescription segmentClearEventDesc;
+		FMOD.Studio.EventInstance segmentClearEvent;
 		systemObj.getEvent("event:/SFX/segment_clear", out segmentClearEventDesc);
 		segmentClearEventDesc.createInstance(out segmentClearEvent);
-		segmentClearEvent.setParameterValue ("segment_clear_score", score);
+		segmentClearEvent.setParameterValue ("segment_clear_score", score); // 0 = okay, 1 = perfect
 		segmentClearEvent.start();
 		segmentClearEvent.release ();
 	}
@@ -207,7 +228,7 @@ public class AudioManager : MonoBehaviour {
 	{
 		systemObj.getEvent(levelClearPath, out levelClearEventDesc);
 		levelClearEventDesc.createInstance(out levelClearEvent);
-		levelClearEvent.setParameterValue ("stage_clear_score", score);
+		levelClearEvent.setParameterValue ("stage_clear_score", score); // 0 = okay, 1 = perfect
 		levelClearEvent.start();
 		levelClearEvent.release ();
 	}
@@ -242,6 +263,67 @@ public class AudioManager : MonoBehaviour {
         snapEv.release();
     }
 
+	public void PlayPauseMenuOpen()
+	{
+		FMOD.Studio.EventDescription pauseMenuOpenEventDesc;
+		FMOD.Studio.EventInstance pauseMenuOpenEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/open", out pauseMenuOpenEventDesc);
+		pauseMenuOpenEventDesc.createInstance(out pauseMenuOpenEv);
+		pauseMenuOpenEv.start();
+		pauseMenuOpenEv.release();
+	}
+
+	public void PlayPauseMenuClose()
+	{
+		FMOD.Studio.EventDescription pauseMenuCloseEventDesc;
+		FMOD.Studio.EventInstance pauseMenuCloseEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/close", out pauseMenuCloseEventDesc);
+		pauseMenuCloseEventDesc.createInstance(out pauseMenuCloseEv);
+		pauseMenuCloseEv.start();
+		pauseMenuCloseEv.release();
+	}
+
+	public void PlayPauseMenuSelect()
+	{
+		FMOD.Studio.EventDescription pauseMenuSelectEventDesc;
+		FMOD.Studio.EventInstance pauseMenuSelectEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/select", out pauseMenuSelectEventDesc);
+		pauseMenuSelectEventDesc.createInstance(out pauseMenuSelectEv);
+		pauseMenuSelectEv.start();
+		pauseMenuSelectEv.release();
+	}
+
+	public void PlayPauseMenuOn()
+	{
+		FMOD.Studio.EventDescription pauseMenuOnEventDesc;
+		FMOD.Studio.EventInstance pauseMenuOnEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/on", out pauseMenuOnEventDesc);
+		pauseMenuOnEventDesc.createInstance(out pauseMenuOnEv);
+		pauseMenuOnEv.start();
+		pauseMenuOnEv.release();
+	}
+
+	public void PlayPauseMenuOff()
+	{
+		FMOD.Studio.EventDescription pauseMenuOffEventDesc;
+		FMOD.Studio.EventInstance pauseMenuOffEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/off", out pauseMenuOffEventDesc);
+		pauseMenuOffEventDesc.createInstance(out pauseMenuOffEv);
+		pauseMenuOffEv.start();
+		pauseMenuOffEv.release();
+	}
+
+	public void PlayShootSound(float result)
+	{
+		FMOD.Studio.EventDescription shootEventDesc;
+		FMOD.Studio.EventInstance shootEv;
+		systemObj.getEvent("event:/SFX/shoot", out shootEventDesc);
+		shootEventDesc.createInstance(out shootEv);
+		shootEv.setParameterValue ("shoot_result", result); //0 = hit, 1 = wrong, 2 = miss
+		shootEv.start();
+		shootEv.release();
+	}
+
 	public void MuteSFX(bool mute)
 	{
 		FMOD.Studio.Bus sfxBus;
@@ -269,28 +351,28 @@ public class AudioManager : MonoBehaviour {
 		//FMOD.DSP_TYPE type;
 
 		gameMusicEv.getChannelGroup (out musicChanGroup);
-		result = musicChanGroup.getGroup (1, out musicChanSubGroup);
+		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
 		//print ("Get subgroup: " + result);
 		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
 		//print ("Get subgroup DSP: " + result);
 		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
-		/*pitchChordsDSP.getType (out type);
+//		pitchChordsDSP.getType (out type);
+//		print (result);
+//		print (type);
+		result = musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
+		/*pitchLeadDSP.getType (out type);
 		print (result);
 		print (type);*/
-		result = musicChanSubGroupDSP.getInput (1, out pitchLeadDSP, out DSPCon);
-		/*pitchVocalsDSP.getType (out type);
-		print (result);
-		print (type);*/
-		result = musicChanSubGroupDSP.getInput (5, out pitchBassDSP, out DSPCon);
-		/*pitchDrumsDSP.getType (out type);
-		print (result);
-		print (type);*/
-		result = musicChanSubGroupDSP.getInput (3, out pitchVocalsDSP, out DSPCon);
+		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
 		/*pitchBassDSP.getType (out type);
 		print (result);
 		print (type);*/
-		result = musicChanSubGroupDSP.getInput (4, out pitchDrumsDSP, out DSPCon);
-		/*pitchLeadDSP.getType (out type);
+		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+		/*pitchVocalsDSP.getType (out type);
+		print (result);
+		print (type);*/
+		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+		/*pitchDrumsDSP.getType (out type);
 		print (result);
 		print (type);*/
 
@@ -335,6 +417,4 @@ public class AudioManager : MonoBehaviour {
         systemObj.release();
 	    lowLevelSys.release();
     }
-
-
 }

@@ -23,6 +23,7 @@ public class PitchCorruption : CorruptionBaseClass {
     public float lineSpeed;
 
     LineRenderer lineRenderer;
+    float timeSinceStart;
 
     public Slider pitchSlider;
     public float mercyRange;
@@ -38,7 +39,7 @@ public class PitchCorruption : CorruptionBaseClass {
     [SerializeField] [Range(0, 5)]
     float leadUp;
 
-    bool inCorruption = true;
+    bool inCorruption = false;
 
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
@@ -105,14 +106,17 @@ public class PitchCorruption : CorruptionBaseClass {
         {
             if (GameManager.Instance.recording)
             {
+                timeSinceStart += Time.deltaTime;
                 if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.
                 {
                     EnterSegment();
                 }
-                if(inCorruption)
+                if (timeSinceStart >= leadUp)
                     RecordPitch();
                 MoveLine();
             }
+            else if (inSegment)
+                ExitSegment();
         }
         else if (inSegment) //If player leaves corrupted area
         {
@@ -122,28 +126,27 @@ public class PitchCorruption : CorruptionBaseClass {
 
     void GenerateLine()
     {
-        /*AnimationCurve curve = new AnimationCurve();
-        float secondsSoFar = 0;
-        for(int i = 0; i < nodes.Count; i++)
-        {
-            curve.AddKey(secondsSoFar / totalTime, nodes[i].mercyRange / 10);
-            secondsSoFar += nodes[i].seconds;
-        }
-
-        lineRenderer.widthCurve = curve;*/
-
         lineRenderer.positionCount = nodes.Count + 1;
+
         
+
         Vector3 newPosition;
         for (int i = 0; i <= nodes.Count; i++)
         {
             if (i == 0)
                 newPosition = new Vector3(0, 0);
-            //else if (i == 0)
-                //newPosition = new Vector3(-nodes[i].seconds * i * lineSpeed, nodes[i].position);
             else
                 newPosition = new Vector3(lineRenderer.GetPosition(i - 1).x - nodes[i-1].seconds * lineSpeed, nodes[i-1].position);
 
+            lineRenderer.SetPosition(i, newPosition); // Create the points in the line
+        }
+
+        Vector3[] positions = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(positions);
+
+        for (int i = 0; i < lineRenderer.positionCount; i++)
+        {
+            newPosition = new Vector3(positions[i].x - leadUp * lineSpeed, positions[i].y, positions[i].z);
             lineRenderer.SetPosition(i, newPosition); // Create the points in the line
         }
     }
@@ -175,6 +178,8 @@ public class PitchCorruption : CorruptionBaseClass {
         hitTime = 0;
         float totalNodeTime = 0;
 
+		audioPitch.SetPitchBypass (pitchType, false);
+
         foreach(PitchNode node in nodes)
         {
             totalNodeTime += node.seconds;
@@ -199,13 +204,16 @@ public class PitchCorruption : CorruptionBaseClass {
     {
         pitchSlider.gameObject.SetActive(false);
 
+		audioPitch.SetPitchBypass (pitchType, true);
+
         GradeScore();
 
         innerDistortion = 0;
         index = 0;
-        StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
+        if(lastCoroutine != null)
+            StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
-        audioPitch.SetPitch(0, PitchType.All);
+        audioPitch.SetPitch(0, pitchType);
         DestroyLine();
         base.ExitSegment();
     }
@@ -221,13 +229,13 @@ public class PitchCorruption : CorruptionBaseClass {
             if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax)) + mercyRange &&
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
-                audioPitch.SetPitch(0, PitchType.All); //If the player is within acceptable margin, let the pitch be normal.
+                audioPitch.SetPitch(0, pitchType); //If the player is within acceptable margin, let the pitch be normal.
                 hitTime += Time.deltaTime;
             }
             else
             {
                 audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y *
-                (pitchSlider.maxValue / pitchIndicatorMax)), PitchType.All);
+                (pitchSlider.maxValue / pitchIndicatorMax)), pitchType);
             }
         }
     }
