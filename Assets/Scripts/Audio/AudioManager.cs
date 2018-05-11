@@ -376,12 +376,11 @@ public class AudioManager : MonoBehaviour {
 		print (result);
 		print (type);*/
 
-		// *** TEMP ***
-		pitchChordsDSP.setBypass(false);
+		/*pitchChordsDSP.setBypass(false);
 		pitchVocalsDSP.setBypass(false);
 		pitchDrumsDSP.setBypass(false);
 		pitchBassDSP.setBypass(false);
-		pitchLeadDSP.setBypass(false);
+		pitchLeadDSP.setBypass(false);*/
 	}
 
     public float GetTrackLength()
