@@ -16,7 +16,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
     //[SerializeField] private List<string> lyrics = new List<string>();
     [SerializeField] private string[] lyrics = new string[3];
     [SerializeField] private int correctLyricSegment;
-    [SerializeField] private bool hasSpawned;
+    private bool hasSpawned;
 
 
                                 // ** TODO ** // 
