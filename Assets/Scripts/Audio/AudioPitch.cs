@@ -58,4 +58,33 @@ public class AudioPitch : MonoBehaviour {
         }
     }
 
+	public void SetPitchBypass(PitchType pitchType, bool bypassState)
+	{
+		switch (pitchType)
+		{
+		case PitchType.All:
+			audioManager.pitchChordsDSP.setBypass(bypassState);
+			audioManager.pitchVocalsDSP.setBypass(bypassState);
+			audioManager.pitchDrumsDSP.setBypass(bypassState);
+			audioManager.pitchBassDSP.setBypass(bypassState);
+			audioManager.pitchLeadDSP.setBypass(bypassState);
+			break;
+		case PitchType.Chords:
+			audioManager.pitchChordsDSP.setBypass(bypassState);
+			break;
+		case PitchType.Vocals:
+			audioManager.pitchVocalsDSP.setBypass(bypassState);
+			break;
+		case PitchType.Drums:
+			audioManager.pitchDrumsDSP.setBypass(bypassState);
+			break;
+		case PitchType.Bass:
+			audioManager.pitchBassDSP.setBypass(bypassState);
+			break;
+		case PitchType.Lead:
+			audioManager.pitchLeadDSP.setBypass(bypassState);
+			break;
+		}
+	}
+
 }

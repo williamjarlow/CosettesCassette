@@ -178,6 +178,8 @@ public class PitchCorruption : CorruptionBaseClass {
         hitTime = 0;
         float totalNodeTime = 0;
 
+		audioPitch.SetPitchBypass (pitchType, false);
+
         foreach(PitchNode node in nodes)
         {
             totalNodeTime += node.seconds;
@@ -202,6 +204,8 @@ public class PitchCorruption : CorruptionBaseClass {
     {
         pitchSlider.gameObject.SetActive(false);
 
+		audioPitch.SetPitchBypass (pitchType, true);
+
         GradeScore();
 
         innerDistortion = 0;
@@ -225,7 +229,6 @@ public class PitchCorruption : CorruptionBaseClass {
             if (pitchSlider.value <= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax)) + mercyRange &&
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
-                Debug.Log("asdhsajd");
                 audioPitch.SetPitch(0, pitchType); //If the player is within acceptable margin, let the pitch be normal.
                 hitTime += Time.deltaTime;
             }
