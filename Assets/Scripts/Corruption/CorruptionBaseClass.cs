@@ -56,6 +56,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         inSegment = false;
         GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
         GameManager.Instance.overallCorruption.UpdateDistortionAmount();
+        //GameManager.Instance.recording = false;
     }
     public virtual void GradeScore()
     {

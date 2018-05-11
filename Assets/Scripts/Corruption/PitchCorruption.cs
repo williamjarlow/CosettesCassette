@@ -96,7 +96,7 @@ public class PitchCorruption : CorruptionBaseClass {
             }
         }
         duration = overallCorruption.durations[segmentID];
-        Load();
+        //Load();
     }
 	
 	// Update is called once per frame

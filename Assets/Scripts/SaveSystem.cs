@@ -26,15 +26,14 @@ public class SaveSystem : Singleton<SaveSystem>
             file.Close();
 
             SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-
-            for (int i = data.segmentSave.Count - 1; i < 20; i++)
+            /*for (int i = 0; i < 20; i++)
             {
                 SaveSegment(emptyStruct, i, 0);
-                for (int j = data.segmentSave[i].Count - 1; j < 20; j++)
+                for (int j = 0; j < 20; j++)
                 {
                     SaveSegment(emptyStruct, i, j);
                 }
-            }
+            }*/
         }
         else if (saveSystem != this)
         {
@@ -147,6 +146,7 @@ public class SaveSystem : Singleton<SaveSystem>
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
+            Debug.Log(loadLevelID + ", " + loadSegmentID);
             load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
             file.Close();
             //Needs Completed Levels to implement
