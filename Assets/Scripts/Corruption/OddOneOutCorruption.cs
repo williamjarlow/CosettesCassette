@@ -4,24 +4,28 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 
+// ** Written by Hannes Gustafsson, template by William Jarlow ** //
+
 public class OddOneOutCorruption : CorruptionBaseClass
 {
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
+    private GameObject lyricsObject;    // Object to be instantiated
     [SerializeField] private GameObject lyricsPrefab;
     private List<GameObject> lyricPages = new List<GameObject>();
-    [SerializeField] private List<string> lyrics = new List<string>();
+    //[SerializeField] private List<string> lyrics = new List<string>();
+    [SerializeField] private string[] lyrics = new string[3];
     [SerializeField] private int correctLyricSegment;
+    private bool hasSpawned;
 
+
+                                // ** TODO ** // 
+        // 1. Add some visual effect when clicking on a button and destroying the lyrics
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-
-        SpawnLyrics();
-
-        //GetComponent<Button>().onClick.AddListener(CorrectChoice);
     }
 
     void Update()
@@ -43,16 +47,22 @@ public class OddOneOutCorruption : CorruptionBaseClass
         {
             ExitSegment();
         }
+
+        if(inSegment && GameManager.Instance.recording && hasSpawned == false)
+        {
+            SpawnLyrics();
+        }
     }
 
     private void SpawnLyrics()
     {
+        hasSpawned = true;
+
         // Instantiate prefab
-        GameObject lyricsObject;
-        lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform); 
+        lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform);
 
         // ** Initialize ** //
-        for (int i = 0; i < lyrics.Count; i++)
+        for (int i = 0; i < lyrics.Length; i++)
         {
             // Find the lyric pages
             lyricPages.Add(lyricsObject.transform.GetChild(i).gameObject);
@@ -69,37 +79,43 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
         }
 
+
         Debug.Assert(lyricPages.Count == lyricsObject.transform.childCount, "The number of lyrics does not equal to the number of lyric pages");
 
     }
 
-    public void CorrectLyricChoice()
+    private void CorrectLyricChoice()
     {
-        // Functionality for clicking on the correct text
-        Debug.Log("Pressed the correct button");
+        // Add some visual effect
+        DestroyLyrics();
+
+        // The player clicked the correct button --> segment is fully cleared
+        currentScore = 100;
+        GradeScore();
+        
     }
 
-    public void IncorrectLyricChoice()
+    private void IncorrectLyricChoice()
     {
-        // Functionality for clicking on the incorrect text
-        Debug.Log("Pressed the incorrect button");
+        // Add some visual effect
+        DestroyLyrics();
+
+        // The player clicked the incorrect button --> set score to 0 and add some distortion?
+        currentScore = 0;
+        GradeScore();
+    }
+
+    private void DestroyLyrics()
+    {
+        Destroy(lyricsObject);
+        lyricPages.Clear();
     }
 
     public override void EnterSegment()
     {
-        //This function gets called upon when entering the segment
-       /* for (int i = 0; i < lyrics.Count; i++)
-        {
-            lyricPageInstances.Add(Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform) as GameObject);
-            lyricPageInstances[i].GetComponent<Text>().text = lyrics[i];
-        }*/
-
-
-
+        ResetConditions();
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        if (GameManager.Instance.recording)
-            corruptionClearedPercent = 0;
         base.EnterSegment();
     }
 
@@ -116,18 +132,15 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        corruptionClearedPercent = 100;
+        base.GradeScore();
     }
 
     private void ResetConditions()
     {
-        //You can use this function to reset any conditions that need to be reset upon leaving a segment.
-
-        //Destroy the lyric page instances
-        for (int i = 0; i < lyricPages.Count; i++)
-        {
-            Destroy(lyricPages[i].gameObject);
-        }
+        // Destroy the lyric objects and enable spawning of the lyric objects
+        DestroyLyrics();
+        hasSpawned = false;
     }
+
 
 }

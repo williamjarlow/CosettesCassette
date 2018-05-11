@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class PitchNode
 {
+    [Range (-2, 2)]
     public float position = 0;
     public float seconds = 0;
     public float mercyRange;
@@ -15,6 +16,9 @@ public class PitchNode
 public class PitchCorruption : CorruptionBaseClass {
     [Header("Pitch nodes")]
     public List<PitchNode> nodes = new List<PitchNode>();
+
+    [SerializeField] [Tooltip("What instrument the pitch shifting should affect.")]
+    PitchType pitchType;
 
     public float lineSpeed;
 
@@ -34,15 +38,14 @@ public class PitchCorruption : CorruptionBaseClass {
     [SerializeField] [Range(0, 5)]
     float leadUp;
 
+    bool inCorruption = true;
+
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
-
-    float savedTime;
 
     float totalTime; //The total amount of time measured in seconds
     float hitTime; //The amount of time the player was in the zone in seconds
 
-    float score;
     Vector3 startingPosition;
 
     [SerializeField] GameObject pitchIndicator;
@@ -54,8 +57,6 @@ public class PitchCorruption : CorruptionBaseClass {
     bool animationDone = true;
 
     private OverallCorruption overallCorruption;
-    
-    private SaveSegmentStruct saveStruct;
 
     // Use this for initialization
     void Start()
@@ -94,13 +95,11 @@ public class PitchCorruption : CorruptionBaseClass {
             }
         }
         duration = overallCorruption.durations[segmentID];
-        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
-        corruptionClearedPercent = saveStruct.points;
+        Load();
     }
 	
 	// Update is called once per frame
 	void Update () {
-
         if (audioManager.GetTimeLinePosition() > duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
@@ -110,11 +109,10 @@ public class PitchCorruption : CorruptionBaseClass {
                 {
                     EnterSegment();
                 }
-                RecordPitch();
+                if(inCorruption)
+                    RecordPitch();
                 MoveLine();
             }
-            else
-                hitTime = savedTime; //If player isn't recording, don't change score.
         }
         else if (inSegment) //If player leaves corrupted area
         {
@@ -165,6 +163,11 @@ public class PitchCorruption : CorruptionBaseClass {
         lineRenderer.positionCount = 0;
     }
 
+    void EnterCorruption()
+    {
+
+    }
+
     public override void EnterSegment()
     {
         pitchSlider.gameObject.SetActive(true);
@@ -185,7 +188,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
         index = 0;
         animationDone = true;
-        score = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
+        currentScore = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
         GenerateLine();
@@ -195,30 +198,14 @@ public class PitchCorruption : CorruptionBaseClass {
     public override void ExitSegment()
     {
         pitchSlider.gameObject.SetActive(false);
-        if (totalTime != 0)
-        {
-            score = (hitTime / totalTime) * 100;
-            if (score > 100)
-                score = 100;
-        }
-        else
-            score = 0;
 
-        corruptionClearedPercent = score;
-        savedTime = hitTime;
+        GradeScore();
+
         innerDistortion = 0;
         index = 0;
         StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
         audioPitch.SetPitch(0, PitchType.All);
-
-        if (corruptionClearedPercent > saveStruct.points)
-        {
-            saveStruct.points = corruptionClearedPercent;
-            saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
-        }
-
         DestroyLine();
         base.ExitSegment();
     }
@@ -248,6 +235,15 @@ public class PitchCorruption : CorruptionBaseClass {
     void MovePitchObject()
     {
         lastCoroutine = StartCoroutine(MoveOverSeconds(pitchIndicatorInstance, new Vector3 (0, nodes[index].position), nodes[index].seconds));
+    }
+
+    public override void GradeScore()
+    {
+        if (totalTime != 0)
+            currentScore = (hitTime / totalTime) * 100;
+        else
+            currentScore = 0;
+        base.GradeScore();
     }
 
     public IEnumerator MoveOverSeconds(GameObject objectToMove, Vector3 end, float seconds)
