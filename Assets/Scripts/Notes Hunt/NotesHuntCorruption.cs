@@ -246,16 +246,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        // Save the player's best score
-        if (currentScore > bestScore)
-            bestScore = currentScore;
-
-        if ((bestScore / maxScore) > perfectThreshold)
-            corruptionClearedPercent = 100;
-        else
-        {
-            corruptionClearedPercent = (bestScore / maxScore) * 100;
-        }
+        currentScore = currentScore / maxScore;
         base.GradeScore();
     }
 
