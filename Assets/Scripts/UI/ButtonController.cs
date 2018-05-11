@@ -8,8 +8,8 @@ public class ButtonController : MonoBehaviour {
     
     [SerializeField] private bool isDual;
     [Header("Settings for DualButtons")]
-    [SerializeField] Material unselectedMaterial;
-    [SerializeField] Material selectedMaterial;
+    [SerializeField] public Material unselectedMaterial;
+    [SerializeField] public Material selectedMaterial;
     [SerializeField] GameObject UITargetDual;
     private enum buttonstates { Up, Down, Moving }
     buttonstates buttonstate;
