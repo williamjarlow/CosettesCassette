@@ -67,10 +67,16 @@ public class CorruptionVisuals : MonoBehaviour {
     public void SetAlpha(float corruptionPercentage)
     {
         // Convert percentage to alpha values
-        float temp = 255 / 100;
-        float output = corruptionPercentage * temp;
+        corruptionPercentage /= 100;
 
-        //maskImage.color.a = output;
+        // Save previous color values
+        Color savedColor = maskImage.color;
+
+        // Edit alpha. 1 == Fully visible, 0 == fully transparent
+        savedColor.a = 1 - corruptionPercentage;
+
+        // Set alpha value to actual image
+        maskImage.color = savedColor;
     }
 
 }
