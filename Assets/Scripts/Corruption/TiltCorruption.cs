@@ -14,7 +14,6 @@ public class TiltCorruption : CorruptionBaseClass
     [SerializeField] private GameObject tiltIndicatorPrefab;
     private bool setPan = false;
     private float soundPos = 0;
-    private float score;
     private const int startingScore = 100;
     FMOD.Studio.PLAYBACK_STATE state;
 
@@ -24,15 +23,12 @@ public class TiltCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
-    private SaveSegmentStruct saveStruct;
-
     void Start()
     {
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
-        corruptionClearedPercent = saveStruct.points;
+        Load();
     }
 
     void Update()
@@ -65,7 +61,7 @@ public class TiltCorruption : CorruptionBaseClass
         if (GameManager.Instance.recording)
             corruptionClearedPercent = 0;
         tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, gameObject.transform);
-        score = startingScore;
+        currentScore = startingScore;
         base.EnterSegment();
     }
 
@@ -74,18 +70,11 @@ public class TiltCorruption : CorruptionBaseClass
         //This function gets called upon when leaving the segment
         inSegment = false;
         if (GameManager.Instance.recording)
-            GradeScore();
+            GradeScore(); //Score gets graded and saved to file here
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
         audioManager.musicChanSubGroup.setPan(0);
         Destroy(tiltIndicatorInstance);
-
-        if (corruptionClearedPercent > saveStruct.points)
-        {
-            saveStruct.points = corruptionClearedPercent;
-            saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
-        }
 
         base.ExitSegment();
         ResetConditions();
@@ -147,7 +136,7 @@ public class TiltCorruption : CorruptionBaseClass
         }
         if (soundPos - mercyRange > 0 || soundPos + mercyRange < 0)
         {
-            score -= punishment;
+            currentScore -= punishment;
         }
 
         tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5, 0, 0);
@@ -156,7 +145,7 @@ public class TiltCorruption : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        corruptionClearedPercent = score;
+        base.GradeScore();
     }
 
     void ResetConditions()

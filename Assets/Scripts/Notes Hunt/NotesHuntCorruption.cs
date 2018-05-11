@@ -38,8 +38,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
     [SerializeField] private int incorrectNotePoints;
     [SerializeField] private int amountOfNoteValues = 2;    // The amount of note values, for now double and single which equals to 2
     private float maxScore;
-    [SerializeField] private float currentScore;
-    private float bestScore;
     private float spawnCooldown = 0.05f;
     [SerializeField] private float speed;
     [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
@@ -87,60 +85,55 @@ public class NotesHuntCorruption : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-            if (inSegment == false) //If player just entered the segment
-            {
-                EnterSegment();
-            }
-
             if (GameManager.Instance.recording) //If recording
             {
+                if (inSegment == false) //If player just entered the segment
+                {
+                    EnterSegment();
+                }
+                RecordSegment();
             }
         }
         else if (inSegment) //If player leaves the segment area
         {
             ExitSegment();
         }
+    }
 
+    private void RecordSegment()
+    {
         // ** Notes Hunt ** //
         timeStamp = GameManager.Instance.audioManager.GetTimeLinePosition();
-
-        // If we are in the current segment
-        if (inSegment && GameManager.Instance.recording)
+        SpawnNotes();
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            SpawnNotes();
 
-            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+
+            // If an object was hit
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
-
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-
-                // If an object was hit
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    // Add/remove points and destroy the hit object
-                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                    Destroy(hit.transform.gameObject);
-                }
-            }
-
-            // ** Temporary for testing ** // 
-            if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                // If an object was hit
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                {
-                    // Add/remove points and destroy the hit object
-                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                    Destroy(hit.transform.gameObject);
-                }
+                // Add/remove points and destroy the hit object
+                currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                Destroy(hit.transform.gameObject);
             }
         }
 
-        
+        // ** Temporary for testing ** // 
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            // If an object was hit
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                // Add/remove points and destroy the hit object
+                currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
+                Destroy(hit.transform.gameObject);
+            }
+        }
     }
 
     private void SpawnNotes()
@@ -236,8 +229,6 @@ public class NotesHuntCorruption : CorruptionBaseClass
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
-
-        Debug.Log("enter segment ");
     }
 
     public override void ExitSegment()
@@ -259,13 +250,13 @@ public class NotesHuntCorruption : CorruptionBaseClass
         if (currentScore > bestScore)
             bestScore = currentScore;
 
-        if ((bestScore / maxScore) > clearThreshold)
+        if ((bestScore / maxScore) > perfectThreshold)
             corruptionClearedPercent = 100;
-
         else
         {
             corruptionClearedPercent = (bestScore / maxScore) * 100;
         }
+        base.GradeScore();
     }
 
     void ResetConditions()

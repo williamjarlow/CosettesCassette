@@ -20,13 +20,12 @@ public class CorruptionTemplate : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-            if (inSegment == false) //If player just entered the segment
-            {
-                EnterSegment();
-            }
-
             if (GameManager.Instance.recording) //If recording
             {
+                if (inSegment == false) //If player just entered the segment
+                {
+                    EnterSegment();
+                }
             }
         }
         else if (inSegment) //If player leaves the segment area
@@ -50,16 +49,17 @@ public class CorruptionTemplate : CorruptionBaseClass
         //This function gets called upon when leaving the segment
         inSegment = false;
         if (GameManager.Instance.recording)
-            GradeScore();
+            GradeScore(); //Score gets evaluated and saved to file here.
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
         base.ExitSegment();
         ResetConditions();
     }
 
-    public override void GradeScore()
+    public override void GradeScore() 
     {
-
+        //Here's where you want to set your corruptionClearPercent to reflect how well the player did.
+        base.GradeScore(); //Score gets evaluated and saved to file here.
     }
 
     void ResetConditions()

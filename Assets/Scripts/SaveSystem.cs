@@ -19,11 +19,31 @@ public class SaveSystem : Singleton<SaveSystem>
         {
             DontDestroyOnLoad(gameObject);
             saveSystem = this;
+
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            data = (PlayerData)bf.Deserialize(file);
+            file.Close();
+
+            SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+
+            for (int i = data.segmentSave.Count - 1; i < 20; i++)
+            {
+                SaveSegment(emptyStruct, i, 0);
+                for (int j = data.segmentSave[i].Count - 1; j < 20; j++)
+                {
+                    SaveSegment(emptyStruct, i, j);
+                }
+            }
         }
         else if (saveSystem != this)
         {
             Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
     }
 
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
@@ -62,10 +82,9 @@ public class SaveSystem : Singleton<SaveSystem>
                 }
             }
         }
-    //Add segment save to the save file and serialize it.
-    Continue:
+        //Add segment save to the save file and serialize it.
+        Continue:
         data.segmentSave[levelIndex][segmentIndex] = save;
-
         bf.Serialize(file, data);
         file.Close();
     }
@@ -117,17 +136,14 @@ public class SaveSystem : Singleton<SaveSystem>
         }
     }
 
-    //WIP
     public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat") && data.segmentSave.Count != 0)
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
-
             load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
-
             file.Close();
             //Needs Completed Levels to implement
         }
