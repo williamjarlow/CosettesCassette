@@ -203,11 +203,9 @@ public class PitchCorruption : CorruptionBaseClass {
     public override void ExitSegment()
     {
         pitchSlider.gameObject.SetActive(false);
-
 		audioPitch.SetPitchBypass (pitchType, true);
-
         GradeScore();
-
+        timeSinceStart = 0;
         innerDistortion = 0;
         index = 0;
         if(lastCoroutine != null)

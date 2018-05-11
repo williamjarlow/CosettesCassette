@@ -128,7 +128,6 @@ public class OverallCorruption : MonoBehaviour {
                 corruptions[i].cleared = true;
                 //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
                 corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
-                GameManager.Instance.audioManager.PlaySegmentClear(0f);
             }
 			else
 				corruptions[i].cleared = false;
