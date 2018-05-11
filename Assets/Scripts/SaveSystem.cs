@@ -42,8 +42,12 @@ public class SaveSystem : Singleton<SaveSystem>
         }
     }
 
-    void Start()
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ClearSegments();
+        }
     }
 
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
