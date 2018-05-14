@@ -48,7 +48,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
             ExitSegment();
         }
 
-        if(inSegment && GameManager.Instance.recording && hasSpawned == false)
+        if(inSegment && GameManager.Instance.recording && hasSpawned == false && !GameManager.Instance.audioManager.switchedToAudioLog)
         {
             SpawnLyrics();
         }
@@ -57,6 +57,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
     private void SpawnLyrics()
     {
         hasSpawned = true;
+
+        Debug.Log("Spawned lyrics");
 
         // Instantiate prefab
         lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform);
