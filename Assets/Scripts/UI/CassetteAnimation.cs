@@ -40,13 +40,12 @@ public class CassetteAnimation : MonoBehaviour {
 
         if (cassetteAnimation && !audioManager.pausedMusic)
             CheckSongSpeed();
-        
     }
 
 
     private void CheckSongSpeed()
     {
-        // Moving fast forward
+        // Moving fast forward (Inverted if listening to audiolog)
         if (audioTimeline.movingFast && audioTimeline.movingForward)
         {
             if (audioManager.switchedToAudioLog)
@@ -55,7 +54,7 @@ public class CassetteAnimation : MonoBehaviour {
             RotationControl("fastForward");
         }
 
-        // Moving fast backwards
+        // Moving fast backwards (Inverted if listening to audiolog)
         if (audioTimeline.movingFast && !audioTimeline.movingForward)
         {
             if (audioManager.switchedToAudioLog)
@@ -64,7 +63,7 @@ public class CassetteAnimation : MonoBehaviour {
                 RotationControl("fastBackwards");
         }
 
-        // Moving slow forward
+        // Moving slow forward (Inverted if listening to audiolog)
         if (audioTimeline.movingSlow && audioTimeline.movingForward)
         {
             if (audioManager.switchedToAudioLog)
@@ -73,7 +72,7 @@ public class CassetteAnimation : MonoBehaviour {
                 RotationControl("slowForward");
         }
 
-        // Moving slow backwards
+        // Moving slow backwards (Inverted if listening to audiolog)
         if (audioTimeline.movingSlow && !audioTimeline.movingForward)
         {
             if (audioManager.switchedToAudioLog)
@@ -82,7 +81,7 @@ public class CassetteAnimation : MonoBehaviour {
                 RotationControl("slowBackwards");
         }
 
-        // Moving forward normally
+        // Moving forward normally (Inverted if listening to audiolog)
         if (!audioTimeline.movingSlow && !audioTimeline.movingFast)
         {
             if (audioManager.switchedToAudioLog)
@@ -140,6 +139,11 @@ public class CassetteAnimation : MonoBehaviour {
                 break;
         }
     }
+
+    public void 
+
+
+    // Designer code below
     public void PlayAnimation()
     {
         lid.GetComponent<Animator>().SetBool("Run", true);

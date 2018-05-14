@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour {
 	//Audio table keys
     public string bassDrumKey;
 
-	private int trackLength;
+	public int trackLength;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
     [SerializeField] private List<string> bankFiles;
@@ -93,8 +93,8 @@ public class AudioManager : MonoBehaviour {
 		
     public void AudioPlayMusic ()
     {
-		//"music" event is assigned to "gameMusicEv"
-		if (!switchedToAudioLog)
+        //"music" event is assigned to "gameMusicEv"
+        if (!switchedToAudioLog)
 		{
 			result = musicEventDesc.createInstance (out gameMusicEv);
 
@@ -408,6 +408,10 @@ public class AudioManager : MonoBehaviour {
     public void toggleTapeSide()
     {
         switchedToAudioLog = !switchedToAudioLog;
+        if (!switchedToAudioLog)
+            musicEventDesc.getLength(out trackLength);
+        if (switchedToAudioLog)
+            logEventDesc.getLength(out trackLength);
     }
 
     private void OnDestroy()
