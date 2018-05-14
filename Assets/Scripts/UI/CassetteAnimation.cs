@@ -140,8 +140,6 @@ public class CassetteAnimation : MonoBehaviour {
         }
     }
 
-    public void 
-
 
     // Designer code below
     public void PlayAnimation()
