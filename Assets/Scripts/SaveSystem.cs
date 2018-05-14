@@ -26,14 +26,15 @@ public class SaveSystem : Singleton<SaveSystem>
             file.Close();
 
             SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-            /*for (int i = 0; i < 20; i++)
-            {
-                SaveSegment(emptyStruct, i, 0);
-                for (int j = 0; j < 20; j++)
-                {
-                    SaveSegment(emptyStruct, i, j);
-                }
-            }*/
+            emptyStruct.exists = true;
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    SaveSegment(emptyStruct, i, 0);
+            //    for (int j = 0; j < 20; j++)
+            //    {
+            //        SaveSegment(emptyStruct, i, j);
+            //    }
+            //}
         }
         else if (saveSystem != this)
         {
@@ -86,8 +87,9 @@ public class SaveSystem : Singleton<SaveSystem>
             }
         }
         //Add segment save to the save file and serialize it.
-        Continue:
+    Continue:
         data.segmentSave[levelIndex][segmentIndex] = save;
+        print("saving" + levelIndex + " , " + segmentIndex);
         bf.Serialize(file, data);
         file.Close();
     }
