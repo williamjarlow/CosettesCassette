@@ -28,7 +28,7 @@ public class TiltCorruption : CorruptionBaseClass
         overallCorruption = GameManager.Instance.overallCorruption;
         audioManager = GameManager.Instance.audioManager;
         duration = overallCorruption.durations[segmentID];
-        //Load();
+        Load();
     }
 
     void Update()
