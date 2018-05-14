@@ -8,6 +8,7 @@ public class WalkmanMaterialSelects : MonoBehaviour {
     [SerializeField] private GameObject walkmanRef;
     [SerializeField] private Texture textureRef;
     [SerializeField] private Texture buttonTextureRef;
+    public Material sharedMaterial;
 
     private UnityEngine.UI.Toggle toggle;
 
@@ -25,18 +26,26 @@ public class WalkmanMaterialSelects : MonoBehaviour {
 
     public void Select()
     {
+        //walkmanRef.GetComponent<Renderer>().sharedMaterials[0].SetTexture("_MainTex", textureRef);
+        
         Renderer[] ass = walkmanRef.GetComponentsInChildren<Renderer>();
         ButtonController[] buttonRefs = walkmanRef.GetComponentsInChildren<ButtonController>();
         for (int i = 0; i < ass.Length; i++)
         {
-            ass[i].material.mainTexture = this.textureRef;
-        }
+            if (ass[i].tag != "Cassette")
+            {
 
+                ass[i].sharedMaterials[0].SetTexture("_MainTex", textureRef);
+                
+            }
+            
+        }
+        /*
         for (int i = 0; i < buttonRefs.Length; i++)
         {
             buttonRefs[i].unselectedMaterial.mainTexture = this.textureRef;
         }
-
+        */
         //walkmanRef.GetComponent<Renderer>().material.mainTexture = textureRef;
         //walkmanLidRef.GetComponent<Renderer>().materials[1].mainTexture = textureRef;
     }
