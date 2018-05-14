@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +15,10 @@ public class AudioManager : MonoBehaviour {
 	//Channel groups
 	public FMOD.ChannelGroup musicChanGroup;
 	public FMOD.ChannelGroup musicChanSubGroup;
+
+	//Buses
+	private FMOD.Studio.Bus sfxBus;
+	private FMOD.Studio.Bus interfaceBus;
 
 	//DSPs
 	public FMOD.DSP musicChanSubGroupDSP;
@@ -48,7 +52,7 @@ public class AudioManager : MonoBehaviour {
 	//Audio table keys
     public string bassDrumKey;
 
-	public int trackLength;
+	private int trackLength;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
     [SerializeField] private List<string> bankFiles;
@@ -93,8 +97,8 @@ public class AudioManager : MonoBehaviour {
 		
     public void AudioPlayMusic ()
     {
-        //"music" event is assigned to "gameMusicEv"
-        if (!switchedToAudioLog)
+		//"music" event is assigned to "gameMusicEv"
+		if (!switchedToAudioLog)
 		{
 			result = musicEventDesc.createInstance (out gameMusicEv);
 
@@ -326,14 +330,26 @@ public class AudioManager : MonoBehaviour {
 
 	public void MuteSFX(bool mute)
 	{
-		FMOD.Studio.Bus sfxBus;
-
 		systemObj.getBus ("bus:/SFX", out sfxBus);
-		sfxBus.setMute (mute);
-		systemObj.getBus ("bus:/Interface", out sfxBus);
-		sfxBus.setMute (mute);
+		systemObj.getBus ("bus:/Interface", out interfaceBus);
+
+		if(!mute)
+			StartCoroutine (delayMute (0.103f)); //waits until "off" event finishes
+		else if (mute) 
+		{
+			sfxBus.setMute (false);
+			interfaceBus.setMute (false);
+		}
 	}
 
+	private IEnumerator delayMute(float time)
+	{
+		yield return new WaitForSeconds (time);
+
+		sfxBus.setMute (true);
+		interfaceBus.setMute (true);
+	}
+		
     private IEnumerator GetDSP()
 	{
 		FMOD.Studio.PLAYBACK_STATE state;
@@ -408,10 +424,6 @@ public class AudioManager : MonoBehaviour {
     public void toggleTapeSide()
     {
         switchedToAudioLog = !switchedToAudioLog;
-        if (!switchedToAudioLog)
-            musicEventDesc.getLength(out trackLength);
-        if (switchedToAudioLog)
-            logEventDesc.getLength(out trackLength);
     }
 
     private void OnDestroy()
