@@ -13,6 +13,7 @@ public class Zoom : MonoBehaviour {
     [SerializeField] private Vector3 zoomPos;
     private Vector3 zoomed;
     [SerializeField] private float increaseSize;
+    private bool isZoomed = false;
 
 
     void Start()
@@ -27,23 +28,19 @@ public class Zoom : MonoBehaviour {
 
     public void Zooming()
     {
-        if (transform.localScale == originalSize)
+        if (isZoomed == false)
         {
             zoomed = zoomSize * increaseSize;
             transform.localPosition = zoomPos;
             transform.localScale = zoomed;
+            isZoomed = true;
         }
-        else if (transform.localScale == zoomed)
+        else if (isZoomed == true)
         {
             transform.localPosition = originalPos;
             transform.localScale = originalSize;
+            isZoomed = false;
         }
-    }
-
-    public void OnMouseExit()
-    {
-
-
     }
 
 }
