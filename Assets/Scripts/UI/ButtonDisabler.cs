@@ -9,7 +9,7 @@ public class ButtonDisabler : MonoBehaviour {
 
     [Tooltip("Drag the buttons you wish to disable during 'recording' here")]
     [SerializeField] private List<Button> disableButtonList;
-    [SerializeField] private Dropdown dropdown;
+    //[SerializeField] private Dropdown dropdown;
 
     private AudioManager audioManager;
     private DrumMechanic drumMechanic;
@@ -32,7 +32,7 @@ public class ButtonDisabler : MonoBehaviour {
             for (int i = 0; i < disableButtonList.Count; i++)
             {
                 disableButtonList[i].interactable = false;
-                dropdown.interactable = false;
+                //dropdown.interactable = false;
             }
         }
 
@@ -43,7 +43,7 @@ public class ButtonDisabler : MonoBehaviour {
         for (int i = 0; i < disableButtonList.Count; i++)
         {
             disableButtonList[i].interactable = true;
-            dropdown.interactable = true;
+            //dropdown.interactable = true;
         }
     }
 
