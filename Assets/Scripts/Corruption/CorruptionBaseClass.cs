@@ -56,7 +56,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         inSegment = false;
         GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
         GameManager.Instance.overallCorruption.UpdateDistortionAmount();
-        GameObject.Find("Button_Record").GetComponent<ButtonController>().ToggleButtonUp();
+        //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
         //GameManager.Instance.recording = false;
     }
     public virtual void GradeScore()
