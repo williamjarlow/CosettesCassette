@@ -104,21 +104,13 @@ public class ButtonController : MonoBehaviour {
     }
     public void ToggleButtonUp()
     {
-        if (buttonclicked)
-        {
+        
             UITargetDual.GetComponent<Button>().onClick.Invoke();
             //buttonclicked = false;
             startingPos = false;
             buttonclicked = false;
             buttonstate = buttonstates.Moving;
-        }
-        else if (!buttonclicked)
-        {
-            UITarget.GetComponent<Button>().onClick.Invoke();
-            buttonclicked = true;
-            startingPos = true;
-            buttonstate = buttonstates.Moving;
-
-        }
+        
+        
     }
 }
