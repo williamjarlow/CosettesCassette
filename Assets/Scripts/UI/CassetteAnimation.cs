@@ -15,10 +15,6 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private SkinnedMeshRenderer leftRotator;
     [SerializeField] private GameObject cassetteToAnimate;
     [SerializeField] private GameObject cassetteToRotate;
-    private float leftBlendShapeValue = 0;
-    private float rightBlendShapeValue = 0;
-
-
 
     [SerializeField] private GameObject lid;
     [SerializeField] private float cassetteMoveDelay;
@@ -166,25 +162,6 @@ public class CassetteAnimation : MonoBehaviour {
             animRightWheel.SetBlendShapeWeight(0, 100-dummyRightWheel.GetBlendShapeWeight(0));
         }
     }
-
-
-    private void StoreBlendShapeValues()
-    {
-        rightBlendShapeValue = dummyLeftWheel.GetBlendShapeWeight(0);
-        leftBlendShapeValue = dummyRightWheel.GetBlendShapeWeight(0);
-    }
-
-    private void GetBlendShapeValues()
-    {
-        animLeftWheel.SetBlendShapeWeight(0, leftBlendShapeValue);
-        animRightWheel.SetBlendShapeWeight(0, rightBlendShapeValue);
-    }
-
-
-
-
-
-
 
 
     // Designer code below
