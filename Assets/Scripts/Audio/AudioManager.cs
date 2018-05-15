@@ -71,7 +71,7 @@ public class AudioManager : MonoBehaviour {
         for (int i = 0; i < bankFiles.Count; i++)
         {
             FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-			result = systemObj.getBank ("bank:/" + bankFiles [i], out banks [i]);
+			systemObj.getBank ("bank:/" + bankFiles [i], out banks [i]);
         }
 
 		FMODUnity.RuntimeManager.WaitForAllLoads ();
@@ -100,7 +100,7 @@ public class AudioManager : MonoBehaviour {
 		//"music" event is assigned to "gameMusicEv"
 		if (!switchedToAudioLog)
 		{
-			result = musicEventDesc.createInstance (out gameMusicEv);
+			musicEventDesc.createInstance (out gameMusicEv);
 
 			//play "playerFade" event
 			systemObj.getEvent ("event:/SFX/playerFade", out playerFadeEventDesc);
