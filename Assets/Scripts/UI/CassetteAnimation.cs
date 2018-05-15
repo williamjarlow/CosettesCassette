@@ -7,12 +7,19 @@ public class CassetteAnimation : MonoBehaviour {
     private AudioManager audioManager;
     private AudioTimeline audioTimeline;
     public bool cassetteAnimation = true;
-    [SerializeField] private SkinnedMeshRenderer rightWheel;
-    [SerializeField] private SkinnedMeshRenderer leftWheel;
+    [SerializeField] private SkinnedMeshRenderer dummyRightWheel;
+    [SerializeField] private SkinnedMeshRenderer dummyLeftWheel;
+    [SerializeField] private SkinnedMeshRenderer animRightWheel;
+    [SerializeField] private SkinnedMeshRenderer animLeftWheel;
     [SerializeField] private SkinnedMeshRenderer rightRotator;
     [SerializeField] private SkinnedMeshRenderer leftRotator;
     [SerializeField] private GameObject cassetteToAnimate;
     [SerializeField] private GameObject cassetteToRotate;
+    private float leftBlendShapeValue = 0;
+    private float rightBlendShapeValue = 0;
+
+
+
     [SerializeField] private GameObject lid;
     [SerializeField] private float cassetteMoveDelay;
     [SerializeField] private int lidClosingDelay;
@@ -24,8 +31,10 @@ public class CassetteAnimation : MonoBehaviour {
         audioManager = GameManager.Instance.audioManager;
         audioTimeline = GameManager.Instance.audioManager.GetComponent<AudioTimeline>();
         
-        Debug.Assert(rightWheel != null, "Right wheel is not attached to the script");
-        Debug.Assert(leftWheel != null, "Left wheel is not attached to the script");
+        Debug.Assert(dummyRightWheel != null, "Dummy right wheel is not attached to the script");
+        Debug.Assert(dummyLeftWheel != null, "Dummy left wheel is not attached to the script");
+        Debug.Assert(animRightWheel != null, "Animation cassette right wheel is not attached to the script");
+        Debug.Assert(animLeftWheel != null, "Animation cassette left wheel is not attached to the script");
         Debug.Assert(rightRotator != null, "Right wheel is not attached to the script");
         Debug.Assert(leftRotator != null, "Left wheel is not attached to the script");
         Debug.Assert(cassetteToAnimate != null, "Cassette to animate is not attachd to the script");
@@ -35,8 +44,11 @@ public class CassetteAnimation : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        leftWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
-        rightWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+        if (audioManager.startedMusic)
+        {
+            dummyLeftWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+            dummyRightWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
+        }
 
         if (cassetteAnimation && !audioManager.pausedMusic)
             CheckSongSpeed();
@@ -99,46 +111,72 @@ public class CassetteAnimation : MonoBehaviour {
             case "fastForward":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 break;
 
             case "fastBackwards":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteFastSpeed * Time.deltaTime)));
                 break;
 
             case "slowForward":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 break;
 
             case "slowBackwards":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteSlowSpeed * Time.deltaTime)));
                 break;
 
             case "normalBackwards":
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z - (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 break;
 
             default:
                 rightRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 leftRotator.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
-                rightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
-                leftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                dummyRightWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
+                dummyLeftWheel.transform.Rotate(new Vector3(0, 0, transform.rotation.z + (audioTimeline.cassetteNormalSpeed * Time.deltaTime)));
                 break;
         }
     }
+
+    public void CopyBlendShapeValues()
+    {
+        animLeftWheel.SetBlendShapeWeight(0, dummyLeftWheel.GetBlendShapeWeight(0));
+        animRightWheel.SetBlendShapeWeight(0, dummyRightWheel.GetBlendShapeWeight(0));
+        dummyLeftWheel.SetBlendShapeWeight(0, animLeftWheel.GetBlendShapeWeight(0));
+    }
+
+
+    private void StoreBlendShapeValues()
+    {
+        rightBlendShapeValue = dummyLeftWheel.GetBlendShapeWeight(0);
+        leftBlendShapeValue = dummyRightWheel.GetBlendShapeWeight(0);
+    }
+
+    private void GetBlendShapeValues()
+    {
+        animLeftWheel.SetBlendShapeWeight(0, leftBlendShapeValue);
+        animRightWheel.SetBlendShapeWeight(0, rightBlendShapeValue);
+    }
+
+
+
+
+
+
 
 
     // Designer code below
@@ -149,7 +187,6 @@ public class CassetteAnimation : MonoBehaviour {
     }
     private IEnumerator LidOpening ()
     {
-        
         yield return new WaitForSeconds(cassetteMoveDelay);
         cassetteToRotate.SetActive(false);
         cassetteToAnimate.SetActive(true);

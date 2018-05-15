@@ -1,13 +1,12 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/Stencil/Mask OneZLess"
+﻿Shader "Custom/Stencil/Mask OneZLess"
 {
     SubShader
     {
-        Tags { "RenderType"="Opaque" "Queue"="Geometry-1" }
-        ColorMask 0
-        ZWrite off
+        Tags { "RenderType"="Opaque" "Queue"="Geometry-1" }	// Write to the stencil buffer before drawing any geometry to the screen
+        ColorMask 0	// Don't write to any colour channels
+        ZWrite off	// Don't write to the Depth buffer
         
+		// Write the value 1 to the stencil buffer
         Stencil
         {
             Ref 1
