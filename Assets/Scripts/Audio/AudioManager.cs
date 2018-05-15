@@ -59,7 +59,7 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
     [HideInInspector] public bool switchedToAudioLog = false;
-    private bool startedMusic = false;
+    [HideInInspector] public bool startedMusic = false;
     [HideInInspector] public bool pausedMusic = true;
 
     void Awake ()
@@ -424,6 +424,10 @@ public class AudioManager : MonoBehaviour {
     public void toggleTapeSide()
     {
         switchedToAudioLog = !switchedToAudioLog;
+        if (switchedToAudioLog)
+            logEventDesc.getLength(out trackLength);
+        if (!switchedToAudioLog)
+            musicEventDesc.getLength(out trackLength);
     }
 
     private void OnDestroy()
