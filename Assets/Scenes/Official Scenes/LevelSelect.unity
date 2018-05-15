@@ -1025,6 +1025,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: ClosePause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &128577902
@@ -6733,7 +6744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 66.4, y: 1.4}
+  m_AnchoredPosition: {x: 66.4, y: 1.4000001}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1081221151
@@ -7062,8 +7073,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cassetteAnimation: 1
-  rightWheel: {fileID: 0}
-  leftWheel: {fileID: 0}
+  dummyRightWheel: {fileID: 0}
+  dummyLeftWheel: {fileID: 0}
+  animRightWheel: {fileID: 0}
+  animLeftWheel: {fileID: 0}
   rightRotator: {fileID: 2054610147}
   leftRotator: {fileID: 323969265}
   cassetteToAnimate: {fileID: 0}
@@ -7997,6 +8010,7 @@ MonoBehaviour:
   cassetteOffset: 1
   cassetteAngle: 30
   workWithMouseInput: 1
+  pauseScreen: 0
 --- !u!114 &1254622550 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114529061550264318, guid: b71481a9af3b62d44b6d851658247729,
@@ -8153,7 +8167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 64.5, y: 0.4}
+  m_AnchoredPosition: {x: 64.5, y: 0.39999998}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295143525
@@ -10079,6 +10093,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: OpenPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1607832576
@@ -10681,6 +10706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e57bce6f91c13499850b323008b586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelSelect: {fileID: 1252220919}
 --- !u!81 &1718588252
 AudioListener:
   m_ObjectHideFlags: 0
@@ -11823,6 +11849,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1607832574}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: OpenPause
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -13252,6 +13289,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1607832574}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: ClosePause
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
