@@ -31,8 +31,10 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private bool workWithMouseInput = false;
     ////
 
+    public bool pauseScreen = false;
+
     private Vector3[] startPos;
-    private bool aids = false;
+    private bool movementLock = false;
 
     void Start()
     {
@@ -48,12 +50,13 @@ public class LevelSelect : MonoBehaviour
 
     void Update()
     {
+        if (!pauseScreen)
         TouchControls();
 
 
         // Temporary
         ////
-        if (workWithMouseInput)
+        if (workWithMouseInput && !pauseScreen)
         MouseControls();
         ////
     }
@@ -62,9 +65,9 @@ public class LevelSelect : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
         {
-            if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && aids == false)
+            if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
             {
-                aids = true;
+                movementLock = true;
                 currentFocus++;
                 Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                 Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -90,9 +93,9 @@ public class LevelSelect : MonoBehaviour
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
         {
-            if (currentFocus > 0 && currentFocus <= cassetteAmount && aids == false)
+            if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
             {
-                aids = true;
+                movementLock = true;
                 currentFocus--;
                 Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                 Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -135,9 +138,9 @@ public class LevelSelect : MonoBehaviour
                 touchPosition = myTouch.position;
                 if ((touchPosition.y - origPosition.y) >= minimumMovementForChange)
                 {
-                    if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && aids == false)
+                    if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
                     {
-                        aids = true;
+                        movementLock = true;
                         currentFocus++;
                         Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                         Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -163,9 +166,9 @@ public class LevelSelect : MonoBehaviour
                 }
                 if ((touchPosition.y - origPosition.y) < minimumMovementForChange)
                 {
-                    if (currentFocus > 0 && currentFocus <= cassetteAmount && aids == false)
+                    if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
                     {
-                        aids = true;
+                        movementLock = true;
                         currentFocus--;
                         Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                         Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -212,9 +215,20 @@ public class LevelSelect : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             moving = false;
-            aids = false;
+            movementLock = false;
             startPos[chosen] = cassettes[chosen].transform.localPosition;
         }
+    }
+
+
+    public void OpenPause()
+    {
+        pauseScreen = true;
+    }
+
+    public void ClosePause()
+    {
+        pauseScreen = false;
     }
 
 }
