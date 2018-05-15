@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum segmentEffects { good, perfect, newRecord };
+public enum segmentEffects { good, perfect, newSticker };
 
-public class SegmentClearVFX : MonoBehaviour {
+public class StageClearVFX : MonoBehaviour {
 
     [SerializeField] private GameObject goodClear;
     [SerializeField] private GameObject perfectClear;
-    [SerializeField] private GameObject newRecord;
+    [SerializeField] private GameObject newSticker;
     [SerializeField] private float timeToShowEffect = 2f;
 
 
@@ -19,7 +19,7 @@ public class SegmentClearVFX : MonoBehaviour {
             CallFullEffect(perfectClear);
     }
 
-    public void CallSegmentVFX(segmentEffects typeOfEffect)
+    public void CallVFX(segmentEffects typeOfEffect)
     {
         if (typeOfEffect == segmentEffects.good)
             CallFullEffect(goodClear);
@@ -27,8 +27,8 @@ public class SegmentClearVFX : MonoBehaviour {
         if (typeOfEffect == segmentEffects.perfect)
             CallFullEffect(perfectClear);
 
-        if (typeOfEffect == segmentEffects.newRecord)
-            CallFullEffect(newRecord);
+        if (typeOfEffect == segmentEffects.newSticker)
+            CallFullEffect(newSticker);
     }
 
     private void CallFullEffect(GameObject gameObjectForEffect)

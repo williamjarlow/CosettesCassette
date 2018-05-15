@@ -28,6 +28,7 @@ public class CorruptionVisuals : MonoBehaviour {
     {
         // Save the original color to be able to reset it when the corrupted area has been fixed
         //maskImage = GetComponentInChildren<Image>();
+        repairedColor = GameManager.Instance.timelineSlider.GetComponent<Image>().color;
 	}
 
     public void SetCorruptionPosition(int corruptionStartPoint, int corruptionEndPoint)
