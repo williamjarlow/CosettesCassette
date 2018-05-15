@@ -428,6 +428,7 @@ public class AudioManager : MonoBehaviour {
             logEventDesc.getLength(out trackLength);
         if (!switchedToAudioLog)
             musicEventDesc.getLength(out trackLength);
+        startedMusic = false;
     }
 
     private void OnDestroy()

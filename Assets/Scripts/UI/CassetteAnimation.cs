@@ -50,7 +50,7 @@ public class CassetteAnimation : MonoBehaviour {
             dummyRightWheel.SetBlendShapeWeight(0, (audioManager.GetTimeLinePosition() / audioManager.GetTrackLength()) * 100); // * 100 to get the percentages
         }
 
-        if (cassetteAnimation && !audioManager.pausedMusic)
+        if (cassetteAnimation && !audioManager.pausedMusic && audioManager.startedMusic)
             CheckSongSpeed();
     }
 
@@ -154,9 +154,17 @@ public class CassetteAnimation : MonoBehaviour {
 
     public void CopyBlendShapeValues()
     {
-        animLeftWheel.SetBlendShapeWeight(0, dummyLeftWheel.GetBlendShapeWeight(0));
-        animRightWheel.SetBlendShapeWeight(0, dummyRightWheel.GetBlendShapeWeight(0));
-        dummyLeftWheel.SetBlendShapeWeight(0, animLeftWheel.GetBlendShapeWeight(0));
+        if (audioManager.switchedToAudioLog)
+        {
+            animLeftWheel.SetBlendShapeWeight(0, dummyLeftWheel.GetBlendShapeWeight(0));
+            animRightWheel.SetBlendShapeWeight(0, dummyRightWheel.GetBlendShapeWeight(0));
+        }
+
+        if (!audioManager.switchedToAudioLog)
+        {
+            animLeftWheel.SetBlendShapeWeight(0, 100-dummyLeftWheel.GetBlendShapeWeight(0));
+            animRightWheel.SetBlendShapeWeight(0, 100-dummyRightWheel.GetBlendShapeWeight(0));
+        }
     }
 
 
