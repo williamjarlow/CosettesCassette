@@ -154,12 +154,16 @@ public class CassetteAnimation : MonoBehaviour {
         {
             animLeftWheel.SetBlendShapeWeight(0, dummyLeftWheel.GetBlendShapeWeight(0));
             animRightWheel.SetBlendShapeWeight(0, dummyRightWheel.GetBlendShapeWeight(0));
+            dummyLeftWheel.transform.ResetRotation();
+            dummyRightWheel.transform.ResetRotation();
         }
 
         if (!audioManager.switchedToAudioLog)
         {
             animLeftWheel.SetBlendShapeWeight(0, 100-dummyLeftWheel.GetBlendShapeWeight(0));
             animRightWheel.SetBlendShapeWeight(0, 100-dummyRightWheel.GetBlendShapeWeight(0));
+            dummyLeftWheel.transform.ResetRotation();
+            dummyRightWheel.transform.ResetRotation();
         }
     }
 
