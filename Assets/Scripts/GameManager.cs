@@ -75,12 +75,16 @@ public class GameManager : Singleton<GameManager>
         // Start recording and disable buttons
         recording = true;
         buttonDisabler.DisableButtons();
+
+		audioManager.PlayRecordStart();
     }
 
     public void Listen()
     {
         buttonDisabler.EnableButtons();
         recording = false;
+
+		audioManager.PlayRecordStop();
     }
 
     public void FindClosestSegment()
@@ -118,6 +122,8 @@ public class GameManager : Singleton<GameManager>
 
         // Set the current segment index to the closest one
         currentSegmentIndex = closestSegmentIndex;
+
+		audioManager.PlaySnapSound ();
     }
 
 

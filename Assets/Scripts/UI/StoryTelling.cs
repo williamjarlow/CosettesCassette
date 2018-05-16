@@ -47,6 +47,8 @@ public class StoryTelling : MonoBehaviour {
             leftPage.text = episodes[index].pages[0].pageText;
         if (episodes[index].pages.Count > 1)
             rightPage.text = episodes[index].pages[1].pageText;
+
+		audioManager.PlayPauseMenuSelect ();
     }
 
     public void FlipPagesForward()
@@ -81,6 +83,8 @@ public class StoryTelling : MonoBehaviour {
         episodeMenu.SetActive(true);
         forwardButton.SetActive(false);
         backwardsButton.SetActive(false);
+
+		audioManager.PlayPauseMenuBack ();
     }
 
 

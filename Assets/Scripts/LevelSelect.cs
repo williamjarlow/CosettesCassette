@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
+	private AudioManager audioManager;
 
     private int currentFocus;
     private int cassetteAmount;
@@ -46,6 +47,8 @@ public class LevelSelect : MonoBehaviour
 
     void Start()
     {
+		audioManager = FindObjectOfType<AudioManager>();
+
         cassetteAmount = cassettes.Count;
         currentFocus = cassetteAmount - 1;
         startPos = new Vector3[cassettes.Count];
@@ -62,7 +65,6 @@ public class LevelSelect : MonoBehaviour
     {
         if (!pauseScreen)
         TouchControls();
-
 
         // Temporary
         ////
@@ -105,6 +107,8 @@ public class LevelSelect : MonoBehaviour
                 currentFocus++;
                 // Set the currently focused cassette to focused
                 cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
+
+				audioManager.PlayLevelSelectScroll ();
             }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
@@ -139,6 +143,7 @@ public class LevelSelect : MonoBehaviour
                 // Set the currently focused cassette to focused
                 cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
                 
+				audioManager.PlayLevelSelectScroll ();
             }
         }
 
@@ -216,6 +221,8 @@ public class LevelSelect : MonoBehaviour
                         currentFocus++;
                         // Set the currently focused cassette to focused
                         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
+
+						audioManager.PlayLevelSelectScroll ();
                     }
                 }
 
@@ -252,6 +259,7 @@ public class LevelSelect : MonoBehaviour
                         // Set the currently focused cassette to focused
                         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
 
+						audioManager.PlayLevelSelectScroll ();
                     }
                 }
 

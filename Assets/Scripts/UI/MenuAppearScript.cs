@@ -13,9 +13,12 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private Text UIbuttonText;
     private bool isShowing = false;
 
+	private AudioManager audioManager;
+
     [SerializeField] private GameObject cassetteAnimation;
     void Start()
     {
+		audioManager = GameManager.Instance.audioManager;
         //menuToShow.SetActive(true);
         //menuToHide.SetActive(false);
       //  Button btn = pauseButton.GetComponent<Button>();
@@ -94,12 +97,15 @@ public class MenuAppearScript : MonoBehaviour
     {
         isShowing = true;
         menuToShow.SetActive(true);
+
+		audioManager.PlayPauseMenuOpen();
     }
 
     public void HidePauseScreen()
     {
         isShowing = false;
         menuToHide.SetActive(false);
+		audioManager.PlayPauseMenuClose();
     }
 
     public void StartCassette()

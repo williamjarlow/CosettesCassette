@@ -337,6 +337,66 @@ public class AudioManager : MonoBehaviour {
 		scriptFlipEv.release();
 	}
 
+	public void PlayLevelSelectScroll ()
+	{
+		FMOD.Studio.EventDescription levelSelectScrollEventDesc;
+		FMOD.Studio.EventInstance levelSelectScrollEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/scroll", out levelSelectScrollEventDesc);
+		levelSelectScrollEventDesc.createInstance(out levelSelectScrollEv);
+		levelSelectScrollEv.start();
+		levelSelectScrollEv.release();
+	}
+
+	public void PlayLevelSelectSelect ()
+	{
+		FMOD.Studio.EventDescription levelSelectSelectEventDesc;
+		FMOD.Studio.EventInstance levelSelectBackEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/select", out levelSelectSelectEventDesc);
+		levelSelectSelectEventDesc.createInstance(out levelSelectBackEv);
+		levelSelectBackEv.start();
+		levelSelectBackEv.release();
+	}
+
+	public void PlayLevelSelectBack ()
+	{
+		FMOD.Studio.EventDescription levelSelectBackEventDesc;
+		FMOD.Studio.EventInstance levelSelectBackEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/back", out levelSelectBackEventDesc);
+		levelSelectBackEventDesc.createInstance(out levelSelectBackEv);
+		levelSelectBackEv.start();
+		levelSelectBackEv.release();
+	}
+
+	public void PlaySkinOpen()
+	{
+		FMOD.Studio.EventDescription skinOpenEventDesc;
+		FMOD.Studio.EventInstance skinOpenEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/skin_open", out skinOpenEventDesc);
+		skinOpenEventDesc.createInstance(out skinOpenEv);
+		skinOpenEv.start();
+		skinOpenEv.release();
+	}
+
+	public void PlaySkinClose()
+	{
+		FMOD.Studio.EventDescription skinCloseEventDesc;
+		FMOD.Studio.EventInstance skinCloseEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/skin_close", out skinCloseEventDesc);
+		skinCloseEventDesc.createInstance(out skinCloseEv);
+		skinCloseEv.start();
+		skinCloseEv.release();
+	}
+
+	public void PlaySkinSelect()
+	{
+		FMOD.Studio.EventDescription skinSelectEventDesc;
+		FMOD.Studio.EventInstance skinSelectEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/skin_select", out skinSelectEventDesc);
+		skinSelectEventDesc.createInstance(out skinSelectEv);
+		skinSelectEv.start();
+		skinSelectEv.release();
+	}
+
 	public void PlayShootSound(float result)
 	{
 		FMOD.Studio.EventDescription shootEventDesc;
@@ -444,11 +504,15 @@ public class AudioManager : MonoBehaviour {
     public void toggleTapeSide()
     {
         switchedToAudioLog = !switchedToAudioLog;
+
         if (switchedToAudioLog)
             logEventDesc.getLength(out trackLength);
         if (!switchedToAudioLog)
             musicEventDesc.getLength(out trackLength);
+		
         startedMusic = false;
+
+		PlayEjectSound ();
     }
 
     private void OnDestroy()
