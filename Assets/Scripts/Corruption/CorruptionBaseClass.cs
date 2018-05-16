@@ -57,7 +57,8 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
         GameManager.Instance.overallCorruption.UpdateDistortionAmount();
         //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
-        //GameManager.Instance.recording = false;
+        //GameManager.Instance.recordButton.NakedToggleUp();
+        //GameManager.Instance.Listen();
     }
     public virtual void GradeScore()
     {

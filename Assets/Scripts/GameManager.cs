@@ -37,7 +37,7 @@ public class GameManager : Singleton<GameManager>
     private int allowedProgressIntoBarInMs = 5000;
 
     // Tolerance to make sure we run certain functions for entering a segment
-    private const int tolerance = 50;
+    private const int tolerance = 150;
 
     public instruments selectedInstrument = instruments.drums;
 
