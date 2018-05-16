@@ -25,7 +25,7 @@ public class RaycastObject : MonoBehaviour
         Rigidbody rb;
         rb = GetComponent<Rigidbody>();
 
-        LevelSelectScript.cassettes.Add(this);
+        //LevelSelectScript.cassettes.Add(this);
         this.transform.parent = LevelSelectMenu.transform;
         this.transform.position = LevelSelectScript.cassettes[0].transform.position;
         Vector3 temp = this.transform.localPosition;
