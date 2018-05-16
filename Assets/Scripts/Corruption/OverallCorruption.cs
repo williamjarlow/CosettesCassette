@@ -47,9 +47,6 @@ public class OverallCorruption : MonoBehaviour {
 	private GameObject corruptedArea;
 	private List<GameObject> corruptedAreaList = new List<GameObject>();
 
-    // Win object
-    [SerializeField] private KillScreen winObject;
-
 	void Awake () {
 		bpmInMs = ConvertBpmToMs(bpm);
 
@@ -158,7 +155,6 @@ public class OverallCorruption : MonoBehaviour {
 		if(levelCleared == true)
 		{
 			GameManager.Instance.LevelCleared = true;
-			winObject.Winning();
             GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.good);
 			Debug.Log("Winning!");
 			GameManager.Instance.audioManager.PlayWinSound(0f);
