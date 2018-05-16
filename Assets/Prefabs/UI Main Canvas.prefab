@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 114529367905353418}
   m_Layer: 0
   m_Name: Buttons Pause
-  m_TagString: Untagged
+  m_TagString: WalkmanButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -441,7 +441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1222889362661678
 GameObject:
   m_ObjectHideFlags: 1
@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 114397752551045656}
   m_Layer: 0
   m_Name: Button Minigame
-  m_TagString: Untagged
+  m_TagString: WalkmanButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1192,7 +1192,7 @@ GameObject:
   - component: {fileID: 114771154938301622}
   m_Layer: 0
   m_Name: Button Eject
-  m_TagString: Untagged
+  m_TagString: WalkmanButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 114319559922928980}
   m_Layer: 0
   m_Name: Button Play
-  m_TagString: Untagged
+  m_TagString: WalkmanButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2058,6 +2058,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 224382405669296022}
+  - {fileID: 224643916288698400}
   - {fileID: 224168157949286964}
   m_Father: {fileID: 4410177446264170}
   m_RootOrder: 0
@@ -3107,17 +3108,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: EnableButtons
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114017679325869816
@@ -3681,17 +3671,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlaySnapSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114142892220137680
@@ -4069,41 +4048,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ShutdownWinning
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 114593866733457594}
         m_MethodName: PlayAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayEjectSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: AudioStopMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4285,28 +4231,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: event:/Music/Cassette_01/test
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ClearRecordings
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: setButtonEnabled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114896342767925604}
@@ -5016,10 +4940,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1302908353800524}
   isDual: 1
-  unselectedMaterial: {fileID: 2100000, guid: 7188a36a07104174f893775290d9c9af, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: ce7c35f71c5d8f1439715647945b6ee9, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: db189430fe28c75428bbdeb28a04c0d7, type: 2}
   UITargetDual: {fileID: 1302908353800524}
-  buttonPressdepth: 0.5
+  buttonPressdepth: 0.05
   buttonSpeed: 2
 --- !u!114 &114328393438395748
 MonoBehaviour:
@@ -5302,10 +5226,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1610789726040214}
   isDual: 1
-  unselectedMaterial: {fileID: 2100000, guid: 7188a36a07104174f893775290d9c9af, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: c49a8094656e8974985d3b4ce3a4b07b, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 720006036b6f1de42ae5b55284929acb, type: 2}
   UITargetDual: {fileID: 1336928794479494}
-  buttonPressdepth: 1
+  buttonPressdepth: 0.05
   buttonSpeed: 2
 --- !u!114 &114402246878931788
 MonoBehaviour:
@@ -5669,17 +5593,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: DisableButtons
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 114098753190876016}
         m_MethodName: 
         m_Mode: 1
@@ -5715,17 +5628,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 114428506132105882}
         m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayRecordStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5889,7 +5791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1222889362661678}
   isDual: 0
-  unselectedMaterial: {fileID: 2100000, guid: a8abb47e3978c744c8efc489f70b3343, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: ce7c35f71c5d8f1439715647945b6ee9, type: 2}
   UITargetDual: {fileID: 0}
   buttonPressdepth: 1
@@ -6072,7 +5974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1784157555333510}
   isDual: 0
-  unselectedMaterial: {fileID: 2100000, guid: 7188a36a07104174f893775290d9c9af, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: ce7c35f71c5d8f1439715647945b6ee9, type: 2}
   UITargetDual: {fileID: 0}
   buttonPressdepth: 1
@@ -6193,7 +6095,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114946895159253086}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -6209,7 +6111,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: AudioUnpauseMusic
+        m_MethodName: AudioPlayMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6221,17 +6123,6 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 114331792296994694}
         m_MethodName: TogglePauseScreen
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: EnableButtons
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6255,17 +6146,6 @@ MonoBehaviour:
       - m_Target: {fileID: 114499536822800976}
         m_MethodName: set_interactable
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayPauseMenuClose
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6499,10 +6379,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1018315695623788}
   isDual: 1
-  unselectedMaterial: {fileID: 2100000, guid: 7188a36a07104174f893775290d9c9af, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 7ffeb245aefcdf04296189bbb57e742e, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: b70962abeae8930418f93338202e4211, type: 2}
   UITargetDual: {fileID: 1446129821853188}
-  buttonPressdepth: 0.5
+  buttonPressdepth: 0.05
   buttonSpeed: 2
 --- !u!114 &114539427655185342
 MonoBehaviour:
@@ -7356,17 +7236,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: DisableButtons
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 114727222984994594}
         m_MethodName: set_interactable
         m_Mode: 6
@@ -7381,17 +7250,6 @@ MonoBehaviour:
       - m_Target: {fileID: 114499536822800976}
         m_MethodName: set_interactable
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayPauseMenuOpen
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7469,10 +7327,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1936417480759108}
   isDual: 1
-  unselectedMaterial: {fileID: 2100000, guid: 7188a36a07104174f893775290d9c9af, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: c49a8094656e8974985d3b4ce3a4b07b, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: dd59c8acec1057345bfac6aed9d54a10, type: 2}
   UITargetDual: {fileID: 1936417480759108}
-  buttonPressdepth: 1
+  buttonPressdepth: 0.05
   buttonSpeed: 2
 --- !u!114 &114787754224924572
 MonoBehaviour:
@@ -8138,17 +7996,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlaySnapSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114936779107036268
@@ -8217,14 +8064,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: edb4756fa870b5046bfc2be1a3474958, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73a7a8eb12275f8438dcd9c0e01909a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -33064,7 +32911,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.15696312, y: 0.0394288}
+  m_AnchoredPosition: {x: -0.15696311, y: 0.0394288}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224140405741471678
@@ -33170,8 +33017,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1057426826601142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 67, y: 0, z: 0}
+  m_LocalScale: {x: 0.82763934, y: 0.8276392, z: 0.8276392}
   m_Children:
   - {fileID: 224845461310766102}
   - {fileID: 224380461597799894}
@@ -33182,11 +33029,11 @@ RectTransform:
   - {fileID: 224357991795352440}
   - {fileID: 224073148265442086}
   m_Father: {fileID: 4097163909127012}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 67, y: 0}
   m_SizeDelta: {x: 1645, y: 976}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224181259937000134
@@ -33326,7 +33173,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1889760755494544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 87}
   m_LocalScale: {x: 0.004105457, y: 0.004105457, z: 0.004105457}
   m_Children:
   - {fileID: 4335429707906750}
@@ -33597,7 +33444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.008, y: 0.0004}
+  m_AnchoredPosition: {x: -0.008000001, y: 0.00040000002}
   m_SizeDelta: {x: 395, y: 126}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224430999133821600
@@ -33708,7 +33555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1082.0486, y: -194.04427}
+  m_AnchoredPosition: {x: 1082.0486, y: -194.04428}
   m_SizeDelta: {x: 101.8, y: 84.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224547505198125098
@@ -33946,15 +33793,15 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1446129821853188}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1182.8232, y: -194.04428, z: -3.252222}
-  m_LocalScale: {x: 0.5476291, y: 0.54773057, z: 0.4567455}
+  m_LocalPosition: {x: -792.7094, y: 169.03293, z: -100.86304}
+  m_LocalScale: {x: 1.9308275, y: 1.9311852, z: 2.0001528}
   m_Children: []
-  m_Father: {fileID: 224796334196442018}
+  m_Father: {fileID: 4097163909127012}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1182.8232, y: -194.04427}
+  m_AnchoredPosition: {x: -792.7094, y: 169.03293}
   m_SizeDelta: {x: 101.8, y: 84.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224660529144823826
@@ -33964,7 +33811,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1538347365085086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193, y: 0, z: 0}
+  m_LocalPosition: {x: 244.1, y: 83.5, z: 0}
   m_LocalScale: {x: 0.99988866, y: 0.20046492, z: 0.99988866}
   m_Children: []
   m_Father: {fileID: 224125207308030344}
@@ -33972,8 +33819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 193, y: 0}
-  m_SizeDelta: {x: 521.1, y: 1181.5}
+  m_AnchoredPosition: {x: 244.1, y: 83.5}
+  m_SizeDelta: {x: 1316.4, y: 3858.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224676314590955794
 RectTransform:
@@ -34157,7 +34004,6 @@ RectTransform:
   m_LocalScale: {x: 0.00013058497, y: 0.00013058497, z: 0.0001621904}
   m_Children:
   - {fileID: 224537908606296202}
-  - {fileID: 224643916288698400}
   m_Father: {fileID: 4447680068234786}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -34200,7 +34046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.17797852, y: 0.0254}
+  m_AnchoredPosition: {x: -0.17797852, y: 0.025399998}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224825318365333276
@@ -34441,7 +34287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -792.99994, y: -837.99994}
+  m_AnchoredPosition: {x: -793, y: -838}
   m_SizeDelta: {x: 910, y: 490}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224983392192384336
