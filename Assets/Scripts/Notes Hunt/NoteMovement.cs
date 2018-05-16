@@ -6,20 +6,23 @@ public class NoteMovement : MonoBehaviour {
 
 
     private float randomMS;
-    [SerializeField] private float edge;
+    [SerializeField] private float leftEdge;
+    [SerializeField] private float rightEdge;
     [SerializeField] private float lowerBound;
     [SerializeField] private float upperBound;
     [SerializeField] private float speedx;
-    private Vector3 bounce;
+    float spriteWidth;
     private bool bouncy = true;
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
 	// Use this for initialization
 	void Start ()
     {
-        bounce = this.transform.localPosition;
+        spriteWidth = GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
         randomMS = Random.Range(lowerBound, upperBound);
-
+        int i = Random.Range(0, 2);
+        if (i == 0)
+            bouncy = false;
 
     }
 
@@ -31,8 +34,7 @@ public class NoteMovement : MonoBehaviour {
         if (bouncy == true )
         {
             transform.Translate(Vector3.left * speedx);
-
-            if(this.transform.localPosition.x < bounce.x - randomMS || this.transform.localPosition.x < -edge)
+            if(0 < -randomMS || transform.position.x < leftEdge + spriteWidth)
             {
                 bouncy = false;
             }
@@ -41,7 +43,7 @@ public class NoteMovement : MonoBehaviour {
         {
             transform.Translate(Vector3.right * speedx);
 
-            if (this.transform.localPosition.x > bounce.x + randomMS || this.transform.localPosition.x > edge)
+            if (0 > randomMS || transform.position.x > rightEdge - spriteWidth)
             {
                 bouncy = true;
             }
