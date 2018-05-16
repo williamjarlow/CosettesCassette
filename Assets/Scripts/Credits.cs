@@ -44,7 +44,7 @@ public class Credits : MonoBehaviour {
         {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         }
-        KS = winning.GetComponent<KillScreen>();
+        //KS = winning.GetComponent<KillScreen>();
         //audiolog = GameManager.Instance.GetComponent<AudioManager>().switchedToAudioLog;
         audioManager = AudioManagerz.GetComponent<AudioManager>();
         //origPos = 2200f;
