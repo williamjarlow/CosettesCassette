@@ -26,9 +26,6 @@ public class DrumMechanic : MonoBehaviour {
     [SerializeField] private int timeStamp;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
 
-    // ** TEMPORARY while FMOD is not fixed ** //
-    private AudioSource audioSource;
-
     private OverallCorruption overallCorruption;
     private ButtonDisabler buttonDisabler;
 
@@ -44,10 +41,6 @@ public class DrumMechanic : MonoBehaviour {
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         Debug.Log(" *** Create sound result *** --> " + result);
-
-        // ** TEMP ** //
-       // audioSource = GetComponent<AudioSource>();
-       // AudioSettings.SetDSPBufferSize(256, 2);
 
 		result = audioManager.systemObj.getSoundInfo(audioManager.bassDrumKey, out kickInfo);
 		Debug.Log("info " + result);
@@ -125,11 +118,6 @@ public class DrumMechanic : MonoBehaviour {
         yield return new WaitForSeconds(0.05f);
         isPlaying = false;
     }
-
-
- 
-
-    
 
     //    **** TEMPORARY SAVINGS **** //
     /*     

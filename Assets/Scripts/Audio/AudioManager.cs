@@ -297,6 +297,16 @@ public class AudioManager : MonoBehaviour {
 		pauseMenuSelectEv.release();
 	}
 
+	public void PlayPauseMenuBack()
+	{
+		FMOD.Studio.EventDescription pauseMenuBackEventDesc;
+		FMOD.Studio.EventInstance pauseMenuBackEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/back", out pauseMenuBackEventDesc);
+		pauseMenuBackEventDesc.createInstance(out pauseMenuBackEv);
+		pauseMenuBackEv.start();
+		pauseMenuBackEv.release();
+	}
+
 	public void PlayPauseMenuOn()
 	{
 		FMOD.Studio.EventDescription pauseMenuOnEventDesc;
@@ -315,6 +325,16 @@ public class AudioManager : MonoBehaviour {
 		pauseMenuOffEventDesc.createInstance(out pauseMenuOffEv);
 		pauseMenuOffEv.start();
 		pauseMenuOffEv.release();
+	}
+
+	public void PlayScriptFlip()
+	{
+		FMOD.Studio.EventDescription scriptFlipEventDesc;
+		FMOD.Studio.EventInstance scriptFlipEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/scriptFlip", out scriptFlipEventDesc);
+		scriptFlipEventDesc.createInstance(out scriptFlipEv);
+		scriptFlipEv.start();
+		scriptFlipEv.release();
 	}
 
 	public void PlayShootSound(float result)

@@ -29,6 +29,12 @@ public class StoryTelling : MonoBehaviour {
     private int episodeIndex = 0;
     private int pageIndex = 0;
 
+	private AudioManager audioManager;
+
+	void Start()
+	{
+		audioManager = GameManager.Instance.audioManager;
+	}
 
     public void InitializeStory(int index)
     {
@@ -47,7 +53,7 @@ public class StoryTelling : MonoBehaviour {
     {
         if (pageIndex <= episodes[episodeIndex].pages.Count - 3)
         {
-            // Hej Jack! Ljudeffekt här
+			audioManager.PlayScriptFlip ();
             pageIndex += 2;
                 leftPage.text = episodes[episodeIndex].pages[pageIndex].pageText;
             if (pageIndex <= episodes[episodeIndex].pages.Count - 2)
@@ -61,7 +67,7 @@ public class StoryTelling : MonoBehaviour {
     {
         if (pageIndex >= 1)
         {
-            // Hej Jack! Ljudeffekt här
+			audioManager.PlayScriptFlip ();
             pageIndex -= 2;
             leftPage.text = episodes[episodeIndex].pages[pageIndex].pageText;
             rightPage.text = episodes[episodeIndex].pages[pageIndex + 1].pageText;

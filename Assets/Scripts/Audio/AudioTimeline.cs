@@ -90,17 +90,25 @@ public class AudioTimeline : MonoBehaviour
                 DecideSpeedAndDirection("moveNormal");
                 return;
             }
-            if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
-                DecideSpeedAndDirection("fastForward");
+			if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn) {
+				DecideSpeedAndDirection ("fastForward");
+				audioManager.SetSkipPitch (100f);
+			}
 
-            else if (sliderValueAtPush < valuePushedOn)
-                DecideSpeedAndDirection("slowForward");
+			else if (sliderValueAtPush < valuePushedOn) {
+				DecideSpeedAndDirection ("slowForward");
+				audioManager.SetSkipPitch (0f);
+			}
 
-            if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
-                DecideSpeedAndDirection("fastBackwards");
+			if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs)) {
+				DecideSpeedAndDirection ("fastBackwards");
+				audioManager.SetSkipPitch (100f);
+			}
 
-            else if (sliderValueAtPush > valuePushedOn)
-                DecideSpeedAndDirection("slowBackwards");
+			else if (sliderValueAtPush > valuePushedOn) {
+				DecideSpeedAndDirection ("slowBackwards");
+				audioManager.SetSkipPitch (0f);
+			}
 
 
             timelineSlider.value = sliderValueAtPush;
@@ -186,7 +194,6 @@ public class AudioTimeline : MonoBehaviour
     {
         valuePushedOn = timelineSlider.value;
     }
-
 
     // Update slider according to music when not touching the slider    
     void ChangeOnPlaying()
