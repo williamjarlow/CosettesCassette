@@ -56,7 +56,6 @@ public class DrumCorruption : CorruptionBaseClass
     void Start()
     {
         audioManager = GameManager.Instance.audioManager;
-        drumMechanic = GameManager.Instance.drumMechanic.GetComponent<DrumMechanic>();
         overallCorruption = GameManager.Instance.overallCorruption;
 
         for (int i = 0; i < beats.Count; i++)

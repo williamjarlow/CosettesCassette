@@ -173,15 +173,11 @@ public class NotesHuntCorruption : CorruptionBaseClass
                     //Debug for spawning notes at edges
                     if (spawnNotesAtEdge)
                         if(Random.Range(0, 2) == 0)
-                        {
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, 0), Quaternion.identity);
-                        }
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, 0), Quaternion.identity, transform);
                         else
-                        {
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, 0), Quaternion.identity);
-                        }
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, 0), Quaternion.identity, transform);
                     else
-                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
+                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.position.y, transform.position.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
                     // Set the game object's speed according to the specified speed in this script

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class KillScreen : MonoBehaviour {
+public class WinScreen : MonoBehaviour {
 
     // Use this for initialization
     void Start ()
@@ -18,7 +18,7 @@ public class KillScreen : MonoBehaviour {
 
     }
 
-    public void Winning ()
+    public void EnableWinScreen ()
     {
         foreach(Transform child in transform)
         {
@@ -27,7 +27,7 @@ public class KillScreen : MonoBehaviour {
         GetComponent<Text>().enabled = true;
     }
 
-    public void ShutdownWinning()
+    public void DisableWinScreen()
     {
         foreach (Transform child in transform)
         {

@@ -10,8 +10,6 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public AudioDistortion audioDistortion;
     [HideInInspector] public OverallCorruption overallCorruption;
     [HideInInspector] public AudioPitch audioPitch;
-    public GameObject drumMechanic;
-    public GameObject pitchMechanic;
     public AudioManager audioManager;
     public GameObject corruptionHandler;
     public GameObject timelineSlider;
@@ -19,11 +17,13 @@ public class GameManager : Singleton<GameManager>
     public GameObject uiParent;
     public GameObject pitchSlider;
     public ButtonController recordButton;
+    public WinScreen winScreen;
     public StageClearVFX stageClearVFX;
 
     const int timelineOffset = 100;
 
     [HideInInspector] public bool LevelCleared;
+    [HideInInspector] public bool LevelPerfected;
     [HideInInspector] public bool recording;
 
     private ButtonDisabler buttonDisabler;
@@ -40,8 +40,6 @@ public class GameManager : Singleton<GameManager>
     private const int tolerance = 150;
 
     public instruments selectedInstrument = instruments.drums;
-
-
 
     void Awake()
     {
@@ -74,7 +72,6 @@ public class GameManager : Singleton<GameManager>
     {
         // Find and jump to the closest segment
         SnapToClosestSegment();
-
         // Start recording and disable buttons
         recording = true;
         buttonDisabler.DisableButtons();
@@ -228,8 +225,6 @@ public class GameManager : Singleton<GameManager>
 
     void DisableMechanics()
     {
-        drumMechanic.SetActive(false);
-        pitchMechanic.SetActive(false);
         corruptionHandler.SetActive(false);
     }
 
