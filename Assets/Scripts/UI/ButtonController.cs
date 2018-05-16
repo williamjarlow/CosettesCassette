@@ -110,7 +110,13 @@ public class ButtonController : MonoBehaviour {
             startingPos = false;
             buttonclicked = false;
             buttonstate = buttonstates.Moving;
-        
-        
+    }
+
+
+    public void NakedToggleUp()
+    {
+        startingPos = false;
+        buttonclicked = false;
+        buttonstate = buttonstates.Moving;
     }
 }

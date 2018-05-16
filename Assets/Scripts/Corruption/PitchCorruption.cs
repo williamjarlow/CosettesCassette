@@ -17,6 +17,11 @@ public class PitchCorruption : CorruptionBaseClass {
     [Header("Pitch nodes")]
     public List<PitchNode> nodes = new List<PitchNode>();
 
+    [SerializeField]
+    bool curvify;
+    [SerializeField]
+    float temporaryTestValue;
+
     [SerializeField] [Tooltip("What instrument the pitch shifting should affect.")]
     PitchType pitchType;
 
@@ -38,6 +43,9 @@ public class PitchCorruption : CorruptionBaseClass {
 
     [SerializeField] [Range(0, 5)]
     float leadUp;
+    [SerializeField]
+    [Range(0.1f, 1)]
+    float ruggedness;
 
     bool inCorruption = false;
 
@@ -57,6 +65,8 @@ public class PitchCorruption : CorruptionBaseClass {
     int index = 0;
     bool animationDone = true;
 
+    List<Vector3> linePositions = new List<Vector3>();
+
     private OverallCorruption overallCorruption;
 
     // Use this for initialization
@@ -69,11 +79,6 @@ public class PitchCorruption : CorruptionBaseClass {
         overallCorruption = GameManager.Instance.overallCorruption;
         // Set the pitch segments to the recording type PITCH 
         overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
-
-        PitchNode p = new PitchNode(); //Give the player some warning before corruption starts. 
-        p.position = 0;
-        p.seconds = leadUp;
-        nodes.Insert(0, p);
 
         if (randomizeNodes) //This code randomizes the nodes rather than use the nodes specified in the inspector.
                             //Useful for testing.
@@ -128,8 +133,6 @@ public class PitchCorruption : CorruptionBaseClass {
     {
         lineRenderer.positionCount = nodes.Count + 1;
 
-        
-
         Vector3 newPosition;
         for (int i = 0; i <= nodes.Count; i++)
         {
@@ -149,6 +152,51 @@ public class PitchCorruption : CorruptionBaseClass {
             newPosition = new Vector3(positions[i].x - leadUp * lineSpeed, positions[i].y, positions[i].z);
             lineRenderer.SetPosition(i, newPosition); // Create the points in the line
         }
+        lineRenderer.GetPositions(positions);
+
+        //Curved Lines
+        if (curvify)
+        {
+            linePositions.Clear();
+            linePositions.AddRange(positions);
+
+            List<Vector3> newList = new List<Vector3>();
+            for (int i = 0; i < linePositions.Count - 2; i++)
+            {
+                //Math.
+                float m1 = (Mathf.Abs(linePositions[i + 1].x) - Mathf.Abs(linePositions[i].x)) / 2;
+                float m2 = (Mathf.Abs(linePositions[i + 2].x) - Mathf.Abs(linePositions[i + 1].x)) / 2;
+                float xDist = m1 + m2; //Beräkna avstånd mellan x värden
+
+                List<Vector3> temp = new List<Vector3>();
+                float a = -nodes[i].position / (xDist * xDist);
+
+                for (float j = xDist / 2; j > -xDist / 2; j -= ruggedness)
+                {
+                    temp.Add(new Vector3(j + temporaryTestValue, (a * (j + xDist / 2) * (j - xDist / 2)) * 4));
+                }
+
+                foreach (Vector3 position in temp)
+                {
+                    newList.Add(new Vector3(linePositions[i].x + position.x, position.y));
+                }
+            }
+            lineRenderer.positionCount = newList.Count;
+            lineRenderer.SetPositions(newList.ToArray());
+
+            positions = new Vector3[lineRenderer.positionCount];
+            lineRenderer.GetPositions(positions);
+
+            nodes.Clear();
+            foreach (Vector3 position in positions)
+            {
+                PitchNode node = new PitchNode();
+                node.position = position.y;
+                node.seconds = totalTime / positions.Length;
+                nodes.Add(node);
+            }
+        }
+
     }
     void MoveLine()
     {
@@ -240,7 +288,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     void MovePitchObject()
     {
-        lastCoroutine = StartCoroutine(MoveOverSeconds(pitchIndicatorInstance, new Vector3 (0, nodes[index].position), nodes[index].seconds));
+        lastCoroutine = StartCoroutine(MoveOverSeconds(pitchIndicatorInstance, new Vector3(0, nodes[index].position), nodes[index].seconds));
     }
 
     public override void GradeScore()
