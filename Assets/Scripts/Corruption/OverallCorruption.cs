@@ -129,34 +129,19 @@ public class OverallCorruption : MonoBehaviour {
 			else
 				corruptions[i].cleared = false;
 		}
-		for (int i = 0; i < segments.Count; i++)
-		{
-			bool corruptionCleared = true;
-			foreach (CorruptionBaseClass corruption in corruptions)
-			{
-				if (i == corruption.segmentID)
-				{
-					if (corruption.cleared != true)
-						corruptionCleared = false;
 
-				}
-			}
-			if (corruptionCleared)
-			{
-
-			}
-		}
-		bool levelCleared = true;
-		foreach(CorruptionBaseClass corruption in corruptions)
-		{
-			if (corruption.cleared == false)
-				levelCleared = false;
-		}
-		if(levelCleared == true)
+        if(GameManager.Instance.LevelPerfected == false && overallCorruption == 0)
+        {
+            GameManager.Instance.LevelPerfected = true;
+            GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.perfect);
+            GameManager.Instance.audioManager.PlayWinSound(1);
+        }
+		else if(GameManager.Instance.LevelCleared == false && overallCorruption <= corruptionClearThreshold) //If player hasn't won already
 		{
 			GameManager.Instance.LevelCleared = true;
             GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.good);
-			GameManager.Instance.audioManager.PlayWinSound(0f);
+            GameManager.Instance.winScreen.EnableWinScreen();
+			GameManager.Instance.audioManager.PlayWinSound(0);
 		}
 	} 
 
