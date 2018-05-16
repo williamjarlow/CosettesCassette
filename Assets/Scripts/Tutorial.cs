@@ -7,7 +7,9 @@ public class Tutorial : MonoBehaviour {
 
     [SerializeField] private GameObject tutorialPrefab;
     [SerializeField] private Sprite[] tutorialSprite;
+    [SerializeField] private float[] timeToAppear;
     [SerializeField] private Button tutButton;
+    [SerializeField] private AudioManager audioManager;
 
     void Start()
     {
@@ -20,10 +22,12 @@ public class Tutorial : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("p"))
+        for(int i = 0; i < tutorialSprite.Length - 1; i++)
         {
-            print("ass");
-            TutorialEvent(0);
+            if(timeToAppear[i] == audioManager.GetTimeLinePosition())
+            {
+                TutorialEvent(i);
+            }
         }
     }
 
