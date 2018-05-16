@@ -156,7 +156,6 @@ public class OverallCorruption : MonoBehaviour {
 		{
 			GameManager.Instance.LevelCleared = true;
             GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.good);
-			Debug.Log("Winning!");
 			GameManager.Instance.audioManager.PlayWinSound(0f);
 		}
 	} 
