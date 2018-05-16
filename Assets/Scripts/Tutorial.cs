@@ -22,9 +22,9 @@ public class Tutorial : MonoBehaviour {
 
     void Update()
     {
-        for(int i = 0; i < tutorialSprite.Length - 1; i++)
+        for(int i = 0; i < tutorialSprite.Length; i++)
         {
-            if(timeToAppear[i] == audioManager.GetTimeLinePosition())
+            if (timeToAppear[i] >= audioManager.GetTimeLinePosition() - 30 && timeToAppear[i] <= audioManager.GetTimeLinePosition() + 30 )
             {
                 TutorialEvent(i);
             }
@@ -36,6 +36,7 @@ public class Tutorial : MonoBehaviour {
     {
         Time.timeScale = 1.0F;
         tutorialPrefab.SetActive(false);
+        audioManager.AudioUnpauseMusic();
     }
 
     //Call this funciton when you want to show tutorial with which sprite you want to use
@@ -49,6 +50,7 @@ public class Tutorial : MonoBehaviour {
         tutorialImage.color = tutAlpha;
 
         Time.timeScale = 0.0F;
+        audioManager.AudioPauseMusic();
         tutorialPrefab.SetActive(true);
     }
 }

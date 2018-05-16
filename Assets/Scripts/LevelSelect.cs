@@ -48,13 +48,13 @@ public class LevelSelect : MonoBehaviour
     {
         cassetteAmount = cassettes.Count;
         currentFocus = cassetteAmount - 1;
-        //currentFocus = 0;
         startPos = new Vector3[cassettes.Count];
         for(int i = 0; i < cassetteAmount; i++)
         {
             startPos[i] = cassettes[i].transform.localPosition;
         }
 
+        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
     }
 
 
@@ -68,9 +68,7 @@ public class LevelSelect : MonoBehaviour
         ////
         if (workWithMouseInput && !pauseScreen)
         MouseControls();
-        ////
-
-            
+        //// 
     }
 
     private void MouseControls()
@@ -79,13 +77,6 @@ public class LevelSelect : MonoBehaviour
         {
             if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
             {
-                Debug.Log(currentFocus);
-
-                // Set the previous cassette to not focused
-                cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
-                currentFocus++;
-                // Set the currently focused cassette to focused
-                cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
 
                 movementLock = true;
                 Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
@@ -93,7 +84,7 @@ public class LevelSelect : MonoBehaviour
                 Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
                 StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z + middleOffset), startPos[currentFocus], rotationDuration, currentFocus, standingRotation, flatRotation));
 
-                for(int i = cassetteAmount - 1; i > 0; i--)
+                for(int i = cassetteAmount - 1; i >= 0; i--)
                 {
                     if(i < currentFocus)
                     {
@@ -109,34 +100,36 @@ public class LevelSelect : MonoBehaviour
                     }
                 }
 
-                Debug.Log(currentFocus);
+                // Set the previous cassette to not focused
+                cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
+                currentFocus++;
+                // Set the currently focused cassette to focused
+                cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
             }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
         {
             if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
             {
-                Debug.Log(currentFocus);
-
                 movementLock = true;
                 Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                 Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
                 Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
-                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, flatRotation, standingRotation));
+                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, reversedStandingRotation, flatRotation));
 
-                for (int i = cassetteAmount - 1; i > 0; i--)
+                for (int i = cassetteAmount - 1; i >= 0; i--)
                 {
-                    if (i < currentFocus)
+                    if (i < currentFocus - 1)
                     {
                         StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
                     }
-                    else if (i > currentFocus+1)
+                    else if (i > currentFocus)
                     {
                         StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
                     }
-                    else if(i == currentFocus+1)
+                    else if(i == currentFocus - 1)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, reversedStandingRotation, flatRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, flatRotation, standingRotation));
                     }
                 }
 
@@ -145,8 +138,7 @@ public class LevelSelect : MonoBehaviour
                 currentFocus--;
                 // Set the currently focused cassette to focused
                 cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
-
-                Debug.Log(currentFocus);
+                
             }
         }
 
@@ -194,37 +186,36 @@ public class LevelSelect : MonoBehaviour
                 // If you scrolled to the left
                 if ((touchPosition.x - origPosition.x) >= minimumMovementForChange)
                 {
-                    if (currentFocus >= -1 && currentFocus <= cassetteAmount - 1 && movementLock == false)
+                    if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
                     {
-                        
-                        // Set the previous cassette to not focused
-                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
-                        currentFocus++;
-                        // Set the currently focused cassette to focused
-                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
 
                         movementLock = true;
                         Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                         Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
                         Quaternion reversedStandingRotation = Quaternion.Euler(180 + cassetteAngle, 0, 0);
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z + middleOffset), startPos[currentFocus], rotationDuration, currentFocus, flatRotation, reversedStandingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z + middleOffset), startPos[currentFocus], rotationDuration, currentFocus, standingRotation, flatRotation));
 
-                        for (int i = cassetteAmount - 1; i > 0; i--)
+                        for (int i = cassetteAmount - 1; i >= 0; i--)
                         {
-                            if (i < currentFocus - 1)
-                            
+                            if (i < currentFocus)
                             {
                                 StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
                             }
-                            else if (i > currentFocus)
+                            else if (i > currentFocus + 1)
                             {
                                 StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
                             }
-                            else if (i == currentFocus - 1)
+                            else if (i == currentFocus + 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + middleOffset), startPos[i], rotationDuration, i, standingRotation, flatRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + middleOffset), startPos[i], rotationDuration, i, flatRotation, reversedStandingRotation));
                             }
                         }
+
+                        // Set the previous cassette to not focused
+                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
+                        currentFocus++;
+                        // Set the currently focused cassette to focused
+                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
                     }
                 }
 
@@ -233,34 +224,34 @@ public class LevelSelect : MonoBehaviour
                 {
                     if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
                     {
-
-                        // Set the previous cassette to not focused
-                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
-                        currentFocus++;
-                        // Set the currently focused cassette to focused
-                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
-
                         movementLock = true;
                         Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                         Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
                         Quaternion reversedStandingRotation = Quaternion.Euler(180 + cassetteAngle, 0, 0);
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, flatRotation, standingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, reversedStandingRotation, flatRotation));
 
-                        for (int i = cassetteAmount - 1; i > 0; i--)
+                        for (int i = cassetteAmount - 1; i >= 0; i--)
                         {
-                            if (i < currentFocus)
+                            if (i < currentFocus - 1)
                             {
                                 StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
                             }
-                            else if (i > currentFocus + 1)
+                            else if (i > currentFocus)
                             {
                                 StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
                             }
-                            else if (i == currentFocus + 1)
+                            else if (i == currentFocus - 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, reversedStandingRotation, flatRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, flatRotation, standingRotation));
                             }
                         }
+
+                        // Set the previous cassette to not focused
+                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = false;
+                        currentFocus--;
+                        // Set the currently focused cassette to focused
+                        cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
+
                     }
                 }
 
