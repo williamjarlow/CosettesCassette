@@ -10,10 +10,12 @@ public class OddOneOutCorruption : CorruptionBaseClass
 {
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
+    private GameObject lyricsGuessObject;
     private GameObject lyricsObject;    // Object to be instantiated
+    [SerializeField] private GameObject lyricsGuessPrefab;
     [SerializeField] private GameObject lyricsPrefab;
     private List<GameObject> lyricPages = new List<GameObject>();
-    //[SerializeField] private List<string> lyrics = new List<string>();
+    [SerializeField] private string lyricsGuess;
     [SerializeField] private string[] lyrics = new string[3];
     [SerializeField] private int correctLyricSegment;
     private bool hasSpawned;
@@ -60,10 +62,13 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
         Debug.Log("Spawned lyrics");
 
-        // Instantiate prefab
+        // Instantiate prefabs
         lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform);
+        lyricsGuessObject = Instantiate(lyricsGuessPrefab, GameManager.Instance.uiParent.transform);
 
         // ** Initialize ** //
+        lyricsGuessObject.transform.GetChild(0).GetComponent<Text>().text = lyricsGuess;
+
         for (int i = 0; i < lyrics.Length; i++)
         {
             // Find the lyric pages
@@ -109,6 +114,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
     private void DestroyLyrics()
     {
+        Destroy(lyricsGuessObject);
         Destroy(lyricsObject);
         lyricPages.Clear();
     }
