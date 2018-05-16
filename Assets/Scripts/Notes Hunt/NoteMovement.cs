@@ -5,47 +5,54 @@ using UnityEngine;
 public class NoteMovement : MonoBehaviour {
 
 
-    private float randomMS;
+    private float RNGBounceTimer;
     [SerializeField] private float leftEdge;
     [SerializeField] private float rightEdge;
-    [SerializeField] private float lowerBound;
-    [SerializeField] private float upperBound;
+
+    [Header ("RNG bounce time range in seconds")]
+    [SerializeField] private float RNGBounceLowerBound;
+    [SerializeField] private float RNGBounceUpperBound;
     [SerializeField] private float speedx;
     float spriteWidth;
-    private bool bouncy = true;
+    private bool headingLeft = true;
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
 	// Use this for initialization
 	void Start ()
     {
         spriteWidth = GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
-        randomMS = Random.Range(lowerBound, upperBound);
-        int i = Random.Range(0, 2);
-        if (i == 0)
-            bouncy = false;
-
+        RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+        if (Random.Range(0, 2) == 0)
+            headingLeft = false;
     }
 
     // Update is called once per frame
     void Update ()
     {
         transform.Translate(Vector3.up * speed);
+        RNGBounceTimer -= Time.deltaTime;
 
-        if (bouncy == true )
+        if(RNGBounceTimer <= 0)
+        {
+            headingLeft = !headingLeft;
+            RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+        }
+        if (headingLeft == true )
         {
             transform.Translate(Vector3.left * speedx);
-            if(0 < -randomMS || transform.position.x < leftEdge + spriteWidth)
+            if (transform.position.x <= leftEdge + spriteWidth)
             {
-                bouncy = false;
+                headingLeft = false;
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
             }
         }
-        else if (bouncy == false)
+        else
         {
             transform.Translate(Vector3.right * speedx);
-
-            if (0 > randomMS || transform.position.x > rightEdge - spriteWidth)
+            if (transform.position.x >= rightEdge - spriteWidth)
             {
-                bouncy = true;
+                headingLeft = true;
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
             }
         }
 
