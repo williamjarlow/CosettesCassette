@@ -27,6 +27,8 @@ public class NotesHuntCorruption : CorruptionBaseClass
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
 
+    [SerializeField] bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
+
     [SerializeField] private GameObject correctNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
     [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
@@ -39,7 +41,7 @@ public class NotesHuntCorruption : CorruptionBaseClass
     [SerializeField] private int amountOfNoteValues = 2;    // The amount of note values, for now double and single which equals to 2
     private float maxScore;
     private float spawnCooldown = 0.05f;
-    [SerializeField] private float speed;
+    [SerializeField] [Range(0, 0.1f)] private float speed;
     [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
     [Tooltip("Maximum x spawn coordinate")] [SerializeField] private float xSpawnRandomMax;
     [SerializeField] private float timeStamp;
@@ -167,7 +169,19 @@ public class NotesHuntCorruption : CorruptionBaseClass
 
                     // Spawn the correct randomized note
                     notesList[i].hasSpawned = true;
-                    spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
+
+                    //Debug for spawning notes at edges
+                    if (spawnNotesAtEdge)
+                        if(Random.Range(0, 2) == 0)
+                        {
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, 0), Quaternion.identity);
+                        }
+                        else
+                        {
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, 0), Quaternion.identity);
+                        }
+                    else
+                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
                     // Set the game object's speed according to the specified speed in this script
