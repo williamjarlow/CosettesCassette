@@ -15,7 +15,7 @@ public class Credits : MonoBehaviour {
     [SerializeField] private GameObject winning;
     [SerializeField] private Image AudiologPic;
     private AudioManager audioManager;
-    private KillScreen KS;
+    //private KillScreen KS;
     private float audiolength;
     private float audiologlength;
     private float audioPos;

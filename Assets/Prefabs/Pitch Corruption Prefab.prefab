@@ -55,7 +55,10 @@ MonoBehaviour:
   maxDistortion: 50
   currentDistortion: 0
   clearThreshold: 50
+  perfectThreshold: 0
   segmentID: 1
+  bestScore: 0
+  currentScore: 0
   notes: "Add the pitch corruption prefab as a child of corruption handler whenever
     you wish to create a new pitch corruption\n segment."
   duration:
@@ -66,42 +69,47 @@ MonoBehaviour:
   inSegment: 0
   cleared: 0
   nodes:
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 1
     mercyRange: 5
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 1
     mercyRange: 5
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 1
     mercyRange: 1
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 1
     mercyRange: 10
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 1
     mercyRange: 5
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 0
     mercyRange: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 0
     mercyRange: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 0
     mercyRange: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 0
     mercyRange: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: NaN
     seconds: 0
     mercyRange: 0
+  curvify: 0
+  temporaryTestValue: 0
+  pitchType: 0
   lineSpeed: 5
   pitchSlider: {fileID: 0}
   mercyRange: 8
   rGoalRange: {x: -2, y: 2}
   rTravelTimeRange: {x: 1, y: 1}
   randomizeNodes: 1
+  leadUp: 0
+  ruggedness: 0
   pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
     type: 2}
 --- !u!120 &120800707696462286
@@ -118,7 +126,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5dff11e8f9aaaee4a960a0f8a2f5341f, type: 2}
+  - {fileID: 2100000, guid: ec124f2273965794db91ecee47425b1c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
