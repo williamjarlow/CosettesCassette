@@ -7,6 +7,7 @@ public class ButtonController : MonoBehaviour {
     [SerializeField] GameObject UITarget;
     
     [SerializeField] private bool isDual;
+    /*[HideInInspector] */public bool isEnabled;
     [Header("Settings for DualButtons")]
     [SerializeField] public Material unselectedMaterial;
     [SerializeField] public Material selectedMaterial;
@@ -26,6 +27,8 @@ public class ButtonController : MonoBehaviour {
         buttonstate = buttonstates.Up;
         Startingposition = transform.position;
         endposition = new Vector3(Startingposition.x, Startingposition.y, Startingposition.z + buttonPressdepth);
+
+        isEnabled = true;
 	}
 	
 	// Update is called once per frame
@@ -60,12 +63,10 @@ public class ButtonController : MonoBehaviour {
                 break;
         }
 	}
-    private void OnMouseOver()
+     private void OnMouseOver()
     {
-        if (buttonstate != buttonstates.Moving)
+        if (buttonstate != buttonstates.Moving && isEnabled)
         {
-
-
             if (!isDual)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -94,7 +95,6 @@ public class ButtonController : MonoBehaviour {
                         buttonclicked = true;
                         startingPos = true;
                         buttonstate = buttonstates.Moving;
-
                     }
                 }
 
@@ -102,6 +102,7 @@ public class ButtonController : MonoBehaviour {
         }
 
     }
+
     public void ToggleButtonUp()
     {
             UITargetDual.GetComponent<Button>().onClick.Invoke();
@@ -109,13 +110,11 @@ public class ButtonController : MonoBehaviour {
             startingPos = false;
             buttonclicked = false;
             buttonstate = buttonstates.Moving;
-
     }
 
 
     public void NakedToggleUp()
     {
-
         startingPos = false;
         buttonclicked = false;
         buttonstate = buttonstates.Moving;
