@@ -34,7 +34,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                         return _instance;
                     }
 
-                    if (_instance == null)
+                    /*if (_instance == null)
                     {
                         GameObject singleton = new GameObject();
                         _instance = singleton.AddComponent<T>();
@@ -50,7 +50,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     {
                         Debug.Log("[Singleton] Using instance already created: " +
                             _instance.gameObject.name);
-                    }
+                    }*/
                 }
 
                 return _instance;
