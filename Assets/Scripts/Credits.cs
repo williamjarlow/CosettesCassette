@@ -14,17 +14,17 @@ public class Credits : MonoBehaviour {
     [SerializeField] private GameObject credits;
     [SerializeField] private GameObject winning;
     [SerializeField] private Image AudiologPic;
+    [SerializeField] private string creditsOrAudiolog;
+    [SerializeField] private float waitforit;
+    [SerializeField] private float safeguard;
+    [SerializeField] private float delay;
     private AudioManager audioManager;
-    //private KillScreen KS;
     private float audiolength;
     private float audiologlength;
     private float audioPos;
     private float audioP;
     public bool music = true;
     public bool audiolog = false;
-    [SerializeField] private string creditsOrAudiolog;
-    [SerializeField] private float waitforit;
-    [SerializeField] private float delay;
     public bool showpicture = false;
 
 
@@ -44,11 +44,7 @@ public class Credits : MonoBehaviour {
         {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         }
-        //KS = winning.GetComponent<KillScreen>();
-        //audiolog = GameManager.Instance.GetComponent<AudioManager>().switchedToAudioLog;
         audioManager = AudioManagerz.GetComponent<AudioManager>();
-        //origPos = 2200f;
-        //endOfTheLine = 4400f;
         audiolength = audioManager.GetTrackLength();
 
     }
@@ -64,12 +60,16 @@ public class Credits : MonoBehaviour {
             Vector3 temp2 = transform.localPosition;
             temp2.y = currentPos - origPos;
             transform.localPosition = temp2;
-            if (currentPos > waitforit && showpicture == false)
+            if (currentPos < safeguard)
             {
-                Fade();
-                showpicture = true;
-                //insert save here
+                if (currentPos > waitforit && showpicture == false)
+                {
+                    Fade();
+                    showpicture = true;
+                    //insert save here
+                }
             }
+
 
 
         }
