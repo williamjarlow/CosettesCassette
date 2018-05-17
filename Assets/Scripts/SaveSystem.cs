@@ -20,21 +20,21 @@ public class SaveSystem : Singleton<SaveSystem>
             DontDestroyOnLoad(gameObject);
             saveSystem = this;
 
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            data = (PlayerData)bf.Deserialize(file);
-            file.Close();
+            //BinaryFormatter bf = new BinaryFormatter();
+            //FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            //data = (PlayerData)bf.Deserialize(file);
+            //file.Close();
 
-            SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-            emptyStruct.exists = true;
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    SaveSegment(emptyStruct, i, 0);
-            //    for (int j = 0; j < 20; j++)
-            //    {
-            //        SaveSegment(emptyStruct, i, j);
-            //    }
-            //}
+            //SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+            //emptyStruct.exists = true;
+            ////for (int i = 0; i < 20; i++)
+            ////{
+            ////    SaveSegment(emptyStruct, i, 0);
+            ////    for (int j = 0; j < 20; j++)
+            ////    {
+            ////        SaveSegment(emptyStruct, i, j);
+            ////    }
+            ////}
         }
         else if (saveSystem != this)
         {
@@ -89,7 +89,6 @@ public class SaveSystem : Singleton<SaveSystem>
         //Add segment save to the save file and serialize it.
     Continue:
         data.segmentSave[levelIndex][segmentIndex] = save;
-        print("saving" + levelIndex + " , " + segmentIndex);
         bf.Serialize(file, data);
         file.Close();
     }
@@ -148,7 +147,39 @@ public class SaveSystem : Singleton<SaveSystem>
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
-            Debug.Log(loadLevelID + ", " + loadSegmentID);
+
+        CreateSaveStateLoad:
+            if (data.segmentSave.Count < loadLevelID + 1)
+            {
+                SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+                data.segmentSave.Add(new List<SaveSegmentStruct> { emptyStruct });
+                goto CreateSaveStateLoad;
+            }
+            else
+            {
+                if (data.segmentSave[loadLevelID].Count < loadSegmentID + 1)
+                {
+                    SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+                    data.segmentSave[loadLevelID].Add(emptyStruct);
+                    goto CreateSaveStateLoad;
+                }
+                else
+                {
+                    if (data.segmentSave[loadLevelID][loadSegmentID].exists == false)
+                    {
+                        SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+                        emptyStruct.exists = true;
+                        data.segmentSave[loadLevelID][loadSegmentID] = emptyStruct;
+                        goto CreateSaveStateLoad;
+                    }
+                    else
+                    {
+                        goto ContinueLoad;
+                    }
+                }
+            }
+        //Add segment save to the save file and serialize it.
+        ContinueLoad:
             load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
             file.Close();
             //Needs Completed Levels to implement
