@@ -6,7 +6,7 @@ public class CassetteDisableButtons : MonoBehaviour {
 
     GameManager gameManager;
 
-    private void Awake()
+    void Awake()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
     }

@@ -16,11 +16,11 @@ public class OverallCorruptionBar : MonoBehaviour {
 
     private void Awake()
     {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
     }
 
     void Start ()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         thisImage = GetComponent<Image>();
         overallCorruption = gameManager.overallCorruption;
 

@@ -8,13 +8,6 @@ public class CorruptionTemplate : CorruptionBaseClass
     AudioManager audioManager;
     OverallCorruption overallCorruption;
 
-    GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start()
     {
         overallCorruption = gameManager.overallCorruption;

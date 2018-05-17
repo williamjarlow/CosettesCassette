@@ -43,7 +43,6 @@ public class OverallCorruption : MonoBehaviour {
 	AudioDistortion audioDistortion;
 	[HideInInspector] public List<CorruptionBaseClass> corruptions = new List<CorruptionBaseClass>();
 
-
 	// ** Corrupted Area** //
 	[SerializeField]
 	[Tooltip("Corrupted area prefab")]
@@ -52,10 +51,7 @@ public class OverallCorruption : MonoBehaviour {
 
 	void Awake () {
 
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-
         bpmInMs = ConvertBpmToMs(bpm);
-
 		for (int i = 0; i < segments.Count; i++)
 		{
 			durations.Add(new Duration());
@@ -66,7 +62,8 @@ public class OverallCorruption : MonoBehaviour {
 
 	void Start()
 	{
-		audioDistortion = gameManager.audioDistortion;
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        audioDistortion = gameManager.audioDistortion;
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 

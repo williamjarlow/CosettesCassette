@@ -16,13 +16,9 @@ public class PitchMechanic : MonoBehaviour
 
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] [SerializeField] private int tolerance;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         overallCorruption = gameManager.overallCorruption;
         pitchSlider = gameManager.pitchSlider.GetComponent<Slider>();

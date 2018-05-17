@@ -15,13 +15,9 @@ public class DropdownHandler : MonoBehaviour {
 
     private AudioManager audioManager;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start ()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         Debug.Assert(dropdown != null, "Attach the dropdown to the dropdown handler");
 

@@ -8,13 +8,9 @@ public class AudioMusic : MonoBehaviour {
 
     private AudioManager audioManager;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     private void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
     }
 }

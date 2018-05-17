@@ -12,15 +12,10 @@ public class UIMechanicChanger : MonoBehaviour {
 
     GameManager gameManager;
 
-    private void Awake()
+    void Start ()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
     }
-
-    void Start ()
-    {
-
-	}
 
 
     public void ToggleShowMechanics()

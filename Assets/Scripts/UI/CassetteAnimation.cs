@@ -24,13 +24,9 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private int lidClosingDelay;
     [SerializeField] private int startClosingDelay;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start ()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         StartCoroutine(LidClosing());
         audioManager = gameManager.audioManager;
         audioTimeline = gameManager.audioManager.GetComponent<AudioTimeline>();

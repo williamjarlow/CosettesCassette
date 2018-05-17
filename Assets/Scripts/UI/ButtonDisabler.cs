@@ -17,13 +17,9 @@ public class ButtonDisabler : MonoBehaviour {
     private DrumMechanic drumMechanic;
     private FMOD.Studio.PLAYBACK_STATE playbackState;
 
-    void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
 	void Start ()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable during tape switching animation)");
 	}

@@ -37,7 +37,10 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     void Awake()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        Debug.Log(gameManager);
+    }
+
+    void Start()
+    {
         saveStruct = new SaveSegmentStruct();
     }
 

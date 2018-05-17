@@ -53,12 +53,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
     public List<Notes> notesList;
     // The list of notes (the game object) to destroy when exiting segment
     [HideInInspector] public List<GameObject> destroyList;
-
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start()
     {
         audioManager = gameManager.audioManager;

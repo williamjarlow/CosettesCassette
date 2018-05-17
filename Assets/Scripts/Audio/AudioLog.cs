@@ -11,13 +11,9 @@ public class AudioLog : MonoBehaviour {
 
     GameManager gameManager;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     private void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
     }
 

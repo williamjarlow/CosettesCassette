@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TiltMechanic : MonoBehaviour {
-    //
     [Range(0, 0.1f)]
     [SerializeField] private float moveSpeed;
     private AudioManager am;
@@ -14,13 +13,9 @@ public class TiltMechanic : MonoBehaviour {
 
     GameManager gameManager;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     // Use this for initialization
     void Start () {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         am = gameManager.audioManager;
     }
 	

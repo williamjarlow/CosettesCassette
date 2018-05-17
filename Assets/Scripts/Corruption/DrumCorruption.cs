@@ -53,13 +53,6 @@ public class DrumCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
-    GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
-
     void Start()
     {
         audioManager = gameManager.audioManager;
