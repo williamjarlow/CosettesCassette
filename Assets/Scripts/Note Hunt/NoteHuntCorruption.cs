@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 // ** Written by Hannes Gustafsson ** // 
 
-public class NotesHuntCorruption : CorruptionBaseClass
+public class NoteHuntCorruption : CorruptionBaseClass
 {
 
                 // ** DISCLAIMER ** //
