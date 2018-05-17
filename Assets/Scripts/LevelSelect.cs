@@ -25,8 +25,9 @@ public class LevelSelect : MonoBehaviour
     [Tooltip("Minimum pixels required for the touch to move in x coordinates to switch cassette")]
     [SerializeField] private float minimumMovementForChange = 100;
     [SerializeField] private float rotationDuration;
-    [SerializeField] private float middleOffset;
-    [SerializeField] private float cassetteOffset;
+    [SerializeField] private float xOffset;
+    [SerializeField] private float yOffset;
+    //[SerializeField] private float cassetteOffset;
     [SerializeField] private float cassetteAngle;
 
     // Temporary
@@ -81,24 +82,24 @@ public class LevelSelect : MonoBehaviour
             {
 
                 movementLock = true;
-                Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
-                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z + middleOffset), startPos[currentFocus], rotationDuration, currentFocus, standingRotation, flatRotation));
+                //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
+                //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
+                //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
+                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z + xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                 for(int i = cassetteAmount - 1; i >= 0; i--)
                 {
                     if(i < currentFocus)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y + yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                     }
                     else if(i > currentFocus + 1)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                     }
                     else if (i == currentFocus + 1)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + middleOffset), startPos[i], rotationDuration, i, flatRotation, reversedStandingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                     }
                 }
 
@@ -116,24 +117,24 @@ public class LevelSelect : MonoBehaviour
             if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
             {
                 movementLock = true;
-                Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
-                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, reversedStandingRotation, flatRotation));
+                //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
+                //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
+                //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
+                StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z - xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                 for (int i = cassetteAmount - 1; i >= 0; i--)
                 {
                     if (i < currentFocus - 1)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                     }
                     else if (i > currentFocus)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y + yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                     }
                     else if(i == currentFocus - 1)
                     {
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, flatRotation, standingRotation));
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                     }
                 }
 
@@ -195,24 +196,24 @@ public class LevelSelect : MonoBehaviour
                     {
 
                         movementLock = true;
-                        Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                        Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                        Quaternion reversedStandingRotation = Quaternion.Euler(180 + cassetteAngle, 0, 0);
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z + middleOffset), startPos[currentFocus], rotationDuration, currentFocus, standingRotation, flatRotation));
+                        //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
+                        //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
+                        //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z + xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                         for (int i = cassetteAmount - 1; i >= 0; i--)
                         {
                             if (i < currentFocus)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y + yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                             }
                             else if (i > currentFocus + 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                             }
                             else if (i == currentFocus + 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z + middleOffset), startPos[i], rotationDuration, i, flatRotation, reversedStandingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z + xOffset), startPos[i], rotationDuration, i));
                             }
                         }
 
@@ -222,7 +223,7 @@ public class LevelSelect : MonoBehaviour
                         // Set the currently focused cassette to focused
                         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
 
-						audioManager.PlayLevelSelectScroll ();
+                        audioManager.PlayLevelSelectScroll();
                     }
                 }
 
@@ -232,24 +233,24 @@ public class LevelSelect : MonoBehaviour
                     if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
                     {
                         movementLock = true;
-                        Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                        Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                        Quaternion reversedStandingRotation = Quaternion.Euler(180 + cassetteAngle, 0, 0);
-                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y, startPos[currentFocus].z - middleOffset), startPos[currentFocus], rotationDuration, currentFocus, reversedStandingRotation, flatRotation));
+                        //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
+                        //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
+                        //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
+                        StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z - xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                         for (int i = cassetteAmount - 1; i >= 0; i--)
                         {
                             if (i < currentFocus - 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, standingRotation, standingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                             }
                             else if (i > currentFocus)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - cassetteOffset), startPos[i], rotationDuration, i, reversedStandingRotation, reversedStandingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y + yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                             }
                             else if (i == currentFocus - 1)
                             {
-                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y, startPos[i].z - middleOffset), startPos[i], rotationDuration, i, flatRotation, standingRotation));
+                                StartCoroutine(MoveFromTo(new Vector3(startPos[i].x, startPos[i].y - yOffset, startPos[i].z - xOffset), startPos[i], rotationDuration, i));
                             }
                         }
 
@@ -259,7 +260,7 @@ public class LevelSelect : MonoBehaviour
                         // Set the currently focused cassette to focused
                         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
 
-						audioManager.PlayLevelSelectScroll ();
+                        audioManager.PlayLevelSelectScroll();
                     }
                 }
 
@@ -291,7 +292,7 @@ public class LevelSelect : MonoBehaviour
             }
         }
     }
-    IEnumerator MoveFromTo(Vector3 pointA, Vector3 pointB, float time, int chosen, Quaternion fromRot, Quaternion targetRot)
+    IEnumerator MoveFromTo(Vector3 pointA, Vector3 pointB, float time, int chosen)
     {
         bool moving = false;
         if (!moving)
@@ -302,7 +303,7 @@ public class LevelSelect : MonoBehaviour
             {
                 t -= Time.deltaTime / time; // Sweeps from 0 to 1 in time seconds
                 cassettes[chosen].transform.localPosition = Vector3.Lerp(pointA, pointB, t); // Set position proportional to t
-                cassettes[chosen].transform.localRotation = Quaternion.Slerp(fromRot, targetRot, t);
+                //cassettes[chosen].transform.localRotation = Quaternion.Slerp(fromRot, targetRot, t);
                 yield return new WaitForEndOfFrame();
             }
             moving = false;
