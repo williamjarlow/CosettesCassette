@@ -13,13 +13,20 @@ public class ButtonDisabler : MonoBehaviour {
     [SerializeField] private List<ButtonController> disable3DButtonList;
     //[SerializeField] private Dropdown dropdown;
 
+    GameManager gameManager;
+
     private AudioManager audioManager;
     private DrumMechanic drumMechanic;
     private FMOD.Studio.PLAYBACK_STATE playbackState;
 
+    void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
 	void Start ()
     {
-        audioManager = GameManager.Instance.audioManager;
+        audioManager = gameManager.audioManager;
         Debug.Assert(disable2DButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable when recording)");
 	}
 	

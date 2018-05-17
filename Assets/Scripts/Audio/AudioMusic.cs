@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class AudioMusic : MonoBehaviour {
 
-	
+    GameManager gameManager;
 
     private AudioManager audioManager;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
 
     private void Start()
     {
-        audioManager = GameManager.Instance.audioManager;
+        audioManager = gameManager.audioManager;
     }
 }

@@ -10,7 +10,14 @@ public class UIMechanicChanger : MonoBehaviour {
     [SerializeField] private GameObject mechanics;
     private bool showingMechanics = false;
 
-	void Start ()
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
+    void Start ()
     {
 
 	}
@@ -29,7 +36,7 @@ public class UIMechanicChanger : MonoBehaviour {
     public void ChangeCurrentImage(string sentInstrument)
     {
         gameObject.GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite;
-        GameManager.Instance.SelectedInstrument = (instruments)System.Enum.Parse(typeof(instruments), sentInstrument);
+        gameManager.SelectedInstrument = (instruments)System.Enum.Parse(typeof(instruments), sentInstrument);
         mechanics.SetActive(false);
         showingMechanics = !showingMechanics;
     }

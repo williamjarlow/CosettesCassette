@@ -10,15 +10,22 @@ public class PitchMechanic : MonoBehaviour
     private OverallCorruption overallCorruption;
     private Slider pitchSlider;
 
+    GameManager gameManager;
+
     private int timeStamp;
 
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] [SerializeField] private int tolerance;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        audioManager = GameManager.Instance.audioManager;
-        overallCorruption = GameManager.Instance.overallCorruption;
-        pitchSlider = GameManager.Instance.pitchSlider.GetComponent<Slider>();
+        audioManager = gameManager.audioManager;
+        overallCorruption = gameManager.overallCorruption;
+        pitchSlider = gameManager.pitchSlider.GetComponent<Slider>();
 
     }
 
@@ -26,19 +33,19 @@ public class PitchMechanic : MonoBehaviour
     void Update()
     {
         // Not necessary, but this way you dont have to write GameManager.Instance.timeStamp every time
-        timeStamp = GameManager.Instance.timeStamp;
+        timeStamp = gameManager.timeStamp;
 
         // If the track has started, we are in a 'PITCH' segment and we are recording -->
-        if (timeStamp > 0 && overallCorruption.durations[GameManager.Instance.currentSegmentIndex].recordingType == Duration.RecordingType.PITCH
-            && GameManager.Instance.recording == true)
+        if (timeStamp > 0 && overallCorruption.durations[gameManager.currentSegmentIndex].recordingType == Duration.RecordingType.PITCH
+            && gameManager.recording == true)
         {
             // Record time- and pitch slider values
-            overallCorruption.durations[GameManager.Instance.currentSegmentIndex].AddPitchRecordings(timeStamp, pitchSlider.value);
+            overallCorruption.durations[gameManager.currentSegmentIndex].AddPitchRecordings(timeStamp, pitchSlider.value);
 
         }
 
         // Recreate the recorded pitch slider values
-        else if (GameManager.Instance.recording == false && !audioManager.switchedToAudioLog)
+        else if (gameManager.recording == false && !audioManager.switchedToAudioLog)
         {
             // Loop through the corrupted segments
             for (int i = 0; i < overallCorruption.durations.Count; i++)

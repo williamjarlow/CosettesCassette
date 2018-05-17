@@ -31,9 +31,16 @@ public class StoryTelling : MonoBehaviour {
 
 	private AudioManager audioManager;
 
-	void Start()
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
+    void Start()
 	{
-		audioManager = GameManager.Instance.audioManager;
+		audioManager = gameManager.audioManager;
 	}
 
     public void InitializeStory(int index)

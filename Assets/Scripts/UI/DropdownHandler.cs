@@ -11,10 +11,18 @@ public class DropdownHandler : MonoBehaviour {
     private List<string> dropdownNames = new List<string>() { "All instruments", "Drums", "Vocals", "Melody", "Chords", "Bass" };
     [SerializeField] private Dropdown dropdown;
 
+    GameManager gameManager;
+
     private AudioManager audioManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start ()
     {
-        audioManager = GameManager.Instance.audioManager;
+        audioManager = gameManager.audioManager;
         Debug.Assert(dropdown != null, "Attach the dropdown to the dropdown handler");
 
         dropdown.AddOptions(dropdownNames);

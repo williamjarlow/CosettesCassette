@@ -21,12 +21,20 @@ public class OddOneOutCorruption : CorruptionBaseClass
     private bool hasSpawned;
 
 
-                                // ** TODO ** // 
-        // 1. Add some visual effect when clicking on a button and destroying the lyrics
+    // ** TODO ** // 
+    // 1. Add some visual effect when clicking on a button and destroying the lyrics
+
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        overallCorruption = GameManager.Instance.overallCorruption;
-        audioManager = GameManager.Instance.audioManager;
+        overallCorruption = gameManager.overallCorruption;
+        audioManager = gameManager.audioManager;
         duration = overallCorruption.durations[segmentID];
     }
 
@@ -40,7 +48,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
                 EnterSegment();
             }
 
-            if (GameManager.Instance.recording) //If recording
+            if (gameManager.recording) //If recording
             {
 
             }
@@ -50,7 +58,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
             ExitSegment();
         }
 
-        if(inSegment && GameManager.Instance.recording && hasSpawned == false && !GameManager.Instance.audioManager.switchedToAudioLog)
+        if(inSegment && gameManager.recording && hasSpawned == false && !gameManager.audioManager.switchedToAudioLog)
         {
             SpawnLyrics();
         }
@@ -61,8 +69,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
         hasSpawned = true;
 
         // Instantiate prefabs
-        lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform);
-        lyricsGuessObject = Instantiate(lyricsGuessPrefab, GameManager.Instance.uiParent.transform);
+        lyricsObject = Instantiate(lyricsPrefab, gameManager.uiParent.transform);
+        lyricsGuessObject = Instantiate(lyricsGuessPrefab, gameManager.uiParent.transform);
 
         // ** Initialize ** //
         lyricsGuessObject.transform.GetChild(0).GetComponent<Text>().text = lyricsGuess;

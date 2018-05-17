@@ -14,6 +14,8 @@ public class DrumMechanic : MonoBehaviour {
     private AudioManager audioManager;
     private FMOD.RESULT result;
 
+    GameManager gameManager;
+
     private FMOD.Sound kickSound;
     private FMOD.Sound kickSubSound;
     private FMOD.Studio.SOUND_INFO kickInfo;
@@ -29,15 +31,20 @@ public class DrumMechanic : MonoBehaviour {
     private OverallCorruption overallCorruption;
     private ButtonDisabler buttonDisabler;
 
-                //** TODO ** //
+    //** TODO ** //
     // 1. Fix recording not stopping when you rewind to before the segment
     // 2. The audio input when recording is playing more than once
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start ()
     {
-        audioManager = GameManager.Instance.audioManager;
-        overallCorruption = GameManager.Instance.overallCorruption;
-        buttonDisabler = GameManager.Instance.uiHandler.GetComponent<ButtonDisabler>();
+        audioManager = gameManager.audioManager;
+        overallCorruption = gameManager.overallCorruption;
+        buttonDisabler = gameManager.uiHandler.GetComponent<ButtonDisabler>();
 
         Debug.Assert(audioManager != null, "Could not find the Audio Manager");
         Debug.Log(" *** Create sound result *** --> " + result);
@@ -58,7 +65,7 @@ public class DrumMechanic : MonoBehaviour {
         //Find the timeline position in the track
         audioManager.gameMusicEv.getTimelinePosition(out timeStamp);
 
-        if (GameManager.Instance.recording && overallCorruption.durations[GameManager.Instance.currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
+        if (gameManager.recording && overallCorruption.durations[gameManager.currentSegmentIndex].recordingType == Duration.RecordingType.DRUMS)
         {
             // If we have started the track and there is some form of input
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0) && !isPlaying)
@@ -67,7 +74,7 @@ public class DrumMechanic : MonoBehaviour {
                 result = audioManager.lowLevelSys.playSound(kickSubSound, kickChannelGroup, false, out kickChannel);
                 Debug.Log("Kick: " + result);
 
-                overallCorruption.durations[GameManager.Instance.currentSegmentIndex].AddDrumRecordings(timeStamp);
+                overallCorruption.durations[gameManager.currentSegmentIndex].AddDrumRecordings(timeStamp);
                 isPlaying = true;
                 gaveInput = true;
 
@@ -76,7 +83,7 @@ public class DrumMechanic : MonoBehaviour {
             }
         }
 
-        else if(GameManager.Instance.recording == false && !isPlaying && !audioManager.switchedToAudioLog)
+        else if(gameManager.recording == false && !isPlaying && !audioManager.switchedToAudioLog)
         {
             // Loop through the corrupted segments
             for(int i = 0; i < overallCorruption.durations.Count; i++)
@@ -107,9 +114,9 @@ public class DrumMechanic : MonoBehaviour {
     {
         // If we exited the corrupted segment, stop recording
         //if (timeStamp < overallCorruption.durations[currentSegmentIndex].start || timeStamp > overallCorruption.durations[currentSegmentIndex].stop)
-        if (timeStamp > overallCorruption.durations[GameManager.Instance.currentSegmentIndex].stop)
+        if (timeStamp > overallCorruption.durations[gameManager.currentSegmentIndex].stop)
         {
-            GameManager.Instance.Listen();
+            gameManager.Listen();
         }
     }
 

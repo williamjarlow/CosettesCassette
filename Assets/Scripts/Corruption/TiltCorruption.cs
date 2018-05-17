@@ -21,12 +21,19 @@ public class TiltCorruption : CorruptionBaseClass
 
     private AudioManager audioManager;
 
+    GameManager gameManager;
+
     private OverallCorruption overallCorruption;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
 
     void Start()
     {
-        overallCorruption = GameManager.Instance.overallCorruption;
-        audioManager = GameManager.Instance.audioManager;
+        overallCorruption = gameManager.overallCorruption;
+        audioManager = gameManager.audioManager;
         duration = overallCorruption.durations[segmentID];
         Load();
     }
@@ -38,7 +45,7 @@ public class TiltCorruption : CorruptionBaseClass
         {
 
 
-            if (GameManager.Instance.recording) //If recording
+            if (gameManager.recording) //If recording
             {
                 if (inSegment == false) //If player just entered the segment
                 {
@@ -58,7 +65,7 @@ public class TiltCorruption : CorruptionBaseClass
         //This function gets called upon when entering the segment
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        if (GameManager.Instance.recording)
+        if (gameManager.recording)
             corruptionClearedPercent = 0;
         tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, gameObject.transform);
         currentScore = startingScore;
@@ -69,7 +76,7 @@ public class TiltCorruption : CorruptionBaseClass
     {
         //This function gets called upon when leaving the segment
         inSegment = false;
-        if (GameManager.Instance.recording)
+        if (gameManager.recording)
             GradeScore(); //Score gets graded and saved to file here
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;

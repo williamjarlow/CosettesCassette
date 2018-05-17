@@ -30,9 +30,11 @@ public class OverallCorruption : MonoBehaviour {
 	const int beatsToMsConversion = 15000; //60000 = 1 minute in milliseconds, divided by four to make sixteenth notes.
 
 	[HideInInspector]
-	public int bpmInMs; 
+	public int bpmInMs;
 
-	[Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
+    GameManager gameManager;
+
+    [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
 
 	[HideInInspector] public float overallCorruption;
 	[HideInInspector] public float overallDistortion;
@@ -48,7 +50,10 @@ public class OverallCorruption : MonoBehaviour {
 	private List<GameObject> corruptedAreaList = new List<GameObject>();
 
 	void Awake () {
-		bpmInMs = ConvertBpmToMs(bpm);
+
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+
+        bpmInMs = ConvertBpmToMs(bpm);
 
 		for (int i = 0; i < segments.Count; i++)
 		{
@@ -60,7 +65,7 @@ public class OverallCorruption : MonoBehaviour {
 
 	void Start()
 	{
-		audioDistortion = GameManager.Instance.audioDistortion;
+		audioDistortion = gameManager.audioDistortion;
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
@@ -71,7 +76,7 @@ public class OverallCorruption : MonoBehaviour {
 		for (int i = 0; i < segments.Count; i++)
 		{
 			// Instantiate the corrupted area prefab according to the corrupted area specifications
-			RectTransform timelineSlider = GameManager.Instance.timelineSlider.GetComponent<RectTransform>();
+			RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
 			GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
 			instantiatedObject.transform.SetAsFirstSibling();
 			corruptedAreaList.Add(instantiatedObject);
@@ -92,7 +97,7 @@ public class OverallCorruption : MonoBehaviour {
 		// Set the current segment to cleared
 		if(Input.GetKeyDown(KeyCode.X))
 		{
-			corruptions[GameManager.Instance.currentSegmentIndex].corruptionClearedPercent = 100;
+			corruptions[gameManager.currentSegmentIndex].corruptionClearedPercent = 100;
 			UpdateCorruptionAmount();
 		}
 
@@ -130,18 +135,18 @@ public class OverallCorruption : MonoBehaviour {
 				corruptions[i].cleared = false;
 		}
 
-        if(GameManager.Instance.LevelPerfected == false && overallCorruption == 0)
+        if(gameManager.LevelPerfected == false && overallCorruption == 0)
         {
-            GameManager.Instance.LevelPerfected = true;
-            GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.perfect);
-            GameManager.Instance.audioManager.PlayWinSound(1);
+            gameManager.LevelPerfected = true;
+            gameManager.stageClearVFX.CallVFX(segmentEffects.perfect);
+            gameManager.audioManager.PlayWinSound(1);
         }
-		else if(GameManager.Instance.LevelCleared == false && overallCorruption <= corruptionClearThreshold) //If player hasn't won already
+		else if(gameManager.LevelCleared == false && overallCorruption <= corruptionClearThreshold) //If player hasn't won already
 		{
-			GameManager.Instance.LevelCleared = true;
-            GameManager.Instance.stageClearVFX.CallVFX(segmentEffects.good);
-            GameManager.Instance.winScreen.EnableWinScreen();
-			GameManager.Instance.audioManager.PlayWinSound(0);
+            gameManager.LevelCleared = true;
+            gameManager.stageClearVFX.CallVFX(segmentEffects.good);
+            gameManager.winScreen.EnableWinScreen();
+            gameManager.audioManager.PlayWinSound(0);
 		}
 	} 
 

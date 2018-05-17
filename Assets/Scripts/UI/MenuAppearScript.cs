@@ -18,7 +18,7 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private GameObject cassetteAnimation;
     void Start()
     {
-		audioManager = GameManager.Instance.audioManager;
+		//audioManager = GameManager.Instance.audioManager;
         //menuToShow.SetActive(true);
         //menuToHide.SetActive(false);
       //  Button btn = pauseButton.GetComponent<Button>();

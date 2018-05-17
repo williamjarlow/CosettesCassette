@@ -20,6 +20,8 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector]
     public float currentScore = 0;
 
+    GameManager gameManager;
+
     private SaveSegmentStruct saveStruct;
 
     [TextArea]
@@ -34,6 +36,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
 
     void Awake()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         saveStruct = new SaveSegmentStruct();
     }
 
@@ -48,14 +51,14 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     public virtual void EnterSegment()
     {
         inSegment = true;
-        GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
-        GameManager.Instance.overallCorruption.UpdateDistortionAmount();
+        gameManager.overallCorruption.UpdateCorruptionAmount();
+        gameManager.overallCorruption.UpdateDistortionAmount();
     }
     public virtual void ExitSegment()
     {
         inSegment = false;
-        GameManager.Instance.overallCorruption.UpdateCorruptionAmount();
-        GameManager.Instance.overallCorruption.UpdateDistortionAmount();
+        gameManager.overallCorruption.UpdateCorruptionAmount();
+        gameManager.overallCorruption.UpdateDistortionAmount();
         //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
         //GameManager.Instance.recordButton.NakedToggleUp();
         //GameManager.Instance.Listen();
@@ -73,7 +76,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
             else if (bestScore > clearThreshold)
             {
                 //Cleared Segment
-                GameManager.Instance.audioManager.PlaySegmentClear(0f);
+                gameManager.audioManager.PlaySegmentClear(0f);
             }
             else
             {

@@ -576,6 +576,11 @@ Prefab:
       propertyPath: m_Colors.m_NormalColor.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114702830181143864, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aec3342522feb2e4e86bf1e5dc3de8fd, type: 2}
   m_IsPrefabParent: 0
@@ -1043,24 +1048,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
-      propertyPath: audioDistortion
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-        type: 2}
-      propertyPath: audioManager
-      value: 
-      objectReference: {fileID: 738148953}
-    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-        type: 2}
       propertyPath: overallCorruption
       value: 
       objectReference: {fileID: 140929164}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
-      propertyPath: drumMechanic
+      propertyPath: audioManager
       value: 
-      objectReference: {fileID: 1163712102}
+      objectReference: {fileID: 738148953}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
       propertyPath: corruptionHandler
@@ -1078,29 +1073,14 @@ Prefab:
       objectReference: {fileID: 1718787021}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
-      propertyPath: LevelCleared
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-        type: 2}
-      propertyPath: pitchSlider
-      value: 
-      objectReference: {fileID: 1443198142}
-    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-        type: 2}
-      propertyPath: pitchMechanic
-      value: 
-      objectReference: {fileID: 2017281248}
-    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-        type: 2}
       propertyPath: uiParent
       value: 
       objectReference: {fileID: 794287679}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
-      propertyPath: stageClearVFX
+      propertyPath: pitchSlider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1443198142}
     - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
         type: 2}
       propertyPath: recordButton
@@ -1583,23 +1563,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: daada61ace94abe46ad6c26817817724, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1325574339 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1531763072804074, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-    type: 2}
-  m_PrefabInternal: {fileID: 1126958121}
---- !u!114 &1325574341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1325574339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94dbc5841c4ff334c85bfdd4e0d6d23c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stickerManRef: {fileID: 0}
 --- !u!1 &1443198142 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1822577189253382, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
@@ -2086,6 +2049,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: daada61ace94abe46ad6c26817817724, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1581234899
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -11.87738
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 18.429903
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 4.3224344
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1718787021
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,11 +2329,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 917d32ac7d1f353479fefa28d72391ef, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2017281248 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1312742080630916, guid: daada61ace94abe46ad6c26817817724,
-    type: 2}
-  m_PrefabInternal: {fileID: 1230337138}
 --- !u!114 &2110408947 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114656179976000180, guid: aec3342522feb2e4e86bf1e5dc3de8fd,

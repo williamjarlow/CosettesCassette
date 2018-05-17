@@ -15,6 +15,8 @@ public class CorruptionVisuals : MonoBehaviour {
     private RectTransform timelineRectTransform;
     private RectTransform corruptedAreaRectTransform;
 
+    GameManager gameManager;
+
     [Tooltip("Converts milliseconds to pixels, ie. how many milliseconds one pixel represents")] private float pixelToMs;
     [Tooltip("The original corrupted area rect width")] private float originalCorruptedRectWidth;
     [Tooltip("Start of the corruption in milliseconds")] private float corruptionStart;
@@ -23,18 +25,22 @@ public class CorruptionVisuals : MonoBehaviour {
     private float rectHeight;
     private int trackLength;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
 
     void Start ()
     {
         // Save the original color to be able to reset it when the corrupted area has been fixed
         //maskImage = GetComponentInChildren<Image>();
-        repairedColor = GameManager.Instance.timelineSlider.GetComponent<Image>().color;
+        repairedColor = gameManager.timelineSlider.GetComponent<Image>().color;
 	}
 
     public void SetCorruptionPosition(int corruptionStartPoint, int corruptionEndPoint)
     {
         // Initialize variables
-        audioManager = GameManager.Instance.audioManager;
+        audioManager = gameManager.audioManager;
         corruptedAreaRectTransform = gameObject.GetComponent<RectTransform>();
         originalCorruptedRectWidth = corruptedAreaRectTransform.rect.width;
         timelineRectTransform = gameObject.transform.parent.GetComponent<RectTransform>();

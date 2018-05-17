@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public enum instruments { drums, synth, vocals, guitar, bass, pitch };
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
 
     [HideInInspector] public AudioDistortion audioDistortion;

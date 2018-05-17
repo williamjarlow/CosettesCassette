@@ -12,9 +12,16 @@ public class TiltMechanic : MonoBehaviour {
     FMOD.RESULT result;
     FMOD.Studio.PLAYBACK_STATE state;
 
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     // Use this for initialization
     void Start () {
-        am = GameManager.Instance.audioManager;
+        am = gameManager.audioManager;
     }
 	
 	// Update is called once per frame
