@@ -51,6 +51,7 @@ public class AudioTimeline : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         timelineSlider = gameManager.timelineSlider.GetComponent<Slider>();
         timelineBar = gameManager.timelineSlider;
         audioManager = GetComponent<AudioManager>();
@@ -62,8 +63,6 @@ public class AudioTimeline : MonoBehaviour
 
         // Convert length of song to size of image to compare where in timeline we're at
         songToImageLengthConversion = timelineSlider.maxValue / timelineBar.GetComponent<RectTransform>().sizeDelta.x;
-
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
     }
 
 
