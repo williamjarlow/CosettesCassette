@@ -12,6 +12,7 @@ public class StageClearVFX : MonoBehaviour {
     [SerializeField] private GameObject perfectParticleEffect;
     [SerializeField] private GameObject newStickerAnimation;
     [SerializeField] private GameObject newStickerParticleEffect;
+    [SerializeField] private Transform positionForParticleEffects;
     [SerializeField] private float timeToShowGood = 1.8f;
     [SerializeField] private float timeToShowPerfect = 2f;
     [SerializeField] private float timeToShowNew = 1.8f;
@@ -26,15 +27,15 @@ public class StageClearVFX : MonoBehaviour {
     {
         // For testing purposes
         if (Input.GetKeyDown("up"))
-            CallFullEffect(perfectClearAnimation, timeToShowPerfect);
+            CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect);
 
         // For testing purposes
         if (Input.GetKeyDown("left"))
-            CallFullEffect(goodClearAnimation, timeToShowGood);
+            CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect);
 
         // For testing purposes
         if (Input.GetKeyDown("right"))
-            CallFullEffect(newStickerAnimation, timeToShowNew);
+            CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect);
     }
 
     public void CallVFX(segmentEffects typeOfEffect)
@@ -53,6 +54,21 @@ public class StageClearVFX : MonoBehaviour {
     {
         GameObject effect = Instantiate(gameObjectForEffect, gameObject.transform);
         Destroy(effect, timeToShowEffect);
+    }
+
+    private void CallFullEffect(GameObject gameObjectForEffect, float timeToShowEffect, GameObject particleEffect)
+    {
+        GameObject effect = Instantiate(gameObjectForEffect, gameObject.transform);
+        Destroy(effect, timeToShowEffect);
+        foreach (Transform particleEffects in particleEffect.transform)
+        {
+            if (particleEffects.GetComponent<ParticleSystem>() != null)
+            {
+                GameObject temp = Instantiate(particleEffects.gameObject, positionForParticleEffects);
+                temp.GetComponent<ParticleSystem>().Play();
+                Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
+            }
+        }
     }
 
 }
