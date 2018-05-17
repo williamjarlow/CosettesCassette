@@ -374,7 +374,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1196578672746964
 GameObject:
   m_ObjectHideFlags: 1
@@ -1986,6 +1986,7 @@ GameObject:
   - component: {fileID: 33808447207747248}
   - component: {fileID: 23236897802075632}
   - component: {fileID: 95737107432043798}
+  - component: {fileID: 114358136928704400}
   m_Layer: 0
   m_Name: Walkman Lid
   m_TagString: Untagged
@@ -2069,13 +2070,14 @@ GameObject:
   - component: {fileID: 4200980044601878}
   - component: {fileID: 33751788124718044}
   - component: {fileID: 23020298584853326}
+  - component: {fileID: 114022620638645460}
   m_Layer: 0
   m_Name: Stationary Casette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1913357506394812
 GameObject:
   m_ObjectHideFlags: 1
@@ -2648,7 +2650,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2955,7 +2957,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3373,6 +3375,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114022620638645460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1910623727723112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c6e12744a3e0b34bb4d95260e5d29ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114026729261863276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4330,6 +4343,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: DisableButtons
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: AudioStopMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114226052570060366
@@ -4449,7 +4484,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1302908353800524}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
@@ -5116,7 +5151,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a59d99ed50792184d817a6b2c9207f9a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a5a13e004a29744b8114fa73c5c2d9a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5226,6 +5261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1302908353800524}
   isDual: 1
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: db189430fe28c75428bbdeb28a04c0d7, type: 2}
   UITargetDual: {fileID: 1302908353800524}
@@ -5411,6 +5447,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114358136928704400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1858464294957050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617b013737740442b9a5d540798934d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114362786314261726
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5538,6 +5585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1610789726040214}
   isDual: 1
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 720006036b6f1de42ae5b55284929acb, type: 2}
   UITargetDual: {fileID: 1336928794479494}
@@ -6103,6 +6151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1222889362661678}
   isDual: 0
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 0}
   UITargetDual: {fileID: 0}
@@ -6378,6 +6427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1784157555333510}
   isDual: 0
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 0}
   UITargetDual: {fileID: 0}
@@ -6808,6 +6858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1018315695623788}
   isDual: 0
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: b70962abeae8930418f93338202e4211, type: 2}
   UITargetDual: {fileID: 1446129821853188}
@@ -7255,7 +7306,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.2689655, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -7513,7 +7564,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114155924955757260}
         m_MethodName: LoadByIndex
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7807,6 +7858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UITarget: {fileID: 1936417480759108}
   isDual: 1
+  isEnabled: 0
   unselectedMaterial: {fileID: 2100000, guid: bd8f1511524ba71409560e8da66c408e, type: 2}
   selectedMaterial: {fileID: 2100000, guid: dd59c8acec1057345bfac6aed9d54a10, type: 2}
   UITargetDual: {fileID: 1936417480759108}
@@ -8025,9 +8077,9 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a23770177343fa84288e79efd08bca5c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ade77251d53cb694b8a66c1e93956811, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -8353,11 +8405,12 @@ MonoBehaviour:
   credits: {fileID: 1818507203527818}
   winning: {fileID: 0}
   AudiologPic: {fileID: 114046726729286512}
-  music: 1
-  audiolog: 0
   creditsOrAudiolog: Audiolog
   waitforit: 600
+  safeguard: 0
   delay: 0
+  music: 1
+  audiolog: 0
   showpicture: 0
 --- !u!114 &114899421202686462
 MonoBehaviour:
@@ -8956,7 +9009,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9003,7 +9056,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9049,7 +9102,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9188,7 +9241,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 0eb6b7df77b46054fb4bfedfafe5b8ca, type: 2}
+  - {fileID: 2100000, guid: cd2acb232e8724f49b5da15b31a64994, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -34350,7 +34403,7 @@ RectTransform:
   m_GameObject: {fileID: 1890976446966012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.425003, y: -17.549988, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.0190701, y: 2.0190704, z: 2.0190704}
   m_Children: []
   m_Father: {fileID: 224457914980681870}
   m_RootOrder: 0

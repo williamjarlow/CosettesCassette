@@ -90,9 +90,6 @@ public class AudioManager : MonoBehaviour {
     {
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
-
-		//play "insertCassette" sound
-		PlayInsertSound();
 	}
 		
     public void AudioPlayMusic ()
@@ -235,16 +232,6 @@ public class AudioManager : MonoBehaviour {
 		levelClearEvent.setParameterValue ("stage_clear_score", score); // 0 = okay, 1 = perfect
 		levelClearEvent.start();
 		levelClearEvent.release ();
-	}
-
-	public void PlayInsertSound ()
-	{
-		FMOD.Studio.EventDescription insertCassetteEventDesc;
-		FMOD.Studio.EventInstance insertCassetteEv;
-		systemObj.getEvent ("event:/SFX/insertCassette", out insertCassetteEventDesc);
-		insertCassetteEventDesc.createInstance (out insertCassetteEv);
-		insertCassetteEv.start ();
-		insertCassetteEv.release ();
 	}
 
     public void PlayEjectSound()
