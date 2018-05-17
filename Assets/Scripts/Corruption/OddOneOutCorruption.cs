@@ -60,8 +60,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
     {
         hasSpawned = true;
 
-        Debug.Log("Spawned lyrics");
-
         // Instantiate prefabs
         lyricsObject = Instantiate(lyricsPrefab, GameManager.Instance.uiParent.transform);
         lyricsGuessObject = Instantiate(lyricsGuessPrefab, GameManager.Instance.uiParent.transform);

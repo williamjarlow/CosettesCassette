@@ -302,8 +302,6 @@ MonoBehaviour:
   audioDistortion: {fileID: 0}
   overallCorruption: {fileID: 0}
   audioPitch: {fileID: 0}
-  drumMechanic: {fileID: 1931723800}
-  pitchMechanic: {fileID: 2025249565}
   audioManager: {fileID: 2021526038}
   corruptionHandler: {fileID: 1788661187}
   timelineSlider: {fileID: 644978756}
@@ -311,8 +309,10 @@ MonoBehaviour:
   uiParent: {fileID: 364654449}
   pitchSlider: {fileID: 1216849505}
   recordButton: {fileID: 0}
+  winScreen: {fileID: 0}
   stageClearVFX: {fileID: 0}
   LevelCleared: 0
+  LevelPerfected: 0
   recording: 0
   pitch: 0
   lengthOfSong: 0
@@ -350,6 +350,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1788661190}
     m_Modifications:
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -411,6 +416,81 @@ Prefab:
         type: 2}
       propertyPath: perfectThreshold
       value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[8].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[9].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[10].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[11].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[12].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[13].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[14].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[15].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[16].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[17].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[18].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[19].spawnTime
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[2].spawnTime
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[3].spawnTime
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
+        type: 2}
+      propertyPath: notesList.Array.data[4].spawnTime
+      value: 65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
