@@ -31,8 +31,6 @@ public class ButtonDisabler : MonoBehaviour {
 
     public void DisableButtons()
     {
-        audioManager.gameMusicEv.getPlaybackState(out playbackState);
-
         // Disable buttons
         for (int i = 0; i < disableButtonList.Count; i++)
         {

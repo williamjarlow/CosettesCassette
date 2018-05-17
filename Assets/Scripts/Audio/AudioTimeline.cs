@@ -48,10 +48,6 @@ public class AudioTimeline : MonoBehaviour
 
     private float songToImageLengthConversion = 0;
 
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
 
     void Start()
     {
@@ -66,6 +62,8 @@ public class AudioTimeline : MonoBehaviour
 
         // Convert length of song to size of image to compare where in timeline we're at
         songToImageLengthConversion = timelineSlider.maxValue / timelineBar.GetComponent<RectTransform>().sizeDelta.x;
+
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
     }
 
 

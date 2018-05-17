@@ -17,4 +17,8 @@ public class CassetteDisableButtons : MonoBehaviour {
         gameManager.uiHandler.GetComponent<ButtonDisabler>().EnableButtons();
     }
 
+    private void OnDisable()
+    {
+        gameManager.uiHandler.GetComponent<ButtonDisabler>().DisableButtons();
+    }
 }
