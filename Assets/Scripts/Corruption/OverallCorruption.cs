@@ -34,7 +34,8 @@ public class OverallCorruption : MonoBehaviour {
 
     GameManager gameManager;
 
-    [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")][SerializeField] int corruptionClearThreshold;
+    [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")]
+    [SerializeField] [Range(0, 100)] int corruptionClearThreshold;
 
 	[HideInInspector] public float overallCorruption;
 	[HideInInspector] public float overallDistortion;
@@ -93,7 +94,6 @@ public class OverallCorruption : MonoBehaviour {
 			Debug.Log("Overall corruption: " + overallCorruption  + "%");
 			Debug.Log("Overall distortion: " + overallDistortion + "%");
 		}
-
 		// Set the current segment to cleared
 		if(Input.GetKeyDown(KeyCode.X))
 		{
@@ -141,7 +141,7 @@ public class OverallCorruption : MonoBehaviour {
             gameManager.stageClearVFX.CallVFX(segmentEffects.perfect);
             gameManager.audioManager.PlayWinSound(1);
         }
-		else if(gameManager.LevelCleared == false && overallCorruption <= corruptionClearThreshold) //If player hasn't won already
+		else if(gameManager.LevelCleared == false && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
 		{
             gameManager.LevelCleared = true;
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
