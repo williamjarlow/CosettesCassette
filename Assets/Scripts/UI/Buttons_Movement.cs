@@ -19,27 +19,30 @@ public class Buttons_Movement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (isUp)
-        {
-            if(transform.position != button_Startposition)
+
+            if (isUp)
             {
-                transform.position = Vector3.MoveTowards(transform.position, button_Startposition, ButtonSpeed);
+                if (transform.position != button_Startposition)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, button_Startposition, ButtonSpeed);
+                }
+
             }
-            
-        }
-        else if (!isUp)
-        {
-            if (transform.position != button_Endposition)
+            else if (!isUp)
             {
-                transform.position = Vector3.MoveTowards(transform.position, button_Endposition, ButtonSpeed);
+                if (transform.position != button_Endposition)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, button_Endposition, ButtonSpeed);
+                }
             }
-        }
+
+
 	}
 
     public void setButtonEnabled()
     {
-        if (isUp) isUp = false;
-        else if (!isUp) isUp = true;
+       if (isUp) isUp = false;
+       else if (!isUp) isUp = true;
 
     }
 }

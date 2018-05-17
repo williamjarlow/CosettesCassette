@@ -171,7 +171,7 @@ public class CassetteAnimation : MonoBehaviour {
     // Designer code below
     public void PlayAnimation()
     {
-        lid.GetComponent<Animator>().SetBool("Run", true);
+        lid.GetComponent<Animator>().SetBool("Run", false);
         StartCoroutine(LidOpening());
     }
     private IEnumerator LidOpening ()
@@ -182,7 +182,7 @@ public class CassetteAnimation : MonoBehaviour {
         cassetteToAnimate.GetComponent<Animator>().SetBool("Intro", true);
         cassetteToAnimate.GetComponent<Animator>().SetBool("Run", true);
         yield return new WaitForSeconds(lidClosingDelay);
-        lid.GetComponent<Animator>().SetBool("Run", false);
+        lid.GetComponent<Animator>().SetBool("Run", true);
         cassetteToAnimate.SetActive(false);
         cassetteToRotate.SetActive(true);
         cassetteToRotate.transform.Rotate(0,180,0);
