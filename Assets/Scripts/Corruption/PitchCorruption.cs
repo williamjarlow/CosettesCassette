@@ -74,9 +74,9 @@ public class PitchCorruption : CorruptionBaseClass {
     {
         pitchSlider.gameObject.SetActive(false);
         lineRenderer = GetComponent<LineRenderer>();
-        audioPitch = GameManager.Instance.audioPitch;
-        audioManager = GameManager.Instance.audioManager;
-        overallCorruption = GameManager.Instance.overallCorruption;
+        audioPitch = gameManager.audioPitch;
+        audioManager = gameManager.audioManager;
+        overallCorruption = gameManager.overallCorruption;
         // Set the pitch segments to the recording type PITCH 
         overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
 
@@ -109,7 +109,7 @@ public class PitchCorruption : CorruptionBaseClass {
         if (audioManager.GetTimeLinePosition() > duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
-            if (GameManager.Instance.recording)
+            if (gameManager.recording)
             {
                 timeSinceStart += Time.deltaTime;
                 if (!inSegment) //inSegment is a bool that toggles when you enter and exit a segment.

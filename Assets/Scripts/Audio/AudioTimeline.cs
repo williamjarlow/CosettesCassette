@@ -21,6 +21,8 @@ public class AudioTimeline : MonoBehaviour
     [SerializeField]
     private float maxSpeedThresholdInMs = 6000;
 
+    GameManager gameManager;
+
     [Header("Speed values for slider movement")]
     [SerializeField]
     private float fastSpeedInMs = 20000;
@@ -46,10 +48,15 @@ public class AudioTimeline : MonoBehaviour
 
     private float songToImageLengthConversion = 0;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        timelineSlider = GameManager.Instance.timelineSlider.GetComponent<Slider>();
-        timelineBar = GameManager.Instance.timelineSlider;
+        timelineSlider = gameManager.timelineSlider.GetComponent<Slider>();
+        timelineBar = gameManager.timelineSlider;
         audioManager = GetComponent<AudioManager>();
         //Find the length of the track and set the max value of the slider to it
         timelineSlider.maxValue = audioManager.GetTrackLength();
@@ -64,7 +71,7 @@ public class AudioTimeline : MonoBehaviour
 
     void Update()
     {
-        if (!holding || GameManager.Instance.recording)
+        if (!holding || gameManager.recording)
         {
             ChangeOnPlaying();
         }
@@ -82,7 +89,7 @@ public class AudioTimeline : MonoBehaviour
     // Manually change the slider with touch
     public void HoldChange()
     {
-        if (!GameManager.Instance.recording)
+        if (!gameManager.recording)
         {
             // Stop player from breaking song by forcing it to play the exact same moment over and over again.
             if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
@@ -125,7 +132,7 @@ public class AudioTimeline : MonoBehaviour
         UpdateValues();
         if (!holding)
         {
-            if (!GameManager.Instance.recording)
+            if (!gameManager.recording)
                 timelineMaskParent.SetActive(true);
             holding = true;
             return;

@@ -9,14 +9,20 @@ public class OverallCorruptionBar : MonoBehaviour {
 
     private Image thisImage;
     private OverallCorruption overallCorruption;
+    GameManager gameManager;
     private float corruptionPercentage;
     private float startValue;
     [SerializeField] private float speed = 1;
 
-	void Start ()
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
+    void Start ()
     {
         thisImage = GetComponent<Image>();
-        overallCorruption = GameManager.Instance.overallCorruption;
+        overallCorruption = gameManager.overallCorruption;
 
         thisImage.fillAmount = 0;
 	}

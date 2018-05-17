@@ -29,6 +29,8 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     [SerializeField] bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
 
+    GameManager gameManager;
+
     [SerializeField] private GameObject correctNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
     [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
@@ -52,10 +54,15 @@ public class NoteHuntCorruption : CorruptionBaseClass
     // The list of notes (the game object) to destroy when exiting segment
     [HideInInspector] public List<GameObject> destroyList;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        audioManager = GameManager.Instance.audioManager;
-        overallCorruption = GameManager.Instance.overallCorruption;
+        audioManager = gameManager.audioManager;
+        overallCorruption = gameManager.overallCorruption;
 
         duration = overallCorruption.durations[segmentID];
 
@@ -67,7 +74,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
         // Set points and calculate max points
         for (int i = 0; i < notesList.Count; i++)
         {
-            notesList[i].spawnTime *= GameManager.Instance.overallCorruption.bpmInMs;
+            notesList[i].spawnTime *= gameManager.overallCorruption.bpmInMs;
             if (notesList[i].noteType == NoteType.CORRECT)
             {
                 notesList[i].points = correctNotePoints;
@@ -88,7 +95,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-            if (GameManager.Instance.recording) //If recording
+            if (gameManager.recording) //If recording
             {
                 if (inSegment == false) //If player just entered the segment
                 {
@@ -106,7 +113,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
     private void RecordSegment()
     {
         // ** Notes Hunt ** //
-        timeStamp = Mathf.Clamp(GameManager.Instance.audioManager.GetTimeLinePosition() - duration.start, 0, duration.stop - duration.start);
+        timeStamp = Mathf.Clamp(gameManager.audioManager.GetTimeLinePosition() - duration.start, 0, duration.stop - duration.start);
         SpawnNotes();
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {

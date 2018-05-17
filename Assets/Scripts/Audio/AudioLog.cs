@@ -9,10 +9,16 @@ public class AudioLog : MonoBehaviour {
     public FMOD.Studio.EventInstance audioLogEv;
     private AudioManager audioManager;
 
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
 
     private void Start()
     {
-        audioManager = GameManager.Instance.audioManager;
+        audioManager = gameManager.audioManager;
     }
 
     public void PlayAudioLog()

@@ -7,20 +7,25 @@ using UnityEngine.UI;
 
 public class ButtonDisabler : MonoBehaviour {
 
-    [Tooltip("Drag the buttons you wish to disable during 'recording' here")]
-    [SerializeField] private List<Button> disable2DButtonList;
     [Tooltip("The 3D buttons you wish to enable/disable")]
-    [SerializeField] private List<ButtonController> disable3DButtonList;
+    [SerializeField] private List<ButtonController> disableButtonList;
     //[SerializeField] private Dropdown dropdown;
+
+    GameManager gameManager;
 
     private AudioManager audioManager;
     private DrumMechanic drumMechanic;
     private FMOD.Studio.PLAYBACK_STATE playbackState;
 
+    void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
 	void Start ()
     {
-        audioManager = GameManager.Instance.audioManager;
-        Debug.Assert(disable2DButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable when recording)");
+        audioManager = gameManager.audioManager;
+        Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable during tape switching animation)");
 	}
 	
 
@@ -28,33 +33,20 @@ public class ButtonDisabler : MonoBehaviour {
     {
         audioManager.gameMusicEv.getPlaybackState(out playbackState);
 
-
-        // Disable 2D buttons
-        for (int i = 0; i < disable2DButtonList.Count; i++)
+        // Disable buttons
+        for (int i = 0; i < disableButtonList.Count; i++)
         {
-            disable2DButtonList[i].interactable = false;
-        }
-
-        // Disable 3D buttons
-        for (int i = 0; i < disable3DButtonList.Count; i++)
-        {
-            disable3DButtonList[i].GetComponent<ButtonController>().enabled = !enabled;
+            disableButtonList[i].GetComponent<ButtonController>().isEnabled = false;
         }
 
     }
 
     public void EnableButtons()
     {
-        // Enable 2D buttons
-        for (int i = 0; i < disable2DButtonList.Count; i++)
+        // Enable buttons
+        for(int i = 0; i < disableButtonList.Count; i++)
         {
-            disable2DButtonList[i].interactable = true;
-        }
-
-        // Enable 3D buttons
-        for(int i = 0; i < disable3DButtonList.Count; i++)
-        {
-            disable3DButtonList[i].GetComponent<ButtonController>().enabled = enabled;
+            disableButtonList[i].GetComponent<ButtonController>().isEnabled = true;
         }
     }
 

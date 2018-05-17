@@ -6,6 +6,9 @@ public class CassetteAnimation : MonoBehaviour {
 
     private AudioManager audioManager;
     private AudioTimeline audioTimeline;
+
+    GameManager gameManager;
+
     public bool cassetteAnimation = true;
     [SerializeField] private SkinnedMeshRenderer dummyRightWheel;
     [SerializeField] private SkinnedMeshRenderer dummyLeftWheel;
@@ -21,11 +24,16 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private int lidClosingDelay;
     [SerializeField] private int startClosingDelay;
 
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start ()
     {
         StartCoroutine(LidClosing());
-        audioManager = GameManager.Instance.audioManager;
-        audioTimeline = GameManager.Instance.audioManager.GetComponent<AudioTimeline>();
+        audioManager = gameManager.audioManager;
+        audioTimeline = gameManager.audioManager.GetComponent<AudioTimeline>();
         
         Debug.Assert(dummyRightWheel != null, "Dummy right wheel is not attached to the script");
         Debug.Assert(dummyLeftWheel != null, "Dummy left wheel is not attached to the script");

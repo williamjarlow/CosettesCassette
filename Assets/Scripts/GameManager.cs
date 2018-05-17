@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public enum instruments { drums, synth, vocals, guitar, bass, pitch };
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
 
     [HideInInspector] public AudioDistortion audioDistortion;
@@ -77,7 +77,7 @@ public class GameManager : Singleton<GameManager>
             SnapToClosestSegment();
             // Start recording and disable buttons
             recording = true;
-            buttonDisabler.DisableButtons();
+            //buttonDisabler.DisableButtons();
 
             audioManager.PlayRecordStart();
         }

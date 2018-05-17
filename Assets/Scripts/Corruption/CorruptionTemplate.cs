@@ -8,10 +8,17 @@ public class CorruptionTemplate : CorruptionBaseClass
     AudioManager audioManager;
     OverallCorruption overallCorruption;
 
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        overallCorruption = GameManager.Instance.overallCorruption;
-        audioManager = GameManager.Instance.audioManager;
+        overallCorruption = gameManager.overallCorruption;
+        audioManager = gameManager.audioManager;
         duration = overallCorruption.durations[segmentID];
     }
 
@@ -20,7 +27,7 @@ public class CorruptionTemplate : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-            if (GameManager.Instance.recording) //If recording
+            if (gameManager.recording) //If recording
             {
                 if (inSegment == false) //If player just entered the segment
                 {
@@ -39,7 +46,7 @@ public class CorruptionTemplate : CorruptionBaseClass
         //This function gets called upon when entering the segment
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        if (GameManager.Instance.recording)
+        if (gameManager.recording)
             corruptionClearedPercent = 0;
         base.EnterSegment();
     }
@@ -48,7 +55,7 @@ public class CorruptionTemplate : CorruptionBaseClass
     {
         //This function gets called upon when leaving the segment
         inSegment = false;
-        if (GameManager.Instance.recording)
+        if (gameManager.recording)
             GradeScore(); //Score gets evaluated and saved to file here.
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;

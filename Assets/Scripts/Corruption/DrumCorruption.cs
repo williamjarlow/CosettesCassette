@@ -53,10 +53,17 @@ public class DrumCorruption : CorruptionBaseClass
 
     private OverallCorruption overallCorruption;
 
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+    }
+
     void Start()
     {
-        audioManager = GameManager.Instance.audioManager;
-        overallCorruption = GameManager.Instance.overallCorruption;
+        audioManager = gameManager.audioManager;
+        overallCorruption = gameManager.overallCorruption;
 
         for (int i = 0; i < beats.Count; i++)
         {
@@ -89,7 +96,7 @@ public class DrumCorruption : CorruptionBaseClass
 
             SetKickMute();
 
-            if (GameManager.Instance.recording) //If recording
+            if (gameManager.recording) //If recording
             {
                 RecordBeats();
             }
@@ -112,7 +119,7 @@ public class DrumCorruption : CorruptionBaseClass
     public override void ExitSegment()
     {
         inSegment = false;
-        if (GameManager.Instance.recording)
+        if (gameManager.recording)
             GradeScore();
         innerDistortion = 0;
         base.ExitSegment();
