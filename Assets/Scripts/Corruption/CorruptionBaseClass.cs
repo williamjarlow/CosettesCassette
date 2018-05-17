@@ -20,7 +20,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector]
     public float currentScore = 0;
 
-    GameManager gameManager;
+    [HideInInspector] public GameManager gameManager;
 
     private SaveSegmentStruct saveStruct;
 
@@ -37,6 +37,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     void Awake()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        Debug.Log(gameManager);
         saveStruct = new SaveSegmentStruct();
     }
 
@@ -50,6 +51,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
 
     public virtual void EnterSegment()
     {
+
         inSegment = true;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();

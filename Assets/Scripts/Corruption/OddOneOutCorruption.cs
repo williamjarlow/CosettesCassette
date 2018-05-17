@@ -24,12 +24,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
     // ** TODO ** // 
     // 1. Add some visual effect when clicking on a button and destroying the lyrics
 
-    GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
 
     void Start()
     {

@@ -59,7 +59,6 @@ public class PitchCorruption : CorruptionBaseClass {
 
     [SerializeField] GameObject pitchIndicator;
     GameObject pitchIndicatorInstance;
-    GameManager gameManager;
     Coroutine lastCoroutine;
     AudioManager audioManager;
     AudioPitch audioPitch;
@@ -69,11 +68,6 @@ public class PitchCorruption : CorruptionBaseClass {
     List<Vector3> linePositions = new List<Vector3>();
 
     private OverallCorruption overallCorruption;
-
-    private void Awake()
-    {
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-    }
 
     // Use this for initialization
     void Start()
