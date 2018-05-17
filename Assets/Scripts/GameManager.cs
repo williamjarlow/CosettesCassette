@@ -70,13 +70,18 @@ public class GameManager : Singleton<GameManager>
 
     public void Record()
     {
-        // Find and jump to the closest segment
-        SnapToClosestSegment();
-        // Start recording and disable buttons
-        recording = true;
-        buttonDisabler.DisableButtons();
+        // If the current track is playing
+        if(audioManager.GetTimeLinePosition() > 0)
+        {
+            // Find and jump to the closest segment
+            SnapToClosestSegment();
+            // Start recording and disable buttons
+            recording = true;
+            buttonDisabler.DisableButtons();
 
-		audioManager.PlayRecordStart();
+            audioManager.PlayRecordStart();
+        }
+
     }
 
     public void Listen()
