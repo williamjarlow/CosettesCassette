@@ -22,11 +22,14 @@ public class AudioManager : MonoBehaviour {
 
 	//DSPs
 	public FMOD.DSP musicChanSubGroupDSP;
+	public FMOD.DSP pitchSumDSP;
 	public FMOD.DSP pitchChordsDSP;
 	public FMOD.DSP pitchVocalsDSP;
 	public FMOD.DSP pitchDrumsDSP;
 	public FMOD.DSP pitchBassDSP;
 	public FMOD.DSP pitchLeadDSP;
+	public FMOD.DSP tremoloVocalsDSP;
+	public FMOD.DSP flangerVocalsDSP;
 
 	//Event instances
 	public FMOD.Studio.EventInstance gameMusicEv;
@@ -431,33 +434,45 @@ public class AudioManager : MonoBehaviour {
 		}
 		
 		FMOD.DSPConnection DSPCon;
-		//FMOD.DSP_TYPE type;
+		FMOD.DSP_TYPE type;
 
+		//CHANNEL GROUP AND DSP HEAD
 		gameMusicEv.getChannelGroup (out musicChanGroup);
 		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
 		//print ("Get subgroup: " + result);
 		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
 		//print ("Get subgroup DSP: " + result);
+
 		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
 //		pitchChordsDSP.getType (out type);
 //		print (result);
 //		print (type);
-		result = musicChanSubGroupDSP.getInput (1, out pitchVocalsDSP, out DSPCon);
-		/*pitchLeadDSP.getType (out type);
-		print (result);
-		print (type);*/
+		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
+//		tremoloVocalsDSP.getType (out type);
+//		print (result);
+//		print (type);
 		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-		/*pitchBassDSP.getType (out type);
-		print (result);
-		print (type);*/
+//		pitchDrumsDSP.getType (out type);
+//		print (result);
+//		print (type);
 		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-		/*pitchVocalsDSP.getType (out type);
-		print (result);
-		print (type);*/
+//		pitchBassDSP.getType (out type);
+//		print (result);
+//		print (type);
 		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
-		/*pitchDrumsDSP.getType (out type);
-		print (result);
-		print (type);*/
+//		pitchLeadDSP.getType (out type);
+//		print (result);
+//		print (type);
+
+		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
+//		result = flangerVocalsDSP.getType(out type);
+//		print(result);
+//		print(type);
+
+		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
+//		result = pitchVocalsDSP.getType(out type);
+//		print(result);
+//		print(type);
 
 		/*pitchChordsDSP.setBypass(false);
 		pitchVocalsDSP.setBypass(false);
