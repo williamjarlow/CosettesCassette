@@ -77,7 +77,7 @@ public class GameManager : Singleton<GameManager>
             SnapToClosestSegment();
             // Start recording and disable buttons
             recording = true;
-            buttonDisabler.DisableButtons();
+            //buttonDisabler.DisableButtons();
 
             audioManager.PlayRecordStart();
         }
