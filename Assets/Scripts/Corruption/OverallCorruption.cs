@@ -153,7 +153,6 @@ public class OverallCorruption : MonoBehaviour {
             //else
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.audioManager.PlayWinSound(0);
-            GameObject.FindGameObjectWithTag("Eject").SetActive(true);
 		}
 	} 
 
