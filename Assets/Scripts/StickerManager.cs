@@ -76,10 +76,10 @@ public class StickerManager : MonoBehaviour {
     {
         if(stickers[title].EarnSticker())
         {
-            GameObject sticker = particleSticker;
-            sticker.SetActive(true);
-            SetVisualSticker(sticker, title);
-            StartCoroutine(HideSticker(sticker));
+            //GameObject sticker = particleSticker;
+            //sticker.SetActive(true);
+            //SetVisualSticker(sticker, title);
+            //StartCoroutine(HideSticker(sticker));
             saveSystemRef.GetComponent<SaveSystem>().SaveStickers(title, true);
         }
     }

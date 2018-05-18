@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int lengthOfSong;
     [HideInInspector] public int currentSegmentIndex;
     [HideInInspector] public int timeStamp;
-    [Header("How far into the corrupted area we are allowed without snapping to earlier segment")]
+    [Header("How far into the corrupted area we are allowed without snapping to earlier segment when using skip")]
     [SerializeField]
     private int allowedProgressIntoBarInMs = 5000;
 
