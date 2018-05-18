@@ -127,8 +127,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
 
-		audioManager.flangerVocalsDSP.setBypass (false);
-		audioManager.tremoloVocalsDSP.setBypass (false);
+		audioManager.toggleOOO.setValue (1f);
     }
 
     public override void ExitSegment()
@@ -141,8 +140,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         base.ExitSegment();
         ResetConditions();
 
-		audioManager.flangerVocalsDSP.setBypass (true);
-		audioManager.tremoloVocalsDSP.setBypass (true);
+		audioManager.toggleOOO.setValue (0f);
     }
 
     public override void GradeScore()

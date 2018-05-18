@@ -21,15 +21,29 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.Bus interfaceBus;
 
 	//DSPs
-	public FMOD.DSP musicChanSubGroupDSP;
-	public FMOD.DSP pitchSumDSP;
-	public FMOD.DSP pitchChordsDSP;
-	public FMOD.DSP pitchVocalsDSP;
-	public FMOD.DSP pitchDrumsDSP;
-	public FMOD.DSP pitchBassDSP;
-	public FMOD.DSP pitchLeadDSP;
-	public FMOD.DSP tremoloVocalsDSP;
-	public FMOD.DSP flangerVocalsDSP;
+//	public FMOD.DSP musicChanSubGroupDSP;
+//	public FMOD.DSP pitchSumDSP;
+//	public FMOD.DSP pitchChordsDSP;
+//	public FMOD.DSP pitchVocalsDSP;
+//	public FMOD.DSP pitchDrumsDSP;
+//	public FMOD.DSP pitchBassDSP;
+//	public FMOD.DSP pitchLeadDSP;
+//	public FMOD.DSP tremoloVocalsDSP;
+//	public FMOD.DSP flangerVocalsDSP;
+
+	//Parameter instances
+	public FMOD.Studio.ParameterInstance togglePitchVocals;
+	public FMOD.Studio.ParameterInstance togglePitchChords;
+	public FMOD.Studio.ParameterInstance togglePitchDrums;
+	public FMOD.Studio.ParameterInstance togglePitchBass;
+	public FMOD.Studio.ParameterInstance togglePitchLead;
+	public FMOD.Studio.ParameterInstance pitchVocals;
+	public FMOD.Studio.ParameterInstance pitchChords;
+	public FMOD.Studio.ParameterInstance pitchDrums;
+	public FMOD.Studio.ParameterInstance pitchBass;
+	public FMOD.Studio.ParameterInstance pitchLead;
+	public FMOD.Studio.ParameterInstance toggleOOO;
+	public FMOD.Studio.ParameterInstance oooVocals;
 
 	//Event instances
 	public FMOD.Studio.EventInstance gameMusicEv;
@@ -70,16 +84,7 @@ public class AudioManager : MonoBehaviour {
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
         lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
 
-        //Loads the FMOD banks
-        for (int i = 0; i < bankFiles.Count; i++)
-        {
-            FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-			result = systemObj.getBank ("bank:" + bankFiles [i], out banks [i]);
-            print(result);
-        }
-
-		FMODUnity.RuntimeManager.WaitForAllLoads ();
-        systemObj.flushCommands ();
+		LoadBanks ();
 
         // Get the event description of music event, needed to get Track Length
         // Required to be in Awake() because a lot of game objects ask for the track length in Start()
@@ -96,6 +101,20 @@ public class AudioManager : MonoBehaviour {
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
 
+	public void LoadBanks()
+	{
+		//Loads the FMOD banks
+		for (int i = 0; i < bankFiles.Count; i++)
+		{
+			FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
+			result = systemObj.getBank ("bank:/" + bankFiles [i], out banks [i]);
+			print(result);
+		}
+
+		FMODUnity.RuntimeManager.WaitForAllLoads ();
+		systemObj.flushCommands ();
+	}
+
     public void UnloadBanks()
     {
         int j = bankFiles.Count;
@@ -106,7 +125,6 @@ public class AudioManager : MonoBehaviour {
             result = banks[i].unload();
             print(result);
         }
-
     }
 
     public void AudioPlayMusic ()
@@ -129,12 +147,31 @@ public class AudioManager : MonoBehaviour {
 
         gameMusicEv.start();
 
+		GetDSPParameters ();
+
         //assigns DSPs if starting music and they haven't been assigned already
-        if (!startedMusic & !switchedToAudioLog) 
-			StartCoroutine (GetDSP ());
+//      	if (!startedMusic & !switchedToAudioLog) 
+//			StartCoroutine (GetDSP ());
     }
 
+	public void GetDSPParameters()
+	{
+		//Toggles
+		gameMusicEv.getParameter ("toggle_pitch_vocals", out togglePitchVocals);
+		gameMusicEv.getParameter ("toggle_pitch_chords", out togglePitchChords);
+		gameMusicEv.getParameter ("toggle_pitch_drums", out togglePitchDrums);
+		gameMusicEv.getParameter ("toggle_pitch_bass", out togglePitchBass);
+		gameMusicEv.getParameter ("toggle_pitch_lead", out togglePitchLead);
+		gameMusicEv.getParameter ("toggle_ooo", out toggleOOO);
 
+		//Intensity
+		gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
+		gameMusicEv.getParameter("pitch_chords", out pitchChords);
+		gameMusicEv.getParameter("pitch_drums", out pitchDrums);
+		gameMusicEv.getParameter("pitch_bass", out pitchBass);
+		gameMusicEv.getParameter("pitch_lead", out pitchLead);
+		gameMusicEv.getParameter("ooo_vocals", out oooVocals);
+	}
 
 	public void AudioStopMusic ()
     {
@@ -436,66 +473,68 @@ public class AudioManager : MonoBehaviour {
 		interfaceBus.setMute (true);
 	}
 		
-    private IEnumerator GetDSP()
-	{
-		FMOD.Studio.PLAYBACK_STATE state;
-
-		gameMusicEv.getPlaybackState (out state);
-
-		//waits for "gameMusicEv" to start before trying to get DSPs
-		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
-		{
-			gameMusicEv.getPlaybackState (out state);
-			yield return null;
-		}
-		
-		FMOD.DSPConnection DSPCon;
-		FMOD.DSP_TYPE type;
-
-		//CHANNEL GROUP AND DSP HEAD
-		gameMusicEv.getChannelGroup (out musicChanGroup);
-		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
-		//print ("Get subgroup: " + result);
-		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
-		//print ("Get subgroup DSP: " + result);
-
-		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
+//    private IEnumerator GetDSP()
+//	{
+//		FMOD.Studio.PLAYBACK_STATE state;
+//
+//		gameMusicEv.getPlaybackState (out state);
+//
+//		//waits for "gameMusicEv" to start before trying to get DSPs
+//		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
+//		{
+//			gameMusicEv.getPlaybackState (out state);
+//			yield return null;
+//		}
+//		
+//		FMOD.DSPConnection DSPCon;
+//		FMOD.DSP_TYPE type;
+//
+//		//CHANNEL GROUP AND DSP HEAD
+//		gameMusicEv.getChannelGroup (out musicChanGroup);
+//		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
+//		//print ("Get subgroup: " + result);
+//		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
+//		//print ("Get subgroup DSP: " + result);
+//
+//		musicChanSubGroupDSP.get
+//
+//		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
 //		pitchChordsDSP.getType (out type);
 //		print (result);
 //		print (type);
-		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
+//		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
 //		tremoloVocalsDSP.getType (out type);
 //		print (result);
 //		print (type);
-		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
+//		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
 //		pitchDrumsDSP.getType (out type);
 //		print (result);
 //		print (type);
-		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+//		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
 //		pitchBassDSP.getType (out type);
 //		print (result);
 //		print (type);
-		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+//		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
 //		pitchLeadDSP.getType (out type);
 //		print (result);
 //		print (type);
-
-		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
+//
+//		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
 //		result = flangerVocalsDSP.getType(out type);
 //		print(result);
 //		print(type);
-
-		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
+//
+//		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
 //		result = pitchVocalsDSP.getType(out type);
 //		print(result);
 //		print(type);
-
-		/*pitchChordsDSP.setBypass(false);
-		pitchVocalsDSP.setBypass(false);
-		pitchDrumsDSP.setBypass(false);
-		pitchBassDSP.setBypass(false);
-		pitchLeadDSP.setBypass(false);*/
-	}
+//
+//		/*pitchChordsDSP.setBypass(false);
+//		pitchVocalsDSP.setBypass(false);
+//		pitchDrumsDSP.setBypass(false);
+//		pitchBassDSP.setBypass(false);
+//		pitchLeadDSP.setBypass(false);*/
+//	}
 
     public float GetTrackLength()
     {
@@ -533,10 +572,10 @@ public class AudioManager : MonoBehaviour {
 		PlayEjectSound ();
     }
 
-    private void OnDestroy()
-    {
-        //release FMOD system objects (safety precaution, likely not needed anymore). "systemObj" has to be released first.
-        //systemObj.release();
-	    //lowLevelSys.release();
-    }
+//    private void OnDestroy()
+//    {
+//        //release FMOD system objects (safety precaution, likely not needed anymore). "systemObj" has to be released first.
+//        systemObj.release();
+//	      lowLevelSys.release();
+//    }
 }
