@@ -64,7 +64,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         inSegment = false;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
-        //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
+        //GameManager.Instance.recordButton.ToggleButtonUp();           //WHY IS THIS NOT WORKING!?!??!
         //GameManager.Instance.recordButton.NakedToggleUp();
         //GameManager.Instance.Listen();
     }

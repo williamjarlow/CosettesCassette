@@ -74,7 +74,8 @@ public class AudioManager : MonoBehaviour {
         for (int i = 0; i < bankFiles.Count; i++)
         {
             FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-			systemObj.getBank ("bank:/" + bankFiles [i], out banks [i]);
+			result = systemObj.getBank ("bank:" + bankFiles [i], out banks [i]);
+            print(result);
         }
 
 		FMODUnity.RuntimeManager.WaitForAllLoads ();
@@ -94,7 +95,20 @@ public class AudioManager : MonoBehaviour {
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
-		
+
+    public void UnloadBanks()
+    {
+        int j = bankFiles.Count;
+        //Loads the FMOD banks
+        for (int i = 0; i < j; i++)
+        {
+            //FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
+            result = banks[i].unload();
+            print(result);
+        }
+
+    }
+
     public void AudioPlayMusic ()
     {
 		//"music" event is assigned to "gameMusicEv"
@@ -119,6 +133,8 @@ public class AudioManager : MonoBehaviour {
         if (!startedMusic & !switchedToAudioLog) 
 			StartCoroutine (GetDSP ());
     }
+
+
 
 	public void AudioStopMusic ()
     {

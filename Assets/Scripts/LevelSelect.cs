@@ -164,6 +164,7 @@ public class LevelSelect : MonoBehaviour
                     // If the hit cassette is focused
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
+                        audioManager.UnloadBanks();
                         SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                     }
                 }
