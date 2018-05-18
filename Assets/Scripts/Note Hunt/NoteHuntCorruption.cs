@@ -82,6 +82,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
             }
                 
         }
+        Load();
     }
 
     void Update()

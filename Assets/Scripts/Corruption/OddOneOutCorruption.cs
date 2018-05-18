@@ -56,6 +56,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         {
             SpawnLyrics();
         }
+        Load();
     }
 
     private void SpawnLyrics()

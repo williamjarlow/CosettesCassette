@@ -3,7 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+class images
+{
+    public Image pageImage;
+}
+
+[System.Serializable]
+class tutorial
+{
+    public Button tutorialButton;
+    public List<images> images;
+}
+
 public class Tutorial : MonoBehaviour {
+
+    [SerializeField] private GameObject tutorialMenu;
+    [SerializeField] private GameObject forwardButton;
+    [SerializeField] private GameObject backwardsButton;
+    [SerializeField] private Image leftImage;
+    [SerializeField] private Image rightImage;
+    [SerializeField] private List<tutorial> tutorials;
+    private int tutorialIndex = 0;
+    private int imageIndex = 0;
 
     [SerializeField] private GameObject tutorialPrefab;
     [SerializeField] private TutorialStruct[] tutStruct;
@@ -55,6 +77,43 @@ public class Tutorial : MonoBehaviour {
         tutorialPrefab.SetActive(true);
         audioManager.AudioPauseMusic();
     }
+
+    public void FlipPagesForward()
+    {
+        if (imageIndex <= tutorials[tutorialIndex].images.Count - 3)
+        {
+            //audioManager.PlayScriptFlip();
+            imageIndex += 2;
+            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage.sprite;
+            if (imageIndex <= tutorials[tutorialIndex].images.Count - 2)
+                rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage.sprite;
+            if (imageIndex == tutorials[tutorialIndex].images.Count - 1)
+                rightImage.sprite = null;
+        }
+    }
+
+    public void FlipPagesBackwards()
+    {
+        if (imageIndex >= 1)
+        {
+            //audioManager.PlayScriptFlip();
+            imageIndex -= 2;
+            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage.sprite;
+            rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage.sprite;
+        }
+    }
+
+    public void BackToTutorials()
+    {
+        leftImage.sprite = null;
+        rightImage.sprite = null;
+        tutorialMenu.SetActive(true);
+        forwardButton.SetActive(false);
+        backwardsButton.SetActive(false);
+
+        //audioManager.PlayPauseMenuBack();
+    }
+
 }
 
 [System.Serializable]
