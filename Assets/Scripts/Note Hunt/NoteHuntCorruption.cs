@@ -28,9 +28,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
     private OverallCorruption overallCorruption;
 
     [SerializeField] bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
-
-    GameManager gameManager;
-
     [SerializeField] private GameObject correctNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
     [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
@@ -57,6 +54,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
     {
         audioManager = gameManager.audioManager;
         overallCorruption = gameManager.overallCorruption;
+        Debug.Log(audioManager);
 
         duration = overallCorruption.durations[segmentID];
 
