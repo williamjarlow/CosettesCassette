@@ -21,6 +21,9 @@ public class ButtonController : MonoBehaviour {
     private Vector3 endposition;
     [SerializeField] private int buttonSpeed;
     private bool buttonclicked = false;
+
+    GameManager gameManager;
+
     // Use this for initialization
     void Start () {
         buttonstates buttonstate;
@@ -29,6 +32,8 @@ public class ButtonController : MonoBehaviour {
         endposition = new Vector3(Startingposition.x, Startingposition.y, Startingposition.z + buttonPressdepth);
 
         isEnabled = true;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -65,6 +70,10 @@ public class ButtonController : MonoBehaviour {
 	}
      private void OnMouseOver()
     {
+        if (gameObject.name != ("Button Eject") || gameObject.name == ("Button Eject") && gameManager.LevelCleared)
+        {
+
+
         if (buttonstate != buttonstates.Moving && isEnabled)
         {
             if (!isDual)
@@ -100,7 +109,7 @@ public class ButtonController : MonoBehaviour {
 
             }
         }
-
+        }
     }
 
     public void ToggleButtonUp()
