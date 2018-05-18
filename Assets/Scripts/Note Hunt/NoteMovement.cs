@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NoteMovement : MonoBehaviour {
 
+    public NoteType noteType;
+    [HideInInspector] public int hitsRemaining;
 
     private float RNGBounceTimer;
     [SerializeField] private float leftEdge;

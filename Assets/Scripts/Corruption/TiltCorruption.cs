@@ -21,8 +21,6 @@ public class TiltCorruption : CorruptionBaseClass
 
     private AudioManager audioManager;
 
-    GameManager gameManager;
-
     private OverallCorruption overallCorruption;
 
     private void Awake()

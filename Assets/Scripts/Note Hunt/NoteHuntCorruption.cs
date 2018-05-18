@@ -5,54 +5,77 @@ using UnityEngine.Assertions;
 
 // ** Written by Hannes Gustafsson ** // 
 
+public enum NoteType { CORRECT, INCORRECT, CORRECTMULTI };
+public enum NoteValue { SINGLE, DOUBLE };
+
 public class NoteHuntCorruption : CorruptionBaseClass
 {
 
-                // ** DISCLAIMER ** //
+    // ** DISCLAIMER ** //
     //  Curently the 'points' variable of the class 'Notes' has no use. Might be reworked in the future
 
     [System.Serializable]
     public class Notes
     {
         public NoteType noteType;
-        [Tooltip("Spawntime in milliseconds relative to the song")] public int spawnTime;
-        [HideInInspector] public int points;  // The points that the player recieves when destroying the object. Public to be able to use multipliers for powerups, etc
-        [HideInInspector] public bool hasSpawned;
+        [Tooltip("Spawntime in milliseconds relative to the song")]
+        public int spawnTime;
+        [HideInInspector]
+        public int points;  // The points that the player recieves when destroying the object. Public to be able to use multipliers for powerups, etc
+        [HideInInspector]
+        public bool hasSpawned;
     }
-
-
-    public enum NoteType { CORRECT, INCORRECT, CORRECTMULTI };
-    public enum NoteValue { SINGLE, DOUBLE };
 
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
 
-    [SerializeField] bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
-    [SerializeField] private GameObject correctNotePrefab;
-    [SerializeField] private GameObject correctMultiNotePrefab;
-    [SerializeField] private GameObject incorrectNotePrefab;
-    [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
-    [SerializeField] private Sprite[] correctNotesSprites = new Sprite[3];
-    [SerializeField] private Sprite[] correctMultiNotesSprites = new Sprite[2];
-    [SerializeField] private Sprite[] incorrectNotesSprites = new Sprite[5];
+    [SerializeField]
+    bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
+    [SerializeField]
+    private GameObject correctNotePrefab;
+    [SerializeField]
+    private GameObject correctMultiNotePrefab;
+    [SerializeField]
+    private GameObject incorrectNotePrefab;
+    [Tooltip("The values added to the note box collider to compensate for its size")]
+    [SerializeField]
+    private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
+    [SerializeField]
+    private Sprite[] correctNotesSprites = new Sprite[3];
+    [SerializeField]
+    private Sprite[] correctMultiNotesSprites = new Sprite[2];
+    [SerializeField]
+    private Sprite[] incorrectNotesSprites = new Sprite[5];
     private int noteSpriteIndex;    // Index to use when randomzing the sprite for the note
-    [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] private int tolerance = 30;
-    [SerializeField] private int correctNotePoints;
-    [SerializeField] private int correctMultiNotePoints;
-    [SerializeField] private int incorrectNotePoints;
+    [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")]
+    private int tolerance = 30;
+    [SerializeField]
+    private int correctNotePoints;
+    [SerializeField]
+    private int correctMultiNotePoints;
+    [SerializeField]
+    private int incorrectNotePoints;
 
     private float maxScore;
     private float spawnCooldown = 0.05f;
-    [SerializeField] [Range(0, 0.1f)] private float speed;
-    [Tooltip("Minimum x spawn coordinate")] [SerializeField] private float xSpawnRandomMin;
-    [Tooltip("Maximum x spawn coordinate")] [SerializeField] private float xSpawnRandomMax;
-    [SerializeField] private float timeStamp;
-    
+    [SerializeField]
+    [Range(0, 0.1f)]
+    private float speed;
+    [Tooltip("Minimum x spawn coordinate")]
+    [SerializeField]
+    private float xSpawnRandomMin;
+    [Tooltip("Maximum x spawn coordinate")]
+    [SerializeField]
+    private float xSpawnRandomMax;
+    [SerializeField]
+    private float timeStamp;
+
 
     // The list of notes the designers will spawn
     public List<Notes> notesList;
     // The list of notes (the game object) to destroy when exiting segment
-    [HideInInspector] public List<GameObject> destroyList;
+    [HideInInspector]
+    public List<GameObject> destroyList;
     void Start()
     {
         audioManager = gameManager.audioManager;
@@ -76,7 +99,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 notesList[i].points = correctNotePoints;
                 maxScore += notesList[i].points;
             }
-            else if(notesList[i].noteType == NoteType.CORRECTMULTI)
+            else if (notesList[i].noteType == NoteType.CORRECTMULTI)
             {
                 notesList[i].points = correctMultiNotePoints;
                 maxScore += notesList[i].points;
@@ -85,7 +108,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
             {
                 notesList[i].points = incorrectNotePoints;
             }
-                
+
         }
         Load();
     }
@@ -124,12 +147,22 @@ public class NoteHuntCorruption : CorruptionBaseClass
             // If an object was hit
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
+                NoteMovement noteMovement = hit.transform.gameObject.GetComponent<NoteMovement>();
                 // If we hit the note
-                if (hit.transform.gameObject.GetComponent<NoteMovement>() != null)
+                if (noteMovement != null)
                 {
                     // Add/remove points and destroy the hit object
-                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                    Destroy(hit.transform.gameObject);
+                    if (noteMovement.hitsRemaining == 1)
+                    {
+                        //Give audio/visual feedback for destroying note
+                        currentScore += noteMovement.points;
+                        Destroy(hit.transform.gameObject);
+                    }
+                    else
+                    {
+                        //Give audio/visual feedback for hitting note
+                        noteMovement.hitsRemaining -= 1;
+                    }
                 }
             }
         }
@@ -139,16 +172,27 @@ public class NoteHuntCorruption : CorruptionBaseClass
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            
 
             // If an object was hit
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
+                NoteMovement noteMovement = hit.transform.gameObject.GetComponent<NoteMovement>();
                 // If we hit the note
-                if (hit.transform.gameObject.GetComponent<NoteMovement>() != null)
+                if (noteMovement != null)
                 {
                     // Add/remove points and destroy the hit object
-                    currentScore += hit.transform.gameObject.GetComponent<NoteMovement>().points;
-                    Destroy(hit.transform.gameObject);
+                    if (noteMovement.hitsRemaining == 1)
+                    {
+                        //Give audio/visual feedback for destroying note
+                        currentScore += noteMovement.points;
+                        Destroy(hit.transform.gameObject);
+                    }
+                    else
+                    {
+                        //Give audio/visual feedback for hitting note
+                        noteMovement.hitsRemaining -= 1;
+                    }
                 }
 
             }
@@ -161,7 +205,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
         for (int i = 0; i < notesList.Count; i++)
         {
             // If we are at the right time stamp (with some tolerance) --> spawn the note according to the object's note type
-            if(timeStamp > 0 && timeStamp <= notesList[i].spawnTime + tolerance / 2 && timeStamp >= notesList[i].spawnTime - tolerance / 2)
+            if (timeStamp > 0 && timeStamp <= notesList[i].spawnTime + tolerance / 2 && timeStamp >= notesList[i].spawnTime - tolerance / 2)
             {
                 GameObject spawnedNote;
 
@@ -269,7 +313,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     private void DestroyNotes()
     {
-        for(int i = 0; i < destroyList.Count; i++)
+        for (int i = 0; i < destroyList.Count; i++)
         {
             if (destroyList[i] != null)
                 Destroy(destroyList[i].transform.gameObject);
@@ -316,11 +360,10 @@ public class NoteHuntCorruption : CorruptionBaseClass
     void ResetConditions()
     {
         // Loop through the list of notes and set the hasSpawned bool to false. Then destroy all notes.
-        for(int i = 0; i < notesList.Count; i++)
+        for (int i = 0; i < notesList.Count; i++)
         {
             notesList[i].hasSpawned = false;
         }
         DestroyNotes();
     }
 }
-

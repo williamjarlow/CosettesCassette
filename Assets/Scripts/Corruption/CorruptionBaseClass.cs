@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public abstract class CorruptionBaseClass : MonoBehaviour {
+public abstract class CorruptionBaseClass : MonoBehaviour
+{
 
     [Range(0, 100)]
     public float maxDistortion;
     [HideInInspector]
     public float currentDistortion;
-    [Range(0, 100)] [Tooltip("Percentage of corruption that has to be beaten in order for the segment to be 'cleared'")]
+    [Range(0, 100)]
+    [Tooltip("Percentage of corruption that has to be beaten in order for the segment to be 'cleared'")]
     public int clearThreshold;
-    [Range(0, 100)] [Tooltip("Percentage of corruption that has to be beaten in order for the segment to be 'perfect-ed'")]
+    [Range(0, 100)]
+    [Tooltip("Percentage of corruption that has to be beaten in order for the segment to be 'perfect-ed'")]
     public int perfectThreshold;
     [Header("ID of segment in 'Game Manager'")]
     public int segmentID;
@@ -20,7 +23,8 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [HideInInspector]
     public float currentScore = 0;
 
-    [HideInInspector] public GameManager gameManager;
+    [HideInInspector]
+    public GameManager gameManager;
 
     private SaveSegmentStruct saveStruct;
 
@@ -28,11 +32,16 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
     [SerializeField]
     string notes;
 
-    [HideInInspector] public Duration duration;
-    [HideInInspector] public float corruptionClearedPercent;
-    [HideInInspector] public float innerDistortion;
-    [HideInInspector] public bool inSegment;
-    [HideInInspector] public bool cleared;
+    [HideInInspector]
+    public Duration duration;
+    [HideInInspector]
+    public float corruptionClearedPercent;
+    [HideInInspector]
+    public float innerDistortion;
+    [HideInInspector]
+    public bool inSegment;
+    [HideInInspector]
+    public bool cleared;
 
     void Awake()
     {
@@ -54,7 +63,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
 
     public virtual void EnterSegment()
     {
-
         inSegment = true;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
@@ -64,7 +72,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         inSegment = false;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
-        //GameManager.Instance.recordButton.ToggleButtonUp();           //WHY IS THIS NOT WORKING!?!??!
+        //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
         //GameManager.Instance.recordButton.NakedToggleUp();
         //GameManager.Instance.Listen();
     }
@@ -93,11 +101,11 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
         Save();
     }
 
-   public virtual void Save()
+    public virtual void Save()
     {
-            saveStruct.points = corruptionClearedPercent;
-            saveStruct.exists = true;
-            SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
+        saveStruct.points = corruptionClearedPercent;
+        saveStruct.exists = true;
+        SaveSystem.Instance.SaveSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
     }
 
     public virtual void Load()
