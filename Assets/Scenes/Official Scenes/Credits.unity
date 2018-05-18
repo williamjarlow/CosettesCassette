@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1159,12 +1159,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4f6e33495263d8248985be3801567157, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &490539883 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
-    type: 2}
-  m_PrefabInternal: {fileID: 704676147}
-  m_Script: {fileID: 11500000, guid: 18ee5168829537745b173645f1c4a372, type: 3}
 --- !u!1 &532872452
 GameObject:
   m_ObjectHideFlags: 0
@@ -3909,7 +3903,7 @@ Prefab:
     - target: {fileID: 224010349590658998, guid: 0ca5233559948fc40a18c2b4ea8e990f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -13
+      value: -1368.4296
       objectReference: {fileID: 0}
     - target: {fileID: 224010349590658998, guid: 0ca5233559948fc40a18c2b4ea8e990f,
         type: 2}
@@ -4073,6 +4067,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1923392679159646, guid: 0ca5233559948fc40a18c2b4ea8e990f, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114916702210334116, guid: 0ca5233559948fc40a18c2b4ea8e990f,
+        type: 2}
+      propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4810,7 +4809,7 @@ GameObject:
   - component: {fileID: 1497187825}
   - component: {fileID: 1497187824}
   m_Layer: 0
-  m_Name: CreditsAutoStartSong
+  m_Name: AutoPlayMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4827,7 +4826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f2b26a67fba014ea47a3615d64fed0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 490539883}
+  audioManager: {fileID: 562825316}
 --- !u!4 &1497187825
 Transform:
   m_ObjectHideFlags: 0

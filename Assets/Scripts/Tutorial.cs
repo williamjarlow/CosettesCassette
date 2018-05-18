@@ -45,6 +45,7 @@ public class Tutorial : MonoBehaviour {
         //tutorialPrefab.SetActive(false);
     }
 
+    /*
     void Update()
     {
         for(int i = 0; i < tutorials.Count; i++)
@@ -56,6 +57,7 @@ public class Tutorial : MonoBehaviour {
             }
         }
     }
+    */
 
     ////Stops tutorial and resumes time
     //void Resume()

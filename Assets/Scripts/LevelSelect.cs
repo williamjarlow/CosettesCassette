@@ -165,6 +165,7 @@ public class LevelSelect : MonoBehaviour
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
                         audioManager.UnloadBanks();
+                        audioManager.AudioStopMusic();
                         SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                     }
                 }

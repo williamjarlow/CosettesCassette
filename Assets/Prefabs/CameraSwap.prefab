@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4742329593644076}
   - component: {fileID: 20687471349427562}
   - component: {fileID: 124835701796489154}
-  - component: {fileID: 81918709332133618}
   - component: {fileID: 114030266895050296}
   m_Layer: 0
   m_Name: CameraSwap
@@ -51,7 +50,7 @@ Camera:
   m_GameObject: {fileID: 1765326253682696}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -78,13 +77,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &81918709332133618
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1765326253682696}
-  m_Enabled: 1
 --- !u!114 &114030266895050296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,7 +92,10 @@ MonoBehaviour:
   closeUp: {fileID: 0}
   delayCounter: 2.5
   delayCounterWait: 10
-  backMovement: -40
+  delayCounterWaitatStart: 2.5
+  backMovement: -25
+  origPos: {x: 0, y: 1, z: -20}
+  startPos: {x: 0, y: 0, z: 0}
   zoomed: 0
 --- !u!124 &124835701796489154
 Behaviour:

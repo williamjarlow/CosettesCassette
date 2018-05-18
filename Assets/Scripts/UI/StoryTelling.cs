@@ -31,13 +31,10 @@ public class StoryTelling : MonoBehaviour {
 
 	private AudioManager audioManager;
 
-    GameManager gameManager;
-
     void Start()
 	{
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        audioManager = gameManager.audioManager;
-	}
+        audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+    }
 
     public void InitializeStory(int index)
     {

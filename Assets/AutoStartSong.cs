@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AutoStartSong : MonoBehaviour {
 
-    public GameManager gameManager;
+    [SerializeField] private AudioManager audioManager;
 	// Use this for initialization
 	void Start () {
-        gameManager.audioManager.AudioPlayMusic();
+        audioManager.AudioPlayMusic();
 	}
 	
 	// Update is called once per frame
