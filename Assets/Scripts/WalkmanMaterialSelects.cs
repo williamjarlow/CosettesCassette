@@ -8,15 +8,15 @@ public class WalkmanMaterialSelects : MonoBehaviour {
     [SerializeField] private GameObject walkmanRef;
     [SerializeField] private Texture textureRef;
     [SerializeField] private Texture buttonTextureRef;
-    public Material sharedMaterial;
+    
 
     private UnityEngine.UI.Toggle toggle;
 
     // Use this for initialization
     void Start()
     {
-        toggle = GetComponent<UnityEngine.UI.Toggle>();
-        toggle.onValueChanged.AddListener(OnToggleValueChanged);
+        //toggle = GetComponent<UnityEngine.UI.Toggle>();
+        //toggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
 
     // Update is called once per frame

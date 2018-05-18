@@ -13,12 +13,11 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private Text UIbuttonText;
     private bool isShowing = false;
 
-	private AudioManager audioManager;
+	[SerializeField] private AudioManager audioManager;
 
     [SerializeField] private GameObject cassetteAnimation;
     void Start()
     {
-		//audioManager = GameManager.Instance.audioManager;
         //menuToShow.SetActive(true);
         //menuToHide.SetActive(false);
       //  Button btn = pauseButton.GetComponent<Button>();
