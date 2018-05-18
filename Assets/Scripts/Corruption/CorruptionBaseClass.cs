@@ -88,6 +88,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour {
                 //New Highscore
             }
         }
+        currentScore = 0;
         corruptionClearedPercent = bestScore;
         Save();
     }
