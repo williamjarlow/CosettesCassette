@@ -30,7 +30,7 @@ public class PitchCorruption : CorruptionBaseClass {
     LineRenderer lineRenderer;
     float timeSinceStart;
 
-    public Slider pitchSlider;
+    private Slider pitchSlider;
     public float mercyRange;
 
     [Header ("Randomness variables")] [Tooltip ("Set the values of rGoalRange between -2 and 2. The x value has to be lower than the y value.")]
@@ -72,6 +72,7 @@ public class PitchCorruption : CorruptionBaseClass {
     // Use this for initialization
     void Start()
     {
+        pitchSlider = gameManager.pitchSlider.GetComponent<Slider>();
         pitchSlider.gameObject.SetActive(false);
         lineRenderer = GetComponent<LineRenderer>();
         audioPitch = gameManager.audioPitch;
