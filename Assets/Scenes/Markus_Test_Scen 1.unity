@@ -112,6 +112,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &135239126
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 114030266895050296, guid: f88fd96c84f5ec54fb0beb025cef54b5,
+        type: 2}
+      propertyPath: closeUp
+      value: 
+      objectReference: {fileID: 975867647}
+    - target: {fileID: 1765326253682696, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+      propertyPath: m_Name
+      value: Camera
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: f88fd96c84f5ec54fb0beb025cef54b5, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &344969955
 Prefab:
   m_ObjectHideFlags: 0
@@ -951,6 +1002,16 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114220445874793032, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1950527382}
+    - target: {fileID: 114220445874793032, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: cameraSwap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aec3342522feb2e4e86bf1e5dc3de8fd, type: 2}
@@ -2341,6 +2402,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1780236385}
   m_Script: {fileID: 11500000, guid: 18ee5168829537745b173645f1c4a372, type: 3}
+--- !u!114 &1950527382 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114030266895050296, guid: f88fd96c84f5ec54fb0beb025cef54b5,
+    type: 2}
+  m_PrefabInternal: {fileID: 135239126}
+  m_Script: {fileID: 11500000, guid: 75966119e45131a4f883d3918ffc2554, type: 3}
 --- !u!1 &2034541604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,8 +2436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df7a4ceb36812c46a9c0b944d8e1c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disable2DButtonList: []
-  disable3DButtonList: []
+  disableButtonList: []
 --- !u!114 &2034541606
 MonoBehaviour:
   m_ObjectHideFlags: 0
