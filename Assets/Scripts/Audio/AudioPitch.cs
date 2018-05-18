@@ -53,8 +53,6 @@ public class AudioPitch : MonoBehaviour {
 				audioManager.pitchLead.setValue(newPitch);
                 break;
         }
-
-		print (newPitch);
     }
 
 	public void TogglePitch(PitchType pitchType, float bypassState)
