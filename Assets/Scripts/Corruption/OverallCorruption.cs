@@ -135,12 +135,22 @@ public class OverallCorruption : MonoBehaviour {
         if(gameManager.LevelPerfected == false && overallCorruption == 0)
         {
             gameManager.LevelPerfected = true;
+            //if (STICKERNOTALREADYEARNED)
+            //{
+            //    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, SPRITEGOESHERE);
+            //}
+            //else
             gameManager.stageClearVFX.CallVFX(segmentEffects.perfect);
             gameManager.audioManager.PlayWinSound(1);
         }
 		else if(gameManager.LevelCleared == false && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
 		{
             gameManager.LevelCleared = true;
+            //if (STICKERNOTALREADYEARNED)
+            //{
+            //    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, SPRITEGOESHERE);
+            //}
+            //else
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.winScreen.EnableWinScreen();
             gameManager.audioManager.PlayWinSound(0);
