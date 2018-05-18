@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &5716306 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114346158668103402, guid: a403edc4b645dee46a50f0d1a4f36bd2,
+    type: 2}
+  m_PrefabInternal: {fileID: 775588831}
+  m_Script: {fileID: 11500000, guid: 5a715458656b35741bdd96f89a26c33d, type: 3}
 --- !u!1 &11816893
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +690,7 @@ Prefab:
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
       propertyPath: offsetModifier
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
@@ -1982,7 +1988,7 @@ Prefab:
         type: 2}
       propertyPath: pitchSlider
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 92806214}
     - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
       propertyPath: timelineMaskParent
@@ -2011,7 +2017,7 @@ Prefab:
     - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
       propertyPath: musicPath
-      value: event:/Music/Cassette_05/music
+      value: event:/Music/cassette_05
       objectReference: {fileID: 0}
     - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
@@ -3777,7 +3783,7 @@ Prefab:
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.size
-      value: 14
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4619194560789936, guid: daada61ace94abe46ad6c26817817724, type: 2}
       propertyPath: m_LocalPosition.x
@@ -3945,22 +3951,22 @@ Prefab:
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[14].position
-      value: 0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[15].position
-      value: 1.3
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[16].position
-      value: -1.6
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[17].position
-      value: 1.62
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
@@ -13985,21 +13991,26 @@ Prefab:
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[14].seconds
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[15].seconds
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
         type: 2}
       propertyPath: nodes.Array.data[16].seconds
-      value: 1.25
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4619194560789936, guid: daada61ace94abe46ad6c26817817724, type: 2}
       propertyPath: m_LocalScale.y
       value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326354796356080, guid: daada61ace94abe46ad6c26817817724,
+        type: 2}
+      propertyPath: nodes.Array.data[17].seconds
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: daada61ace94abe46ad6c26817817724, type: 2}
@@ -15571,10 +15582,10 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 25
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -15595,7 +15606,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 750415538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1961716, y: 1.2767138, z: -3.944304}
+  m_LocalPosition: {x: 0, y: 1, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -21126,6 +21137,11 @@ Prefab:
       propertyPath: recordButton
       value: 
       objectReference: {fileID: 1054963767}
+    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
+        type: 2}
+      propertyPath: stageClearVFX
+      value: 
+      objectReference: {fileID: 5716306}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aef8bb58cd7cb7c418421394dfeb49d7, type: 2}
   m_IsPrefabParent: 0
@@ -21147,7 +21163,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.06
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -28402,7 +28418,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.06
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -36251,6 +36267,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 738148953}
         m_MethodName: AudioStopMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 750415539}
+        m_MethodName: cameraSwap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
