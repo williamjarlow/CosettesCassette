@@ -182,7 +182,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 if (noteMovement != null)
                 {
                     // Add/remove points and destroy the hit object
-                    if (noteMovement.hitsRemaining == 1)
+                    if (noteMovement.hitsRemaining <= 1)
                     {
                         //Give audio/visual feedback for destroying note
                         currentScore += noteMovement.points;
