@@ -9,8 +9,8 @@ public class SwapCamera : MonoBehaviour {
     [SerializeField] private float delayCounter;
     [SerializeField] private float delayCounterWait;
     [SerializeField] private float backMovement;
-    private Vector3 startPos;
-    public bool zoomed = false;
+    [SerializeField] private Vector3 startPos;
+    [SerializeField] private bool zoomed = false;
     
 
     void Start()
