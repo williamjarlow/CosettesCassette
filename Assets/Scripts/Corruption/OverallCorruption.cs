@@ -67,22 +67,23 @@ public class OverallCorruption : MonoBehaviour {
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
-        //winObject = winObject.GetComponent<KillScreen>();
-
 		Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
+        if (!gameManager.audioManager.switchedToAudioLog)
+        {
+            for (int i = 0; i < segments.Count; i++)
+            {
+                // Instantiate the corrupted area prefab according to the corrupted area specifications
+                RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
+                GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
+                instantiatedObject.transform.SetAsFirstSibling();
+                corruptedAreaList.Add(instantiatedObject);
+                instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
+            }
 
-		for (int i = 0; i < segments.Count; i++)
-		{
-			// Instantiate the corrupted area prefab according to the corrupted area specifications
-			RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
-			GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
-			instantiatedObject.transform.SetAsFirstSibling();
-			corruptedAreaList.Add(instantiatedObject);
-			instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
-		}
+            UpdateCorruptionAmount();
+            UpdateDistortionAmount();
+        }
 
-		UpdateCorruptionAmount();
-		UpdateDistortionAmount();
 	}
 
 	void Update () {
