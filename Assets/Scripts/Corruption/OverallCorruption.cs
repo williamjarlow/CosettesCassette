@@ -68,8 +68,7 @@ public class OverallCorruption : MonoBehaviour {
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
 		Debug.Assert(corruptedArea != null, "Attach the corrupted area prefab to 'Overall Corruption'");
-        if (!gameManager.audioManager.switchedToAudioLog)
-        {
+
             for (int i = 0; i < segments.Count; i++)
             {
                 // Instantiate the corrupted area prefab according to the corrupted area specifications
@@ -82,7 +81,6 @@ public class OverallCorruption : MonoBehaviour {
 
             UpdateCorruptionAmount();
             UpdateDistortionAmount();
-        }
 
 	}
 

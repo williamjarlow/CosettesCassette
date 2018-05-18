@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour {
 
@@ -79,16 +80,21 @@ public class AudioManager : MonoBehaviour {
     [HideInInspector] public bool startedMusic = false;
     [HideInInspector] public bool pausedMusic = true;
 
+    private void OnLevelWasLoaded(int level)
+    {
+       // UnloadBanks();
+    }
+
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
         lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
 
-		LoadBanks ();
+        LoadBanks();
 
         // Get the event description of music event, needed to get Track Length
         // Required to be in Awake() because a lot of game objects ask for the track length in Start()
-		systemObj.getEvent(musicPath, out musicEventDesc);
+        systemObj.getEvent(musicPath, out musicEventDesc);
         musicEventDesc.getLength(out trackLength);
 
 		//Get the event description of audio log
@@ -103,17 +109,17 @@ public class AudioManager : MonoBehaviour {
 
 	public void LoadBanks()
 	{
-		//Loads the FMOD banks
-		for (int i = 0; i < bankFiles.Count; i++)
-		{
-			FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-			result = systemObj.getBank ("bank:/" + bankFiles [i], out banks [i]);
-			print(result);
-		}
+        //Loads the FMOD banks
+        for (int i = 0; i < bankFiles.Count; i++)
+        {
+            FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
+            result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
+            print(result);
+        }
 
-		FMODUnity.RuntimeManager.WaitForAllLoads ();
-		systemObj.flushCommands ();
-	}
+        FMODUnity.RuntimeManager.WaitForAllLoads();
+        systemObj.flushCommands();
+    }
 
     public void UnloadBanks()
     {
@@ -121,9 +127,9 @@ public class AudioManager : MonoBehaviour {
         //Loads the FMOD banks
         for (int i = 0; i < j; i++)
         {
-            //FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
-            result = banks[i].unload();
-            print(result);
+            FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
+            //result = banks[i].unload();
+            //print(result);
         }
     }
 
