@@ -107,7 +107,7 @@ public class PitchCorruption : CorruptionBaseClass {
 	// Update is called once per frame
 	void Update () {
     
-        if(audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
+        if(audioManager.GetTimeLinePosition() > duration.start && audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
             if (gameManager.recording)
             {

@@ -13,6 +13,8 @@ public class NoteMovement : MonoBehaviour {
     [SerializeField] private float RNGBounceLowerBound;
     [SerializeField] private float RNGBounceUpperBound;
     [SerializeField] private float speedx;
+    [SerializeField] private float RNGSpeedxRange;
+    [SerializeField] private float RNGSpeedyRange;
     float spriteWidth;
     private bool headingLeft = true;
     [HideInInspector] public float speed;
@@ -24,6 +26,8 @@ public class NoteMovement : MonoBehaviour {
         RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
         if (Random.Range(0, 2) == 0)
             headingLeft = false;
+        speedx *= Random.Range((1- RNGSpeedxRange), (1 + RNGSpeedxRange));
+        speed *= Random.Range((1 - RNGSpeedyRange), (1 + RNGSpeedyRange));
     }
 
     // Update is called once per frame
