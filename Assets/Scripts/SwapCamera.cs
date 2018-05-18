@@ -8,16 +8,21 @@ public class SwapCamera : MonoBehaviour {
     [SerializeField] private Camera closeUp;
     [SerializeField] private float delayCounter;
     [SerializeField] private float delayCounterWait;
+    [SerializeField] private float delayCounterWaitatStart;
     [SerializeField] private float backMovement;
+    [SerializeField] private Vector3 origPos;
     [SerializeField] private Vector3 startPos;
     [SerializeField] private bool zoomed = false;
     
 
     void Start()
     {
-        zoomedOut.enabled = false;
-        closeUp.enabled = true;
+        zoomedOut.enabled = true;
+        closeUp.enabled = false;
+        zoomedOut.transform.localPosition = origPos;
+        StartCoroutine(DelayatStart());
         startPos = closeUp.transform.position;
+
     }
 
     public void cameraSwap()
@@ -71,6 +76,15 @@ public class SwapCamera : MonoBehaviour {
         StartCoroutine(MoveFromTo(startPos, new Vector3(zoomedOut.transform.localPosition.x, zoomedOut.transform.localPosition.y, backMovement), delayCounter));
         yield return new WaitForSeconds(2.5f);
         swapBack();
+    }
+
+    IEnumerator DelayatStart()
+    {
+        yield return new WaitForSeconds(delayCounterWaitatStart);
+        StartCoroutine(MoveFromTo(closeUp.transform.localPosition, origPos, delayCounter));
+        yield return new WaitForSeconds(2.5f);
+        zoomedOut.enabled = false;
+        closeUp.enabled = true;
     }
 
 }
