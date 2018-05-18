@@ -21,26 +21,26 @@ public class NoteHuntCorruption : CorruptionBaseClass
     }
 
 
-    public enum NoteType { CORRECT, INCORRECT };
+    public enum NoteType { CORRECT, INCORRECT, CORRECTMULTI };
     public enum NoteValue { SINGLE, DOUBLE };
 
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
 
     [SerializeField] bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
-
-    GameManager gameManager;
-
     [SerializeField] private GameObject correctNotePrefab;
+    [SerializeField] private GameObject correctMultiNotePrefab;
     [SerializeField] private GameObject incorrectNotePrefab;
     [Tooltip("The values added to the note box collider to compensate for its size")][SerializeField] private Vector2 addedBoxColliderSize = new Vector2(0.6f, 0.2f);
-    [SerializeField] private Sprite[] correctNotesSprites = new Sprite[5];
+    [SerializeField] private Sprite[] correctNotesSprites = new Sprite[3];
+    [SerializeField] private Sprite[] correctMultiNotesSprites = new Sprite[2];
     [SerializeField] private Sprite[] incorrectNotesSprites = new Sprite[5];
     private int noteSpriteIndex;    // Index to use when randomzing the sprite for the note
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")] private int tolerance = 30;
     [SerializeField] private int correctNotePoints;
+    [SerializeField] private int correctMultiNotePoints;
     [SerializeField] private int incorrectNotePoints;
-    [SerializeField] private int amountOfNoteValues = 2;    // The amount of note values, for now double and single which equals to 2
+
     private float maxScore;
     private float spawnCooldown = 0.05f;
     [SerializeField] [Range(0, 0.1f)] private float speed;
@@ -57,12 +57,14 @@ public class NoteHuntCorruption : CorruptionBaseClass
     {
         audioManager = gameManager.audioManager;
         overallCorruption = gameManager.overallCorruption;
+        Debug.Log(audioManager);
 
         duration = overallCorruption.durations[segmentID];
 
 
         // Initialize points
         correctNotePrefab.GetComponent<NoteMovement>().points = correctNotePoints;
+        correctMultiNotePrefab.GetComponent<NoteMovement>().points = correctMultiNotePoints;
         incorrectNotePrefab.GetComponent<NoteMovement>().points = incorrectNotePoints;
 
         // Set points and calculate max points
@@ -74,8 +76,11 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 notesList[i].points = correctNotePoints;
                 maxScore += notesList[i].points;
             }
-                
-
+            else if(notesList[i].noteType == NoteType.CORRECTMULTI)
+            {
+                notesList[i].points = correctMultiNotePoints;
+                maxScore += notesList[i].points;
+            }
             else if (notesList[i].noteType == NoteType.INCORRECT)
             {
                 notesList[i].points = incorrectNotePoints;
@@ -160,9 +165,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
             {
                 GameObject spawnedNote;
 
-                // Randomize the index of the sprite list. Since both sprite lists should be the same size it should not matter which list is chosen 
-                noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
-
                 // Correct note
                 if (notesList[i].noteType == NoteType.CORRECT && !notesList[i].hasSpawned)
                 {
@@ -174,12 +176,12 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
                     //Debug for spawning notes at edges
                     if (spawnNotesAtEdge)
-                        if(Random.Range(0, 2) == 0)
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, 0), Quaternion.identity, transform);
+                        if (Random.Range(0, 2) == 0)
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                         else
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, 0), Quaternion.identity, transform);
+                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     else
-                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.position.y, transform.position.z), Quaternion.identity, transform);
+                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
                     // Set the game object's speed according to the specified speed in this script
@@ -193,7 +195,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     float pixelsPerUnit = sprite.pixelsPerUnit;
                     // Set the box collider size according to the world space size + the added box collider size
                     boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-
+                    // Prepare the object for destruction
                     destroyList.Add(spawnedNote);
                 }
 
@@ -205,7 +207,14 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
                     // Spawn the correct randomized note
                     notesList[i].hasSpawned = true;
-                    spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), 0), Quaternion.identity);
+                    //Debug for spawning notes at edges
+                    if (spawnNotesAtEdge)
+                        if (Random.Range(0, 2) == 0)
+                            spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                        else
+                            spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                    else
+                        spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = incorrectNotesSprites[noteSpriteIndex];
                     // Set the game object's speed according to the specified speed in this script
@@ -219,7 +228,39 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     float pixelsPerUnit = sprite.pixelsPerUnit;
                     // Set the box collider size according to the world space size + the added box collider size
                     boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+                    // Prepare the object for destruction
+                    destroyList.Add(spawnedNote);
+                }
+                else if (notesList[i].noteType == NoteType.CORRECTMULTI)
+                {
+                    //Randomize the sprite
+                    noteSpriteIndex = Random.Range(0, correctMultiNotesSprites.Length - 1);
 
+                    // Spawn the correct randomized note
+                    notesList[i].hasSpawned = true;
+
+                    //Debug for spawning notes at edges
+                    if (spawnNotesAtEdge)
+                        if (Random.Range(0, 2) == 0)
+                            spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                        else
+                            spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                    else
+                        spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                    // Set the sprite according to the randomly generated sprite
+                    spawnedNote.GetComponent<SpriteRenderer>().sprite = correctMultiNotesSprites[noteSpriteIndex];
+                    // Set the game object's speed according to the specified speed in this script
+                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
+
+                    // Save the box collider and sprite as variables
+                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+
+                    // Convert the sprite to world space units
+                    float pixelsPerUnit = sprite.pixelsPerUnit;
+                    // Set the box collider size according to the world space size + the added box collider size
+                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+                    // Prepare the object for destruction
                     destroyList.Add(spawnedNote);
                 }
             }
@@ -245,7 +286,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     public override void EnterSegment()
     {
-        // Reset the conditions, i.e destroy notes to be able to replay
+        // Reset the conditions, i.e destroy notes to be able to replay and reset
         ResetConditions();
 
         inSegment = true;
@@ -279,7 +320,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
         {
             notesList[i].hasSpawned = false;
         }
-
         DestroyNotes();
     }
 }

@@ -13,6 +13,7 @@ public class Credits : MonoBehaviour {
     [SerializeField] private GameObject AudioManagerz;
     [SerializeField] private GameObject credits;
     [SerializeField] private GameObject winning;
+    [SerializeField] private Image CreditsFade;
     [SerializeField] private Image AudiologPic;
     [SerializeField] private string creditsOrAudiolog;
     [SerializeField] private float waitforit;
@@ -26,6 +27,7 @@ public class Credits : MonoBehaviour {
     public bool music = true;
     public bool audiolog = false;
     public bool showpicture = false;
+    public bool showFade = false;
 
 
 
@@ -36,23 +38,32 @@ public class Credits : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+
+        audioManager = AudioManagerz.GetComponent<AudioManager>();
+        audiolength = audioManager.GetTrackLength();
+
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
+        CreditsFade.CrossFadeAlpha(0, 0.0f, false);
 
         //insert load here
         AudiologPic.enabled = false;
+        CreditsFade.enabled = false;
         if (showpicture == true)
         {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         }
-        audioManager = AudioManagerz.GetComponent<AudioManager>();
-        audiolength = audioManager.GetTrackLength();
+        if (showFade == true)
+        {
+            CreditsFade.CrossFadeAlpha(0, 0.0f, false);
+        }
+
 
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (creditsOrAudiolog == "Audiolog" && audiolog ==true)
+        if (creditsOrAudiolog == "Audiolog" && audiolog == true)
         {
             audioPos = audioManager.GetTimeLinePosition();
             audioP = audioPos / audiolength;
@@ -81,8 +92,14 @@ public class Credits : MonoBehaviour {
             Vector3 temp = transform.localPosition;
             temp.y = currentPos - origPos;
             transform.localPosition = temp;
-        }
         
+            if (currentPos > waitforit && showFade == false)
+            {
+                FadeOut();
+                showFade = true;
+                //insert save here
+            }
+        }
     }
   
     public void Flip()
@@ -102,12 +119,31 @@ public class Credits : MonoBehaviour {
 
         
     }
+    public void FadeOut()
+    {
+        if (music == true)
+        {
+            CreditsFade.enabled = true;
+            StartCoroutine(FadeOutCounter());
+
+        }
+
+
+    }
 
     IEnumerator Audiopic()
     {
 
         yield return new WaitForSeconds(delay);
         AudiologPic.CrossFadeAlpha(1, 1.0f, false);
+
+    }
+
+    IEnumerator FadeOutCounter()
+    {
+
+        yield return new WaitForSeconds(delay);
+        CreditsFade.CrossFadeAlpha(0.5f, 0.0f, false);
 
     }
 
