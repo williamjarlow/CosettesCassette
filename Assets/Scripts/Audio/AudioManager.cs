@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour {
 	[SerializeField] private string levelClearPath;
 
 	//Audio table keys
-    public string bassDrumKey;
+    //public string bassDrumKey;
 
 	private int trackLength;
 
@@ -114,22 +114,19 @@ public class AudioManager : MonoBehaviour {
         {
             FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
             result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
-            print(result);
         }
 
+        //Waits for loads to finish
         FMODUnity.RuntimeManager.WaitForAllLoads();
         systemObj.flushCommands();
     }
 
     public void UnloadBanks()
     {
-        int j = bankFiles.Count;
-        //Loads the FMOD banks
-        for (int i = 0; i < j; i++)
+        //Unloads the loaded FMOD banks
+        for (int i = 0; i < bankFiles.Count; i++)
         {
             FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
-            //result = banks[i].unload();
-            //print(result);
         }
     }
 
@@ -160,24 +157,11 @@ public class AudioManager : MonoBehaviour {
 //			StartCoroutine (GetDSP ());
     }
 
-	public void GetDSPParameters()
-	{
-		//Toggles
-		gameMusicEv.getParameter ("toggle_pitch_vocals", out togglePitchVocals);
-		gameMusicEv.getParameter ("toggle_pitch_chords", out togglePitchChords);
-		gameMusicEv.getParameter ("toggle_pitch_drums", out togglePitchDrums);
-		gameMusicEv.getParameter ("toggle_pitch_bass", out togglePitchBass);
-		gameMusicEv.getParameter ("toggle_pitch_lead", out togglePitchLead);
-		gameMusicEv.getParameter ("toggle_ooo", out toggleOOO);
-
-		//Intensity
-		gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
-		gameMusicEv.getParameter("pitch_chords", out pitchChords);
-		gameMusicEv.getParameter("pitch_drums", out pitchDrums);
-		gameMusicEv.getParameter("pitch_bass", out pitchBass);
-		gameMusicEv.getParameter("pitch_lead", out pitchLead);
-		gameMusicEv.getParameter("ooo_vocals", out oooVocals);
-	}
+    public void AudioPlayMenuMusic()
+    {
+        musicEventDesc.createInstance(out gameMusicEv);
+        gameMusicEv.start();
+    }
 
 	public void AudioStopMusic ()
     {
@@ -478,69 +462,88 @@ public class AudioManager : MonoBehaviour {
 		sfxBus.setMute (true);
 		interfaceBus.setMute (true);
 	}
-		
-//    private IEnumerator GetDSP()
-//	{
-//		FMOD.Studio.PLAYBACK_STATE state;
-//
-//		gameMusicEv.getPlaybackState (out state);
-//
-//		//waits for "gameMusicEv" to start before trying to get DSPs
-//		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
-//		{
-//			gameMusicEv.getPlaybackState (out state);
-//			yield return null;
-//		}
-//		
-//		FMOD.DSPConnection DSPCon;
-//		FMOD.DSP_TYPE type;
-//
-//		//CHANNEL GROUP AND DSP HEAD
-//		gameMusicEv.getChannelGroup (out musicChanGroup);
-//		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
-//		//print ("Get subgroup: " + result);
-//		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
-//		//print ("Get subgroup DSP: " + result);
-//
-//		musicChanSubGroupDSP.get
-//
-//		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
-//		pitchChordsDSP.getType (out type);
-//		print (result);
-//		print (type);
-//		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
-//		tremoloVocalsDSP.getType (out type);
-//		print (result);
-//		print (type);
-//		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-//		pitchDrumsDSP.getType (out type);
-//		print (result);
-//		print (type);
-//		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-//		pitchBassDSP.getType (out type);
-//		print (result);
-//		print (type);
-//		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
-//		pitchLeadDSP.getType (out type);
-//		print (result);
-//		print (type);
-//
-//		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
-//		result = flangerVocalsDSP.getType(out type);
-//		print(result);
-//		print(type);
-//
-//		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
-//		result = pitchVocalsDSP.getType(out type);
-//		print(result);
-//		print(type);
-//
-//		/*pitchChordsDSP.setBypass(false);
-//		pitchVocalsDSP.setBypass(false);
-//		pitchDrumsDSP.setBypass(false);
-//		pitchBassDSP.setBypass(false);
-//		pitchLeadDSP.setBypass(false);*/
-//	}
+
+    public void GetDSPParameters()
+    {
+        //Toggles
+        gameMusicEv.getParameter("toggle_pitch_vocals", out togglePitchVocals);
+        gameMusicEv.getParameter("toggle_pitch_chords", out togglePitchChords);
+        gameMusicEv.getParameter("toggle_pitch_drums", out togglePitchDrums);
+        gameMusicEv.getParameter("toggle_pitch_bass", out togglePitchBass);
+        gameMusicEv.getParameter("toggle_pitch_lead", out togglePitchLead);
+        gameMusicEv.getParameter("toggle_ooo", out toggleOOO);
+
+        //Intensity
+        gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
+        gameMusicEv.getParameter("pitch_chords", out pitchChords);
+        gameMusicEv.getParameter("pitch_drums", out pitchDrums);
+        gameMusicEv.getParameter("pitch_bass", out pitchBass);
+        gameMusicEv.getParameter("pitch_lead", out pitchLead);
+        gameMusicEv.getParameter("ooo_vocals", out oooVocals);
+    }
+
+    //    private IEnumerator GetDSP()
+    //	{
+    //		FMOD.Studio.PLAYBACK_STATE state;
+    //
+    //		gameMusicEv.getPlaybackState (out state);
+    //
+    //		//waits for "gameMusicEv" to start before trying to get DSPs
+    //		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
+    //		{
+    //			gameMusicEv.getPlaybackState (out state);
+    //			yield return null;
+    //		}
+    //		
+    //		FMOD.DSPConnection DSPCon;
+    //		FMOD.DSP_TYPE type;
+    //
+    //		//CHANNEL GROUP AND DSP HEAD
+    //		gameMusicEv.getChannelGroup (out musicChanGroup);
+    //		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
+    //		//print ("Get subgroup: " + result);
+    //		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
+    //		//print ("Get subgroup DSP: " + result);
+    //
+    //		musicChanSubGroupDSP.get
+    //
+    //		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
+    //		pitchChordsDSP.getType (out type);
+    //		print (result);
+    //		print (type);
+    //		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
+    //		tremoloVocalsDSP.getType (out type);
+    //		print (result);
+    //		print (type);
+    //		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
+    //		pitchDrumsDSP.getType (out type);
+    //		print (result);
+    //		print (type);
+    //		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+    //		pitchBassDSP.getType (out type);
+    //		print (result);
+    //		print (type);
+    //		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+    //		pitchLeadDSP.getType (out type);
+    //		print (result);
+    //		print (type);
+    //
+    //		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
+    //		result = flangerVocalsDSP.getType(out type);
+    //		print(result);
+    //		print(type);
+    //
+    //		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
+    //		result = pitchVocalsDSP.getType(out type);
+    //		print(result);
+    //		print(type);
+    //
+    //		/*pitchChordsDSP.setBypass(false);
+    //		pitchVocalsDSP.setBypass(false);
+    //		pitchDrumsDSP.setBypass(false);
+    //		pitchBassDSP.setBypass(false);
+    //		pitchLeadDSP.setBypass(false);*/
+    //	}
 
     public float GetTrackLength()
     {
