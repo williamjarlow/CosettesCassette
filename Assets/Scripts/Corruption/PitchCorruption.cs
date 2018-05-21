@@ -227,7 +227,7 @@ public class PitchCorruption : CorruptionBaseClass {
         hitTime = 0;
         float totalNodeTime = 0;
 
-		audioPitch.SetPitchBypass (pitchType, false);
+		audioPitch.TogglePitch (pitchType, 1f);
 
         foreach(PitchNode node in nodes)
         {
@@ -252,7 +252,7 @@ public class PitchCorruption : CorruptionBaseClass {
     public override void ExitSegment()
     {
         pitchSlider.gameObject.SetActive(false);
-		audioPitch.SetPitchBypass (pitchType, true);
+		audioPitch.TogglePitch (pitchType, 0f);
         GradeScore();
         timeSinceStart = 0;
         innerDistortion = 0;

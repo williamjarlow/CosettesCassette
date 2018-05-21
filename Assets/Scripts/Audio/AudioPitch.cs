@@ -21,8 +21,7 @@ public class AudioPitch : MonoBehaviour {
 	void Start (){
 		audioManager = GetComponent<AudioManager> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update ()
     {
     }
@@ -32,57 +31,55 @@ public class AudioPitch : MonoBehaviour {
         switch (pitchType)
         {
             case PitchType.All:
-                audioManager.gameMusicEv.setParameterValue("pitch_chords", newPitch);
-                audioManager.gameMusicEv.setParameterValue("pitch_vocals", newPitch);
-                audioManager.gameMusicEv.setParameterValue("pitch_drums", newPitch);
-                audioManager.gameMusicEv.setParameterValue("pitch_bass", newPitch);
-                audioManager.gameMusicEv.setParameterValue("pitch_lead", newPitch);
-
+				audioManager.pitchChords.setValue(newPitch);
+				audioManager.pitchVocals.setValue(newPitch);
+				audioManager.pitchDrums.setValue(newPitch);
+				audioManager.pitchBass.setValue(newPitch);
+				audioManager.pitchLead.setValue(newPitch);
                 break;
             case PitchType.Chords:
-                audioManager.gameMusicEv.setParameterValue("pitch_chords", newPitch);
+				audioManager.pitchChords.setValue(newPitch);
                 break;
             case PitchType.Vocals:
-                audioManager.gameMusicEv.setParameterValue("pitch_vocals", newPitch);
+				audioManager.pitchVocals.setValue(newPitch);
                 break;
             case PitchType.Drums:
-                audioManager.gameMusicEv.setParameterValue("pitch_drums", newPitch);
+				audioManager.pitchDrums.setValue(newPitch);
                 break;
             case PitchType.Bass:
-                audioManager.gameMusicEv.setParameterValue("pitch_bass", newPitch);
+				audioManager.pitchBass.setValue(newPitch);
                 break;
             case PitchType.Lead:
-                audioManager.gameMusicEv.setParameterValue("pitch_lead", newPitch);
+				audioManager.pitchLead.setValue(newPitch);
                 break;
-
         }
     }
 
-	public void SetPitchBypass(PitchType pitchType, bool bypassState)
+	public void TogglePitch(PitchType pitchType, float bypassState)
 	{
 		switch (pitchType)
 		{
 		case PitchType.All:
-			audioManager.pitchChordsDSP.setBypass(bypassState);
-			audioManager.pitchVocalsDSP.setBypass(bypassState);
-			audioManager.pitchDrumsDSP.setBypass(bypassState);
-			audioManager.pitchBassDSP.setBypass(bypassState);
-			audioManager.pitchLeadDSP.setBypass(bypassState);
+			audioManager.togglePitchVocals.setValue (bypassState);
+			audioManager.togglePitchChords.setValue (bypassState);
+			audioManager.togglePitchDrums.setValue (bypassState);
+			audioManager.togglePitchBass.setValue (bypassState);
+			audioManager.togglePitchLead.setValue (bypassState);
 			break;
 		case PitchType.Chords:
-			audioManager.pitchChordsDSP.setBypass(bypassState);
+			audioManager.togglePitchChords.setValue (bypassState);
 			break;
 		case PitchType.Vocals:
-			audioManager.pitchVocalsDSP.setBypass(bypassState);
+			audioManager.togglePitchVocals.setValue (bypassState);
 			break;
 		case PitchType.Drums:
-			audioManager.pitchDrumsDSP.setBypass(bypassState);
+			audioManager.togglePitchDrums.setValue (bypassState);
 			break;
 		case PitchType.Bass:
-			audioManager.pitchBassDSP.setBypass(bypassState);
+			audioManager.togglePitchBass.setValue (bypassState);
 			break;
 		case PitchType.Lead:
-			audioManager.pitchLeadDSP.setBypass(bypassState);
+			audioManager.togglePitchLead.setValue (bypassState);
 			break;
 		}
 	}

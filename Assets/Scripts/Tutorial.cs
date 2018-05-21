@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 class images
 {
-    public Image pageImage;
+    public Sprite pageImage;
 }
 
 [System.Serializable]
@@ -19,76 +19,118 @@ class tutorial
 public class Tutorial : MonoBehaviour {
 
     [SerializeField] private GameObject tutorialMenu;
-    [SerializeField] private GameObject forwardButton;
-    [SerializeField] private GameObject backwardsButton;
+    [SerializeField] private GameObject tutorialScreen;
+    [SerializeField] private GameObject settingsPage;
+    [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Image leftImage;
     [SerializeField] private Image rightImage;
+    [SerializeField] private GameObject book;
     [SerializeField] private List<tutorial> tutorials;
+    [SerializeField] private AudioManager audioManager;
+    [SerializeField] private TutorialStruct[] tutStruct;
     private int tutorialIndex = 0;
     private int imageIndex = 0;
-
-    [SerializeField] private GameObject tutorialPrefab;
-    [SerializeField] private TutorialStruct[] tutStruct;
-    [SerializeField] private Button tutButton;
-    [SerializeField] private AudioManager audioManager;
-
     private bool musicPaused = false;
+    private bool initializedFromGame = false;
+
+    //[SerializeField] private GameObject tutorialPrefab;
+    //[SerializeField] private Button tutButton;
 
     void Start()
     {
-        //Add Listener to the button to leave the tutorial 
-        Button tutorialButton = tutButton.GetComponent<Button>();
-        tutorialButton.onClick.AddListener(() => Resume());
+        ////Add Listener to the button to leave the tutorial 
+        //Button tutorialButton = tutButton.GetComponent<Button>();
+        //tutorialButton.onClick.AddListener(() => Resume());
 
-        tutorialPrefab.SetActive(false);
+        //tutorialPrefab.SetActive(false);
     }
 
+    /*
     void Update()
     {
-        for(int i = 0; i < tutStruct.Length; i++)
+        for(int i = 0; i < tutorials.Count; i++)
         {
             if (tutStruct[i].timeToAppear >= audioManager.GetTimeLinePosition() - 30 && tutStruct[i].timeToAppear <= audioManager.GetTimeLinePosition() + 30 && tutStruct[i].hasBeenShown == false)
             {
-                TutorialEvent(i);
+                InitializeTutorialFromGame(i);
                 tutStruct[i].hasBeenShown = true;
             }
         }
     }
+    */
 
-    //Stops tutorial and resumes time
-    void Resume()
+    ////Stops tutorial and resumes time
+    //void Resume()
+    //{
+    //    Time.timeScale = 1.0F;
+    //    tutorialPrefab.SetActive(false);
+    //    audioManager.AudioUnpauseMusic();
+    //}
+
+    ////Call this funciton when you want to show tutorial with which sprite you want to use
+    //public void TutorialEvent(int tutorialIndex)
+    //{
+    //    //Change base value of the chosen sprite's alpha to fit desired esthetic effect
+    //    Image tutorialImage = tutorialPrefab.GetComponent<Image>();
+    //    tutorialImage.sprite = tutStruct[tutorialIndex].spriteToShow;
+    //    Color tutAlpha = tutorialImage.color;
+    //    tutAlpha.a = 0.75f;
+    //    tutorialImage.color = tutAlpha;
+
+    //    Time.timeScale = 0.0F;
+    //    tutorialPrefab.SetActive(true);
+    //    audioManager.AudioPauseMusic();
+    //}
+    public void InitializeTutorialFromGame(int index)
     {
-        Time.timeScale = 1.0F;
-        tutorialPrefab.SetActive(false);
-        audioManager.AudioUnpauseMusic();
+        tutorialIndex = index;
+        tutorialMenu.SetActive(false);
+        settingsPage.SetActive(false);
+        tutorialScreen.SetActive(true);
+        pauseMenu.SetActive(true);
+        book.SetActive(true);
+        imageIndex = 0;
+        if (tutorials[index].images.Count > 0)
+            leftImage.sprite = tutorials[index].images[0].pageImage;
+        if (tutorials[index].images.Count > 1)
+            rightImage.sprite = tutorials[index].images[1].pageImage;
+
+        audioManager.AudioPauseMusic();
+        initializedFromGame = true;
     }
 
-    //Call this funciton when you want to show tutorial with which sprite you want to use
-    public void TutorialEvent(int tutorialIndex)
+    public void InitializeTutorial(int index)
     {
-        //Change base value of the chosen sprite's alpha to fit desired esthetic effect
-        Image tutorialImage = tutorialPrefab.GetComponent<Image>();
-        tutorialImage.sprite = tutStruct[tutorialIndex].spriteToShow;
-        Color tutAlpha = tutorialImage.color;
-        tutAlpha.a = 0.75f;
-        tutorialImage.color = tutAlpha;
-
-        Time.timeScale = 0.0F;
-        tutorialPrefab.SetActive(true);
-        audioManager.AudioPauseMusic();
+        tutorialIndex = index;
+        tutorialMenu.SetActive(false);
+        settingsPage.SetActive(false);
+        tutorialScreen.SetActive(true);
+        pauseMenu.SetActive(true);
+        book.SetActive(true);
+        imageIndex = 0;
+        if (tutorials[index].images.Count > 0)
+            leftImage.sprite = tutorials[index].images[0].pageImage;
+        if (tutorials[index].images.Count > 1)
+            rightImage.sprite = tutorials[index].images[1].pageImage;
+        
+        audioManager.PlayPauseMenuSelect();
     }
 
     public void FlipPagesForward()
     {
         if (imageIndex <= tutorials[tutorialIndex].images.Count - 3)
         {
-            //audioManager.PlayScriptFlip();
+            audioManager.PlayScriptFlip();
             imageIndex += 2;
-            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage.sprite;
+            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage;
             if (imageIndex <= tutorials[tutorialIndex].images.Count - 2)
-                rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage.sprite;
+                rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage;
             if (imageIndex == tutorials[tutorialIndex].images.Count - 1)
                 rightImage.sprite = null;
+        }
+        else if(initializedFromGame == true)
+        {
+            BackToGame();
         }
     }
 
@@ -96,22 +138,30 @@ public class Tutorial : MonoBehaviour {
     {
         if (imageIndex >= 1)
         {
-            //audioManager.PlayScriptFlip();
+            audioManager.PlayScriptFlip();
             imageIndex -= 2;
-            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage.sprite;
-            rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage.sprite;
+            leftImage.sprite = tutorials[tutorialIndex].images[imageIndex].pageImage;
+            rightImage.sprite = tutorials[tutorialIndex].images[imageIndex + 1].pageImage;
         }
     }
 
     public void BackToTutorials()
     {
-        leftImage.sprite = null;
-        rightImage.sprite = null;
         tutorialMenu.SetActive(true);
-        forwardButton.SetActive(false);
-        backwardsButton.SetActive(false);
+        book.SetActive(false);
 
-        //audioManager.PlayPauseMenuBack();
+        audioManager.PlayPauseMenuBack();
+    }
+    public void BackToGame()
+    {
+        tutorialMenu.SetActive(false);
+        settingsPage.SetActive(true);
+        tutorialScreen.SetActive(false);
+        pauseMenu.SetActive(false);
+        book.SetActive(false);
+        initializedFromGame = false;
+
+        audioManager.AudioUnpauseMusic();
     }
 
 }
