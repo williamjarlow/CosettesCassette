@@ -18,6 +18,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
     public class Notes
     {
         public NoteType noteType;
+        public MovementType movementType;
         [Tooltip("Spawntime in milliseconds relative to the song")]
         public int spawnTime;
         [HideInInspector]
@@ -67,12 +68,16 @@ public class NoteHuntCorruption : CorruptionBaseClass
     [Tooltip("Maximum x spawn coordinate")]
     [SerializeField]
     private float xSpawnRandomMax;
-    [SerializeField]
-    private float timeStamp;
+    [SerializeField] private float timeStamp;
 
+    [SerializeField] [Tooltip("Check this box if input is in bpm rather than milliseconds")]
+    private bool inputBPM;
+
+    const int standardNoteHits = 1;
+    const int multiNoteHits = 2;
 
     // The list of notes the designers will spawn
-    public List<Notes> notesList;
+    public List<Notes> noteList;
     // The list of notes (the game object) to destroy when exiting segment
     [HideInInspector]
     public List<GameObject> destroyList;
@@ -91,22 +96,23 @@ public class NoteHuntCorruption : CorruptionBaseClass
         incorrectNotePrefab.GetComponent<NoteMovement>().points = incorrectNotePoints;
 
         // Set points and calculate max points
-        for (int i = 0; i < notesList.Count; i++)
+        for (int i = 0; i < noteList.Count; i++)
         {
-            notesList[i].spawnTime *= gameManager.overallCorruption.bpmInMs;
-            if (notesList[i].noteType == NoteType.CORRECT)
+            if(inputBPM)
+                noteList[i].spawnTime *= gameManager.overallCorruption.bpmInMs;
+            if (noteList[i].noteType == NoteType.CORRECT)
             {
-                notesList[i].points = correctNotePoints;
-                maxScore += notesList[i].points;
+                noteList[i].points = correctNotePoints;
+                maxScore += noteList[i].points;
             }
-            else if (notesList[i].noteType == NoteType.CORRECTMULTI)
+            else if (noteList[i].noteType == NoteType.CORRECTMULTI)
             {
-                notesList[i].points = correctMultiNotePoints;
-                maxScore += notesList[i].points;
+                noteList[i].points = correctMultiNotePoints;
+                maxScore += noteList[i].points;
             }
-            else if (notesList[i].noteType == NoteType.INCORRECT)
+            else if (noteList[i].noteType == NoteType.INCORRECT)
             {
-                notesList[i].points = incorrectNotePoints;
+                noteList[i].points = incorrectNotePoints;
             }
 
         }
@@ -140,7 +146,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
         SpawnNotes();
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
@@ -152,7 +157,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 if (noteMovement != null)
                 {
                     // Add/remove points and destroy the hit object
-                    if (noteMovement.hitsRemaining == 1)
+                    if (noteMovement.hitsRemaining <= 1)
                     {
                         //Give audio/visual feedback for destroying note
                         currentScore += noteMovement.points;
@@ -192,6 +197,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     {
                         //Give audio/visual feedback for hitting note
                         noteMovement.hitsRemaining -= 1;
+                        noteMovement.GetComponent<SpriteRenderer>().color = new Color(1,1,0);
                     }
                 }
 
@@ -202,22 +208,18 @@ public class NoteHuntCorruption : CorruptionBaseClass
     private void SpawnNotes()
     {
         // Loop through the list of notes
-        for (int i = 0; i < notesList.Count; i++)
+        for (int i = 0; i < noteList.Count; i++)
         {
             // If we are at the right time stamp (with some tolerance) --> spawn the note according to the object's note type
-            if (timeStamp > 0 && timeStamp <= notesList[i].spawnTime + tolerance / 2 && timeStamp >= notesList[i].spawnTime - tolerance / 2)
+            if (timeStamp > 0 && timeStamp <= noteList[i].spawnTime + tolerance / 2 && timeStamp >= noteList[i].spawnTime - tolerance / 2)
             {
                 GameObject spawnedNote;
 
                 // Correct note
-                if (notesList[i].noteType == NoteType.CORRECT && !notesList[i].hasSpawned)
+                if (noteList[i].noteType == NoteType.CORRECT && !noteList[i].hasSpawned)
                 {
                     //Randomize the sprite
                     noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
-
-                    // Spawn the correct randomized note
-                    notesList[i].hasSpawned = true;
-
                     //Debug for spawning notes at edges
                     if (spawnNotesAtEdge)
                         if (Random.Range(0, 2) == 0)
@@ -228,29 +230,15 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
-                    // Set the game object's speed according to the specified speed in this script
-                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
-
-                    // Save the box collider and sprite as variables
-                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
-                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
-
-                    // Convert the sprite to world space units
-                    float pixelsPerUnit = sprite.pixelsPerUnit;
-                    // Set the box collider size according to the world space size + the added box collider size
-                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-                    // Prepare the object for destruction
-                    destroyList.Add(spawnedNote);
+                    // Set the required amount of hits
+                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
                 }
 
                 // Incorrect note
-                else if (notesList[i].noteType == NoteType.INCORRECT && !notesList[i].hasSpawned)
+                else if (noteList[i].noteType == NoteType.INCORRECT && !noteList[i].hasSpawned)
                 {
                     //Randomize the sprite
                     noteSpriteIndex = Random.Range(0, incorrectNotesSprites.Length - 1);
-
-                    // Spawn the correct randomized note
-                    notesList[i].hasSpawned = true;
                     //Debug for spawning notes at edges
                     if (spawnNotesAtEdge)
                         if (Random.Range(0, 2) == 0)
@@ -261,28 +249,13 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = incorrectNotesSprites[noteSpriteIndex];
-                    // Set the game object's speed according to the specified speed in this script
-                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
-
-                    // Save the box collider and sprite as variables
-                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
-                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
-
-                    // Convert the sprite to world space units
-                    float pixelsPerUnit = sprite.pixelsPerUnit;
-                    // Set the box collider size according to the world space size + the added box collider size
-                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-                    // Prepare the object for destruction
-                    destroyList.Add(spawnedNote);
+                    // Set the required amount of hits
+                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
                 }
-                else if (notesList[i].noteType == NoteType.CORRECTMULTI)
+                else if (noteList[i].noteType == NoteType.CORRECTMULTI)
                 {
                     //Randomize the sprite
                     noteSpriteIndex = Random.Range(0, correctMultiNotesSprites.Length - 1);
-
-                    // Spawn the correct randomized note
-                    notesList[i].hasSpawned = true;
-
                     //Debug for spawning notes at edges
                     if (spawnNotesAtEdge)
                         if (Random.Range(0, 2) == 0)
@@ -293,20 +266,28 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     // Set the sprite according to the randomly generated sprite
                     spawnedNote.GetComponent<SpriteRenderer>().sprite = correctMultiNotesSprites[noteSpriteIndex];
-                    // Set the game object's speed according to the specified speed in this script
-                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
-
-                    // Save the box collider and sprite as variables
-                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
-                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
-
-                    // Convert the sprite to world space units
-                    float pixelsPerUnit = sprite.pixelsPerUnit;
-                    // Set the box collider size according to the world space size + the added box collider size
-                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-                    // Prepare the object for destruction
-                    destroyList.Add(spawnedNote);
+                    // Set the required amount of hits
+                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = multiNoteHits;
                 }
+                else
+                    spawnedNote = new GameObject();
+
+                // Spawn the correct randomized note
+                noteList[i].hasSpawned = true;
+                // Set the game object's speed according to the specified speed in this script
+                spawnedNote.GetComponent<NoteMovement>().speed = speed;
+                // Save the box collider and sprite as variables
+                BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+                Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+                // Convert the sprite to world space units
+                float pixelsPerUnit = sprite.pixelsPerUnit;
+                // Set the box collider size according to the world space size + the added box collider size
+                boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+
+                // Prepare the object for destruction
+                destroyList.Add(spawnedNote);
+                // Set note movement type
+                spawnedNote.GetComponent<NoteMovement>().movementType = noteList[i].movementType;
             }
         }
     }
@@ -318,7 +299,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
             if (destroyList[i] != null)
                 Destroy(destroyList[i].transform.gameObject);
         }
-
         destroyList.Clear();
     }
 
@@ -359,9 +339,9 @@ public class NoteHuntCorruption : CorruptionBaseClass
     void ResetConditions()
     {
         // Loop through the list of notes and set the hasSpawned bool to false. Then destroy all notes.
-        for (int i = 0; i < notesList.Count; i++)
+        for (int i = 0; i < noteList.Count; i++)
         {
-            notesList[i].hasSpawned = false;
+            noteList[i].hasSpawned = false;
         }
         DestroyNotes();
     }

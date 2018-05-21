@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MovementType
+{
+    Standard,
+    Arc,
+    Glitchy
+};
+
 public class NoteMovement : MonoBehaviour {
 
-    public NoteType noteType;
     [HideInInspector] public int hitsRemaining;
+    [HideInInspector] public MovementType movementType;
 
     private float RNGBounceTimer;
     [SerializeField] private float leftEdge;
@@ -21,6 +28,9 @@ public class NoteMovement : MonoBehaviour {
     private bool headingLeft = true;
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
+
+    float gradualDecrease = 0;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -33,35 +43,62 @@ public class NoteMovement : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
-        transform.Translate(Vector3.up * speed);
-        RNGBounceTimer -= Time.deltaTime;
-
-        if(RNGBounceTimer <= 0)
+        if (movementType == MovementType.Standard)
         {
-            headingLeft = !headingLeft;
-            RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
-        }
-        if (headingLeft == true )
-        {
-            transform.Translate(Vector3.left * speedx);
-            if (transform.position.x <= leftEdge + spriteWidth)
+            transform.Translate(Vector3.up * speed);
+            RNGBounceTimer -= Time.deltaTime;
+            if (RNGBounceTimer <= 0)
             {
-                headingLeft = false;
+                headingLeft = !headingLeft;
                 RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
             }
-        }
-        else
-        {
-            transform.Translate(Vector3.right * speedx);
-            if (transform.position.x >= rightEdge - spriteWidth)
+            if (headingLeft == true)
             {
-                headingLeft = true;
-                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                transform.Translate(Vector3.left * speedx);
+                if (transform.position.x <= leftEdge + spriteWidth)
+                {
+                    headingLeft = false;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
+            }
+            else
+            {
+                transform.Translate(Vector3.right * speedx);
+                if (transform.position.x >= rightEdge - spriteWidth)
+                {
+                    headingLeft = true;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
             }
         }
+        else if (movementType == MovementType.Arc)
+        {
+            gradualDecrease -= 0.01f;
+            transform.Translate(Vector3.up * ((speed * 2) + gradualDecrease));
+            if (headingLeft == true)
+            {
+                transform.Translate(Vector3.left * speedx);
+                if (transform.position.x <= leftEdge + spriteWidth)
+                {
+                    headingLeft = false;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
+            }
+            else
+            {
+                transform.Translate(Vector3.right * speedx);
+                if (transform.position.x >= rightEdge - spriteWidth)
+                {
+                    headingLeft = true;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
+            }
+        }
+        else if (movementType == MovementType.Glitchy)
+        {
 
+        }
     }
-
 }
