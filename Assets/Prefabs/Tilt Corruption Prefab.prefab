@@ -34,8 +34,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1272630150928662}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.95, y: -0.12, z: -3.74}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: -4.25, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,9 +53,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDistortion: 30
   currentDistortion: 0
-  clearThreshold: 80
+  clearThreshold: 40
   perfectThreshold: 95
-  segmentID: 1
+  segmentID: 0
   bestScore: 0
   currentScore: 0
   gameManager: {fileID: 0}
@@ -67,9 +67,13 @@ MonoBehaviour:
   innerDistortion: 0
   inSegment: 0
   cleared: 0
-  punishment: 0
-  moveSpeed: 0.011
-  mercyRange: 0.3
-  offsetModifier: 2.5
+  moveSpeed: 0.026
+  perfectRange: 0.15
+  offsetModifier: 1
+  minumumScore: 40
+  windStrength: 0
+  windDuration: 0
+  windSpawnLowerBound: 0
+  windSpawnUpperBound: 2
   tiltIndicatorPrefab: {fileID: 1381994805003684, guid: e397f0b461b535b4aac378dc216b62f2,
     type: 2}
