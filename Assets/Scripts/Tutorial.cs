@@ -18,6 +18,7 @@ class tutorial
 
 public class Tutorial : MonoBehaviour {
 
+    [SerializeField] private Text showText;
     [SerializeField] private GameObject tutorialMenu;
     [SerializeField] private GameObject tutorialScreen;
     [SerializeField] private GameObject settingsPage;
@@ -164,7 +165,14 @@ public class Tutorial : MonoBehaviour {
         audioManager.AudioUnpauseMusic();
     }
 
+    public void TextboxShow(string text)
+    {
+        showText.text = text;
+    }
+
 }
+
+
 
 [System.Serializable]
 public struct TutorialStruct
