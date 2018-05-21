@@ -18,17 +18,20 @@ class tutorial
 
 public class Tutorial : MonoBehaviour {
 
-    [SerializeField] private Text showText;
+    [SerializeField] private GameObject liveTutorial;
+    [SerializeField] private Text textBoxForLiveTutorial;
     [SerializeField] private GameObject tutorialMenu;
     [SerializeField] private GameObject tutorialScreen;
     [SerializeField] private GameObject settingsPage;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Image leftImage;
     [SerializeField] private Image rightImage;
+    [SerializeField] private GameObject noteBook;
     [SerializeField] private GameObject book;
     [SerializeField] private List<tutorial> tutorials;
     [SerializeField] private AudioManager audioManager;
-    [SerializeField] private TutorialStruct[] tutStruct;
+    //[SerializeField] private TutorialStruct[] tutStruct;
+    [SerializeField] private TutorialTextStruct[] textTutStruct;
     private int tutorialIndex = 0;
     private int imageIndex = 0;
     private bool musicPaused = false;
@@ -44,6 +47,19 @@ public class Tutorial : MonoBehaviour {
         //tutorialButton.onClick.AddListener(() => Resume());
 
         //tutorialPrefab.SetActive(false);
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < textTutStruct.Length; i++)
+        {
+            if (textTutStruct[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && textTutStruct[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && textTutStruct[i].hasBeenShown == false)
+            {
+                InitializeTutorialFromGame(i);
+                TextboxShow(textTutStruct[i].tutorialText);
+                textTutStruct[i].hasBeenShown = true;
+            }
+        }
     }
 
     /*
@@ -82,6 +98,8 @@ public class Tutorial : MonoBehaviour {
     //    tutorialPrefab.SetActive(true);
     //    audioManager.AudioPauseMusic();
     //}
+
+    /*
     public void InitializeTutorialFromGame(int index)
     {
         tutorialIndex = index;
@@ -98,6 +116,16 @@ public class Tutorial : MonoBehaviour {
 
         audioManager.AudioPauseMusic();
         initializedFromGame = true;
+    }
+    */
+
+    public void InitializeTutorialFromGame(int index)
+    {
+        pauseMenu.SetActive(true);
+        liveTutorial.SetActive(true);
+        noteBook.SetActive(false);
+        audioManager.AudioPauseMusic();
+        //initializedFromGame = true;
     }
 
     public void InitializeTutorial(int index)
@@ -129,10 +157,10 @@ public class Tutorial : MonoBehaviour {
             if (imageIndex == tutorials[tutorialIndex].images.Count - 1)
                 rightImage.sprite = null;
         }
-        else if(initializedFromGame == true)
-        {
-            BackToGame();
-        }
+        //else if(initializedFromGame == true)
+        //{
+        //    BackToGame();
+        //}
     }
 
     public void FlipPagesBackwards()
@@ -150,34 +178,51 @@ public class Tutorial : MonoBehaviour {
     {
         tutorialMenu.SetActive(true);
         book.SetActive(false);
-
         audioManager.PlayPauseMenuBack();
     }
-    public void BackToGame()
-    {
-        tutorialMenu.SetActive(false);
-        settingsPage.SetActive(true);
-        tutorialScreen.SetActive(false);
-        pauseMenu.SetActive(false);
-        book.SetActive(false);
-        initializedFromGame = false;
+    //public void BackToGame()
+    //{
+    //    if (liveTutorial && pauseMenu.GetComponent<MenuAppearScript>().isShowing)
+    //    {
+    //        tutorialMenu.SetActive(false);
+    //        settingsPage.SetActive(true);
+    //        if (!noteBook)
+    //            noteBook.SetActive(true);
+    //        tutorialScreen.SetActive(false);
+    //        pauseMenu.SetActive(false);
+    //        book.SetActive(false);
+    //        initializedFromGame = false;
 
-        audioManager.AudioUnpauseMusic();
-    }
+    //        audioManager.AudioUnpauseMusic();
+    //    }
+    //}
 
     public void TextboxShow(string text)
     {
-        showText.text = text;
+        textBoxForLiveTutorial.gameObject.SetActive(true);
+        textBoxForLiveTutorial.text = text;
     }
 
 }
 
 
-
+/*
 [System.Serializable]
 public struct TutorialStruct
 {
     public Sprite spriteToShow;
     public float timeToAppear;
+    public bool hasBeenShown;
+}
+*/
+
+
+[System.Serializable]
+public struct TutorialTextStruct
+{
+    [TextArea]
+    [SerializeField]
+    public string tutorialText;
+    public float timeToAppearInMs;
     public bool hasBeenShown;
 }

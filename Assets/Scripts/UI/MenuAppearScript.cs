@@ -11,7 +11,7 @@ public class MenuAppearScript : MonoBehaviour
     [SerializeField] private Button pauseButton;
     [SerializeField] private Button unPauseButton;
     [SerializeField] private Text UIbuttonText;
-    private bool isShowing = false;
+    [HideInInspector] public bool isShowing = false;
 
 	private AudioManager audioManager;
 

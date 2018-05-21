@@ -171,14 +171,14 @@ public class LevelSelect : MonoBehaviour
                     {
                         //audioManager.UnloadBanks();
                         audioManager.AudioStopMusic();
-                        lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
-                        print(lvl);
-                        //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
+                        //lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+                        //print(lvl);
+                        SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                         buttons.SetActive(true);
-                        if (buttons.activeInHierarchy == true)
-                        {
-                            movementLock = true;
-                        }
+                        //if (buttons.activeInHierarchy == true)
+                        //{
+                        //    movementLock = true;
+                        //}
                         
                     }
                 }
