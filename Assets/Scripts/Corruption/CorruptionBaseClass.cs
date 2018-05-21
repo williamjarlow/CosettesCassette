@@ -53,14 +53,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         saveStruct = new SaveSegmentStruct();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-            Load();
-        if (Input.GetKeyDown(KeyCode.S))
-            Save();
-    }
-
     public virtual void EnterSegment()
     {
         inSegment = true;
