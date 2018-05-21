@@ -72,7 +72,7 @@ public class JackTheRunner : CorruptionBaseClass
 
     public override void EnterSegment()
     {
-
+        ResetConditions();
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         if (gameManager.recording)
