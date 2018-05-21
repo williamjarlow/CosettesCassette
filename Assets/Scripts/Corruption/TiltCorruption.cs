@@ -7,17 +7,21 @@ using UnityEngine.SceneManagement;
 public class TiltCorruption : CorruptionBaseClass
 {
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
+    [SerializeField] [Range(0, 1)] private float spikeArea;
     [SerializeField] [Range(0, 1)] private float perfectRange;
     [Tooltip("Decides how quickly the sound will offset. ¨Higher value equals faster offset")]
-    [SerializeField] [Range(1, 500)] private float offsetModifier;
+    //[SerializeField] [Range(1, 500)] private float offsetModifier;
     [SerializeField] [Range(0, 100)] private float minumumScore;
     [Tooltip("Decides how strong the wind is. ¨Higher value equals stronger wind")]
-    [SerializeField] [Range(1, 500)] private float windStrength;
-    [SerializeField] private float windDuration;
-    [SerializeField] private float windSpawnLowerBound;
-    [SerializeField] private float windSpawnUpperBound;
+    [SerializeField] [Range(0, 0.1f)] private float windSpeed;
+    [SerializeField] private float randomWindDuration;
+    [SerializeField] private float randomWindSpawnLowerBound;
+    [SerializeField] private float randomWindSpawnUpperBound;
     [SerializeField] private GameObject tiltIndicatorPrefab;
+    [SerializeField] private bool useRandomWind;
+    [SerializeField] private WindStruct[] winds;
     private bool setPan = false;
+    //private bool windIsBlowing = false;
     private float punishment;
     private float soundPos = 0;
     private float RNGWindSpawner;
@@ -40,7 +44,7 @@ public class TiltCorruption : CorruptionBaseClass
         overallCorruption = gameManager.overallCorruption;
         audioManager = gameManager.audioManager;
         duration = overallCorruption.durations[segmentID];
-        RNGWindSpawner = Random.Range(windSpawnLowerBound, windSpawnUpperBound);
+        RNGWindSpawner = Random.Range(randomWindSpawnLowerBound, randomWindSpawnUpperBound);
         Load();
     }
 
@@ -95,6 +99,7 @@ public class TiltCorruption : CorruptionBaseClass
 
     void RecordSegment()
     {
+        //Reset Panning on entering and exiting segment
         audioManager.gameMusicEv.getPlaybackState(out state);
         if (state != FMOD.Studio.PLAYBACK_STATE.PLAYING && setPan == false)
         {
@@ -109,25 +114,31 @@ public class TiltCorruption : CorruptionBaseClass
             setPan = false;
         }
 
+        //Check for acceleromator and update x based on it
         float x = Input.acceleration.x;
-        if (soundPos + 0.06f > 0 && soundPos - 0.06f <= 0)
-        {
-            if (soundPos > 0)
-            {
-                soundPos += Random.Range(0, 0.02f);
-            }
-            else if (soundPos < 0)
-            {
-                soundPos += Random.Range(-0.02f, 0);
-            }
-            else
-            {
-                soundPos += Random.Range(-0.03f, 0.03f);
-            }
-        }
 
-        soundPos += soundPos * offsetModifier / 100;
-        soundPos = Mathf.Clamp(soundPos, -1, 1);
+        ////Edgecase handler for values close to 0
+        //if (soundPos + 0.06f > 0 && soundPos - 0.06f <= 0 && windIsBlowing ==false)
+        //{
+        //    if (soundPos > 0)
+        //    {
+        //        soundPos += Random.Range(0, 0.02f);
+        //    }
+        //    else if (soundPos < 0)
+        //    {
+        //        soundPos += Random.Range(-0.02f, 0);
+        //    }
+        //    else
+        //    {
+        //        soundPos += Random.Range(-0.03f, 0.03f);
+        //    }
+        //}
+
+        ////Offset position over time
+        //soundPos += soundPos * offsetModifier / 100;
+        //soundPos = Mathf.Clamp(soundPos, -1, 1);
+
+        //Keyboard functions
         if (Input.GetKey("left"))
         {
             x = -1;
@@ -137,6 +148,7 @@ public class TiltCorruption : CorruptionBaseClass
             x = 1;
         }
 
+        //Move sound and indicator based on x value, x is either deciedd by keyboard or acceleromator
         if (x < -0.1f)
         {
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos - moveSpeed, -1, 1));
@@ -147,37 +159,60 @@ public class TiltCorruption : CorruptionBaseClass
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos + moveSpeed, -1, 1));
             soundPos = Mathf.Clamp(soundPos + moveSpeed, -1, 1);
         }
+
+        //Lose points if not inside perfect range
         if (soundPos < -perfectRange || soundPos > perfectRange)
         {
             currentScore -= punishment * Time.deltaTime;
         }
-        
-        if (soundPos <= -0.9f || soundPos >= 0.9f )
+
+        //Lose minigame if outside of boundaries
+        if (soundPos <= -spikeArea || soundPos >= spikeArea)
         {
             currentScore = 0;
             gameManager.recording = false;
             ExitSegment();
         }
 
+        //Random wind handler
         RNGWindSpawner -= Time.deltaTime;
-
-        if (RNGWindSpawner <= 0)
+        if (RNGWindSpawner <= 0 && useRandomWind == true)
         {
-            if(RNGWindSpawner < windSpawnUpperBound - windSpawnLowerBound)
+            float randomDirection = Random.Range(0f, 1f);
+            Debug.Log(randomDirection);
+            if(randomDirection < 0.5f)
             {
-                tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(-1, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+                StartCoroutine(WindEffect(windSpeed, false, randomWindDuration));
             }
             else
             {
-                tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(1, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+                StartCoroutine(WindEffect(windSpeed, true, randomWindDuration));
             }
-            tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
 
-            RNGWindSpawner = Random.Range(windSpawnLowerBound, windSpawnUpperBound);
+            RNGWindSpawner = Random.Range(randomWindSpawnLowerBound, randomWindSpawnUpperBound);
         }
 
+        //Preset wind handler
+        if(useRandomWind == false)
+        {
+            for (int i = 0; i < winds.Length; i++)
+            {
+                if (duration.start + winds[i].timeToAppear >= audioManager.GetTimeLinePosition() - 30 && duration.start + winds[i].timeToAppear <= audioManager.GetTimeLinePosition() + 30 && winds[i].hasBeenActive == false)
+                {
+                    if(winds[i].blowLeft == true)
+                    {
+                        StartCoroutine(WindEffect(windSpeed, winds[i].blowLeft, winds[i].duration));
+                    }
+                    else
+                    {
+                        StartCoroutine(WindEffect(windSpeed, winds[i].blowLeft, winds[i].duration));
+                    }
+                    winds[i].hasBeenActive = true;
+                }
+            }
+        }
+        
         tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5, 0, 0);
-
     }
 
     public override void GradeScore()
@@ -188,5 +223,49 @@ public class TiltCorruption : CorruptionBaseClass
     void ResetConditions()
     {
         soundPos = 0;
+        for(int i = 0; i < winds.Length; i++)
+        {
+            winds[i].hasBeenActive = false;
+        }
     }
+
+    IEnumerator WindEffect(float strength, bool blowLeft, float time)
+    {
+        //windIsBlowing = true;
+        bool moving = false;
+        if (!moving)
+        {                     // Do nothing if already moving
+            moving = true;                 // Set flag to true
+            float t = 1.0f;
+            while (t >= 0.0f)
+            {
+                t -= Time.deltaTime / time; // Sweeps from 0 to 1 in time seconds
+                Debug.Log(blowLeft);
+                if(blowLeft == true)
+                {
+                    soundPos -= strength;
+                    tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
+                    tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(1f, 0, 0);
+                }
+                else
+                {
+                    soundPos += strength;
+                    tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
+                    tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(-1f, 0, 0);
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+            tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(false);
+            //windIsBlowing = false;
+        }
+    }
+}
+[System.Serializable]
+public struct WindStruct
+{
+    public float timeToAppear;
+    public float duration;
+    public bool blowLeft;
+    [HideInInspector] public bool hasBeenActive;
 }
