@@ -102,6 +102,11 @@ public class JackTheRunner : CorruptionBaseClass
 
     void ResetConditions()
     {
+        for (int i = 0; i < enemiesList.Count; i++)
+        {
+            enemiesList[i].hasSpawned = false;
+        }
+        currentScore = 0;
         damageTaken = 0;
         DestroyObjects();
     }
