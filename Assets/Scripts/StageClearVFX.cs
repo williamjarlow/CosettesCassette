@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public enum segmentEffects { good, perfect, newSticker };
 
-public class StageClearVFX : MonoBehaviour {
+public class StageClearVFX : MonoBehaviour
+{
 
     [SerializeField] private GameObject goodClearAnimation;
     [SerializeField] private GameObject goodParticleEffect;
@@ -21,9 +22,11 @@ public class StageClearVFX : MonoBehaviour {
     [SerializeField] private float goodParticleYOffset = 1.6f;
     [SerializeField] private float perfectParticleYOffset = 1.6f;
     [SerializeField] private float newStickerParticleYOffset = 0.1f;
-    [SerializeField] private float delayBetweenClearAndSticker = 2.5f;
+    //[SerializeField] private float delayBetweenClearAndSticker = 2.5f;
     [SerializeField] private GameObject stickerSpritePosition;
     private SpriteRenderer stickerSprite;
+    public Sprite test1;
+    public Sprite test2;
 
 
     private void Start()
@@ -36,17 +39,17 @@ public class StageClearVFX : MonoBehaviour {
     // For testing purposes
     void Update()
     {
-        //if (Input.GetKeyDown("up"))
-        //    CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
+        if (Input.GetKeyDown("up"))
+            CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
 
-        //if (Input.GetKeyDown("left"))
-        //    CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
+        if (Input.GetKeyDown("left"))
+            CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
 
-        //if (Input.GetKeyDown("right"))
-        //    CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
+        if (Input.GetKeyDown("right"))
+            CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
 
-        //if (Input.GetKeyDown("down"))
-        //    CallVFXWithStickerEarned(segmentEffects.good, stickerSprite.sprite);
+        if (Input.GetKeyDown("down"))
+            CallVFXWith2StickersEarned(test1, test2);
     }
 
 
@@ -71,16 +74,24 @@ public class StageClearVFX : MonoBehaviour {
         if (typeOfEffect == segmentEffects.good)
         {
             CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
-            StartCoroutine(StickerDelay(delayBetweenClearAndSticker));
+            StartCoroutine(StickerDelay(timeToShowGood));
         }
 
         if (typeOfEffect == segmentEffects.perfect)
         {
             CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
-            StartCoroutine(StickerDelay(delayBetweenClearAndSticker));
+            StartCoroutine(StickerDelay(timeToShowPerfect));
         }
 
         else return;
+    }
+
+    public void CallVFXWith2StickersEarned(Sprite sticker, Sprite secondSticker)
+    {
+        stickerSprite.sprite = sticker;
+        CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
+        StartCoroutine(StickerDelay(timeToShowPerfect));
+        StartCoroutine(StickerDelay(timeToShowPerfect + timeToShowNew + 0.1f, secondSticker));
     }
 
     private void CallFullEffect(GameObject gameObjectForEffect, float timeToShowEffect, GameObject particleEffect, float yOffset)
@@ -102,6 +113,15 @@ public class StageClearVFX : MonoBehaviour {
     IEnumerator StickerDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        stickerSpritePosition.SetActive(true);
+        CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
+        StartCoroutine(HideStickerObject(timeToShowNew));
+    }
+
+    IEnumerator StickerDelay(float delay, Sprite secondSticker)
+    {
+        yield return new WaitForSeconds(delay);
+        stickerSprite.sprite = secondSticker;
         stickerSpritePosition.SetActive(true);
         CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
         StartCoroutine(HideStickerObject(timeToShowNew));

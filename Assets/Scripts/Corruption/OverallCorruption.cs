@@ -132,26 +132,23 @@ public class OverallCorruption : MonoBehaviour {
 
         if(gameManager.LevelPerfected == false && overallCorruption == 0)
         {
-            gameManager.LevelPerfected = true;
-            //if (STICKERNOTALREADYEARNED)
-            //{
-            //    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, SPRITEGOESHERE);
-            //}
-            //else
-            gameManager.stageClearVFX.CallVFX(segmentEffects.perfect);
+            if (!gameManager.LevelCleared)
+            {
+                gameManager.LevelCleared = true;
+                gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood, gameManager.stickerForPerfect);
+            }
+            else
+            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect);
             gameManager.audioManager.PlayWinSound(1);
+            gameManager.LevelPerfected = true;
         }
 		else if(gameManager.LevelCleared == false && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
 		{
-            gameManager.LevelCleared = true;
-            //if (STICKERNOTALREADYEARNED)
-            //{
-            //    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, SPRITEGOESHERE);
-            //}
-            //else
+            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood);
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.audioManager.PlayWinSound(0);
-		}
+            gameManager.LevelCleared = true;
+        }
 	} 
 
 	public void UpdateDistortionAmount()

@@ -41,6 +41,11 @@ public class GameManager : MonoBehaviour
 
     public instruments selectedInstrument = instruments.drums;
 
+    [Header("Stickers for this level")]
+    public Sprite stickerForGood;
+    public Sprite stickerForPerfect;
+
+
     void Awake()
     {
         audioDistortion = audioManager.GetComponent<AudioDistortion>();
