@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
+    [SerializeField] private GameObject buttons;
+    private int lvl;
+
 	private AudioManager audioManager;
 
     private int currentFocus;
@@ -72,6 +75,8 @@ public class LevelSelect : MonoBehaviour
         if (workWithMouseInput && !pauseScreen)
         MouseControls();
         //// 
+
+
     }
 
     private void MouseControls()
@@ -164,9 +169,17 @@ public class LevelSelect : MonoBehaviour
                     // If the hit cassette is focused
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
-                        audioManager.UnloadBanks();
+                        //audioManager.UnloadBanks();
                         audioManager.AudioStopMusic();
-                        SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
+                        lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+                        print(lvl);
+                        //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
+                        buttons.SetActive(true);
+                        if (buttons.activeInHierarchy == true)
+                        {
+                            movementLock = true;
+                        }
+                        
                     }
                 }
 
@@ -313,6 +326,21 @@ public class LevelSelect : MonoBehaviour
             startPos[chosen] = cassettes[chosen].transform.localPosition;
         }
     }
+
+    public void BacktolvlSelect()
+    {
+        audioManager.AudioPlayMusic();
+        if (buttons.activeInHierarchy == false)
+        {
+            movementLock = false;
+        }
+    }
+
+    public void Playlvl()
+    {
+        SceneManager.LoadScene(lvl);
+    }
+
 
 
     public void OpenPause()
