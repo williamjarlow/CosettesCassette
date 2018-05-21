@@ -127,7 +127,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
 
-		audioManager.toggleOOO.setValue (1f);
+		audioManager.oooVocals.setValue (100f);
     }
 
     public override void ExitSegment()
@@ -140,7 +140,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         base.ExitSegment();
         ResetConditions();
 
-		audioManager.toggleOOO.setValue (0f);
+		audioManager.oooVocals.setValue (0f);
     }
 
     public override void GradeScore()

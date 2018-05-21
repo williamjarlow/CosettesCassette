@@ -43,7 +43,6 @@ public class AudioManager : MonoBehaviour {
 	public FMOD.Studio.ParameterInstance pitchDrums;
 	public FMOD.Studio.ParameterInstance pitchBass;
 	public FMOD.Studio.ParameterInstance pitchLead;
-	public FMOD.Studio.ParameterInstance toggleOOO;
 	public FMOD.Studio.ParameterInstance oooVocals;
 
 	//Event instances
@@ -441,6 +440,21 @@ public class AudioManager : MonoBehaviour {
 		shootEv.release();
 	}
 
+	public void PlayInsertAnimSound ()
+	{
+		FMOD.Studio.EventDescription insertCassetteEventDesc;
+		FMOD.Studio.EventInstance insertCassetteEv;
+		systemObj.getEvent ("event:/SFX/insertCassette", out insertCassetteEventDesc);
+		insertCassetteEventDesc.createInstance (out insertCassetteEv);
+		insertCassetteEv.start ();
+		insertCassetteEv.release ();
+	}
+
+	public void PlayFlipCassetteAnimSound()
+	{
+
+	}
+
 	public void MuteSFX(bool mute)
 	{
 		systemObj.getBus ("bus:/SFX", out sfxBus);
@@ -471,7 +485,6 @@ public class AudioManager : MonoBehaviour {
         gameMusicEv.getParameter("toggle_pitch_drums", out togglePitchDrums);
         gameMusicEv.getParameter("toggle_pitch_bass", out togglePitchBass);
         gameMusicEv.getParameter("toggle_pitch_lead", out togglePitchLead);
-        gameMusicEv.getParameter("toggle_ooo", out toggleOOO);
 
         //Intensity
         gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
