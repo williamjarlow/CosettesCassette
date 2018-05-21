@@ -89,6 +89,13 @@ public class OverallCorruption : MonoBehaviour {
 			Debug.Log("Overall corruption: " + overallCorruption  + "%");
 			Debug.Log("Overall distortion: " + overallDistortion + "%");
 		}
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            print("Current time: " + gameManager.audioManager.GetTimeLinePosition());
+            print("Current Beat in 16th notes: " + gameManager.audioManager.GetTimeLinePosition() / bpmInMs);
+            print("Current Beat: " + gameManager.audioManager.GetTimeLinePosition() / (bpmInMs * 4));
+        }
 		// Set the current segment to cleared
 		if(Input.GetKeyDown(KeyCode.X))
 		{
