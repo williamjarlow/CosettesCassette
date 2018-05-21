@@ -24,6 +24,9 @@ public class NoteMovement : MonoBehaviour {
     [SerializeField] private float speedx;
     [SerializeField] private float RNGSpeedxRange;
     [SerializeField] private float RNGSpeedyRange;
+    [SerializeField] float upwardForce;
+    [SerializeField] float downwardAcceleration;
+    [SerializeField] float terminalVelocity;
     float spriteWidth;
     private bool headingLeft = true;
     [HideInInspector] public float speed;
@@ -75,8 +78,8 @@ public class NoteMovement : MonoBehaviour {
         }
         else if (movementType == MovementType.Arc)
         {
-            gradualDecrease -= 0.01f;
-            transform.Translate(Vector3.up * ((speed * 2) + gradualDecrease));
+            gradualDecrease = Mathf.Clamp(gradualDecrease - downwardAcceleration, -terminalVelocity, 0); //Prevent wierd acceleration issues from occurring, just in case
+            transform.Translate(Vector3.up * ((speed * 10) + gradualDecrease));
             if (headingLeft == true)
             {
                 transform.Translate(Vector3.left * speedx);
