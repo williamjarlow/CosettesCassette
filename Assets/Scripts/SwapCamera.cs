@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SwapCamera : MonoBehaviour {
 
+    //[SerializeField] private GameObject visual;
     [SerializeField] private Camera zoomedOut;
     [SerializeField] private Camera closeUp;
     [SerializeField] private float delayCounter;
@@ -18,6 +19,7 @@ public class SwapCamera : MonoBehaviour {
     void Start()
     {
         zoomedOut.enabled = true;
+        //visual.enabled = false;
         closeUp.enabled = false;
         zoomedOut.transform.localPosition = origPos;
         StartCoroutine(DelayatStart());
@@ -40,6 +42,7 @@ public class SwapCamera : MonoBehaviour {
     public void swap()
     {
         zoomedOut.enabled = true;
+        //visual.enabled = false;
         closeUp.enabled = false;
         zoomed = true;
 
@@ -49,6 +52,7 @@ public class SwapCamera : MonoBehaviour {
     public void swapBack()
     {
         zoomedOut.enabled = false;
+        //visual.enabled = true;
         closeUp.enabled = true;
     }
 
@@ -84,6 +88,7 @@ public class SwapCamera : MonoBehaviour {
         StartCoroutine(MoveFromTo(closeUp.transform.localPosition, origPos, delayCounter));
         yield return new WaitForSeconds(2.5f);
         zoomedOut.enabled = false;
+        //visual.enabled = true;
         closeUp.enabled = true;
     }
 
