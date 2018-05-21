@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool LevelCleared;
     [HideInInspector] public bool LevelPerfected;
-    /*[HideInInspector] */public bool recording;
+    [HideInInspector] public bool recording;
 
     private ButtonDisabler buttonDisabler;
 
@@ -73,13 +73,9 @@ public class GameManager : MonoBehaviour
 
     // ** General functions for different mechanics ** //
 
-        // ** TODO ** // 
-// 1. Hide the recording bool in inspector
 
     public void ToggleRecord()
     {
-        Debug.Log("Toggled recording");
-
         // If the current track is playing
         if (audioManager.GetTimeLinePosition() > 0)
         {
