@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool LevelCleared;
     [HideInInspector] public bool LevelPerfected;
-    [HideInInspector] public bool recording;
+    /*[HideInInspector] */public bool recording;
 
     private ButtonDisabler buttonDisabler;
 
@@ -73,25 +73,38 @@ public class GameManager : MonoBehaviour
 
     // ** General functions for different mechanics ** //
 
-    public void Record()
+        // ** TODO ** // 
+// 1. Hide the recording bool in inspector
+
+    public void ToggleRecord()
     {
+        Debug.Log("Toggled recording");
+
         // If the current track is playing
-        if(audioManager.GetTimeLinePosition() > 0)
+        if (audioManager.GetTimeLinePosition() > 0)
         {
-            // Find and jump to the closest segment
-            SnapToClosestSegment();
-            // Start recording and disable buttons
-            recording = true;
-            //buttonDisabler.DisableButtons();
+            
+            // If we are not recording --> start recording
+            if (recording == false)
+            {
+                // Find and jump to the closest segment
+                SnapToClosestSegment();
+                // Start recording
+                recording = true;
+                audioManager.PlayRecordStart();
+            }
 
-            audioManager.PlayRecordStart();
+            // If we are recording --> stop recording
+            else if (recording)
+            {
+                recording = false;
+                audioManager.PlayRecordStop();
+            }
         }
-
     }
 
     public void Listen()
     {
-        buttonDisabler.EnableButtons();
         recording = false;
 
 		audioManager.PlayRecordStop();
@@ -247,7 +260,21 @@ public class GameManager : MonoBehaviour
 }
 
 
+/*public void Record()
+{
+    // If the current track is playing
+    if(audioManager.GetTimeLinePosition() > 0)
+    {
+        // Find and jump to the closest segment
+        SnapToClosestSegment();
+        // Start recording and disable buttons
+        recording = true;
+        //buttonDisabler.DisableButtons();
 
+        audioManager.PlayRecordStart();
+    }
+
+}*/
 
 
 

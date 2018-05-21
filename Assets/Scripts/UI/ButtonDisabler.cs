@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ButtonDisabler : MonoBehaviour {
 
     [Tooltip("The 3D buttons you wish to enable/disable")]
-    [SerializeField] private List<ButtonController> disableButtonList;
+    [SerializeField] private List<GameObject> disableButtonList;
     //[SerializeField] private Dropdown dropdown;
 
     GameManager gameManager;
@@ -22,6 +22,7 @@ public class ButtonDisabler : MonoBehaviour {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable during tape switching animation)");
+
 	}
 	
 
@@ -30,7 +31,7 @@ public class ButtonDisabler : MonoBehaviour {
         // Disable buttons
         for (int i = 0; i < disableButtonList.Count; i++)
         {
-            disableButtonList[i].GetComponent<ButtonController>().isEnabled = false;
+            disableButtonList[i].GetComponent<Button>().interactable = false;
         }
 
     }
@@ -40,7 +41,7 @@ public class ButtonDisabler : MonoBehaviour {
         // Enable buttons
         for(int i = 0; i < disableButtonList.Count; i++)
         {
-            disableButtonList[i].GetComponent<ButtonController>().isEnabled = true;
+            disableButtonList[i].GetComponent<Button>().interactable = true;
         }
     }
 
