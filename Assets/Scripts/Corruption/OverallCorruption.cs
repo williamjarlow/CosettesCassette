@@ -78,7 +78,6 @@ public class OverallCorruption : MonoBehaviour {
                 corruptedAreaList.Add(instantiatedObject);
                 instantiatedObject.GetComponent<CorruptionVisuals>().SetCorruptionPosition(durations[i].start, durations[i].stop);
             }
-
             UpdateCorruptionAmount();
             UpdateDistortionAmount();
 

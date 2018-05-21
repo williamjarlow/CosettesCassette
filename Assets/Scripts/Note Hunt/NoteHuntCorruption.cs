@@ -332,7 +332,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
     {
         // Reset the conditions, i.e destroy notes to be able to replay and reset
         ResetConditions();
-
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
