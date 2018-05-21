@@ -6,13 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class TiltCorruption : CorruptionBaseClass
 {
-    [SerializeField] [Range(0, 1)] private float punishment;
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
-    [SerializeField] [Range(0, 1)] private float mercyRange;
+    [SerializeField] [Range(0, 1)] private float perfectRange;
     [Tooltip("Decides how quickly the sound will offset. ¨Higher value equals faster offset")]
     [SerializeField] [Range(1, 500)] private float offsetModifier;
+    [SerializeField] private float windDuration;
     [SerializeField] private GameObject tiltIndicatorPrefab;
     private bool setPan = false;
+    private float punishment;
     private float soundPos = 0;
     private const int startingScore = 100;
     FMOD.Studio.PLAYBACK_STATE state;
@@ -63,6 +64,7 @@ public class TiltCorruption : CorruptionBaseClass
         //This function gets called upon when entering the segment
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        punishment = ((100 - clearThreshold) / (duration.stop - duration.start)) * 1000;
         if (gameManager.recording)
             corruptionClearedPercent = 0;
         tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, gameObject.transform);
@@ -80,7 +82,7 @@ public class TiltCorruption : CorruptionBaseClass
         innerDistortion = 0;
         audioManager.musicChanSubGroup.setPan(0);
         Destroy(tiltIndicatorInstance);
-
+        Debug.Log(corruptionClearedPercent);
         base.ExitSegment();
         ResetConditions();
     }
@@ -139,9 +141,16 @@ public class TiltCorruption : CorruptionBaseClass
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos + moveSpeed, -1, 1));
             soundPos = Mathf.Clamp(soundPos + moveSpeed, -1, 1);
         }
-        if (soundPos - mercyRange > 0 || soundPos + mercyRange < 0)
+        if (soundPos < -perfectRange || soundPos > perfectRange)
         {
-            currentScore -= punishment;
+            currentScore -= punishment * Time.deltaTime;
+            Debug.Log(punishment);
+        }
+        
+        if (soundPos <= -0.9f || soundPos >= 0.9f )
+        {
+            currentScore = 0;
+            ExitSegment();
         }
 
         tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5, 0, 0);

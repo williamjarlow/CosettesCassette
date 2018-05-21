@@ -36,17 +36,17 @@ public class StageClearVFX : MonoBehaviour {
     // For testing purposes
     void Update()
     {
-        if (Input.GetKeyDown("up"))
-            CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
+        //if (Input.GetKeyDown("up"))
+        //    CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
 
-        if (Input.GetKeyDown("left"))
-            CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
+        //if (Input.GetKeyDown("left"))
+        //    CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
 
-        if (Input.GetKeyDown("right"))
-            CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
+        //if (Input.GetKeyDown("right"))
+        //    CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
 
-        if (Input.GetKeyDown("down"))
-            CallVFXWithStickerEarned(segmentEffects.good, stickerSprite.sprite);
+        //if (Input.GetKeyDown("down"))
+        //    CallVFXWithStickerEarned(segmentEffects.good, stickerSprite.sprite);
     }
 
 
