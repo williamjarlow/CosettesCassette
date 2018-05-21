@@ -26,6 +26,7 @@ public class NoteMovement : MonoBehaviour {
     [SerializeField] private float speedx;
     [SerializeField] private float RNGSpeedxRange;
     [SerializeField] private float RNGSpeedyRange;
+
     [Header("Arc note variables")]
     [Tooltip("Initial upward momentum")]
     [Range(0.01f, 0.2f)] [SerializeField] float upwardForce;
@@ -33,6 +34,14 @@ public class NoteMovement : MonoBehaviour {
     [Range(0, 0.1f)][SerializeField] float downwardAcceleration;
     [Tooltip("Maximum downward speed")]
     [Range(0.01f, 1f)][SerializeField] float terminalVelocity;
+
+    [Header("Glitch note variables")]
+    [Tooltip("Time between each teleport, measured in beats for that crisp, clutch feel")]
+    [Range(1, 32)] [SerializeField] int teleportDelay;
+
+    [Tooltip("Distance of each individual teleport. WARNING: If this number is set too high, the mechanic might not work at all. Use with caution.")]
+    [Range(1, 30)] [SerializeField] int teleportDistance;
+
     float spriteWidth;
     private bool headingLeft = true;
     bool headingUp = true;
@@ -48,88 +57,78 @@ public class NoteMovement : MonoBehaviour {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         spriteWidth = GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
         RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
-        if (Random.Range(0, 2) == 0)
+        if (Random.Range(0, 2) == 0) //Randomize starting direction
             headingLeft = false;
-        speedx *= Random.Range((1- RNGSpeedxRange), (1 + RNGSpeedxRange));
-        speed *= Random.Range((1 - RNGSpeedyRange), (1 + RNGSpeedyRange));
+        speedx *= Random.Range((1- RNGSpeedxRange), (1 + RNGSpeedxRange)); //Randomize xSpeed
+        speed *= Random.Range((1 - RNGSpeedyRange), (1 + RNGSpeedyRange)); //Randomize ySpeed
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (movementType == MovementType.Standard)
+        if (movementType == MovementType.Standard) //Standard movement
         {
-            transform.Translate(Vector3.up * speed);
-            RNGBounceTimer -= Time.deltaTime;
-            if (RNGBounceTimer <= 0)
+            transform.Translate(Vector3.up * speed); //Move note upward with a constant speed
+            RNGBounceTimer -= Time.deltaTime; //Decrement the random bounce timer.
+            if (RNGBounceTimer <= 0) //If the random bounce timer hits zero...
             {
-                headingLeft = !headingLeft;
-                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                headingLeft = !headingLeft; //...change the direction of the note...
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound); //...and reset the random bounce timer.
             }
+
             if (headingLeft == true)
             {
                 transform.Translate(Vector3.left * speedx);
-                if (transform.position.x <= leftEdge + spriteWidth)
+                if (transform.position.x <= leftEdge + spriteWidth) //If wall has been hit
                 {
                     headingLeft = false;
                     RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
                 }
             }
-            else
+            else //If heading right
             {
                 transform.Translate(Vector3.right * speedx);
-                if (transform.position.x >= rightEdge - spriteWidth)
+                if (transform.position.x >= rightEdge - spriteWidth) //If wall has been hit
                 {
                     headingLeft = true;
-                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound); 
                 }
             }
         }
-        else if (movementType == MovementType.Arc)
+        else if (movementType == MovementType.Arc) //Arcing movement
         {
-            gradualDecrease -= downwardAcceleration;
+            gradualDecrease -= downwardAcceleration; //Move note upward with an initial force and let gravity affect note
             transform.Translate(Vector3.up * Mathf.Clamp(upwardForce + gradualDecrease, -terminalVelocity, upwardForce));
             if (headingLeft == true)
             {
                 transform.Translate(Vector3.left * speedx);
-                if (transform.position.x <= leftEdge + spriteWidth)
+                if (transform.position.x <= leftEdge + spriteWidth) //If wall has been hit
                 {
                     headingLeft = false;
                     RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
                 }
             }
-            else
+            else //If heading right
             {
                 transform.Translate(Vector3.right * speedx);
-                if (transform.position.x >= rightEdge - spriteWidth)
+                if (transform.position.x >= rightEdge - spriteWidth) //If wall has been hit
                 {
                     headingLeft = true;
                     RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
                 }
             }
         }
-        else if (movementType == MovementType.Glitchy)
-        {
-            
+        else if (movementType == MovementType.Glitchy) //Standard movement but with occasional downward teleports
+        {   
             RNGBounceTimer -= Time.deltaTime;
-            bounceTimer -= Time.deltaTime;
-            if (bounceTimer <= 0 && headingUp == false)
+            bounceTimer -= Time.deltaTime; //Bounce timer is used to determine when a downwarp should occur
+            if (bounceTimer <= 0) //If the note should downwarped
             {
-                headingUp = !headingUp;
-                speed /= 20;
-                bounceTimer = gameManager.overallCorruption.bpmInMs*16/1000;
-            }
-            else if(bounceTimer <= 0 && headingUp)
-            {
-                headingUp = !headingUp;
-                speed *= 20;
-                bounceTimer = 0;
+                transform.Translate(Vector3.down * speed * teleportDistance);  //Downwarp the note
+                bounceTimer = (gameManager.overallCorruption.bpmInMs*teleportDelay/1000); //Restart the bounce timer
             }
 
-            if(headingUp)
-                transform.Translate(Vector3.up * speed);
-            else
-                transform.Translate(Vector3.down * speed);
+            transform.Translate(Vector3.up * speed);
 
             if (RNGBounceTimer <= 0)
             {
@@ -140,16 +139,16 @@ public class NoteMovement : MonoBehaviour {
             if (headingLeft == true)
             {
                 transform.Translate(Vector3.left * speedx);
-                if (transform.position.x <= leftEdge + spriteWidth)
+                if (transform.position.x <= leftEdge + spriteWidth) //If wall has been hit
                 {
                     headingLeft = false;
                     RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
                 }
             }
-            else
+            else //If heading right
             {
                 transform.Translate(Vector3.right * speedx);
-                if (transform.position.x >= rightEdge - spriteWidth)
+                if (transform.position.x >= rightEdge - spriteWidth) //If wall has been hit
                 {
                     headingLeft = true;
                     RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
