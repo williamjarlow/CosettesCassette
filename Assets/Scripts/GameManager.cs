@@ -16,8 +16,7 @@ public class GameManager : MonoBehaviour
     public GameObject uiHandler;
     public GameObject uiParent;
     public GameObject pitchSlider;
-    public ButtonController recordButton;
-    public WinScreen winScreen;
+    public ButtonScript minigameButton;
     public StageClearVFX stageClearVFX;
 
     const int timelineOffset = 100;

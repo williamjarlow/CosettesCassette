@@ -17,7 +17,7 @@ public class JackTheRunner : CorruptionBaseClass
     AudioManager audioManager;
     OverallCorruption overallCorruption;
 
-    [SerializeField] private GameObject enemiesPrefab;
+    [SerializeField] private GameObject[] enemiesPrefabs;
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private GameObject jackTheRunnerPrefab;
     [SerializeField] private List<runnerEnemies> enemiesList;
@@ -32,6 +32,7 @@ public class JackTheRunner : CorruptionBaseClass
     {
         for (int i = 0; i < enemiesList.Count; i++)
         {
+            enemiesList[i].hasSpawned = false;
             enemiesList[i].spawnTime *= gameManager.overallCorruption.bpmInMs;
             maxScore += 1;
         }
@@ -59,6 +60,7 @@ public class JackTheRunner : CorruptionBaseClass
         }
         else if (inSegment) //If player leaves the segment area
         {
+            print("Else");
             ExitSegment();
         }
     }
@@ -120,8 +122,10 @@ public class JackTheRunner : CorruptionBaseClass
             if (timeStamp > 0 && timeStamp <= enemiesList[i].spawnTime + tolerance / 2 && timeStamp >= enemiesList[i].spawnTime - tolerance / 2)
             {
                 if (!enemiesList[i].hasSpawned)
-                    Instantiate(enemiesPrefab, transform);
-                enemiesList[i].hasSpawned = true;
+                {
+                    enemiesList[i].hasSpawned = true;
+                    Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
+                }
             }
         }
     }

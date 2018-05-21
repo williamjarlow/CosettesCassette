@@ -68,11 +68,22 @@ public class AudioTimeline : MonoBehaviour
 
     void Update()
     {
+        if (gameManager.recording && timelineSlider.IsInteractable())
+        {
+            timelineSlider.interactable = false;
+        }
+
+        if (!gameManager.recording && !timelineSlider.IsInteractable())
+        {
+            timelineSlider.interactable = true;
+        }
+
+
         if (!holding || gameManager.recording)
         {
             ChangeOnPlaying();
         }
-        else if (holding)
+        else if (holding && timelineSlider.IsInteractable())
         {
             HoldChange();
         }

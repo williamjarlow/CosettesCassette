@@ -18,8 +18,6 @@ class tutorial
 
 public class Tutorial : MonoBehaviour {
 
-    [SerializeField] private GameObject liveTutorial;
-    [SerializeField] private Text textBoxForLiveTutorial;
     [SerializeField] private GameObject tutorialMenu;
     [SerializeField] private GameObject tutorialScreen;
     [SerializeField] private GameObject settingsPage;
@@ -28,6 +26,9 @@ public class Tutorial : MonoBehaviour {
     [SerializeField] private Image rightImage;
     [SerializeField] private GameObject noteBook;
     [SerializeField] private GameObject book;
+    [Header("Needed for live tutorial system")]
+    [SerializeField] private GameObject liveTutorial;
+    [SerializeField] private Text textBoxForLiveTutorial;
     [SerializeField] private List<tutorial> tutorials;
     [SerializeField] private AudioManager audioManager;
     //[SerializeField] private TutorialStruct[] tutStruct;
@@ -36,6 +37,8 @@ public class Tutorial : MonoBehaviour {
     private int imageIndex = 0;
     private bool musicPaused = false;
     private bool initializedFromGame = false;
+    private GameManager gameManager;
+
 
     //[SerializeField] private GameObject tutorialPrefab;
     //[SerializeField] private Button tutButton;
@@ -51,15 +54,21 @@ public class Tutorial : MonoBehaviour {
 
     void Update()
     {
-        for (int i = 0; i < textTutStruct.Length; i++)
+        if (textTutStruct.Length > 0)
         {
-            if (textTutStruct[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && textTutStruct[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && textTutStruct[i].hasBeenShown == false)
+            for (int i = 0; i < textTutStruct.Length; i++)
             {
-                InitializeTutorialFromGame(i);
-                TextboxShow(textTutStruct[i].tutorialText);
-                textTutStruct[i].hasBeenShown = true;
+                if (textTutStruct[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && textTutStruct[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && textTutStruct[i].hasBeenShown == false)
+                {
+                    OpenLiveTutorial(i);
+                    TextboxShow(textTutStruct[i].tutorialText);
+                    textTutStruct[i].hasBeenShown = true;
+                }
             }
         }
+
+        if (Input.GetKeyDown("down"))
+            CloseLiveTutorial();
     }
 
     /*
@@ -119,13 +128,20 @@ public class Tutorial : MonoBehaviour {
     }
     */
 
-    public void InitializeTutorialFromGame(int index)
+    private void OpenLiveTutorial(int index)
     {
-        pauseMenu.SetActive(true);
         liveTutorial.SetActive(true);
-        noteBook.SetActive(false);
         audioManager.AudioPauseMusic();
+        audioManager.pausedMusic = true;
+
         //initializedFromGame = true;
+    }
+
+    public void CloseLiveTutorial()
+    {
+        liveTutorial.SetActive(false);
+        audioManager.AudioUnpauseMusic();
+        audioManager.pausedMusic = false;
     }
 
     public void InitializeTutorial(int index)

@@ -25,8 +25,6 @@ public class StageClearVFX : MonoBehaviour
     //[SerializeField] private float delayBetweenClearAndSticker = 2.5f;
     [SerializeField] private GameObject stickerSpritePosition;
     private SpriteRenderer stickerSprite;
-    public Sprite test1;
-    public Sprite test2;
 
 
     private void Start()
@@ -34,24 +32,6 @@ public class StageClearVFX : MonoBehaviour
         Debug.Assert(positionForParticleEffects != null, "StageClearVFX needs the prefab ParticleSpawnPosition. Make sure you read info on prefab!");
         stickerSprite = stickerSpritePosition.GetComponent<SpriteRenderer>();
     }
-
-
-    // For testing purposes
-    void Update()
-    {
-        if (Input.GetKeyDown("up"))
-            CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
-
-        if (Input.GetKeyDown("left"))
-            CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
-
-        if (Input.GetKeyDown("right"))
-            CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
-
-        if (Input.GetKeyDown("down"))
-            CallVFXWith2StickersEarned(test1, test2);
-    }
-
 
     public void CallVFX(segmentEffects typeOfEffect)
     {

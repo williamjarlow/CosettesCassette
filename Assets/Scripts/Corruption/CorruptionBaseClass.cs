@@ -61,9 +61,11 @@ public abstract class CorruptionBaseClass : MonoBehaviour
     }
     public virtual void ExitSegment()
     {
+        print("I am doing this how many times?");
         inSegment = false;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
+        gameManager.minigameButton.TogglePosition();
         //GameManager.Instance.recordButton.ToggleButtonUp();           // WHY IS THIS NOT WORKING!?!??!
         //GameManager.Instance.recordButton.NakedToggleUp();
         //GameManager.Instance.Listen();
