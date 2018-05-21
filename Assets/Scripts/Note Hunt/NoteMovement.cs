@@ -18,6 +18,8 @@ public class NoteMovement : MonoBehaviour {
     [SerializeField] private float leftEdge;
     [SerializeField] private float rightEdge;
 
+    GameManager gameManager;
+
     [Header ("RNG bounce time range in seconds")]
     [SerializeField] private float RNGBounceLowerBound;
     [SerializeField] private float RNGBounceUpperBound;
@@ -37,11 +39,13 @@ public class NoteMovement : MonoBehaviour {
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
 
+    float bounceTimer = 0;
     float gradualDecrease = 0;
 
 	// Use this for initialization
 	void Start ()
     {
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         spriteWidth = GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
         RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
         if (Random.Range(0, 2) == 0)
@@ -108,24 +112,30 @@ public class NoteMovement : MonoBehaviour {
         {
             
             RNGBounceTimer -= Time.deltaTime;
-            if (RNGBounceTimer <= 0 && headingUp == false)
+            bounceTimer -= Time.deltaTime;
+            if (bounceTimer <= 0 && headingUp == false)
             {
                 headingUp = !headingUp;
-                speed /= 10;
-                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
-
+                speed /= 20;
+                bounceTimer = gameManager.overallCorruption.bpmInMs*16/1000;
             }
-            else if(RNGBounceTimer <= 0 && headingUp)
+            else if(bounceTimer <= 0 && headingUp)
             {
                 headingUp = !headingUp;
-                speed *= 10;
-                RNGBounceTimer = Random.Range(RNGBounceLowerBound/200, RNGBounceUpperBound/200);
+                speed *= 20;
+                bounceTimer = 0;
             }
 
             if(headingUp)
                 transform.Translate(Vector3.up * speed);
             else
                 transform.Translate(Vector3.down * speed);
+
+            if (RNGBounceTimer <= 0)
+            {
+                headingLeft = !headingLeft;
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound/3, RNGBounceUpperBound/3);
+            }
 
             if (headingLeft == true)
             {
