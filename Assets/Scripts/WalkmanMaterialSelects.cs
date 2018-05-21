@@ -5,16 +5,18 @@ using UnityEngine.UI;
 
 public class WalkmanMaterialSelects : MonoBehaviour {
 
-    [SerializeField] private GameObject walkmanRef;
+	private AudioManager audioManager;
+
+	[SerializeField] private GameObject walkmanRef;
     [SerializeField] private Texture textureRef;
     [SerializeField] private Texture buttonTextureRef;
     
-
     private UnityEngine.UI.Toggle toggle;
 
     // Use this for initialization
     void Start()
     {
+		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioManager>();
         //toggle = GetComponent<UnityEngine.UI.Toggle>();
         //toggle.onValueChanged.AddListener(OnToggleValueChanged);
     }
@@ -40,6 +42,9 @@ public class WalkmanMaterialSelects : MonoBehaviour {
             }
             
         }
+
+		audioManager.PlaySkinMenuSelect ();
+
         /*
         for (int i = 0; i < buttonRefs.Length; i++)
         {

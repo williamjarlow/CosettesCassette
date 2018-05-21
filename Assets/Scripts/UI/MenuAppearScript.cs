@@ -106,8 +106,38 @@ public class MenuAppearScript : MonoBehaviour
     {
         isShowing = false;
         menuToHide.SetActive(false);
+
 		audioManager.PlayPauseMenuClose();
     }
+
+	public void ToggleSkinMenu()
+	{
+		if (!isShowing)
+		{
+			ShowSkinMenu();
+		}
+
+		else if (isShowing)
+		{
+			HideSkinMenu();
+		}
+	}
+
+	public void ShowSkinMenu()
+	{
+		isShowing = true;
+		menuToShow.SetActive(true);
+
+		audioManager.PlaySkinMenuOpen();
+	}
+
+	public void HideSkinMenu()
+	{
+		isShowing = false;
+		menuToHide.SetActive(false);
+
+		audioManager.PlaySkinMenuClose();
+	}
 
     public void StartCassette()
     {

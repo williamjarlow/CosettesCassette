@@ -89,7 +89,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
         duration = overallCorruption.durations[segmentID];
 
-
         // Initialize points
         correctNotePrefab.GetComponent<NoteMovement>().points = correctNotePoints;
         correctMultiNotePrefab.GetComponent<NoteMovement>().points = correctMultiNotePoints;
@@ -162,11 +161,13 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         //Give audio/visual feedback for destroying note
                         currentScore += noteMovement.points;
                         Destroy(hit.transform.gameObject);
+						audioManager.PlayShootSound (0f);
                     }
                     else
                     {
                         //Give audio/visual feedback for hitting note
                         noteMovement.hitsRemaining -= 1;
+						audioManager.PlayShootSound (2f);
                     }
                 }
             }
@@ -192,12 +193,14 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         //Give audio/visual feedback for destroying note
                         currentScore += noteMovement.points;
                         Destroy(hit.transform.gameObject);
+						audioManager.PlayShootSound (0f);
                     }
                     else
                     {
                         //Give audio/visual feedback for hitting note
                         noteMovement.hitsRemaining -= 1;
                         noteMovement.GetComponent<SpriteRenderer>().color = new Color(1,1,0);
+						audioManager.PlayShootSound (2f);
                     }
                 }
 

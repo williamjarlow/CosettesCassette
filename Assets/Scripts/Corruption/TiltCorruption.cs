@@ -172,6 +172,7 @@ public class TiltCorruption : CorruptionBaseClass
             currentScore = 0;
             gameManager.recording = false;
             ExitSegment();
+			audioManager.PlaySegmentClear (2f);
         }
 
         //Random wind handler

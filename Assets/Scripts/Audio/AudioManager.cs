@@ -399,7 +399,7 @@ public class AudioManager : MonoBehaviour {
 		levelSelectBackEv.release();
 	}
 
-	public void PlaySkinOpen()
+	public void PlaySkinMenuOpen()
 	{
 		FMOD.Studio.EventDescription skinOpenEventDesc;
 		FMOD.Studio.EventInstance skinOpenEv;
@@ -409,7 +409,7 @@ public class AudioManager : MonoBehaviour {
 		skinOpenEv.release();
 	}
 
-	public void PlaySkinClose()
+	public void PlaySkinMenuClose()
 	{
 		FMOD.Studio.EventDescription skinCloseEventDesc;
 		FMOD.Studio.EventInstance skinCloseEv;
@@ -419,7 +419,7 @@ public class AudioManager : MonoBehaviour {
 		skinCloseEv.release();
 	}
 
-	public void PlaySkinSelect()
+	public void PlaySkinMenuSelect()
 	{
 		FMOD.Studio.EventDescription skinSelectEventDesc;
 		FMOD.Studio.EventInstance skinSelectEv;
@@ -438,6 +438,16 @@ public class AudioManager : MonoBehaviour {
 		shootEv.setParameterValue ("shoot_result", result); //0 = hit, 1 = wrong, 2 = miss
 		shootEv.start();
 		shootEv.release();
+	}
+
+	public void PlayGameStart()
+	{
+		FMOD.Studio.EventDescription gameStartEventDesc;
+		FMOD.Studio.EventInstance gameStartEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/start", out gameStartEventDesc);
+		gameStartEventDesc.createInstance(out gameStartEv);
+		gameStartEv.start();
+		gameStartEv.release();
 	}
 
 	public void PlayInsertAnimSound ()
