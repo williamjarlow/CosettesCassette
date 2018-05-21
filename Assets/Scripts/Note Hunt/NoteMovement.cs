@@ -28,11 +28,12 @@ public class NoteMovement : MonoBehaviour {
     [Tooltip("Initial upward momentum")]
     [Range(0.01f, 0.2f)] [SerializeField] float upwardForce;
     [Tooltip("Strength of gravity")]
-    [Range(0.001f, 0.1f)][SerializeField] float downwardAcceleration;
+    [Range(0, 0.1f)][SerializeField] float downwardAcceleration;
     [Tooltip("Maximum downward speed")]
     [Range(0.01f, 1f)][SerializeField] float terminalVelocity;
     float spriteWidth;
     private bool headingLeft = true;
+    bool headingUp = true;
     [HideInInspector] public float speed;
     [HideInInspector] public int points;
 
@@ -105,7 +106,45 @@ public class NoteMovement : MonoBehaviour {
         }
         else if (movementType == MovementType.Glitchy)
         {
+            
+            RNGBounceTimer -= Time.deltaTime;
+            if (RNGBounceTimer <= 0 && headingUp == false)
+            {
+                headingUp = !headingUp;
+                speed /= 10;
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
 
+            }
+            else if(RNGBounceTimer <= 0 && headingUp)
+            {
+                headingUp = !headingUp;
+                speed *= 10;
+                RNGBounceTimer = Random.Range(RNGBounceLowerBound/200, RNGBounceUpperBound/200);
+            }
+
+            if(headingUp)
+                transform.Translate(Vector3.up * speed);
+            else
+                transform.Translate(Vector3.down * speed);
+
+            if (headingLeft == true)
+            {
+                transform.Translate(Vector3.left * speedx);
+                if (transform.position.x <= leftEdge + spriteWidth)
+                {
+                    headingLeft = false;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
+            }
+            else
+            {
+                transform.Translate(Vector3.right * speedx);
+                if (transform.position.x >= rightEdge - spriteWidth)
+                {
+                    headingLeft = true;
+                    RNGBounceTimer = Random.Range(RNGBounceLowerBound, RNGBounceUpperBound);
+                }
+            }
         }
     }
 }
