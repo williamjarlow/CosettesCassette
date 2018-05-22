@@ -203,21 +203,18 @@ public class AudioManager : MonoBehaviour {
         
         if (startedMusic && !pausedMusic)
         {
-            Debug.Log("Music is paused");
             AudioPauseMusic();
             pausedMusic = true;
         }
 
         else if (startedMusic && pausedMusic)
         {
-            Debug.Log("Music is resumed");
             AudioUnpauseMusic();
             pausedMusic = false;
         }
 
         if (!startedMusic)
         {
-            Debug.Log("Music starts");
             AudioPlayMusic();
             startedMusic = true;
             pausedMusic = false;
