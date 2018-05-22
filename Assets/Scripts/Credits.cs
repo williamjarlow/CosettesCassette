@@ -7,10 +7,13 @@ using System.IO;
 public class Credits : MonoBehaviour {
 
     [SerializeField] private GameObject stopper;
+    [SerializeField] private float stopPos;
+    [SerializeField] private Vector3 freeze;
     [SerializeField] private float origPos;
     [SerializeField] public float currentPos;
     [SerializeField] private float endOfTheLine;
     [SerializeField] private GameObject AudioManagerz;
+    [SerializeField] private GameObject Timeslider;
     [SerializeField] private GameObject credits;
     [SerializeField] private GameObject winning;
     [SerializeField] private Image CreditsFade;
@@ -28,6 +31,7 @@ public class Credits : MonoBehaviour {
     public bool audiolog = false;
     public bool showpicture = false;
     public bool showFade = false;
+    private bool reachedEnd = false;
 
 
 
@@ -63,6 +67,7 @@ public class Credits : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
+
         if (creditsOrAudiolog == "Audiolog" && audiolog == true)
         {
             audioPos = audioManager.GetTimeLinePosition();
@@ -81,23 +86,32 @@ public class Credits : MonoBehaviour {
                 }
             }
 
-
-
         }
         else if (creditsOrAudiolog == "Credits" && music == true)
         {
-            audioPos = audioManager.GetTimeLinePosition();
-            audioP = audioPos / audiolength;
-            currentPos = audioP * endOfTheLine;
-            Vector3 temp = transform.localPosition;
-            temp.y = currentPos - origPos;
-            transform.localPosition = temp;
         
-            if (currentPos > waitforit && showFade == false)
-            {
+            //if (currentPos > waitforit && showFade == false)
+            //{
                 FadeOut();
                 showFade = true;
                 //insert save here
+            //}
+            if (currentPos < stopPos && reachedEnd == false)
+            {
+                audioPos = audioManager.GetTimeLinePosition();
+                audioP = audioPos / audiolength;
+                currentPos = audioP * endOfTheLine;
+                Vector3 temp = transform.localPosition;
+                temp.y = currentPos - origPos;
+                transform.localPosition = temp;
+            }
+            else if (currentPos > stopPos && !reachedEnd)
+            {
+                transform.localPosition = freeze;
+                reachedEnd = true;
+                Timeslider.SetActive(false);
+                //audioManager.AudioPauseMusic();
+                //audioManager.pausedMusic = true;
             }
         }
     }
