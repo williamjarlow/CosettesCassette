@@ -29,7 +29,10 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     private AudioManager audioManager;
     private OverallCorruption overallCorruption;
+    [SerializeField]
+    GameObject noteExplosionPrefab;
 
+    [SerializeField] float noteExplosionTime;
     [SerializeField]
     bool spawnNotesAtEdge; //Debug bool for spawning notes at edge values.
     [SerializeField]
@@ -68,13 +71,14 @@ public class NoteHuntCorruption : CorruptionBaseClass
     [Tooltip("Maximum x spawn coordinate")]
     [SerializeField]
     private float xSpawnRandomMax;
-    [SerializeField] private float timeStamp;
 
     [SerializeField] [Tooltip("Check this box if input is in bpm rather than milliseconds")]
     private bool inputBPM;
 
     const int standardNoteHits = 1;
     const int multiNoteHits = 2;
+
+    float timeStamp;
 
     // The list of notes the designers will spawn
     public List<Notes> noteList;
@@ -85,7 +89,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
     {
         audioManager = gameManager.audioManager;
         overallCorruption = gameManager.overallCorruption;
-        Debug.Log(audioManager);
 
         duration = overallCorruption.durations[segmentID];
 
@@ -140,13 +143,16 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     private void RecordSegment()
     {
-        // ** Notes Hunt ** //
         timeStamp = Mathf.Clamp(gameManager.audioManager.GetTimeLinePosition() - duration.start, 0, duration.stop - duration.start);
         SpawnNotes();
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began || Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            Ray ray;
+            if (Input.GetMouseButtonDown(0))
+                ray  = Camera.main.ScreenPointToRay(Input.mousePosition);
+            else
+                ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 
             // If an object was hit
             if (Physics.Raycast(ray, out hit, Mathf.Infinity))
@@ -160,50 +166,24 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     {
                         //Give audio/visual feedback for destroying note
                         currentScore += noteMovement.points;
+                        GameObject noteExplosioninstance;
+                        noteExplosioninstance = Instantiate(noteExplosionPrefab, hit.transform.position, hit.transform.rotation, transform);
                         Destroy(hit.transform.gameObject);
+                        Destroy(noteExplosioninstance, noteExplosionTime);
 						audioManager.PlayShootSound (0f);
                     }
                     else
                     {
                         //Give audio/visual feedback for hitting note
                         noteMovement.hitsRemaining -= 1;
-						audioManager.PlayShootSound (2f);
+                        GameObject noteExplosioninstance;
+                        noteExplosioninstance = Instantiate(noteExplosionPrefab, hit.transform.position, hit.transform.rotation, transform);
+                        Destroy(noteExplosioninstance, noteExplosionTime);
+                        int i = Random.Range(0, 3);
+                        hit.transform.gameObject.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[i];
+                        audioManager.PlayShootSound (2f);
                     }
                 }
-            }
-        }
-
-        // ** Temporary for testing ** // 
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            
-
-            // If an object was hit
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-            {
-                NoteMovement noteMovement = hit.transform.gameObject.GetComponent<NoteMovement>();
-                // If we hit the note
-                if (noteMovement != null)
-                {
-                    // Add/remove points and destroy the hit object
-                    if (noteMovement.hitsRemaining <= 1)
-                    {
-                        //Give audio/visual feedback for destroying note
-                        currentScore += noteMovement.points;
-                        Destroy(hit.transform.gameObject);
-						audioManager.PlayShootSound (0f);
-                    }
-                    else
-                    {
-                        //Give audio/visual feedback for hitting note
-                        noteMovement.hitsRemaining -= 1;
-                        noteMovement.GetComponent<SpriteRenderer>().color = new Color(1,1,0);
-						audioManager.PlayShootSound (2f);
-                    }
-                }
-
             }
         }
     }
@@ -255,7 +235,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     // Set the required amount of hits
                     spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
                 }
-                else if (noteList[i].noteType == NoteType.CORRECTMULTI)
+                else if (noteList[i].noteType == NoteType.CORRECTMULTI && !noteList[i].hasSpawned)
                 {
                     //Randomize the sprite
                     noteSpriteIndex = Random.Range(0, correctMultiNotesSprites.Length - 1);
@@ -273,24 +253,29 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     spawnedNote.GetComponent<NoteMovement>().hitsRemaining = multiNoteHits;
                 }
                 else
+                {
                     spawnedNote = new GameObject();
+                    Destroy(spawnedNote);
+                }
+                if (!noteList[i].hasSpawned)
+                {
+                    // Spawn the correct randomized note
+                    noteList[i].hasSpawned = true;
+                    // Set the game object's speed according to the specified speed in this script
+                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
+                    // Save the box collider and sprite as variables
+                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+                    // Convert the sprite to world space units
+                    float pixelsPerUnit = sprite.pixelsPerUnit;
+                    // Set the box collider size according to the world space size + the added box collider size
+                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
 
-                // Spawn the correct randomized note
-                noteList[i].hasSpawned = true;
-                // Set the game object's speed according to the specified speed in this script
-                spawnedNote.GetComponent<NoteMovement>().speed = speed;
-                // Save the box collider and sprite as variables
-                BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
-                Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
-                // Convert the sprite to world space units
-                float pixelsPerUnit = sprite.pixelsPerUnit;
-                // Set the box collider size according to the world space size + the added box collider size
-                boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-
-                // Prepare the object for destruction
-                destroyList.Add(spawnedNote);
-                // Set note movement type
-                spawnedNote.GetComponent<NoteMovement>().movementType = noteList[i].movementType;
+                    // Prepare the object for destruction
+                    destroyList.Add(spawnedNote);
+                    // Set note movement type
+                    spawnedNote.GetComponent<NoteMovement>().movementType = noteList[i].movementType;
+                }
             }
         }
     }
@@ -326,11 +311,9 @@ public class NoteHuntCorruption : CorruptionBaseClass
         inSegment = false;
         GradeScore();
         innerDistortion = 0;
-
-        base.ExitSegment();
-
         // Reset conditions, i.e destroy notes to improve performance
         ResetConditions();
+        base.ExitSegment();
     }
 
     public override void GradeScore()
