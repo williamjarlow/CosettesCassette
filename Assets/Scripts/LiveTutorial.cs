@@ -50,6 +50,7 @@ public class LiveTutorial : MonoBehaviour {
 
     private void OpenLiveTutorial()
     {
+        // HEJ JACK, FIN FIN! LÄGG LJUD HÄR!
         liveTutorial.SetActive(true);
         audioManager.AudioPauseMusic();
         audioManager.pausedMusic = true;
@@ -57,6 +58,7 @@ public class LiveTutorial : MonoBehaviour {
 
     public void CloseLiveTutorial()
     {
+        // STÄNGA AV OCKSÅ, FÖR DET HADE DU ALDRIG FATTAT SJÄLV!
         liveTutorial.SetActive(false);
         audioManager.AudioUnpauseMusic();
         audioManager.pausedMusic = false;

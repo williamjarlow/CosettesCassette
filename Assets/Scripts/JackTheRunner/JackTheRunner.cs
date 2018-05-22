@@ -53,14 +53,17 @@ public class JackTheRunner : CorruptionBaseClass
             {
                 if (inSegment == false) //If player just entered the segment
                 {
-                    EnterSegment(); 
+                    EnterSegment();
                 }
                 RecordSegment();
             }
+
+            else if (!gameManager.recording)
+                ResetConditions();
         }
+
         else if (inSegment) //If player leaves the segment area
         {
-            print("Else");
             ExitSegment();
         }
     }
