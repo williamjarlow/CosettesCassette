@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwapCamera : MonoBehaviour {
 
     [SerializeField] private GameObject visual;
+    [SerializeField] private GameObject FakeCanvas;
     [SerializeField] private Camera zoomedOut;
     [SerializeField] private Camera closeUp;
     [SerializeField] private float delayCounter;
@@ -29,6 +30,7 @@ public class SwapCamera : MonoBehaviour {
 
     public void cameraSwap()
     {
+        FakeCanvas.SetActive(true);
         swap();
         if (zoomed == true)
         {
@@ -80,6 +82,7 @@ public class SwapCamera : MonoBehaviour {
         StartCoroutine(MoveFromTo(startPos, new Vector3(zoomedOut.transform.localPosition.x, zoomedOut.transform.localPosition.y, backMovement), delayCounter));
         yield return new WaitForSeconds(2.5f);
         swapBack();
+        FakeCanvas.SetActive(false);
     }
 
     IEnumerator DelayatStart()
@@ -90,6 +93,7 @@ public class SwapCamera : MonoBehaviour {
         zoomedOut.enabled = false;
         visual.SetActive(true);
         closeUp.enabled = true;
+        FakeCanvas.SetActive(false);
     }
 
 }
