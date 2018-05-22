@@ -19,22 +19,6 @@ public class SaveSystem : Singleton<SaveSystem>
         {
             DontDestroyOnLoad(gameObject);
             saveSystem = this;
-
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            //data = (PlayerData)bf.Deserialize(file);
-            //file.Close();
-
-            //SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-            //emptyStruct.exists = true;
-            ////for (int i = 0; i < 20; i++)
-            ////{
-            ////    SaveSegment(emptyStruct, i, 0);
-            ////    for (int j = 0; j < 20; j++)
-            ////    {
-            ////        SaveSegment(emptyStruct, i, j);
-            ////    }
-            ////}
         }
         else if (saveSystem != this)
         {
