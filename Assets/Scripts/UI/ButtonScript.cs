@@ -25,6 +25,7 @@ public class ButtonScript : MonoBehaviour {
 
     public void TogglePosition()
     {
+        Debug.Log("Button toggle");
         // If button is 'down'
         if(isDown)
         {
@@ -47,4 +48,5 @@ public class ButtonScript : MonoBehaviour {
             isDown = true;
         }
     }
+
 }
