@@ -26,13 +26,13 @@ public class Tutorial : MonoBehaviour {
     [SerializeField] private Image rightImage;
     [SerializeField] private GameObject noteBook;
     [SerializeField] private GameObject book;
-    [Header("Needed for live tutorial system")]
-    [SerializeField] private GameObject liveTutorial;
-    [SerializeField] private Text textBoxForLiveTutorial;
+    //[Header("Needed for live tutorial system")]
+    //[SerializeField] private GameObject liveTutorial;
+    //[SerializeField] private Text textBoxForLiveTutorial;
     [SerializeField] private List<tutorial> tutorials;
-    [SerializeField] private AudioManager audioManager;
+    private AudioManager audioManager;
     //[SerializeField] private TutorialStruct[] tutStruct;
-    [SerializeField] private TutorialTextStruct[] textTutStruct;
+    //[SerializeField] private TutorialTextStruct[] textTutStruct;
     private int tutorialIndex = 0;
     private int imageIndex = 0;
     private bool musicPaused = false;
@@ -45,6 +45,7 @@ public class Tutorial : MonoBehaviour {
 
     void Start()
     {
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         ////Add Listener to the button to leave the tutorial 
         //Button tutorialButton = tutButton.GetComponent<Button>();
         //tutorialButton.onClick.AddListener(() => Resume());
@@ -52,24 +53,21 @@ public class Tutorial : MonoBehaviour {
         //tutorialPrefab.SetActive(false);
     }
 
-    void Update()
-    {
-        if (textTutStruct.Length > 0)
-        {
-            for (int i = 0; i < textTutStruct.Length; i++)
-            {
-                if (textTutStruct[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && textTutStruct[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && textTutStruct[i].hasBeenShown == false)
-                {
-                    OpenLiveTutorial(i);
-                    TextboxShow(textTutStruct[i].tutorialText);
-                    textTutStruct[i].hasBeenShown = true;
-                }
-            }
-        }
-
-        if (Input.GetKeyDown("down"))
-            CloseLiveTutorial();
-    }
+    //void Update()
+    //{
+    //    if (textTutStruct.Length > 0)
+    //    {
+    //        for (int i = 0; i < textTutStruct.Length; i++)
+    //        {
+    //            if (textTutStruct[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && textTutStruct[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && textTutStruct[i].hasBeenShown == false)
+    //            {
+    //                OpenLiveTutorial(i);
+    //                TextboxShow(textTutStruct[i].tutorialText);
+    //                textTutStruct[i].hasBeenShown = true;
+    //            }
+    //        }
+    //    }
+    //}
 
     /*
     void Update()
@@ -98,7 +96,8 @@ public class Tutorial : MonoBehaviour {
     //{
     //    //Change base value of the chosen sprite's alpha to fit desired esthetic effect
     //    Image tutorialImage = tutorialPrefab.GetComponent<Image>();
-    //    tutorialImage.sprite = tutStruct[tutorialIndex].spriteToShow;
+    //    tutorialImage.sprite = 
+    // ct[tutorialIndex].spriteToShow;
     //    Color tutAlpha = tutorialImage.color;
     //    tutAlpha.a = 0.75f;
     //    tutorialImage.color = tutAlpha;
@@ -128,21 +127,21 @@ public class Tutorial : MonoBehaviour {
     }
     */
 
-    private void OpenLiveTutorial(int index)
-    {
-        liveTutorial.SetActive(true);
-        audioManager.AudioPauseMusic();
-        audioManager.pausedMusic = true;
+    //private void OpenLiveTutorial(int index)
+    //{
+    //    liveTutorial.SetActive(true);
+    //    audioManager.AudioPauseMusic();
+    //    audioManager.pausedMusic = true;
 
-        //initializedFromGame = true;
-    }
+    //    //initializedFromGame = true;
+    //}
 
-    public void CloseLiveTutorial()
-    {
-        liveTutorial.SetActive(false);
-        audioManager.AudioUnpauseMusic();
-        audioManager.pausedMusic = false;
-    }
+    //public void CloseLiveTutorial()
+    //{
+    //    liveTutorial.SetActive(false);
+    //    audioManager.AudioUnpauseMusic();
+    //    audioManager.pausedMusic = false;
+    //}
 
     public void InitializeTutorial(int index)
     {
@@ -213,11 +212,11 @@ public class Tutorial : MonoBehaviour {
     //    }
     //}
 
-    public void TextboxShow(string text)
-    {
-        textBoxForLiveTutorial.gameObject.SetActive(true);
-        textBoxForLiveTutorial.text = text;
-    }
+    //public void TextboxShow(string text)
+    //{
+    //    textBoxForLiveTutorial.gameObject.SetActive(true);
+    //    textBoxForLiveTutorial.text = text;
+    //}
 
 }
 
@@ -233,12 +232,12 @@ public struct TutorialStruct
 */
 
 
-[System.Serializable]
-public struct TutorialTextStruct
-{
-    [TextArea]
-    [SerializeField]
-    public string tutorialText;
-    public float timeToAppearInMs;
-    public bool hasBeenShown;
-}
+//[System.Serializable]
+//public struct TutorialTextStruct
+//{
+//    [TextArea]
+//    [SerializeField]
+//    public string tutorialText;
+//    public float timeToAppearInMs;
+//    public bool hasBeenShown;
+//}

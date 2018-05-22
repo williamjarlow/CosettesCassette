@@ -65,7 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fdc777a9344ce4f9342d2675585353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteType: 1
+  hitsRemaining: 0
+  movementType: 0
   leftEdge: -1.6
   rightEdge: 3.15
   RNGBounceLowerBound: 1
@@ -73,8 +74,13 @@ MonoBehaviour:
   speedx: 0.03
   RNGSpeedxRange: 0
   RNGSpeedyRange: 0
+  upwardForce: 0.045
+  downwardAcceleration: 0.0005
+  terminalVelocity: 0.1
+  teleportDelay: 8
+  teleportDistance: 20
   speed: 0.01
-  points: -6
+  points: -2
 --- !u!212 &212448318277003408
 SpriteRenderer:
   m_ObjectHideFlags: 1
