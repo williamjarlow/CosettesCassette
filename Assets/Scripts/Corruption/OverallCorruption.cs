@@ -35,7 +35,7 @@ public class OverallCorruption : MonoBehaviour {
     GameManager gameManager;
 
     [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")]
-    [SerializeField] [Range(0, 100)] int corruptionClearThreshold;
+    [Range(0, 100)] public int corruptionClearThreshold;
 
 	[HideInInspector] public float overallCorruption;
 	[HideInInspector] public float overallDistortion;

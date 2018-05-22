@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 public enum instruments { drums, synth, vocals, guitar, bass, pitch };
 public class GameManager : MonoBehaviour
@@ -57,11 +58,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
-        Sticker goodSticker = new Sticker(stickerForGood.Name, stickerForGood.Description, stickerForGood.Sprite);
-        Sticker perfectSticker = new Sticker(stickerForPerfect.Name, stickerForPerfect.Description, stickerForPerfect.Sprite);
         stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
-        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForGood.Name, stickerForGood);
-        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForPerfect.Name, stickerForPerfect);
+        stickerForGood = stickerManageRef.stickers[(SceneManager.GetActiveScene().buildIndex - 1) * 2];
+        stickerForPerfect = stickerManageRef.stickers[((SceneManager.GetActiveScene().buildIndex - 1) * 2) + 1];
     }
 
     private void Update()
