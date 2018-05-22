@@ -20,6 +20,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
     [SerializeField] private int correctLyricSegment;
     private bool hasSpawned;
 
+	[SerializeField] private float chosenWordStart;
+	[SerializeField] private float chosenWordEnd;
 
     // ** TODO ** // 
     // 1. Add some visual effect when clicking on a button and destroying the lyrics
@@ -46,6 +48,13 @@ public class OddOneOutCorruption : CorruptionBaseClass
             {
 
             }
+
+			// If player is currently listening to chosen word
+			if (audioManager.GetTimeLinePosition () >= chosenWordStart &&
+			    audioManager.GetTimeLinePosition () < chosenWordEnd)
+				audioManager.oooVocals.setValue (100f);
+			else // If player is not currently listening to chosen word
+				audioManager.oooVocals.setValue (30f);
         }
         else if (inSegment) //If player leaves the segment area
         {
@@ -127,7 +136,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         base.EnterSegment();
 
-		audioManager.oooVocals.setValue (100f);
+		//audioManager.oooVocals.setValue (100f);
     }
 
     public override void ExitSegment()

@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+		audioManager.PlayInsertAnimSound ();
+
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
         Sticker goodSticker = new Sticker(stickerForGood.Name, stickerForGood.Description, stickerForGood.Sprite);
         Sticker perfectSticker = new Sticker(stickerForPerfect.Name, stickerForPerfect.Description, stickerForPerfect.Sprite);

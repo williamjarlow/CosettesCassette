@@ -79,11 +79,6 @@ public class AudioManager : MonoBehaviour {
     [HideInInspector] public bool startedMusic = false;
     [HideInInspector] public bool pausedMusic = true;
 
-    private void OnLevelWasLoaded(int level)
-    {
-       // UnloadBanks();
-    }
-
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -203,21 +198,18 @@ public class AudioManager : MonoBehaviour {
         
         if (startedMusic && !pausedMusic)
         {
-            Debug.Log("Music is paused");
             AudioPauseMusic();
             pausedMusic = true;
         }
 
         else if (startedMusic && pausedMusic)
         {
-            Debug.Log("Music is resumed");
             AudioUnpauseMusic();
             pausedMusic = false;
         }
 
         if (!startedMusic)
         {
-            Debug.Log("Music starts");
             AudioPlayMusic();
             startedMusic = true;
             pausedMusic = false;
@@ -433,6 +425,36 @@ public class AudioManager : MonoBehaviour {
 		skinSelectEv.release();
 	}
 
+	public void PlayTutorialOpen()
+	{
+		FMOD.Studio.EventDescription tutorialOpenEventDesc;
+		FMOD.Studio.EventInstance tutorialOpenEv;
+		systemObj.getEvent("event:/Interface/tutorial_open", out tutorialOpenEventDesc);
+		tutorialOpenEventDesc.createInstance(out tutorialOpenEv);
+		tutorialOpenEv.start();
+		tutorialOpenEv.release();
+	}
+
+	public void PlayTutorialClose()
+	{
+		FMOD.Studio.EventDescription tutorialCloseEventDesc;
+		FMOD.Studio.EventInstance tutorialCloseEv;
+		systemObj.getEvent("event:/Interface/tutorial_close", out tutorialCloseEventDesc);
+		tutorialCloseEventDesc.createInstance(out tutorialCloseEv);
+		tutorialCloseEv.start();
+		tutorialCloseEv.release();
+	}
+
+	public void PlayOOOCorrect()
+	{
+		
+	}
+
+	public void PlayOOOWrong()
+	{
+
+	}
+
 	public void PlayShootSound(float result)
 	{
 		FMOD.Studio.EventDescription shootEventDesc;
@@ -442,6 +464,20 @@ public class AudioManager : MonoBehaviour {
 		shootEv.setParameterValue ("shoot_result", result); //0 = hit, 1 = wrong, 2 = miss
 		shootEv.start();
 		shootEv.release();
+	}
+
+	public void PlayRunnerJump(bool land) // 0 = jump, 1 = land
+	{
+		FMOD.Studio.EventDescription runnerJumpEventDesc;
+		FMOD.Studio.EventInstance runnerJumpEv;
+		systemObj.getEvent("event:/SFX/runner_jump", out runnerJumpEventDesc);
+		runnerJumpEventDesc.createInstance(out runnerJumpEv);
+
+		if (!land)
+			runnerJumpEv.start();
+		else if (land)
+			runnerJumpEv.triggerCue ();
+		runnerJumpEv.release();
 	}
 
 	public void PlayGameStart()
