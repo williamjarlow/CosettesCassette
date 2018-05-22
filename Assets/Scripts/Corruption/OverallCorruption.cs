@@ -35,7 +35,7 @@ public class OverallCorruption : MonoBehaviour {
     GameManager gameManager;
 
     [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")]
-    [SerializeField] [Range(0, 100)] int corruptionClearThreshold;
+    [Range(0, 100)] public int corruptionClearThreshold;
 
 	[HideInInspector] public float overallCorruption;
 	[HideInInspector] public float overallDistortion;
@@ -139,19 +139,22 @@ public class OverallCorruption : MonoBehaviour {
 
         if(gameManager.LevelPerfected == false && overallCorruption == 0)
         {
-            if (!gameManager.LevelCleared)
+            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
             {
-                gameManager.LevelCleared = true;
-                gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood, gameManager.stickerForPerfect);
+                if (!gameManager.LevelCleared)
+                {
+                    gameManager.LevelCleared = true;
+                    gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
+                }
+                else
+                    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
+                gameManager.audioManager.PlayWinSound(1);
+                gameManager.LevelPerfected = true;
             }
-            else
-            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect);
-            gameManager.audioManager.PlayWinSound(1);
-            gameManager.LevelPerfected = true;
         }
-		else if(gameManager.LevelCleared == false && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
-		{
-            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood);
+		else if(gameManager.stickerForGood.EarnSticker() && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
+        {
+            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
