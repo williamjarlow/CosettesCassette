@@ -41,8 +41,9 @@ public class GameManager : MonoBehaviour
     public instruments selectedInstrument = instruments.drums;
 
     [Header("Stickers for this level")]
-    public Sprite stickerForGood;
-    public Sprite stickerForPerfect;
+    public StickerManager stickerManageRef;
+    public Sticker stickerForGood;
+    public Sticker stickerForPerfect;
 
 
     void Awake()
@@ -56,6 +57,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
+        Sticker goodSticker = new Sticker(stickerForGood.Name, stickerForGood.Description, stickerForGood.Sprite);
+        Sticker perfectSticker = new Sticker(stickerForPerfect.Name, stickerForPerfect.Description, stickerForPerfect.Sprite);
+        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForGood.Name, stickerForGood);
+        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForPerfect.Name, stickerForPerfect);
     }
 
     private void Update()

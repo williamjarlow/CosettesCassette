@@ -139,19 +139,22 @@ public class OverallCorruption : MonoBehaviour {
 
         if(gameManager.LevelPerfected == false && overallCorruption == 0)
         {
-            if (!gameManager.LevelCleared)
+            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
             {
-                gameManager.LevelCleared = true;
-                gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood, gameManager.stickerForPerfect);
+                if (!gameManager.LevelCleared)
+                {
+                    gameManager.LevelCleared = true;
+                    gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
+                }
+                else
+                    gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
+                gameManager.audioManager.PlayWinSound(1);
+                gameManager.LevelPerfected = true;
             }
-            else
-            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect);
-            gameManager.audioManager.PlayWinSound(1);
-            gameManager.LevelPerfected = true;
         }
-		else if(gameManager.LevelCleared == false && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
-		{
-            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood);
+		else if(gameManager.stickerForGood.EarnSticker() && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
+        {
+            gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
