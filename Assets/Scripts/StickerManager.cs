@@ -12,12 +12,13 @@ public class StickerManager : MonoBehaviour {
     //[SerializeField] private GameObject[] otherCategories;
     //[SerializeField] private GameObject particleSticker;
     [SerializeField] private GameObject saveSystemRef;
+    public Sticker[] stickers;
     //[SerializeField] private int showDuration;
 
     //[SerializeField] private GameObject stickerPrefab;
     //private bool menuDisable = true;
 
-    public Dictionary<string, Sticker> stickers = new Dictionary<string, Sticker>();
+    public Dictionary<string, Sticker> stickersDic = new Dictionary<string, Sticker>();
 
     void Start ()
     {
@@ -31,8 +32,12 @@ public class StickerManager : MonoBehaviour {
         //{
         //    otherCategories[i].SetActive(false);
         //}
+        for (int i=0; i < stickers.Length; i++)
+        {
+            stickersDic.Add(stickers[i].Name, stickers[i]);
+        }
 
-        saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickers);
+        saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickersDic);
     }
 	
 	void Update () {
@@ -62,14 +67,14 @@ public class StickerManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.V))
         {
-            saveSystemRef.GetComponent<SaveSystem>().ClearStickers(stickers);
+            saveSystemRef.GetComponent<SaveSystem>().ClearStickers(stickersDic);
         }
     }
 
     //Earns the chosen sticker, call thiss with the exact stickers name to earn the sticker and set its correct values in the sticker menu
     public bool EarnSticker(string title)
     {
-        if(stickers[title].EarnSticker())
+        if(stickersDic[title].EarnSticker())
         {
             //GameObject sticker = particleSticker;
             //sticker.SetActive(true);
