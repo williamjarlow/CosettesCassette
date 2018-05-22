@@ -8,7 +8,10 @@ public enum eventTriggered {jackDamaged, passedEnemy};
 [System.Serializable]
 class runnerEnemies
 {
+    public GameObject enemyTypePrefab;
     public int spawnTime;
+    public float speed = 1.5f;
+    public float animatedSpeed = 0.5f;
     [HideInInspector]public bool hasSpawned = false;
 }
 
@@ -17,7 +20,7 @@ public class JackTheRunner : CorruptionBaseClass
     AudioManager audioManager;
     OverallCorruption overallCorruption;
 
-    [SerializeField] private GameObject[] enemiesPrefabs;
+    //[SerializeField] private GameObject[] enemiesPrefabs;
     [SerializeField] private GameObject groundPrefab;
     [SerializeField] private GameObject jackTheRunnerPrefab;
     [SerializeField] private List<runnerEnemies> enemiesList;
@@ -41,6 +44,8 @@ public class JackTheRunner : CorruptionBaseClass
         overallCorruption = gameManager.overallCorruption;
         audioManager = gameManager.audioManager;
         duration = overallCorruption.durations[segmentID];
+
+        Load();
     }
 
     void Update()
@@ -127,7 +132,9 @@ public class JackTheRunner : CorruptionBaseClass
                 if (!enemiesList[i].hasSpawned)
                 {
                     enemiesList[i].hasSpawned = true;
-                    Instantiate(enemiesPrefabs[Random.Range(0, enemiesPrefabs.Length)], transform);
+                    GameObject instantiatedEnemy = Instantiate(enemiesList[i].enemyTypePrefab, transform);
+                    instantiatedEnemy.GetComponent<EnemiesMovement>().movementSpeed = -enemiesList[i].speed;
+                    instantiatedEnemy.GetComponent<Animator>().speed = enemiesList[i].animatedSpeed;
                 }
             }
         }

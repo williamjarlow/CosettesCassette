@@ -66,8 +66,6 @@ public class Tutorial : MonoBehaviour
             currentIndex += 1;
             leftImage.sprite = tutorials[tutorialIndex].images[currentIndex].pageImage;
             rightTextBox.text = tutorials[tutorialIndex].textPages[currentIndex].pageText;
-            //if (imageIndex == tutorials[tutorialIndex].images.Count - 1)
-            //    rightImage.sprite = null;
         }
     }
 
@@ -84,6 +82,8 @@ public class Tutorial : MonoBehaviour
 
     public void BackToTutorials()
     {
+        leftImage.sprite = null;
+        rightTextBox.text = "";
         tutorialMenu.SetActive(true);
         book.SetActive(false);
         audioManager.PlayPauseMenuBack();

@@ -22,7 +22,6 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private float goodParticleYOffset = 1.6f;
     [SerializeField] private float perfectParticleYOffset = 1.6f;
     [SerializeField] private float newStickerParticleYOffset = 0.1f;
-    //[SerializeField] private float delayBetweenClearAndSticker = 2.5f;
     [SerializeField] private GameObject stickerSpritePosition;
     private SpriteRenderer stickerSprite;
 

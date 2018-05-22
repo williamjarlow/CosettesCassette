@@ -4,19 +4,36 @@ using UnityEngine;
 
 public class EnemiesMovement : MonoBehaviour {
 
-    private Transform trans;
-    [SerializeField] private float movementSpeed = -1.5f;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Collider2D coll;
+    private Rigidbody2D rb;
+    [HideInInspector] public float movementSpeed = -1.5f;
+    [SerializeField] private Sprite deadSprite;
 
 	void Start ()
     {
-        trans = transform;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
 	}
-	
 
-	void Update ()
+    private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.tag == ("JackTheRunner") && deadSprite != null)
+        {
+            animator.enabled = false;
+            coll.enabled = false;
+            spriteRenderer.sprite = deadSprite;
+            rb.AddTorque(Random.Range(-100, 300), ForceMode2D.Force);
+        }
+
+    }
 
 
-        trans.Translate(movementSpeed * Time.deltaTime, 0, 0);
+        void Update ()
+    {
+        transform.Translate(movementSpeed * Time.deltaTime, 0, 0);
 	}
 }
