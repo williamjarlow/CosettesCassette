@@ -6,33 +6,35 @@ using System;
 
 public class StickerPrefs : MonoBehaviour {
 
-    [SerializeField] private string name;
+    [SerializeField] private string title;
     [SerializeField] private string description;
-    [SerializeField] private int points;
-    [SerializeField] private Sprite notCompleted;
-    [SerializeField] private Sprite completed;
+    [SerializeField] private Sprite sprite;
     [SerializeField] private GameObject stickerRef;
-    [SerializeField] private Image imageRef;
-    [SerializeField] private StickerManager managerRef;
-    
+    [SerializeField] private SpriteRenderer imageRef;
+    [SerializeField] private GameObject saveSystemRef;
+
+    //[SerializeField] private int points;
+    //[SerializeField] private Sprite notCompleted;
+    //[SerializeField] private Sprite completed;
 
 
-    // Use this for initialization
-    void Awake () {
-        Sticker newSticker = new Sticker(name, description, points, stickerRef, imageRef, notCompleted, completed);
 
-        //This line HAS TO be run BEFORE the sticker menu is disabled in StickerManager script
-        //All stickers are a part of their category in the sticker menu, if they dont get instantiated before the
-        //sticker menu is disabled the stickers wont get added to the stickers dictionary in StickerManager, 
-        //this pretty much fucks everything up so dont do this
-        managerRef.GetComponent<StickerManager>().stickers.Add(name, newSticker);
-    }
+    //// Use this for initialization
+    //void Awake () {
+    //    Sticker newSticker = new Sticker(title, description, stickerRef, imageRef);
+
+    //    //This line HAS TO be run BEFORE the sticker menu is disabled in StickerManager script
+    //    //All stickers are a part of their category in the sticker menu, if they dont get instantiated before the
+    //    //sticker menu is disabled the stickers wont get added to the stickers dictionary in StickerManager, 
+    //    //this pretty much fucks everything up so dont do this
+    //    managerRef.GetComponent<StickerManager>().stickers.Add(title, newSticker);
+    //}
 }
 
 [Serializable]
 public class Sticker
 {
-    private string stickerName;
+    public string stickerName;
 
     public string Name
     {
@@ -40,7 +42,7 @@ public class Sticker
         set { stickerName = value; }
     }
 
-    private string stickerDescription;
+    public string stickerDescription;
 
     public string Description
     {
@@ -56,40 +58,53 @@ public class Sticker
         set { stickerUnlocked = value; SetLoadedSticker(); }
     }
 
-    private int stickerPoints;
-
-    public int Points
+    //private GameObject stickerRef;
+    public SpriteRenderer imageRef;
+    public SpriteRenderer ImageRef
     {
-        get { return stickerPoints; }
-        set { stickerPoints = value; }
+        get { return imageRef; }
+        set { imageRef = value; }
     }
 
-    private Sprite stickerNotCompleted;
-    private Sprite stickerCompleted;
-
-    public Sprite Completed
+    public Sprite Sprite
     {
-        get { return stickerCompleted; }
-        set { stickerCompleted = value; }
+        get { return sprite; }
+        set { sprite = value; }
     }
 
-    private GameObject stickerRef;
-    private Image imageRef;
+    public Sprite sprite;
+
+    //private int stickerPoints;
+
+    //public int Points
+    //{
+    //    get { return stickerPoints; }
+    //    set { stickerPoints = value; }
+    //}
+
+    //private Sprite stickerNotCompleted;
+    //private Sprite stickerCompleted;
+
+    //public Sprite Completed
+    //{
+    //    get { return stickerCompleted; }
+    //    set { stickerCompleted = value; }
+    //}
 
     //Accessed from save system
-    public bool loaded;
+    [HideInInspector]public bool loaded;
 
     //Sticker constructor
-    public Sticker(string name, string description, int points, GameObject stickerRef, Image imageRef, Sprite notCompleted, Sprite completed)
+    public Sticker(string name, string description, Sprite sprite)
     {
         this.stickerName = name;
         this.stickerDescription = description;
         this.stickerUnlocked = false;
-        this.stickerPoints = points;
-        this.stickerRef = stickerRef;
-        this.imageRef = imageRef;
-        this.stickerNotCompleted = notCompleted;
-        this.stickerCompleted = completed;
+        this.Sprite = sprite;
+        //this.stickerRef = stickerRef;
+        //this.stickerPoints = points;
+        //this.stickerNotCompleted = notCompleted;
+        //this.stickerCompleted = completed;
     }
 
     //Earning stickers requires us to change the sprite in image to show that we have earned it
@@ -97,7 +112,8 @@ public class Sticker
     {
         if (!stickerUnlocked)
         {
-            this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
+            //this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
             stickerUnlocked = true;
             return true;
         }
@@ -109,12 +125,15 @@ public class Sticker
     {
         if (this.loaded == true)
         {
-            this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
+            //this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
+           
             stickerUnlocked = true;
         }
         else if (this.loaded == false)
         {
-            this.imageRef.GetComponent<Image>().sprite = this.stickerNotCompleted;
+            //this.imageRef.GetComponent<Image>().sprite = this.stickerNotCompleted;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.black;
             stickerUnlocked = false;
         }
     }
