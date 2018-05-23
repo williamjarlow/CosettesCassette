@@ -202,11 +202,11 @@ public class TiltCorruption : CorruptionBaseClass
                 {
                     if(winds[i].blowLeft == true)
                     {
-                        StartCoroutine(WindEffect(windSpeed, winds[i].blowLeft, winds[i].duration));
+                        StartCoroutine(WindEffect(windSpeed, true, winds[i].duration));
                     }
                     else
                     {
-                        StartCoroutine(WindEffect(windSpeed, winds[i].blowLeft, winds[i].duration));
+                        StartCoroutine(WindEffect(windSpeed, false, winds[i].duration));
                     }
                     winds[i].hasBeenActive = true;
                 }
@@ -245,12 +245,14 @@ public class TiltCorruption : CorruptionBaseClass
                 if(blowLeft == true)
                 {
                     soundPos -= strength;
+                    tiltIndicatorInstance.transform.GetChild(1).transform.eulerAngles = new Vector3(180, 0, 180);
                     tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
                     tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(1f, 0, 0);
                 }
                 else
                 {
                     soundPos += strength;
+                    tiltIndicatorInstance.transform.GetChild(1).transform.eulerAngles = new Vector3(0, 0, 0);
                     tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
                     tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(-1f, 0, 0);
                 }
