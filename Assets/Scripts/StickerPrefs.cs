@@ -59,7 +59,7 @@ public class Sticker
     }
 
     //private GameObject stickerRef;
-    private SpriteRenderer imageRef;
+    public SpriteRenderer imageRef;
     public SpriteRenderer ImageRef
     {
         get { return imageRef; }
@@ -113,7 +113,7 @@ public class Sticker
         if (!stickerUnlocked)
         {
             //this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
-            //this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
             stickerUnlocked = true;
             return true;
         }
@@ -126,14 +126,14 @@ public class Sticker
         if (this.loaded == true)
         {
             //this.imageRef.GetComponent<Image>().sprite = this.stickerCompleted;
-            //this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.white;
            
             stickerUnlocked = true;
         }
         else if (this.loaded == false)
         {
             //this.imageRef.GetComponent<Image>().sprite = this.stickerNotCompleted;
-            //this.ImageRef.GetComponent<SpriteRenderer>().color = Color.black;
+            this.ImageRef.GetComponent<SpriteRenderer>().color = Color.black;
             stickerUnlocked = false;
         }
     }

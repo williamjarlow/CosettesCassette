@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 public enum instruments { drums, synth, vocals, guitar, bass, pitch };
 public class GameManager : MonoBehaviour
@@ -43,8 +42,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Stickers for this level")]
     [HideInInspector] public StickerManager stickerManageRef;
-    [HideInInspector] public Sticker stickerForGood;
-    [HideInInspector] public Sticker stickerForPerfect;
+    public Sticker stickerForGood;
+    public Sticker stickerForPerfect;
 
 
     void Awake()
@@ -58,20 +57,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 		audioManager.PlayInsertAnimSound ();
-        Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
-        stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
 
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (((currentScene.buildIndex - 1) * 2) > (stickerManageRef.stickers.Length - 1) || currentScene.buildIndex < 0)
-        {
-            stickerForGood = stickerManageRef.stickers[0];
-            stickerForPerfect = stickerManageRef.stickers[1];
-        }
-        else
-        {
-            stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 1) * 2];
-            stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 1) * 2) + 1];
-        }
+        Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
+        Sticker goodSticker = new Sticker(stickerForGood.Name, stickerForGood.Description, stickerForGood.Sprite);
+        Sticker perfectSticker = new Sticker(stickerForPerfect.Name, stickerForPerfect.Description, stickerForPerfect.Sprite);
+        stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
+        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForGood.Name, stickerForGood);
+        stickerManageRef.GetComponent<StickerManager>().stickers.Add(stickerForPerfect.Name, stickerForPerfect);
     }
 
     private void Update()
