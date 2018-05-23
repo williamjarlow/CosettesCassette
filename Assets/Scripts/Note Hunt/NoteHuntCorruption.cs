@@ -172,7 +172,11 @@ public class NoteHuntCorruption : CorruptionBaseClass
                         noteExplosioninstance = Instantiate(noteExplosionPrefab, hit.transform.position, hit.transform.rotation, transform);
                         Destroy(hit.transform.gameObject);
                         Destroy(noteExplosioninstance, noteExplosionTime);
-                        audioManager.PlayShootSound(0f);
+
+						if (noteMovement.points < 0) // correct note
+							audioManager.PlayShootSound (1f);
+						else if (noteMovement.points > 0) // incorrect note
+							audioManager.PlayShootSound (0f);
                     }
                     else
                     {

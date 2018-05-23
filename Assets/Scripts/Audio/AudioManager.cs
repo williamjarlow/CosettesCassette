@@ -263,7 +263,7 @@ public class AudioManager : MonoBehaviour {
 		FMOD.Studio.EventInstance segmentClearEvent;
 		systemObj.getEvent("event:/SFX/segment_clear", out segmentClearEventDesc);
 		segmentClearEventDesc.createInstance(out segmentClearEvent);
-		segmentClearEvent.setParameterValue ("segment_clear_score", score); // 0 = okay, 1 = perfect
+		segmentClearEvent.setParameterValue ("segment_clear_score", score); // 0 = okay, 1 = perfect, 2 = fail
 		segmentClearEvent.start();
 		segmentClearEvent.release ();
 	}
@@ -445,6 +445,16 @@ public class AudioManager : MonoBehaviour {
 		tutorialCloseEventDesc.createInstance(out tutorialCloseEv);
 		tutorialCloseEv.start();
 		tutorialCloseEv.release();
+	}
+
+	public void PlayStickerGet ()
+	{
+		FMOD.Studio.EventDescription stickerGetEventDesc;
+		FMOD.Studio.EventInstance stickerGetEv;
+		systemObj.getEvent("event:/SFX/stickerGet", out stickerGetEventDesc);
+		stickerGetEventDesc.createInstance(out stickerGetEv);
+		stickerGetEv.start();
+		stickerGetEv.release();
 	}
 
 	public void PlayOOOSelect ()

@@ -74,6 +74,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour
             if (bestScore > perfectThreshold)
             {
                 bestScore = 100; //Perfect Segment
+				gameManager.audioManager.PlaySegmentClear(1f);
             }
             else if (bestScore > clearThreshold)
             {

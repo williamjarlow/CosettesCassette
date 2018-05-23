@@ -92,6 +92,8 @@ public class TiltCorruption : CorruptionBaseClass
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
         audioManager.musicChanSubGroup.setPan(0);
+		audioManager.windEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+		audioManager.windEv.release ();
         Destroy(tiltIndicatorInstance);
         base.ExitSegment();
         ResetConditions();
@@ -210,6 +212,11 @@ public class TiltCorruption : CorruptionBaseClass
 
     IEnumerator WindEffect(float strength, bool blowLeft, float time)
     {
+		if (blowLeft)
+			audioManager.PlayWind (1f);
+		else if (!blowLeft)
+			audioManager.PlayWind (-1f);
+
         bool moving = false;
         if (!moving)
         {                     // Do nothing if already moving

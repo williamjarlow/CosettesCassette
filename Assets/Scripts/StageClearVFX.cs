@@ -7,7 +7,6 @@ public enum segmentEffects { good, perfect, newSticker };
 
 public class StageClearVFX : MonoBehaviour
 {
-
     [SerializeField] private GameObject goodClearAnimation;
     [SerializeField] private GameObject goodParticleEffect;
     [SerializeField] private GameObject perfectClearAnimation;
@@ -24,12 +23,13 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private float newStickerParticleYOffset = 0.1f;
     [SerializeField] private GameObject stickerSpritePosition;
     private SpriteRenderer stickerSprite;
-
+	private AudioManager audioManager;
 
     private void Start()
     {
         Debug.Assert(positionForParticleEffects != null, "StageClearVFX needs the prefab ParticleSpawnPosition. Make sure you read info on prefab!");
         stickerSprite = stickerSpritePosition.GetComponent<SpriteRenderer>();
+		audioManager = FindObjectOfType<AudioManager>();
     }
 
     public void CallVFX(segmentEffects typeOfEffect)
@@ -94,6 +94,7 @@ public class StageClearVFX : MonoBehaviour
         yield return new WaitForSeconds(delay);
         stickerSpritePosition.SetActive(true);
         CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
+		audioManager.PlayStickerGet ();
         StartCoroutine(HideStickerObject(timeToShowNew));
     }
 
@@ -103,6 +104,7 @@ public class StageClearVFX : MonoBehaviour
         stickerSprite.sprite = secondSticker;
         stickerSpritePosition.SetActive(true);
         CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
+		audioManager.PlayStickerGet ();
         StartCoroutine(HideStickerObject(timeToShowNew));
     }
 
