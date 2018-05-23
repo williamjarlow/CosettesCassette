@@ -4730,7 +4730,6 @@ GameObject:
   - component: {fileID: 252596783}
   - component: {fileID: 252596786}
   - component: {fileID: 252596785}
-  - component: {fileID: 252596784}
   m_Layer: 0
   m_Name: StickerTemplate (5)
   m_TagString: Untagged
@@ -4753,31 +4752,13 @@ RectTransform:
   - {fileID: 238572024}
   - {fileID: 2138171004}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -501, y: -243.6}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &252596784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 252596782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 252596782}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &252596785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5636,7 +5617,7 @@ RectTransform:
   - {fileID: 531246440}
   - {fileID: 1155710223}
   - {fileID: 930460239}
-  - {fileID: 1530080912}
+  - {fileID: 1497284790}
   - {fileID: 2098918642}
   - {fileID: 482776624}
   m_Father: {fileID: 620862315}
@@ -5697,7 +5678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &345807340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5894,7 +5875,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -6187,7 +6168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404274454}
   m_Layer: 0
-  m_Name: Set1
+  m_Name: Sticker Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6203,12 +6184,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0.0000038146973, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 691211109}
-  - {fileID: 1319827924}
-  - {fileID: 2146155470}
   - {fileID: 1043341212}
   - {fileID: 1074621649}
   - {fileID: 252596783}
+  - {fileID: 691211109}
+  - {fileID: 1319827924}
+  - {fileID: 2146155470}
   m_Father: {fileID: 482776624}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6414,13 +6395,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 482776624}
+  - component: {fileID: 482776625}
   m_Layer: 0
   m_Name: StickersScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &482776624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6445,6 +6427,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &482776625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 482776623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab28782b41b7b68428f2b683e2e825f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  images:
+  - {fileID: 1590905638}
+  - {fileID: 2134650764}
+  - {fileID: 2138171005}
+  - {fileID: 1062328704}
+  - {fileID: 1917872973}
+  - {fileID: 2055141652}
+  titles:
+  - {fileID: 368085532}
+  - {fileID: 1039124068}
+  - {fileID: 585468021}
+  - {fileID: 818813138}
+  - {fileID: 1824326237}
+  - {fileID: 1100589221}
+  descriptions:
+  - {fileID: 1458541166}
+  - {fileID: 868712054}
+  - {fileID: 238572026}
+  - {fileID: 879064014}
+  - {fileID: 1617787472}
+  - {fileID: 1344819455}
 --- !u!1 &484824647 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1986457720149012, guid: f236062a340c42644b0efd0d34e0e407,
@@ -7091,7 +7105,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -10534,7 +10548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &620862315
 Transform:
   m_ObjectHideFlags: 0
@@ -10644,7 +10658,6 @@ GameObject:
   - component: {fileID: 691211109}
   - component: {fileID: 691211112}
   - component: {fileID: 691211111}
-  - component: {fileID: 691211110}
   m_Layer: 0
   m_Name: StickerTemplate
   m_TagString: Untagged
@@ -10667,31 +10680,13 @@ RectTransform:
   - {fileID: 879064012}
   - {fileID: 1062328703}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 445.4, y: 252.5}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &691211110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 691211108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 691211108}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &691211111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10818,7 +10813,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 818813135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000015258789, y: 144.53, z: 0}
+  m_LocalPosition: {x: 0, y: 144.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 691211109}
@@ -10826,7 +10821,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000022888002, y: 144.53}
+  m_AnchoredPosition: {x: 0, y: 144.53}
   m_SizeDelta: {x: 0, y: -285.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &818813137
@@ -10868,7 +10863,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -11159,7 +11154,7 @@ Prefab:
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[0].stop
-      value: 138
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -16144,7 +16139,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -16172,7 +16167,6 @@ GameObject:
   - component: {fileID: 1043341212}
   - component: {fileID: 1043341215}
   - component: {fileID: 1043341214}
-  - component: {fileID: 1043341213}
   m_Layer: 0
   m_Name: StickerTemplate (3)
   m_TagString: Untagged
@@ -16195,31 +16189,13 @@ RectTransform:
   - {fileID: 1458541164}
   - {fileID: 1590905637}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -631, y: 143.6}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1043341213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1043341211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 1043341211}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &1043341214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16446,7 +16422,6 @@ GameObject:
   - component: {fileID: 1074621649}
   - component: {fileID: 1074621652}
   - component: {fileID: 1074621651}
-  - component: {fileID: 1074621650}
   m_Layer: 0
   m_Name: StickerTemplate (4)
   m_TagString: Untagged
@@ -16469,31 +16444,13 @@ RectTransform:
   - {fileID: 868712052}
   - {fileID: 2134650763}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -273, y: 109.900024}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1074621650
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1074621648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 1074621648}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &1074621651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16531,7 +16488,7 @@ Prefab:
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
       propertyPath: winds.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
       propertyPath: m_LocalPosition.x
@@ -16608,7 +16565,7 @@ Prefab:
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
       propertyPath: useRandomWind
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
@@ -16618,12 +16575,12 @@ Prefab:
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
       propertyPath: winds.Array.data[0].timeToAppear
-      value: 0
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
       propertyPath: winds.Array.data[0].duration
-      value: 0
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
         type: 2}
@@ -16634,6 +16591,51 @@ Prefab:
         type: 2}
       propertyPath: windSpeed
       value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[1].timeToAppear
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[1].duration
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[2].timeToAppear
+      value: 9000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[2].duration
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[3].timeToAppear
+      value: 15000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[3].duration
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[2].blowLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[1].blowLeft
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114962846326773412, guid: c30b2849aa78e5742896da78b61ad7f5,
+        type: 2}
+      propertyPath: winds.Array.data[3].blowLeft
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
@@ -16830,7 +16832,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -17699,6 +17701,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 224073126077450880, guid: b5fd70868b6090b4bb9edaf6f6c8ede3,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5fd70868b6090b4bb9edaf6f6c8ede3, type: 2}
   m_IsPrefabParent: 0
@@ -17713,7 +17720,6 @@ GameObject:
   - component: {fileID: 1319827924}
   - component: {fileID: 1319827927}
   - component: {fileID: 1319827926}
-  - component: {fileID: 1319827925}
   m_Layer: 0
   m_Name: StickerTemplate (1)
   m_TagString: Untagged
@@ -17736,31 +17742,13 @@ RectTransform:
   - {fileID: 1617787470}
   - {fileID: 1917872972}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 163.4, y: 73}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1319827925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1319827923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 1319827923}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &1319827926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17961,6 +17949,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114921235090379764, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6,
+        type: 2}
+      propertyPath: stickers.Array.size
+      value: 23
+      objectReference: {fileID: 0}
     - target: {fileID: 4834054530521440, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.3995663
@@ -17997,6 +17990,22 @@ Prefab:
       propertyPath: m_Name
       value: SaveSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 114921235090379764, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6,
+        type: 2}
+      propertyPath: stickers.Array.data[23].stickerName
+      value: X
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921235090379764, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6,
+        type: 2}
+      propertyPath: stickers.Array.data[23].stickerDescription
+      value: X
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921235090379764, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6,
+        type: 2}
+      propertyPath: stickers.Array.data[23].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
   m_IsPrefabParent: 0
@@ -22307,6 +22316,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f0455d6c8778be94fa6b249632a23b72, type: 2}
   m_IsPrefabParent: 0
+--- !u!224 &1497284790 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224073126077450880, guid: b5fd70868b6090b4bb9edaf6f6c8ede3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1318390833}
 --- !u!1 &1502336160
 GameObject:
   m_ObjectHideFlags: 0
@@ -22456,7 +22470,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1507197161}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 482776625}
+        m_MethodName: FlipPagesBackward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1507197161
@@ -22536,11 +22561,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 164}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!224 &1530080912 stripped
-RectTransform:
-  m_PrefabParentObject: {fileID: 224333505121751358, guid: b5fd70868b6090b4bb9edaf6f6c8ede3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1318390833}
 --- !u!1 &1533954969
 GameObject:
   m_ObjectHideFlags: 0
@@ -26579,8 +26599,10 @@ MonoBehaviour:
   leftImage: {fileID: 0}
   rightTextBox: {fileID: 0}
   book: {fileID: 0}
+  tutorialHeader: {fileID: 0}
   tutorials:
   - tutorialButton: {fileID: 0}
+    header: 
     images:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     - pageImage: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef, type: 3}
@@ -26588,6 +26610,7 @@ MonoBehaviour:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     textPages: []
   - tutorialButton: {fileID: 0}
+    header: 
     images:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     - pageImage: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef, type: 3}
@@ -26595,6 +26618,7 @@ MonoBehaviour:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     textPages: []
   - tutorialButton: {fileID: 0}
+    header: 
     images:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     - pageImage: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef, type: 3}
@@ -26602,6 +26626,7 @@ MonoBehaviour:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     textPages: []
   - tutorialButton: {fileID: 0}
+    header: 
     images:
     - pageImage: {fileID: 21300000, guid: 77c6f3a5b31b87b4686f2bbccdb8deda, type: 3}
     - pageImage: {fileID: 21300000, guid: a291cc89750ae1746a57c8b6f9cb0bef, type: 3}
@@ -30831,7 +30856,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 90
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
@@ -31420,7 +31445,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1904893908}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 482776625}
+        m_MethodName: FlipPagesForward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1904893908
@@ -36276,9 +36312,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 482776625}
+        m_MethodName: InitializeStickerPage
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -36555,7 +36591,6 @@ GameObject:
   - component: {fileID: 2146155470}
   - component: {fileID: 2146155473}
   - component: {fileID: 2146155472}
-  - component: {fileID: 2146155471}
   m_Layer: 0
   m_Name: StickerTemplate (2)
   m_TagString: Untagged
@@ -36578,31 +36613,13 @@ RectTransform:
   - {fileID: 1344819453}
   - {fileID: 2055141651}
   m_Father: {fileID: 404274454}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 445.40002, y: -143.6}
   m_SizeDelta: {x: 282, y: 387.2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2146155471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114599236300864626, guid: 041ff5bffd5046a4fa14897ffd5cf977,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2146155469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 004205678369d7f46a9072dcdae664c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: 
-  description: 
-  sprite: {fileID: 0}
-  stickerRef: {fileID: 2146155469}
-  imageRef: {fileID: 0}
-  saveSystemRef: {fileID: 0}
 --- !u!114 &2146155472
 MonoBehaviour:
   m_ObjectHideFlags: 0
