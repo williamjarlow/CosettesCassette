@@ -82,20 +82,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
                     SpawnLyrics();
                 }   
 
-                // Update colors of selected toggles when not displaying the result 
-                /*if(!displayChoice)
-                {
-                    for (int i = 0; i < lyricPages.Count; i++)
-                    {
-                        // If we have a toggle selected --> change the color to highlighted
-                        if (lyricPages[i].GetComponent<Toggle>().isOn)
-                            lyricPages[i].GetComponent<Text>().color = highlightedColor;
-
-                        // Else set the color to normal
-                        else
-                            lyricPages[i].GetComponent<Text>().color = normalColor;
-                    }
-                }*/
             }
 
             // If we stopped recording --> destroy the mechanic objects by resetting
@@ -172,6 +158,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
             // Set the text components to the specified strings
             lyricPages[i].GetComponent<Text>().text = lyrics[i];
 
+            // Add listeners to the toggles to be able to call functions when toggled
             lyricPages[i].GetComponent<Toggle>().onValueChanged.AddListener(delegate { OnToggleValueChanged(); } );
          }
 
@@ -183,15 +170,28 @@ public class OddOneOutCorruption : CorruptionBaseClass
         // Find the currently selected game object
         GameObject currentEvent = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         
-        // If we have a toggle selected --> change the color to highlighted
-        if (currentEvent.GetComponent<Toggle>().isOn)
-            currentEvent.GetComponent<Text>().color = highlightedColor;
+        if(!displayChoice)
+        {
+            // If we have a toggle selected and we are not displaying the results --> change the color to highlighted
+            if (currentEvent.GetComponent<Toggle>().isOn)
+            {
+                // Reset the colors
+                for (int i = 0; i < lyricPages.Count; i++)
+                    lyricPages[i].GetComponent<Text>().color = normalColor;
 
-        // Else set the color to normal
-        else
-            currentEvent.GetComponent<Text>().color = normalColor;
+                // Set highlighted color and play sound
+                currentEvent.GetComponent<Text>().color = highlightedColor;
+                audioManager.PlayOOOSelect();
+            }
 
-		audioManager.PlayOOOSelect ();
+            // Else set the color to normal
+            else
+            {
+                currentEvent.GetComponent<Text>().color = normalColor;
+                audioManager.PlayOOOSelect();
+            }
+        }
+
     }
 
      private void EvaluateToggles()
