@@ -15,6 +15,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
     [SerializeField] private GameObject lyricsGuessPrefab;
     [SerializeField] private GameObject lyricsPrefab;
     private List<GameObject> lyricPages = new List<GameObject>();
+    [SerializeField] private Color normalColor;
+    [SerializeField] private Color highlightedColor;
     [SerializeField] private Color correctColor;
     [SerializeField] private Color incorrectColor;
     [SerializeField] private string lyricsGuess;
@@ -70,6 +72,22 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
                 if (inSegment && hasSpawned == false && !gameManager.audioManager.switchedToAudioLog)
                     SpawnLyrics();
+
+
+                // Update colors of selected toggles when not displaying the result 
+                if(!displayChoice)
+                {
+                    for (int i = 0; i < lyricPages.Count; i++)
+                    {
+                        // If we have a toggle selected --> change the color to highlighted
+                        if (lyricPages[i].GetComponent<Toggle>().isOn)
+                            lyricPages[i].GetComponent<Text>().color = highlightedColor;
+
+                        // Else set the color to normal
+                        else
+                            lyricPages[i].GetComponent<Text>().color = normalColor;
+                    }
+                }
             }
 
             // If we stopped recording --> destroy the mechanic objects by resetting
@@ -151,137 +169,129 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             // Set the text components to the specified strings
             lyricPages[i].GetComponent<Text>().text = lyrics[i];
-
-            // This child is used to change the color of the toggle when pressed
-            lyricPages[i].transform.GetChild(0).GetComponent<Text>().text = lyrics[i];
-
-           /* // Set the correct/incorrect onClick() functions 
-            if (i == correctLyricSegment)
-                lyricPages[i].GetComponent<Button>().onClick.AddListener(CorrectLyricChoice);
-
-            else
-                lyricPages[i].GetComponent<Button>().onClick.AddListener(IncorrectLyricChoice);*/
-
-        }
-
+         }
 
         Debug.Assert(lyricPages.Count == lyricsObject.transform.childCount, "The number of lyrics does not equal to the number of lyric pages");
+     }
 
-    }
+     private void EvaluateToggles()
+     {
+         // Loop through the toggles, i.e lyric pages
+         for (int i = 0; i < lyricPages.Count; i++)
+         {
+             // Check the selected lyric
+             if (lyricPages[i].GetComponent<Toggle>().isOn)
+             {
+                 // If the correct lyric was chosen --> change color of the text to correctColor and set the score to 100
+                 if (i == correctLyricSegment)
+                 {
+                     lyricPages[i].GetComponent<Text>().color = correctColor;
+                     currentScore = 100;
+                     GradeScore();
+                 }
 
-    private void EvaluateToggles()
-    {
-        // Loop through the toggles, i.e lyric pages
-        for (int i = 0; i < lyricPages.Count; i++)
-        {
-            // Check the selected lyric
-            if (lyricPages[i].GetComponent<Toggle>().isOn)
-            {
-                // If the correct lyric was chosen --> change color of the text to correctColor and set the score to 100
-                if (i == correctLyricSegment)
-                {
-                    lyricPages[i].GetComponent<Text>().color = correctColor;
-                    lyricPages[i].transform.GetChild(0).GetComponent<Text>().color = correctColor;
-                    currentScore = 100;
-                    GradeScore();
-                }
+                 // If not, the player chose the incorrect lyric --> change color of the text to incorrectColor and set the score to 0
+                 else
+                 {
+                     lyricPages[i].GetComponent<Text>().color = incorrectColor;
+                     currentScore = 0;
+                     GradeScore();
+                 }
 
-                // If not, the player chose the incorrect lyric --> change color of the text to incorrectColor and set the score to 0
-                else
-                {
-                    lyricPages[i].GetComponent<Text>().color = incorrectColor;
-                    lyricPages[i].transform.GetChild(0).GetComponent<Text>().color = incorrectColor;
-                    currentScore = 0;
-                    GradeScore();
-                }
+                 // The player clicked the incorrect button --> set score to 0 and add some distortion?
+                 currentScore = 0;
+                 GradeScore();
+             }
 
-                // The player clicked the incorrect button --> set score to 0 and add some distortion?
-                currentScore = 0;
-                GradeScore();
-            }
+         }
+     }
 
-        }
-    }
+     private void DestroyLyrics()
+     {
+         Destroy(lyricsGuessObject);
+         Destroy(lyricsObject);
+         lyricPages.Clear();
+     }
 
-    private void DestroyLyrics()
-    {
-        Destroy(lyricsGuessObject);
-        Destroy(lyricsObject);
-        lyricPages.Clear();
-    }
+     public override void EnterSegment()
+     {
+         ResetConditions();
+         inSegment = true;
+         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+         base.EnterSegment();
 
-    public override void EnterSegment()
-    {
-        ResetConditions();
-        inSegment = true;
-        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        base.EnterSegment();
+         //audioManager.oooVocals.setValue (100f);
+     }
 
-		//audioManager.oooVocals.setValue (100f);
-    }
+     public override void ExitSegment()
+     {
+         //This function gets called upon when leaving the segment
+         inSegment = false;
+         GradeScore();
+         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
+         innerDistortion = 0;
+         base.ExitSegment();
+         ResetConditions();
 
-    public override void ExitSegment()
-    {
-        //This function gets called upon when leaving the segment
-        inSegment = false;
-        GradeScore();
-        corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
-        innerDistortion = 0;
-        base.ExitSegment();
-        ResetConditions();
+         audioManager.oooVocals.setValue (0f);
+     }
 
-		audioManager.oooVocals.setValue (0f);
-    }
+     public override void GradeScore()
+     {
+         base.GradeScore();
+     }
 
-    public override void GradeScore()
-    {
-        base.GradeScore();
-    }
+     private void ResetConditions()
+     {
+         // Destroy the lyric objects and enable spawning of the lyric objects
+         DestroyLyrics();
+         hasSpawned = false;
 
-    private void ResetConditions()
-    {
-        // Destroy the lyric objects and enable spawning of the lyric objects
-        DestroyLyrics();
-        hasSpawned = false;
+         // Destroy timer object and reset variables
+         Destroy(timerObject);
+         timerLength = originalTimerLength;
+         spawnedTimer = false;
 
-        // Destroy timer object and reset variables
-        Destroy(timerObject);
-        timerLength = originalTimerLength;
-        spawnedTimer = false;
-
-        displayChoice = false;
-    }
+         displayChoice = false;
+     }
 
 
-}
+ }
 
 
-                    // ** Temporary savings ** //
-/* 
- *    private void CorrectLyricChoice()
-    {
-        // Add some visual effect
-        //DestroyLyrics();
+                     // ** Temporary savings ** //
+ /* 
+  *    private void CorrectLyricChoice()
+     {
+         // Add some visual effect
+         //DestroyLyrics();
 
-        // Finds the currently selected event, i.e the lyrics game object
-        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().color = correctColor;
+         // Finds the currently selected event, i.e the lyrics game object
+         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().color = correctColor;
 
-        // The player clicked the correct button --> segment is fully cleared
-        currentScore = 100;
-        GradeScore();
-        
-    }
+         // The player clicked the correct button --> segment is fully cleared
+         currentScore = 100;
+         GradeScore();
 
-    private void IncorrectLyricChoice()
-    {
-        // Add some visual effect
-        //DestroyLyrics();
+     }
 
-        // Finds the currently selected event, i.e the lyrics game object
-        UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().color = incorrectColor;
+     private void IncorrectLyricChoice()
+     {
+         // Add some visual effect
+         //DestroyLyrics();
 
-        // The player clicked the incorrect button --> set score to 0 and add some distortion?
-        currentScore = 0;
-        GradeScore();
-    }
+         // Finds the currently selected event, i.e the lyrics game object
+         UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponentInChildren<Text>().color = incorrectColor;
+
+         // The player clicked the incorrect button --> set score to 0 and add some distortion?
+         currentScore = 0;
+         GradeScore();
+     }
+
+                 // Set the correct/incorrect onClick() functions 
+             if (i == correctLyricSegment)
+                 lyricPages[i].GetComponent<Button>().onClick.AddListener(CorrectLyricChoice);
+
+             else
+                 lyricPages[i].GetComponent<Button>().onClick.AddListener(IncorrectLyricChoice);
 */

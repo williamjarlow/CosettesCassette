@@ -84,12 +84,16 @@ public class MenuAppearScript : MonoBehaviour
         if (!isShowing)
         {
             ShowPauseScreen();
+            audioManager.pausedMusic = true;
+            audioManager.AudioPauseMusic();
             //GameManager.Instance.audioManager.AudioUnpauseMusic();
         }
 
         else if (isShowing)
         {
             HidePauseScreen();
+            audioManager.pausedMusic = false;
+            audioManager.AudioUnpauseMusic();
             //GameManager.Instance.audioManager.AudioPauseMusic();
         }
     }
@@ -139,17 +143,17 @@ public class MenuAppearScript : MonoBehaviour
 		audioManager.PlaySkinMenuClose();
 	}
 
-    public void StartCassette()
-    {
+    //public void StartCassette()
+    //{
         
-        CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
-        cassetteAnim.cassetteAnimation = true;
-    }
+    //    CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
+    //    cassetteAnim.cassetteAnimation = true;
+    //}
 
-    public void StopCassette()
-    {
+    //public void StopCassette()
+    //{
         
-        CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
-        cassetteAnim.cassetteAnimation = false;
-    }
+    //    CassetteAnimation cassetteAnim = cassetteAnimation.GetComponent<CassetteAnimation>();
+    //    cassetteAnim.cassetteAnimation = false;
+    //}
 }
