@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class JackTheRunnerMovement : MonoBehaviour {
 
+	private AudioManager audioManager;
+
     private Rigidbody2D rb;
     private JackTheRunner mainGame;
     private Color changedColor;
@@ -26,6 +28,7 @@ public class JackTheRunnerMovement : MonoBehaviour {
         origColor = GetComponent<SpriteRenderer>().color;
         sprite = GetComponent<SpriteRenderer>();
         mainGame = GetComponentInParent<JackTheRunner>();
+		audioManager = mainGame.gameManager.audioManager;
         jacksHurt.SetActive(false);
 	}
 
@@ -34,26 +37,37 @@ public class JackTheRunnerMovement : MonoBehaviour {
 
         // For testing purposes only
         //
-        if (Input.GetKeyDown("space") && grounded)
-            rb.AddForce(jump * jumpForce, ForceMode2D.Impulse);
+		if (Input.GetKeyDown ("space") && grounded)
+		{
+			rb.AddForce (jump * jumpForce, ForceMode2D.Impulse);
+			audioManager.PlayRunnerJump();
+			print ("jump");
+		}
         //
 
-
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && grounded)
-            rb.AddForce(jump * jumpForce, ForceMode2D.Impulse);
+		{
+			rb.AddForce (jump * jumpForce, ForceMode2D.Impulse);
+			audioManager.PlayRunnerJump();
+		}
 
         if (invisible)
         {
             changedColor.a = Mathf.Lerp(1, 0.2f, Mathf.PingPong(Time.time * invisibilityBlinkSpeed, 1));
             sprite.color = changedColor;
         }
-
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         grounded = true;
     }
+
+	private void OnCollisionEnter2D (Collision2D collision)
+	{
+		audioManager.PlayRunnerLand();
+		print ("land");
+	}
 
     private void OnCollisionExit2D(Collision2D collision)
     {

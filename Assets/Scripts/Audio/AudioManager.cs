@@ -466,18 +466,24 @@ public class AudioManager : MonoBehaviour {
 		shootEv.release();
 	}
 
-	public void PlayRunnerJump(bool land) // 0 = jump, 1 = land
+	public void PlayRunnerJump()
 	{
 		FMOD.Studio.EventDescription runnerJumpEventDesc;
 		FMOD.Studio.EventInstance runnerJumpEv;
-		systemObj.getEvent("event:/SFX/runner_jump", out runnerJumpEventDesc);
-		runnerJumpEventDesc.createInstance(out runnerJumpEv);
+		systemObj.getEvent("event:/SFX/Runner/runner_jump", out runnerJumpEventDesc);
+		runnerJumpEventDesc.createInstance (out runnerJumpEv);
+		runnerJumpEv.start ();
+		runnerJumpEv.release ();
+	}
 
-		if (!land)
-			runnerJumpEv.start();
-		else if (land)
-			runnerJumpEv.triggerCue ();
-		runnerJumpEv.release();
+	public void PlayRunnerLand()
+	{
+		FMOD.Studio.EventDescription runnerLandEventDesc;
+		FMOD.Studio.EventInstance runnerLandEv;
+		systemObj.getEvent("event:/SFX/Runner/runner_land", out runnerLandEventDesc);
+		runnerLandEventDesc.createInstance (out runnerLandEv);
+		runnerLandEv.start ();
+		runnerLandEv.release ();
 	}
 
 	public void PlayGameStart()
