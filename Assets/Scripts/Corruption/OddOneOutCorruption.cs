@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 // ** Written by Hannes Gustafsson, template by William Jarlow ** //
 
@@ -82,7 +83,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
                 }   
 
                 // Update colors of selected toggles when not displaying the result 
-                if(!displayChoice)
+                /*if(!displayChoice)
                 {
                     for (int i = 0; i < lyricPages.Count; i++)
                     {
@@ -94,7 +95,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
                         else
                             lyricPages[i].GetComponent<Text>().color = normalColor;
                     }
-                }
+                }*/
             }
 
             // If we stopped recording --> destroy the mechanic objects by resetting
@@ -170,10 +171,26 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             // Set the text components to the specified strings
             lyricPages[i].GetComponent<Text>().text = lyrics[i];
+
+            lyricPages[i].GetComponent<Toggle>().onValueChanged.AddListener(delegate { OnToggleValueChanged(); } );
          }
 
         Debug.Assert(lyricPages.Count == lyricsObject.transform.childCount, "The number of lyrics does not equal to the number of lyric pages");
      }
+
+    private void OnToggleValueChanged()
+    {
+        // Find the currently selected game object
+        GameObject currentEvent = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        
+        // If we have a toggle selected --> change the color to highlighted
+        if (currentEvent.GetComponent<Toggle>().isOn)
+            currentEvent.GetComponent<Text>().color = highlightedColor;
+
+        // Else set the color to normal
+        else
+            currentEvent.GetComponent<Text>().color = normalColor;
+    }
 
      private void EvaluateToggles()
      {
