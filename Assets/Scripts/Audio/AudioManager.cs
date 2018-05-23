@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.EventInstance skipEv;
 	private FMOD.Studio.EventInstance levelClearEvent;
 	private FMOD.Studio.EventInstance playerFadeEv;
+	[HideInInspector] public FMOD.Studio.EventInstance windEv;
 
 	//Event descriptions
 	private FMOD.Studio.EventDescription musicEventDesc;
@@ -57,6 +58,7 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.EventDescription skipEventDesc;
 	private FMOD.Studio.EventDescription levelClearEventDesc;
 	private FMOD.Studio.EventDescription playerFadeEventDesc;
+	private FMOD.Studio.EventDescription windEventDesc;
 
 	//Event paths
 	[FMODUnity.EventRef]
@@ -445,14 +447,25 @@ public class AudioManager : MonoBehaviour {
 		tutorialCloseEv.release();
 	}
 
-	public void PlayOOOCorrect()
+	public void PlayOOOSelect ()
 	{
-		
+		FMOD.Studio.EventDescription oooSelectEventDesc;
+		FMOD.Studio.EventInstance oooSelectEv;
+		systemObj.getEvent("event:/Interface/ooo_select", out oooSelectEventDesc);
+		oooSelectEventDesc.createInstance(out oooSelectEv);
+		oooSelectEv.start();
+		oooSelectEv.release();
 	}
 
-	public void PlayOOOWrong()
+	public void PlayOOOResult(float result)
 	{
-
+		FMOD.Studio.EventDescription oooResultEventDesc;
+		FMOD.Studio.EventInstance oooResultEv;
+		systemObj.getEvent("event:/SFX/ooo_result", out oooResultEventDesc);
+		oooResultEventDesc.createInstance(out oooResultEv);
+		oooResultEv.setParameterValue ("ooo_result", result);
+		oooResultEv.start();
+		oooResultEv.release();
 	}
 
 	public void PlayShootSound(float result)
@@ -484,6 +497,14 @@ public class AudioManager : MonoBehaviour {
 		runnerLandEventDesc.createInstance (out runnerLandEv);
 		runnerLandEv.start ();
 		runnerLandEv.release ();
+	}
+
+	public void PlayWind(float direction)
+	{
+		systemObj.getEvent("event:/SFX/wind", out windEventDesc);
+		windEventDesc.createInstance (out windEv);
+		windEv.setParameterValue ("wind_pan", direction);
+		windEv.start ();
 	}
 
 	public void PlayGameStart()
