@@ -8,36 +8,71 @@ public class StickerBook : MonoBehaviour {
     [SerializeField] private Image[] images;
     [SerializeField] private Text[] titles;
     [SerializeField] private Text[] descriptions;
-    private List<Sprite> stickerSprites = new List<Sprite>();
-    private List<string> stickerTitles = new List<string>();
-    private List<string> stickerDescriptions = new List<string>();
     private StickerManager stickerManRef;
+    private int stickerAmount = 6;
+    private int stickerSet = 0;
     
-    void Start ()
+    void Awake()
     {
-
+        stickerManRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
     }
 
     public void InitializeStickerPage()
     {
-        stickerManRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
-        Debug.Log(stickerManRef.stickers.Length);
-        for (int i = 0; i < stickerManRef.stickers.Length; i++)
+        for (int i = 0; i < stickerAmount; i++)
         {
-            Debug.Log("in for");
-            //stickerPages.stickerSprites.Add(stickerManRef.stickers[i].Sprite);
-            stickerSprites.Add(stickerManRef.stickers[i].Sprite);
-            stickerTitles.Add(stickerManRef.stickers[i].Name);
-            stickerDescriptions.Add(stickerManRef.stickers[i].Description);
+            images[i].sprite = stickerManRef.stickers[i].Sprite;
+            titles[i].text = stickerManRef.stickers[i].Name;
+            descriptions[i].text = stickerManRef.stickers[i].Description;
         }
+    }
 
-        for (int i = 0; i < 6; i++)
+    public void FlipPagesForward()
+    {
+        if(stickerSet * stickerAmount < stickerManRef.stickers.Length - stickerAmount)
         {
-            Debug.Log(images.Length + " , " + stickerSprites.Count);
-            //images[i].GetComponent<Image>().sprite = stickerPages.stickerSprites[i];
-            images[i].GetComponent<Image>().sprite = stickerSprites[i];
-            titles[i].text = stickerTitles[i];
-            descriptions[i].text = stickerDescriptions[i];
+            stickerSet += 1;
+            for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
+            {
+                if(i < stickerManRef.stickers.Length)
+                {
+                    images[i - stickerSet * stickerAmount].sprite = stickerManRef.stickers[i].Sprite;
+                    titles[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Name;
+                    descriptions[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Description;
+                }
+                else
+                {
+                    images[i - stickerSet * stickerAmount].sprite = null;
+                    images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 0);
+                    titles[i - stickerSet * stickerAmount].text = "";
+                    descriptions[i - stickerSet * stickerAmount].text = "";
+                }
+            }
+        }
+    }
+
+    public void FlipPagesBackward()
+    {
+        if (stickerSet * stickerAmount > 0)
+        {
+            stickerSet -= 1;
+            for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
+            {
+                if (i < stickerManRef.stickers.Length)
+                {
+                    images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 1);
+                    images[i - stickerSet * stickerAmount].sprite = stickerManRef.stickers[i].Sprite;
+                    titles[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Name;
+                    descriptions[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Description;
+                }
+                else
+                {
+                    images[i - stickerSet * stickerAmount].sprite = null;
+                    images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 0);
+                    titles[i - stickerSet * stickerAmount].text = "";
+                    descriptions[i - stickerSet * stickerAmount].text = "";
+                }
+            }
         }
     }
 
