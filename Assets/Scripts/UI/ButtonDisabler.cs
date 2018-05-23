@@ -25,6 +25,13 @@ public class ButtonDisabler : MonoBehaviour {
 
 	}
 	
+    public void ToggleButtonsInteractable()
+    {
+        for (int i = 0; i < disableButtonList.Count; i++)
+        {
+            disableButtonList[i].GetComponent<Button>().interactable = !disableButtonList[i].GetComponent<Button>().interactable;
+        }
+    }
 
     public void DisableButtons()
     {

@@ -149,7 +149,7 @@ public class LevelSelect : MonoBehaviour
                 // Set the currently focused cassette to focused
                 cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
                 
-				audioManager.PlayLevelSelectScroll ();
+				audioManager.PlayLevelSelectScroll();
             }
         }
 
@@ -170,15 +170,16 @@ public class LevelSelect : MonoBehaviour
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
                         //audioManager.UnloadBanks();
-                        audioManager.AudioStopMusic();
-                        lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+                        //audioManager.AudioStopMusic();
+                        //lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
                         //print(lvl);
-                        //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
-                        buttons.SetActive(true);
-                        if (buttons.activeInHierarchy == true)
-                        {
-                            movementLock = true;
-                        }
+                        audioManager.AudioStopMusic();
+                        SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
+                        //buttons.SetActive(true);
+                        //if (buttons.activeInHierarchy == true)
+                        //{
+                        //    movementLock = true;
+                        //}
                         
                     }
                 }
@@ -295,6 +296,7 @@ public class LevelSelect : MonoBehaviour
                             // If the hit cassette is focused
                             if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                             {
+                                audioManager.AudioStopMusic();
                                 SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                             }
                         }

@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class TiltCorruption : CorruptionBaseClass
 {
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
-    [SerializeField] [Range(0, 1)] private float spikeArea;
+    [SerializeField] [Range(0, 1)] private float spikeBoundaryRight;
+    [SerializeField] [Range(0, 1)] private float spikeBoundaryLeft;
     [SerializeField] [Range(0, 1)] private float perfectRange;
     [Tooltip("Decides how quickly the sound will offset. ¨Higher value equals faster offset")]
     //[SerializeField] [Range(1, 500)] private float offsetModifier;
@@ -145,7 +146,7 @@ public class TiltCorruption : CorruptionBaseClass
         }
 
         //Lose minigame if outside of boundaries
-        if (soundPos <= -spikeArea || soundPos >= spikeArea)
+        if (soundPos <= -spikeBoundaryLeft || soundPos >= spikeBoundaryRight)
         {
             currentScore = 0;
             gameManager.recording = false;
