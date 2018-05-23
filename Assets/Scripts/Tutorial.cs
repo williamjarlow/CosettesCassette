@@ -20,6 +20,7 @@ class textPage
 class tutorial
 {
     public Button tutorialButton;
+    public string header;
     public List<images> images;
     public List<textPage> textPages;
 }
@@ -31,6 +32,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private Image leftImage;
     [SerializeField] private Text rightTextBox;
     [SerializeField] private GameObject book;
+    [SerializeField] private Text tutorialHeader;
     [SerializeField] private List<tutorial> tutorials;
     private AudioManager audioManager;
     private int tutorialIndex = 0;
@@ -47,6 +49,7 @@ public class Tutorial : MonoBehaviour
     public void InitializeTutorial(int index)
     {
         tutorialIndex = index;
+        tutorialHeader.text = tutorials[index].header;
         tutorialMenu.SetActive(false);
         book.SetActive(true);
         currentIndex = 0;
@@ -84,6 +87,7 @@ public class Tutorial : MonoBehaviour
     {
         leftImage.sprite = null;
         rightTextBox.text = "";
+        tutorialHeader.text = "";
         tutorialMenu.SetActive(true);
         book.SetActive(false);
         audioManager.PlayPauseMenuBack();
