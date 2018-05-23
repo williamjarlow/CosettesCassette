@@ -190,6 +190,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
         // Else set the color to normal
         else
             currentEvent.GetComponent<Text>().color = normalColor;
+
+		audioManager.PlayOOOSelect ();
     }
 
      private void EvaluateToggles()
@@ -203,17 +205,19 @@ public class OddOneOutCorruption : CorruptionBaseClass
                  // If the correct lyric was chosen --> change color of the text to correctColor and set the score to 100
                  if (i == correctLyricSegment)
                  {
-                     lyricPages[i].GetComponent<Text>().color = correctColor;
-                     currentScore = 100;
-                     GradeScore();
+                    lyricPages[i].GetComponent<Text>().color = correctColor;
+                    currentScore = 100;
+                    GradeScore();
+					audioManager.PlayOOOResult (0f);
                  }
 
                  // If not, the player chose the incorrect lyric --> change color of the text to incorrectColor and set the score to 0
                  else
                  {
-                     lyricPages[i].GetComponent<Text>().color = incorrectColor;
-                     currentScore = 0;
-                     GradeScore();
+                    lyricPages[i].GetComponent<Text>().color = incorrectColor;
+                    currentScore = 0;
+                    GradeScore();
+					audioManager.PlayOOOResult (1f);
                  }
 
                  // The player clicked the incorrect button --> set score to 0 and add some distortion?
