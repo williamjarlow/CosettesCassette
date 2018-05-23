@@ -82,20 +82,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
                     SpawnLyrics();
                 }   
 
-                // Update colors of selected toggles when not displaying the result 
-                /*if(!displayChoice)
-                {
-                    for (int i = 0; i < lyricPages.Count; i++)
-                    {
-                        // If we have a toggle selected --> change the color to highlighted
-                        if (lyricPages[i].GetComponent<Toggle>().isOn)
-                            lyricPages[i].GetComponent<Text>().color = highlightedColor;
-
-                        // Else set the color to normal
-                        else
-                            lyricPages[i].GetComponent<Text>().color = normalColor;
-                    }
-                }*/
             }
 
             // If we stopped recording --> destroy the mechanic objects by resetting
@@ -172,6 +158,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
             // Set the text components to the specified strings
             lyricPages[i].GetComponent<Text>().text = lyrics[i];
 
+            // Add listeners to the toggles to be able to call functions when toggled
             lyricPages[i].GetComponent<Toggle>().onValueChanged.AddListener(delegate { OnToggleValueChanged(); } );
          }
 
@@ -183,13 +170,28 @@ public class OddOneOutCorruption : CorruptionBaseClass
         // Find the currently selected game object
         GameObject currentEvent = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         
-        // If we have a toggle selected --> change the color to highlighted
-        if (currentEvent.GetComponent<Toggle>().isOn)
-            currentEvent.GetComponent<Text>().color = highlightedColor;
+        if(!displayChoice)
+        {
+            // If we have a toggle selected and we are not displaying the results --> change the color to highlighted
+            if (currentEvent.GetComponent<Toggle>().isOn)
+            {
+                // Reset the colors
+                for (int i = 0; i < lyricPages.Count; i++)
+                    lyricPages[i].GetComponent<Text>().color = normalColor;
 
-        // Else set the color to normal
-        else
-            currentEvent.GetComponent<Text>().color = normalColor;
+                // Set highlighted color and play sound
+                currentEvent.GetComponent<Text>().color = highlightedColor;
+                audioManager.PlayOOOSelect();
+            }
+
+            // Else set the color to normal
+            else
+            {
+                currentEvent.GetComponent<Text>().color = normalColor;
+                audioManager.PlayOOOSelect();
+            }
+        }
+
     }
 
      private void EvaluateToggles()
@@ -203,17 +205,19 @@ public class OddOneOutCorruption : CorruptionBaseClass
                  // If the correct lyric was chosen --> change color of the text to correctColor and set the score to 100
                  if (i == correctLyricSegment)
                  {
-                     lyricPages[i].GetComponent<Text>().color = correctColor;
-                     currentScore = 100;
-                     GradeScore();
+                    lyricPages[i].GetComponent<Text>().color = correctColor;
+                    currentScore = 100;
+                    GradeScore();
+					audioManager.PlayOOOResult (0f);
                  }
 
                  // If not, the player chose the incorrect lyric --> change color of the text to incorrectColor and set the score to 0
                  else
                  {
-                     lyricPages[i].GetComponent<Text>().color = incorrectColor;
-                     currentScore = 0;
-                     GradeScore();
+                    lyricPages[i].GetComponent<Text>().color = incorrectColor;
+                    currentScore = 0;
+                    GradeScore();
+					audioManager.PlayOOOResult (1f);
                  }
 
                  // The player clicked the incorrect button --> set score to 0 and add some distortion?
