@@ -100,6 +100,7 @@ public class JackTheRunner : CorruptionBaseClass
             GradeScore(); //Score gets evaluated and saved to file here.
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
+        //DestroyObjects();
         base.ExitSegment();
         ResetConditions();
     }
