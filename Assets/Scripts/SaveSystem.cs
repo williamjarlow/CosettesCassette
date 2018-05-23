@@ -127,12 +127,12 @@ public class SaveSystem : Singleton<SaveSystem>
             {
                 if (!data.stickersSave.ContainsKey(keyList[i]))
                 {
-                    data.stickersSave.Add(stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].Name, false);
+                    data.stickersSave.Add(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
                 }
                 else if(data.stickersSave[keyList[i]] == true)
                 {
-                    stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].loaded = true;
-                    stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].Unlocked = data.stickersSave[keyList[i]];
+                    stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].loaded = true;
+                    stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Unlocked = data.stickersSave[keyList[i]];
                 }
             }
 
@@ -196,18 +196,18 @@ public class SaveSystem : Singleton<SaveSystem>
         data = (PlayerData)bf.Deserialize(file);
 
         List<string> keyList = new List<string>(stickersRef.Keys);
-        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickers.Count; i++)
+        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
         {
-            stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].loaded = false;
-            stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].Unlocked = false;
+            stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].loaded = false;
+            stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Unlocked = false;
         }
 
         data.stickersSave.Clear();
         file.Close();
 
-        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickers.Count; i++)
+        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
         {
-            SaveStickers(stickerManRef.GetComponent<StickerManager>().stickers[keyList[i]].Name, false);
+            SaveStickers(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
         }
     }
 
