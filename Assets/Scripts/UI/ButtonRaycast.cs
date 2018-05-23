@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonRaycast : MonoBehaviour {
+    private Camera mainCam;
+	void Start ()
+    {
 
-	// Use this for initialization
-	void Start () {
-		
 	}
 
     // Update is called once per frame
@@ -26,8 +26,8 @@ public class ButtonRaycast : MonoBehaviour {
                 // Make sure the button is enabled because Invoke() calls the functions even if the button is disabled
                 if (button.enabled && button.interactable)
                 {
-                    // Invoke all buttons that the button has
-                    button.onClick.Invoke();
+                        // Invoke all buttons that the button has
+                        button.onClick.Invoke();
                 }
             }
         }
