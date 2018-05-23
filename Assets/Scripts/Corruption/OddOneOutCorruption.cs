@@ -40,6 +40,9 @@ public class OddOneOutCorruption : CorruptionBaseClass
     private bool displayChoice;
 
 
+
+                                // ** TODO ** // 
+        // 1. Fix calling SpawnLyrics() twice when playing 'play' in the middle of the segment
     void Start()
     {
         overallCorruption = gameManager.overallCorruption;
@@ -67,12 +70,16 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             if (gameManager.recording) //If recording
             {
+               
                 if (inSegment && !gameManager.audioManager.switchedToAudioLog)
+                {
                     Timer();
+                }
 
                 if (inSegment && hasSpawned == false && !gameManager.audioManager.switchedToAudioLog)
+                {
                     SpawnLyrics();
-
+                }   
 
                 // Update colors of selected toggles when not displaying the result 
                 if(!displayChoice)
@@ -108,11 +115,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
         {
             ExitSegment();
         }
-
-        if(inSegment && gameManager.recording && hasSpawned == false && !gameManager.audioManager.switchedToAudioLog)
-        {
-            SpawnLyrics();
-        }
     }
 
     private void Timer()
@@ -128,8 +130,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
             spawnedTimer = true;
         }
 
-        // If the timer is not 0 --> decrement it and update the game object
-        if (timerLength > 1 && spawnedTimer)
+        // If the timer is > 1 and we are not displaying the results, and the music is not paused --> decrement the timer and update the game object
+        if (timerLength > 1 && spawnedTimer && !gameManager.audioManager.pausedMusic)
         {
             timerLength -= Time.deltaTime;
 
@@ -138,7 +140,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             // Set the text of the instantiated object to the timer length converted to int
             timerObject.GetComponent<Text>().text = temp.ToString();
-
         }
 
         // Destroy the game object when timerLength < 1 and evaluate the chosen lyric
@@ -215,7 +216,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
      public override void EnterSegment()
      {
-         ResetConditions();
          inSegment = true;
          innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
          base.EnterSegment();
