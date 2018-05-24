@@ -46,7 +46,7 @@ public class NoteMovement : MonoBehaviour {
     private bool headingLeft = true;
     bool headingUp = true;
     [HideInInspector] public float speed;
-    [HideInInspector] public int points;
+    /*[HideInInspector]*/ public int points;
 
     float bounceTimer = 0;
     float gradualDecrease = 0;
