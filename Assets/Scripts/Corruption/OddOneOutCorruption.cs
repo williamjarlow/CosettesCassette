@@ -25,13 +25,13 @@ public class OddOneOutCorruption : CorruptionBaseClass
     [SerializeField] private int correctLyricSegment;
     private bool hasSpawned;
 
-	[SerializeField] private float chosenWordStart;
-	[SerializeField] private float chosenWordEnd;
+    [SerializeField] private float chosenWordStart;
+    [SerializeField] private float chosenWordEnd;
 
     // Timer
     [SerializeField] private GameObject timerPrefab;
     private GameObject timerObject;    // Timer object to be instantiated
-    [SerializeField] private float timerStartPoint;
+    [Tooltip("Timer startpoin in ms/beats from the segment start")][SerializeField] private float timerStartPoint;
     [SerializeField] [Tooltip("Time in seconds the timer will display")] private float timerLength;
     private float originalTimerLength;
     [Tooltip("Check this box if input is in bpm rather than milliseconds")]
@@ -90,8 +90,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
                 ResetConditions();
             }
 
-			// If player is currently listening to chosen word
-			if (audioManager.GetTimeLinePosition () >= chosenWordStart &&
+            // If player is currently listening to chosen word
+            if (audioManager.GetTimeLinePosition () >= chosenWordStart &&
 			    audioManager.GetTimeLinePosition () < chosenWordEnd)
 				audioManager.oooVocals.setValue (100f);
 			else // If player is not currently listening to chosen word
@@ -101,6 +101,14 @@ public class OddOneOutCorruption : CorruptionBaseClass
         else if (inSegment) //If player leaves the segment area
         {
             ExitSegment();
+
+            // Reset conditions if we are not recording (ExitSegment sets recording to false)
+            // Required to not have the lyrics spawn/despawn when replaying a segment
+            if (!gameManager.recording)
+            {
+                ResetConditions();
+            }
+                
         }
     }
 
@@ -252,7 +260,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
          corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
          innerDistortion = 0;
          base.ExitSegment();
-         ResetConditions();
 
          audioManager.oooVocals.setValue (0f);
      }

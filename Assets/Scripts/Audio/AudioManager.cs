@@ -216,6 +216,7 @@ public class AudioManager : MonoBehaviour {
             startedMusic = true;
             pausedMusic = false;
         }
+
     }
 
 	public void PlaySkip()
@@ -675,8 +676,8 @@ public class AudioManager : MonoBehaviour {
             logEventDesc.getLength(out trackLength);
         if (!switchedToAudioLog)
             musicEventDesc.getLength(out trackLength);
-		
-        startedMusic = false;
+
+        AudioStopMusic();
 
 		PlayEjectSound ();
     }
