@@ -64,6 +64,8 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         inSegment = false;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
+        if(gameManager.audioManager.GetTimeLinePosition() >= duration.start) //This means that if player hits record the record button won't be disabled.
+            gameManager.ToggleRecord(false);
     }
     public virtual void GradeScore()
     {
