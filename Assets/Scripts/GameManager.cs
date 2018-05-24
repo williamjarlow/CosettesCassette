@@ -121,8 +121,6 @@ public class GameManager : MonoBehaviour
     }
     public void SetRecord(bool recordingState)
     {
-        Debug.Log(audioManager.startedMusic);
-
         // If the current track is playing
         if (audioManager.startedMusic)
         {

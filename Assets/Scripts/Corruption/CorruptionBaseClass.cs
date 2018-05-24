@@ -73,8 +73,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour
             gameManager.SetRecord(false);
             gameManager.minigameButton.SetPositionUp();
         }
-
-        Debug.Log("Exit segment");            
     }
     public virtual void GradeScore()
     {
