@@ -14,37 +14,48 @@ public class ButtonScript : MonoBehaviour {
     private Material originalMaterial;
 
     private Vector3 originalPosition;
+    private Vector3 newPosition;
 
+    private AudioManager audioManager;
 
 	void Start ()
     {
         isDown = false;
         originalPosition = transform.position;
+        
         originalMaterial = GetComponent<MeshRenderer>().material;
+
+        audioManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().audioManager;
 	}
 
     public void TogglePosition()
     {
-        // If button is 'down'
-        if(isDown)
+        // Set the newPosition according to buttonDepth here, so that it updates in real-time
+        newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + buttonDepth);
+
+        if (audioManager.startedMusic)
         {
-            // Move to original position
-            transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth * Time.deltaTime);
+            // If button is 'down'
+            if (isDown)
+            {
+                // Move to original position
+                transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
 
-            // Switch material and toggle the bool
-            gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
-            isDown = false;
-        }
+                // Switch material and toggle the bool
+                gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
+                isDown = false;
+            }
 
-        // If button is 'up'
-        else if(!isDown)
-        {
-            // Increase z position
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y, transform.position.z + buttonDepth), buttonDepth * Time.deltaTime);
+            // If button is 'up'
+            else if (!isDown)
+            {
+                // Increase z position
+                transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
 
-            // Switch material and toggle the bool
-            gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
-            isDown = true;
+                // Switch material and toggle the bool
+                gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
+                isDown = true;
+            }
         }
     }
 }
