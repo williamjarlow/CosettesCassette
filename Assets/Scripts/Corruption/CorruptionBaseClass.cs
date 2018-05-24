@@ -70,10 +70,9 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         if (gameManager.audioManager.GetTimeLinePosition() >= duration.start)
         {
             // Set recording to false and set the minigame button position to up
-            gameManager.ToggleRecord(false);
+            gameManager.SetRecord(false);
             gameManager.minigameButton.SetPositionUp();
         }
-            
     }
     public virtual void GradeScore()
     {

@@ -119,12 +119,11 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void ToggleRecord(bool recordingState)
+    public void SetRecord(bool recordingState)
     {
         // If the current track is playing
         if (audioManager.startedMusic)
         {
-
             //If start recording
             if (recordingState == true)
             {
