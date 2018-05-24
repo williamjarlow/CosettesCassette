@@ -15,12 +15,14 @@ using UnityEngine.UI;
     class episodes
 {
     public Button episodeButton;
+    public string header;
     public List<pages> pages;
 }
 
 public class StoryTelling : MonoBehaviour {
 
     [SerializeField] private GameObject episodeMenu;
+    [SerializeField] private Text transcriptHeader;
     [SerializeField] private GameObject forwardButton;
     [SerializeField] private GameObject backwardsButton;
     [SerializeField] private Text leftPage;
@@ -39,6 +41,7 @@ public class StoryTelling : MonoBehaviour {
     public void InitializeStory(int index)
     {
         episodeIndex = index;
+        transcriptHeader.text = episodes[index].header;
         episodeMenu.SetActive(false);
         forwardButton.SetActive(true);
         backwardsButton.SetActive(true);
@@ -78,6 +81,7 @@ public class StoryTelling : MonoBehaviour {
 
     public void BackToEpisodes()
     {
+        transcriptHeader.text = "";
         leftPage.text = "";
         rightPage.text = "";
         episodeMenu.SetActive(true);
