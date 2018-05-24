@@ -348,6 +348,20 @@ public class LevelSelect : MonoBehaviour
         SceneManager.LoadScene(lvl);
     }
 
+    public void PlayASide()
+    {
+        lvl = lvl + 7;
+        print(lvl);
+        SceneManager.LoadScene(lvl);
+    }
+
+    public void PlayBSide()
+    {
+        lvl = lvl + 14;
+        print(lvl);
+        SceneManager.LoadScene(lvl);
+    }
+
 
 
     public void OpenPause()
