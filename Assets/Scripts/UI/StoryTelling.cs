@@ -30,12 +30,16 @@ public class StoryTelling : MonoBehaviour {
     [SerializeField] private List<episodes> episodes;
     private int episodeIndex = 0;
     private int pageIndex = 0;
+    private string originalHeader = "";
 
 	private AudioManager audioManager;
 
     void Start()
 	{
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+        originalHeader = transcriptHeader.text;
+        leftPage.text = "";
+        rightPage.text = "";
     }
 
     public void InitializeStory(int index)
@@ -81,7 +85,7 @@ public class StoryTelling : MonoBehaviour {
 
     public void BackToEpisodes()
     {
-        transcriptHeader.text = "";
+        transcriptHeader.text = originalHeader;
         leftPage.text = "";
         rightPage.text = "";
         episodeMenu.SetActive(true);

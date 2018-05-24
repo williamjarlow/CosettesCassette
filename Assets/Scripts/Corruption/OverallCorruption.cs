@@ -155,7 +155,6 @@ public class OverallCorruption : MonoBehaviour {
 		else if(gameManager.stickerForGood.EarnSticker() && overallCorruption <= 100-corruptionClearThreshold) //If player hasn't won already
         {
             gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
-            gameManager.stageClearVFX.CallVFX(segmentEffects.good);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
         }

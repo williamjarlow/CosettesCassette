@@ -11,7 +11,9 @@ public class LiveTutorials
     [SerializeField]
     public string tutorialText;
     public float timeToAppearInMs;
-    public bool hasBeenShown;
+    public bool specialCaseWithDelay = false;
+    public float delayedCaseInSeconds = 3;
+    [HideInInspector] public bool hasBeenShown = false;
 }
 
 public class LiveTutorial : MonoBehaviour {
@@ -38,10 +40,21 @@ public class LiveTutorial : MonoBehaviour {
             {
                 if (liveTutorials[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && liveTutorials[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && liveTutorials[i].hasBeenShown == false)
                 {
-                    OpenLiveTutorial();
-                    textBoxForLiveTutorial.gameObject.SetActive(true);
-                    textBoxForLiveTutorial.text = liveTutorials[i].tutorialText;
-                    liveTutorials[i].hasBeenShown = true;
+                    if (liveTutorials[i].specialCaseWithDelay)
+                    {
+                        liveTutorials[i].hasBeenShown = true;
+                        print("In here");
+                        delayedSpecialCase(liveTutorials[i].delayedCaseInSeconds, i);
+                    }
+
+
+                    else
+                    {
+                        OpenLiveTutorial();
+                        textBoxForLiveTutorial.gameObject.SetActive(true);
+                        textBoxForLiveTutorial.text = liveTutorials[i].tutorialText;
+                        liveTutorials[i].hasBeenShown = true;
+                    }
                 }
             }
         }
@@ -50,7 +63,7 @@ public class LiveTutorial : MonoBehaviour {
 
     private void OpenLiveTutorial()
     {
-		audioManager.PlayTutorialOpen ();
+		audioManager.PlayTutorialOpen();
         liveTutorial.SetActive(true);
         audioManager.AudioPauseMusic();
         audioManager.pausedMusic = true;
@@ -58,13 +71,19 @@ public class LiveTutorial : MonoBehaviour {
 
     public void CloseLiveTutorial()
     {
-		audioManager.PlayTutorialClose ();
+		audioManager.PlayTutorialClose();
         liveTutorial.SetActive(false);
         audioManager.AudioUnpauseMusic();
         audioManager.pausedMusic = false;
     }
 
+    IEnumerator delayedSpecialCase(float delay, int index)
+    {
+        yield return new WaitForSeconds(delay);
+        OpenLiveTutorial();
+        textBoxForLiveTutorial.gameObject.SetActive(true);
+        textBoxForLiveTutorial.text = liveTutorials[index].tutorialText;
+    }
 
 
-
-}
+    }

@@ -217,4 +217,9 @@ public class AudioTimeline : MonoBehaviour
         timelineSlider.value = temp;
     }
 
+    public void SetCorrectSideForSlider()
+    {
+        timelineSlider.maxValue = audioManager.GetTrackLength();
+    }
+
 }
