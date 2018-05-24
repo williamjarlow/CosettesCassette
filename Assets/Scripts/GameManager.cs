@@ -92,17 +92,23 @@ public class GameManager : MonoBehaviour
     public void ToggleRecord()
     {
         // If the current track is playing
-        if (audioManager.GetTimeLinePosition() > 0)
+		if (audioManager.startedMusic)
         {
-            
             // If we are not recording --> start recording
-            if (recording == false)
+			if (recording == false)
             {
+				//If we are paused
+				if (audioManager.pausedMusic)
+				{
+					audioManager.gameMusicEv.setPaused (false);
+					audioManager.pausedMusic = false;
+				}
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
                 // Start recording
                 recording = true;
-                audioManager.PlayRecordStart();
+
+				audioManager.PlayRecordStart ();
             }
 
             // If we are recording --> stop recording
@@ -116,7 +122,7 @@ public class GameManager : MonoBehaviour
     public void ToggleRecord(bool recordingState)
     {
         // If the current track is playing
-        if (audioManager.GetTimeLinePosition() > 0)
+        if (audioManager.startedMusic)
         {
 
             //If start recording
@@ -180,8 +186,6 @@ public class GameManager : MonoBehaviour
 
         // Set the current segment index to the closest one
         currentSegmentIndex = closestSegmentIndex;
-
-		audioManager.PlaySnapSound ();
     }
 
 
@@ -219,8 +223,10 @@ public class GameManager : MonoBehaviour
 
     public void SnapToClosestSegmentInFront()
     {
-        if (!recording)
+		if (!recording && audioManager.startedMusic)
         {
+			audioManager.PlaySnapSound ();
+
             FindClosestSegment();
             if (currentSegmentIndex == overallCorruption.durations.Count - 1)       // If last segment is closest
             {
@@ -237,8 +243,10 @@ public class GameManager : MonoBehaviour
 
     public void SnapToClosestSegmentBehind()
     {
-        if (!recording)
+		if (!recording && audioManager.startedMusic)
         {
+			audioManager.PlaySnapSound ();
+
             FindClosestSegment();
             if (currentSegmentIndex == 0 && overallCorruption.durations[currentSegmentIndex].start + allowedProgressIntoBarInMs > audioManager.GetTimeLinePosition()) // If first segment is closest and we are less than "allowedProgressIntoBarInMs" into the segment
             {
