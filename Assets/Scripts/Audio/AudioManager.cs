@@ -181,6 +181,7 @@ public class AudioManager : MonoBehaviour {
 		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
         gameMusicEv.setPaused(true);
+        pausedMusic = true;
     }
 
 	public void AudioUnpauseMusic ()
@@ -193,6 +194,7 @@ public class AudioManager : MonoBehaviour {
 		playEv.release ();
 
         gameMusicEv.setPaused(false);
+        pausedMusic = false;
     }
 
     public void AudioPlayPauseAndUnpause()
