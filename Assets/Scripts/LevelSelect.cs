@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class LevelSelect : MonoBehaviour
 {
     [SerializeField] private GameObject buttons;
+    private BoxCollider disablestuff;
     private int lvl;
 
 	private AudioManager audioManager;
@@ -154,7 +155,7 @@ public class LevelSelect : MonoBehaviour
         }
 
         // SceneLoader for mouse input
-        if(Input.GetMouseButtonUp(0))
+        if(Input.GetMouseButtonUp(0) && buttons.activeInHierarchy == false)
         {
             // Raycast the ended touch position
             RaycastHit hit;
@@ -172,6 +173,8 @@ public class LevelSelect : MonoBehaviour
                         //audioManager.UnloadBanks();
                         //audioManager.AudioStopMusic();
                         lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+                        disablestuff = hit.transform.GetComponent<BoxCollider>();
+                        disablestuff.enabled = false;
                         print(lvl);
                         audioManager.AudioStopMusic();
                         //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
@@ -335,11 +338,27 @@ public class LevelSelect : MonoBehaviour
         if (buttons.activeInHierarchy == false)
         {
             movementLock = false;
+            disablestuff.enabled = true;
+            
         }
     }
 
     public void Playlvl()
     {
+        SceneManager.LoadScene(lvl);
+    }
+
+    public void PlayASide()
+    {
+        lvl = lvl + 7;
+        print(lvl);
+        SceneManager.LoadScene(lvl);
+    }
+
+    public void PlayBSide()
+    {
+        lvl = lvl + 14;
+        print(lvl);
         SceneManager.LoadScene(lvl);
     }
 
