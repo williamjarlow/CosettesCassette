@@ -41,7 +41,6 @@ public class JackTheRunnerMovement : MonoBehaviour {
 		{
 			rb.AddForce (jump * jumpForce, ForceMode2D.Impulse);
 			audioManager.PlayRunnerJump();
-			print ("jump");
 		}
         //
 
@@ -66,7 +65,6 @@ public class JackTheRunnerMovement : MonoBehaviour {
 	private void OnCollisionEnter2D (Collision2D collision)
 	{
 		audioManager.PlayRunnerLand();
-		print ("land");
 	}
 
     private void OnCollisionExit2D(Collision2D collision)

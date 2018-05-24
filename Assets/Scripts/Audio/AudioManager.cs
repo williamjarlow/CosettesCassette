@@ -81,6 +81,10 @@ public class AudioManager : MonoBehaviour {
     [HideInInspector] public bool startedMusic = false;
     [HideInInspector] public bool pausedMusic = true;
 
+    // Added for special case of LiveTutorial popup
+    private LiveTutorial liveTutorial;
+    private bool showedSpecialCase = false;
+
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -99,11 +103,30 @@ public class AudioManager : MonoBehaviour {
 		
     void Start()
     {
+        //// Special case for LiveTutorial
+        if (SceneManager.GetActiveScene().name == "Cassette00Tutorial")
+        {
+            liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+        }
+        ////
+
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
 
-	public void LoadBanks()
+    void Update()
+    {
+        //// Special case for LiveTutorial
+        if (liveTutorial != null && !showedSpecialCase && GetTimeLinePosition() == GetTrackLength())
+        {
+            print("End of log in Tutorial level, did popup show?");
+            showedSpecialCase = true;
+            liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
+        }
+        ////
+    }
+
+    public void LoadBanks()
 	{
         //Loads the FMOD banks
         for (int i = 0; i < bankFiles.Count; i++)
@@ -221,7 +244,9 @@ public class AudioManager : MonoBehaviour {
 
     }
 
-	public void PlaySkip()
+
+    #region soundEffects
+    public void PlaySkip()
 	{
 		result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
 		skipEventDesc.createInstance(out skipEv);
@@ -560,7 +585,9 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEv.release ();
 	}
 
-	public void MuteSFX(bool mute)
+    #endregion
+
+    public void MuteSFX(bool mute)
 	{
 		systemObj.getBus ("bus:/SFX", out sfxBus);
 		systemObj.getBus ("bus:/Interface", out interfaceBus);

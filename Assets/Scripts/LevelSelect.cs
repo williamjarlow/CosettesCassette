@@ -175,8 +175,6 @@ public class LevelSelect : MonoBehaviour
                         lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
                         disablestuff = hit.transform.GetComponent<BoxCollider>();
                         disablestuff.enabled = false;
-                        print(lvl);
-                        audioManager.AudioStopMusic();
                         //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                         buttons.SetActive(true);
                         if (buttons.activeInHierarchy == true)
@@ -299,7 +297,6 @@ public class LevelSelect : MonoBehaviour
                             // If the hit cassette is focused
                             if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                             {
-                                audioManager.AudioStopMusic();
                                 SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                             }
                         }
@@ -334,7 +331,6 @@ public class LevelSelect : MonoBehaviour
 
     public void BacktolvlSelect()
     {
-        audioManager.AudioPlayMusic();
         if (buttons.activeInHierarchy == false)
         {
             movementLock = false;

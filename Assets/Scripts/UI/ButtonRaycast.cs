@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Camera))]
+
 public class ButtonRaycast : MonoBehaviour {
 
     private AudioManager audioManager;
+    [SerializeField] private Camera m_MainCamera;
 
-	void Start ()
+    void Start ()
     {
         audioManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>().audioManager;
-	}
+    }
 
     // Update is called once per frame
     void Update()
     {
-
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && m_MainCamera.enabled)
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CorruptionInformation {
 	[Range(0, 100)]
@@ -49,7 +50,10 @@ public class OverallCorruption : MonoBehaviour {
 	private GameObject corruptedArea;
 	private List<GameObject> corruptedAreaList = new List<GameObject>();
 
-	void Awake () {
+    // Added for special case of LiveTutorial popup
+    private LiveTutorial liveTutorial;
+
+    void Awake () {
 
         bpmInMs = ConvertBpmToMs(bpm);
 		for (int i = 0; i < segments.Count; i++)
@@ -62,7 +66,12 @@ public class OverallCorruption : MonoBehaviour {
 
 	void Start()
 	{
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        //// Special case for LiveTutorial
+        if (SceneManager.GetActiveScene().name == "Cassette00Tutorial")
+            liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+        ////
+
+            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioDistortion = gameManager.audioDistortion;
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
@@ -146,6 +155,10 @@ public class OverallCorruption : MonoBehaviour {
                     gameManager.LevelCleared = true;
                     gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
+                    //// Special case for LiveTutorial
+                    if (liveTutorial != null)
+                    liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew);
+                    ////
                 }
                 else
                     gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
@@ -158,6 +171,10 @@ public class OverallCorruption : MonoBehaviour {
             gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
+            //// Special case for LiveTutorial
+            if (liveTutorial != null)
+            liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew);
+            ////
         }
 	} 
 

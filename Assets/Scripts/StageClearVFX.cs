@@ -15,9 +15,9 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private GameObject newStickerParticleEffect;
     [Header("OBS! This needs the prefab ParticleSpawnPosition in the scene to work")]
     [SerializeField] private Transform positionForParticleEffects;
-    [SerializeField] private float timeToShowGood = 3;
-    [SerializeField] private float timeToShowPerfect = 4.5f;
-    [SerializeField] private float timeToShowNew = 3;
+    public float timeToShowGood = 3;
+    public float timeToShowPerfect = 4.5f;
+    public float timeToShowNew = 3;
     [SerializeField] private float goodParticleYOffset = 1.6f;
     [SerializeField] private float perfectParticleYOffset = 1.6f;
     [SerializeField] private float newStickerParticleYOffset = 0.1f;

@@ -3962,7 +3962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &715068073
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7124,7 +7124,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4854102014608760, guid: fe9c67b967512f2459e57fa955a9d598, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114135618744191550, guid: fe9c67b967512f2459e57fa955a9d598,
         type: 2}
@@ -7549,14 +7549,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 114675638342511188, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6,
+        type: 2}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3bdbfe7aaf70cfe4b8be2c61fd7776a6, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1401764344 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062,
-    type: 2}
-  m_PrefabInternal: {fileID: 1483463974}
 --- !u!1 &1414430640
 GameObject:
   m_ObjectHideFlags: 0
@@ -7697,48 +7697,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1454759663}
---- !u!1001 &1483463974
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1564931354}
-    m_Modifications:
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &1509965779
 Prefab:
   m_ObjectHideFlags: 0
@@ -8038,7 +7996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1564931354
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8056,7 +8014,6 @@ RectTransform:
   - {fileID: 1028312456}
   - {fileID: 1355608249}
   - {fileID: 1247805489}
-  - {fileID: 1401764344}
   - {fileID: 446365674}
   m_Father: {fileID: 569284798}
   m_RootOrder: 1
@@ -8907,6 +8864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1823134181}
   - component: {fileID: 1823134182}
+  - component: {fileID: 1823134183}
   m_Layer: 0
   m_Name: Tap-to-start
   m_TagString: Untagged
@@ -8972,6 +8930,24 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!114 &1823134183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1823134180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5538a6945c67c814899c5c21061a996b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkWithAlpha: 1
+  minAlpha: 0.2
+  maxAlpha: 1
+  blinkingSpeed: 0.7
+  rotateImage: 0
+  maxRotation: 30
+  rotationSpeed: 30
 --- !u!1 &1848218868
 GameObject:
   m_ObjectHideFlags: 0

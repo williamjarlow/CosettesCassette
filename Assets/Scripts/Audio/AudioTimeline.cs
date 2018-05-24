@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AudioTimeline : MonoBehaviour
 {
@@ -47,7 +48,6 @@ public class AudioTimeline : MonoBehaviour
     private float maskStartPos = 0;
 
     private float songToImageLengthConversion = 0;
-
 
     void Start()
     {
@@ -130,7 +130,8 @@ public class AudioTimeline : MonoBehaviour
             audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
 
             // Update mask according to timeline bar
-            timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
+            if (!gameManager.recording && !audioManager.switchedToAudioLog)
+                timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
         }
     }
 
@@ -140,7 +141,7 @@ public class AudioTimeline : MonoBehaviour
         UpdateValues();
         if (!holding)
         {
-            if (!gameManager.recording)
+            if (!gameManager.recording && !audioManager.switchedToAudioLog)
                 timelineMaskParent.SetActive(true);
             holding = true;
             return;

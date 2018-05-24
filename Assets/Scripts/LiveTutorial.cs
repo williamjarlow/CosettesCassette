@@ -34,10 +34,6 @@ public class LiveTutorial : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown("down"))
-            ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
-        if (Input.GetKeyDown("up"))
-            ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!");
         if (liveTutorials.Length > 0)
         {
             for (int i = 0; i < liveTutorials.Length; i++)

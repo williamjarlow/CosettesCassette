@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class OverallCorruptionBar : MonoBehaviour {
 
-    private Image thisImage;
+    [HideInInspector] public Image thisImage;
     private OverallCorruption overallCorruption;
     GameManager gameManager;
     private float corruptionPercentage;
