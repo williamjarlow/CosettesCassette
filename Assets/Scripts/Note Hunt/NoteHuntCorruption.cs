@@ -166,17 +166,21 @@ public class NoteHuntCorruption : CorruptionBaseClass
                     // Add/remove points and destroy the hit object
                     if (noteMovement.hitsRemaining <= 1)
                     {
-                        //Give audio/visual feedback for destroying note
+                        //Give visual feedback for destroying note
                         currentScore += noteMovement.points;
                         GameObject noteExplosioninstance;
                         noteExplosioninstance = Instantiate(noteExplosionPrefab, hit.transform.position, hit.transform.rotation, transform);
                         Destroy(hit.transform.gameObject);
                         Destroy(noteExplosioninstance, noteExplosionTime);
 
-						if (noteMovement.points < 0) // correct note
-							audioManager.PlayShootSound (1f);
-						else if (noteMovement.points > 0) // incorrect note
-							audioManager.PlayShootSound (0f);
+                        // correct note
+                        if (noteMovement.points > 0)
+                            audioManager.PlayShootSound(0f);
+
+                        // incorrect note
+                        else if (noteMovement.points < 0)
+                            audioManager.PlayShootSound(1f);
+                        
                     }
                     else
                     {
