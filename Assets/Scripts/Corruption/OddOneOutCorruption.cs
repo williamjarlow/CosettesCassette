@@ -36,14 +36,13 @@ public class OddOneOutCorruption : CorruptionBaseClass
     private float originalTimerLength;
     [Tooltip("Check this box if input is in bpm rather than milliseconds")]
     [SerializeField]
-    private bool inputBeats;
-    private bool spawnedTimer;
-    private bool displayChoice;
-
-
+    private bool inputBeats;        // Does the designer want to design stuff in beats or milliseconds?
+    private bool spawnedTimer;      // Used to check if we have spawned the timer
+    private bool displayChoice;     // Used to check if we are displaying the results/choice, i.e which toggle/word was pressed
+    private bool resetConditions;   // Used to reset conditions only once
 
                                 // ** TODO ** // 
-        // 1. Fix calling SpawnLyrics() twice when playing 'play' in the middle of the segment
+        // 1. Fix calling ResetConditions() every frame. Happens when inSegment and !recording
     void Start()
     {
         overallCorruption = gameManager.overallCorruption;
@@ -56,7 +55,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
         originalTimerLength = timerLength;
 
-        //Load();
+        Load();
     }
 
     void Update()
@@ -85,9 +84,10 @@ public class OddOneOutCorruption : CorruptionBaseClass
             }
 
             // If we stopped recording --> destroy the mechanic objects by resetting
-            else if (!gameManager.recording)
+            else if (!gameManager.recording && !resetConditions)
             {
                 ResetConditions();
+                resetConditions = true;
             }
 
             // If player is currently listening to chosen word
@@ -245,11 +245,11 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
      public override void EnterSegment()
      {
-         inSegment = true;
-         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-         base.EnterSegment();
+        inSegment = true;
+        innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
+        base.EnterSegment();
 
-         //audioManager.oooVocals.setValue (100f);
+        resetConditions = false;
      }
 
      public override void ExitSegment()

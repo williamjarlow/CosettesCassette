@@ -968,7 +968,7 @@ Prefab:
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[0].stop
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -978,17 +978,17 @@ Prefab:
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[1].stop
-      value: 304
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[2].start
-      value: 352
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
       propertyPath: segments.Array.data[2].stop
-      value: 400
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 114313094229826628, guid: 217ff3c6edad08746800892c4eab6f54,
         type: 2}
@@ -1228,12 +1228,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4749292932027470, guid: 917d32ac7d1f353479fefa28d72391ef, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114612484180479104, guid: 917d32ac7d1f353479fefa28d72391ef,
         type: 2}
       propertyPath: segmentID
-      value: 3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114612484180479104, guid: 917d32ac7d1f353479fefa28d72391ef,
+        type: 2}
+      propertyPath: inputBeats
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114612484180479104, guid: 917d32ac7d1f353479fefa28d72391ef,
+        type: 2}
+      propertyPath: timerStartPoint
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 917d32ac7d1f353479fefa28d72391ef, type: 2}
@@ -2024,7 +2034,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4912875478692932, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c30b2849aa78e5742896da78b61ad7f5, type: 2}
@@ -25013,9 +25023,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 738148953}
-        m_MethodName: toggleTapeSide
-        m_Mode: 1
+      - m_Target: {fileID: 2087865281}
+        m_MethodName: SetRecord
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25047,7 +25057,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 738148953}
-        m_MethodName: AudioStopMusic
+        m_MethodName: toggleTapeSide
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25055,7 +25065,29 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1505081222}
+        m_MethodName: SetPositionUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1464901650}
+        m_MethodName: SetPositionUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -26954,7 +26986,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4619194560789936, guid: daada61ace94abe46ad6c26817817724, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: daada61ace94abe46ad6c26817817724, type: 2}
@@ -31302,12 +31334,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4914133324850090, guid: b9ed7c3e64636a94cb26227994b07d1e, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
         type: 2}
       propertyPath: segmentID
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114927636913348338, guid: b9ed7c3e64636a94cb26227994b07d1e,
         type: 2}
