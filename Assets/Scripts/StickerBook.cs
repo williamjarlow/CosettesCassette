@@ -26,18 +26,18 @@ public class StickerBook : MonoBehaviour {
             descriptions[i].text = stickerManRef.stickers[i].Description;
             if(stickerManRef.stickers[i].Unlocked == false)
             {
-                images[i].color = new Vector4(0, 0, 0, 1);
+                images[i].color = Color.black;
             }
             else
             {
-                images[i].color = new Vector4(255, 255, 255, 1);
+                images[i].color = Color.white;
             }
         }
     }
 
     public void FlipPagesForward()
     {
-        if(stickerSet * stickerAmount < stickerManRef.stickers.Length - stickerAmount)
+        if (stickerSet * stickerAmount < stickerManRef.stickers.Length - stickerAmount)
         {
             stickerSet += 1;
             for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
@@ -47,6 +47,15 @@ public class StickerBook : MonoBehaviour {
                     images[i - stickerSet * stickerAmount].sprite = stickerManRef.stickers[i].Sprite;
                     titles[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Name;
                     descriptions[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Description;
+
+                    if (stickerManRef.stickers[i].Unlocked == false)
+                    {
+                        images[i - stickerSet * stickerAmount].color = Color.black;
+                    }
+                    else
+                    {
+                        images[i - stickerSet * stickerAmount].color = Color.white;
+                    }
                 }
                 else
                 {
@@ -54,15 +63,6 @@ public class StickerBook : MonoBehaviour {
                     images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 0);
                     titles[i - stickerSet * stickerAmount].text = "";
                     descriptions[i - stickerSet * stickerAmount].text = "";
-                }
-
-                if (stickerManRef.stickers[i - stickerSet * stickerAmount].Unlocked == false)
-                {
-                    images[i - stickerSet * stickerAmount].color = new Vector4(0, 0, 0, 1);
-                }
-                else
-                {
-                    images[i - stickerSet * stickerAmount].color = new Vector4(255, 255, 255, 1);
                 }
             }
         }
@@ -81,6 +81,15 @@ public class StickerBook : MonoBehaviour {
                     images[i - stickerSet * stickerAmount].sprite = stickerManRef.stickers[i].Sprite;
                     titles[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Name;
                     descriptions[i - stickerSet * stickerAmount].text = stickerManRef.stickers[i].Description;
+
+                    if (stickerManRef.stickers[i].Unlocked == false)
+                    {
+                        images[i - stickerSet * stickerAmount].color = Color.black;
+                    }
+                    else
+                    {
+                        images[i - stickerSet * stickerAmount].color = Color.white;
+                    }
                 }
                 else
                 {
@@ -90,14 +99,6 @@ public class StickerBook : MonoBehaviour {
                     descriptions[i - stickerSet * stickerAmount].text = "";
                 }
 
-                if (stickerManRef.stickers[i - stickerSet * stickerAmount].Unlocked == false)
-                {
-                    images[i - stickerSet * stickerAmount].color = new Vector4(0, 0, 0, 1);
-                }
-                else
-                {
-                    images[i - stickerSet * stickerAmount].color = new Vector4(255, 255, 255, 1);
-                }
             }
         }
     }
