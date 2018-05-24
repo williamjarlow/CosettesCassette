@@ -25,6 +25,7 @@ public class StoryTelling : MonoBehaviour {
     [SerializeField] private Text transcriptHeader;
     [SerializeField] private GameObject forwardButton;
     [SerializeField] private GameObject backwardsButton;
+    [SerializeField] private GameObject backToEpisodesButton;
     [SerializeField] private Text leftPage;
     [SerializeField] private Text rightPage;
     [SerializeField] private List<episodes> episodes;
@@ -37,6 +38,9 @@ public class StoryTelling : MonoBehaviour {
     void Start()
 	{
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
+        forwardButton.SetActive(false);
+        backwardsButton.SetActive(false);
+        backToEpisodesButton.SetActive(false);
         originalHeader = transcriptHeader.text;
         leftPage.text = "";
         rightPage.text = "";
@@ -49,6 +53,7 @@ public class StoryTelling : MonoBehaviour {
         episodeMenu.SetActive(false);
         forwardButton.SetActive(true);
         backwardsButton.SetActive(true);
+        backToEpisodesButton.SetActive(true);
         pageIndex = 0;
         if (episodes[index].pages.Count > 0)
             leftPage.text = episodes[index].pages[0].pageText;
@@ -91,8 +96,9 @@ public class StoryTelling : MonoBehaviour {
         episodeMenu.SetActive(true);
         forwardButton.SetActive(false);
         backwardsButton.SetActive(false);
+        backToEpisodesButton.SetActive(false);
 
-		audioManager.PlayPauseMenuBack ();
+        audioManager.PlayPauseMenuBack ();
     }
 
 
