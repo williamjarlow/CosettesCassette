@@ -145,6 +145,7 @@ public class OverallCorruption : MonoBehaviour {
                 {
                     gameManager.LevelCleared = true;
                     gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
+                    gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
                 }
                 else
                     gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);

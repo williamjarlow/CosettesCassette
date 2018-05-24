@@ -73,9 +73,10 @@ public class Sticker
     //Earning stickers requires us to change the sprite in image to show that we have earned it
     public bool EarnSticker()
     {
-        if (!stickerUnlocked)
+        if (!this.stickerUnlocked)
         {
-            stickerUnlocked = true;
+            this.stickerUnlocked = true;
+            this.loaded = true;
             return true;
         }
         return false;
