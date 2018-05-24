@@ -24,6 +24,14 @@ public class StickerBook : MonoBehaviour {
             images[i].sprite = stickerManRef.stickers[i].Sprite;
             titles[i].text = stickerManRef.stickers[i].Name;
             descriptions[i].text = stickerManRef.stickers[i].Description;
+            if(stickerManRef.stickers[i].Unlocked == false)
+            {
+                images[i].color = new Vector4(0, 0, 0, 1);
+            }
+            else
+            {
+                images[i].color = new Vector4(255, 255, 255, 1);
+            }
         }
     }
 
@@ -46,6 +54,15 @@ public class StickerBook : MonoBehaviour {
                     images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 0);
                     titles[i - stickerSet * stickerAmount].text = "";
                     descriptions[i - stickerSet * stickerAmount].text = "";
+                }
+
+                if (stickerManRef.stickers[i - stickerSet * stickerAmount].Unlocked == false)
+                {
+                    images[i - stickerSet * stickerAmount].color = new Vector4(0, 0, 0, 1);
+                }
+                else
+                {
+                    images[i - stickerSet * stickerAmount].color = new Vector4(255, 255, 255, 1);
                 }
             }
         }
@@ -71,6 +88,15 @@ public class StickerBook : MonoBehaviour {
                     images[i - stickerSet * stickerAmount].color = new Vector4(images[i - stickerSet * stickerAmount].color.r, images[i - stickerSet * stickerAmount].color.g, images[i - stickerSet * stickerAmount].color.b, 0);
                     titles[i - stickerSet * stickerAmount].text = "";
                     descriptions[i - stickerSet * stickerAmount].text = "";
+                }
+
+                if (stickerManRef.stickers[i - stickerSet * stickerAmount].Unlocked == false)
+                {
+                    images[i - stickerSet * stickerAmount].color = new Vector4(0, 0, 0, 1);
+                }
+                else
+                {
+                    images[i - stickerSet * stickerAmount].color = new Vector4(255, 255, 255, 1);
                 }
             }
         }
