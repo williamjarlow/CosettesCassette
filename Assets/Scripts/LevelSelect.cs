@@ -81,7 +81,7 @@ public class LevelSelect : MonoBehaviour
 
     private void MouseControls()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f) // forward
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.LeftArrow)) // forward
         {
             if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
             {
@@ -117,7 +117,7 @@ public class LevelSelect : MonoBehaviour
 				audioManager.PlayLevelSelectScroll ();
             }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.RightArrow)) // backwards
         {
             if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
             {

@@ -113,6 +113,30 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void ToggleRecord(bool recordingState)
+    {
+        // If the current track is playing
+        if (audioManager.GetTimeLinePosition() > 0)
+        {
+
+            //If start recording
+            if (recordingState == true)
+            {
+                // Find and jump to the closest segment
+                SnapToClosestSegment();
+                // Start recording
+                recording = true;
+                audioManager.PlayRecordStart();
+            }
+
+            //If stop recording
+            else if (recordingState == false)
+            {
+                recording = false;
+                audioManager.PlayRecordStop();
+            }
+        }
+    }
 
     public void Listen()
     {
