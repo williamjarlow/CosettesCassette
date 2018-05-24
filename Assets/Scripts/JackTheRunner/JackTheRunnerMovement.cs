@@ -82,6 +82,7 @@ public class JackTheRunnerMovement : MonoBehaviour {
             jacksHurt.SetActive(true);
             invisible = true;
             StartCoroutine(invisibilityTime(invisibilitySeconds));
+			audioManager.PlayRunnerHurt ();
         }
     }
 

@@ -149,8 +149,8 @@ public class AudioManager : MonoBehaviour {
 		GetDSPParameters ();
 
         //assigns DSPs if starting music and they haven't been assigned already
-//      	if (!startedMusic & !switchedToAudioLog) 
-//			StartCoroutine (GetDSP ());
+		//if (!startedMusic & !switchedToAudioLog) 
+		//	StartCoroutine (GetDSP ());
     }
 
     public void AudioPlayMenuMusic()
@@ -512,6 +512,16 @@ public class AudioManager : MonoBehaviour {
 		runnerLandEv.release ();
 	}
 
+	public void PlayRunnerHurt()
+	{
+		FMOD.Studio.EventDescription runnerHurtEventDesc;
+		FMOD.Studio.EventInstance runnerHurtEv;
+		systemObj.getEvent("event:/SFX/Runner/runner_hit", out runnerHurtEventDesc);
+		runnerHurtEventDesc.createInstance (out runnerHurtEv);
+		runnerHurtEv.start ();
+		runnerHurtEv.release ();
+	}
+
 	public void PlayWind(float direction)
 	{
 		systemObj.getEvent("event:/SFX/wind", out windEventDesc);
@@ -540,9 +550,14 @@ public class AudioManager : MonoBehaviour {
 		insertCassetteEv.release ();
 	}
 
-	public void PlayFlipCassetteAnimSound()
+	public void PlayFlipAnimSound()
 	{
-
+		FMOD.Studio.EventDescription flipCassetteEventDesc;
+		FMOD.Studio.EventInstance flipCassetteEv;
+		systemObj.getEvent ("event:/SFX/flipCassette", out flipCassetteEventDesc);
+		flipCassetteEventDesc.createInstance (out flipCassetteEv);
+		flipCassetteEv.start ();
+		flipCassetteEv.release ();
 	}
 
 	public void MuteSFX(bool mute)
@@ -682,6 +697,7 @@ public class AudioManager : MonoBehaviour {
         AudioStopMusic();
 
 		PlayEjectSound ();
+		PlayFlipAnimSound ();
     }
 
 //    private void OnDestroy()
