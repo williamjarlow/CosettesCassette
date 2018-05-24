@@ -43,6 +43,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour
     [HideInInspector]
     public bool cleared;
 
+
     void Awake()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -64,8 +65,15 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         inSegment = false;
         gameManager.overallCorruption.UpdateCorruptionAmount();
         gameManager.overallCorruption.UpdateDistortionAmount();
-        if(gameManager.audioManager.GetTimeLinePosition() >= duration.start) //This means that if player hits record the record button won't be disabled.
+
+        //This means that if player hits record the record button won't be disabled.
+        if (gameManager.audioManager.GetTimeLinePosition() >= duration.start)
+        {
+            // Set recording to false and Toggle the minigame button position, i.e push it out
             gameManager.ToggleRecord(false);
+            gameManager.minigameButton.TogglePosition();
+        }
+            
     }
     public virtual void GradeScore()
     {
