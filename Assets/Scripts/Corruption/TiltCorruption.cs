@@ -6,22 +6,29 @@ using UnityEngine.SceneManagement;
 
 public class TiltCorruption : CorruptionBaseClass
 {
+    [SerializeField] List<ScoreAreaNode> nodes;
     [SerializeField] [Range(0, 0.1f)] private float moveSpeed;
     [SerializeField] [Range(0, 1)] private float spikeBoundaryRight;
     [SerializeField] [Range(0, 1)] private float spikeBoundaryLeft;
-    [SerializeField] [Range(0, 1)] private float perfectRange;
-    [Tooltip("Decides how quickly the sound will offset. ¨Higher value equals faster offset")]
+    [SerializeField] [Range(0, 1)] private float scoreArea;
+    [Tooltip("Decides how quickly the sound will offset. Higher value equals faster offset")]
     //[SerializeField] [Range(1, 500)] private float offsetModifier;
-    [SerializeField] [Range(0, 100)] private float minumumScore;
-    [Tooltip("Decides how strong the wind is. ¨Higher value equals stronger wind")]
+    [SerializeField] [Range(0, 100)] private float minimumScore;
+    [Tooltip("Decides how strong the wind is. Higher value equals stronger wind")]
     [SerializeField] [Range(0, 0.1f)] private float windSpeed;
     [SerializeField] private float randomWindDuration;
     [SerializeField] private float randomWindSpawnLowerBound;
     [SerializeField] private float randomWindSpawnUpperBound;
+    private float scoreAreaOffset = 0;
+    [SerializeField] GameObject scoreAreaIndicatorPrefab;
     [SerializeField] private GameObject tiltIndicatorPrefab;
+    private List<GameObject> scoreAreaIndicatorInstances = new List<GameObject>();
     [SerializeField] private bool useRandomWind;
     [SerializeField] private WindStruct[] winds;
+    Coroutine lastCoroutine;
     private bool setPan = false;
+    int index = 0;
+    bool animationDone;
     private float punishment;
     private float soundPos = 0;
     private float RNGWindSpawner;
@@ -63,6 +70,8 @@ public class TiltCorruption : CorruptionBaseClass
                 }
                 RecordSegment();
             }
+            else
+                ResetConditions();
         }
         else if (inSegment) //If player leaves the segment area
         {
@@ -73,34 +82,56 @@ public class TiltCorruption : CorruptionBaseClass
     public override void EnterSegment()
     {
         //This function gets called upon when entering the segment
+        animationDone = true;
         inSegment = true;
+        index = 0;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        punishment = ((float)(100000 - minumumScore) / (duration.stop - duration.start));
+        punishment = ((float)(100000 - minimumScore) / (duration.stop - duration.start));
         if (gameManager.recording)
             corruptionClearedPercent = 0;
-        tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, gameObject.transform);
+        tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, transform);
+        scoreAreaIndicatorInstances.Clear();
+        scoreAreaIndicatorInstances.Add(Instantiate(scoreAreaIndicatorPrefab, transform));
+        scoreAreaIndicatorInstances.Add(Instantiate(scoreAreaIndicatorPrefab, transform));
         currentScore = startingScore;
         base.EnterSegment();
     }
 
     public override void ExitSegment()
     {
+
         //This function gets called upon when leaving the segment
         inSegment = false;
         if (gameManager.recording)
             GradeScore(); //Score gets graded and saved to file here
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
-        innerDistortion = 0;
-        audioManager.musicChanSubGroup.setPan(0);
-		audioManager.windEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-		audioManager.windEv.release ();
-        Destroy(tiltIndicatorInstance);
+
+        if (lastCoroutine != null)
+            StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
+
         base.ExitSegment();
         ResetConditions();
     }
 
+    void MoveScoreArea()
+    {
+        lastCoroutine = StartCoroutine(MoveOverBeats(scoreAreaOffset, new Vector3(nodes[index].position, 0), nodes[index].beats));
+    }
+
     void RecordSegment()
     {
+
+        if (animationDone && index < nodes.Count)
+            MoveScoreArea();
+
+        for(int i = 0; i < scoreAreaIndicatorInstances.Count; i++)//Temp bullshit
+        {
+            if (i == 0)
+                scoreAreaIndicatorInstances[0].transform.localPosition = new Vector3(scoreAreaOffset*2 - scoreArea, 0, -3);
+            else
+                scoreAreaIndicatorInstances[1].transform.localPosition = new Vector3(scoreAreaOffset*2 + scoreArea, 0, -3);
+        }
+
         //Reset Panning on entering and exiting segment
         audioManager.gameMusicEv.getPlaybackState(out state);
         if (state != FMOD.Studio.PLAYBACK_STATE.PLAYING && setPan == false)
@@ -129,7 +160,7 @@ public class TiltCorruption : CorruptionBaseClass
             x = 1;
         }
 
-        //Move sound and indicator based on x value, x is either deciedd by keyboard or acceleromator
+        //Move sound and indicator based on x value, x is either decided by keyboard or accelerometer
         if (x < -0.1f)
         {
             audioManager.musicChanSubGroup.setPan(Mathf.Clamp(soundPos - moveSpeed, -1, 1));
@@ -142,9 +173,10 @@ public class TiltCorruption : CorruptionBaseClass
         }
 
         //Lose points if not inside perfect range
-        if (soundPos < -perfectRange || soundPos > perfectRange)
+        if (soundPos < -scoreArea + scoreAreaOffset || soundPos > scoreArea + scoreAreaOffset)
         {
             currentScore -= punishment * Time.deltaTime;
+            Debug.Log(currentScore);
         }
 
         //Lose minigame if outside of boundaries
@@ -203,8 +235,20 @@ public class TiltCorruption : CorruptionBaseClass
 
     void ResetConditions()
     {
+        if (scoreAreaIndicatorInstances.Count > 0)
+        {
+            foreach (GameObject indicator in scoreAreaIndicatorInstances)
+                Destroy(indicator);
+            scoreAreaIndicatorInstances.Clear();
+        }
+        animationDone = true;
+        index = 0;
         soundPos = 0;
-        for(int i = 0; i < winds.Length; i++)
+        innerDistortion = 0;
+        scoreAreaOffset = 0;
+        audioManager.musicChanSubGroup.setPan(0);
+        Destroy(tiltIndicatorInstance);
+        for (int i = 0; i < winds.Length; i++)
         {
             winds[i].hasBeenActive = false;
         }
@@ -242,7 +286,30 @@ public class TiltCorruption : CorruptionBaseClass
 
                 yield return new WaitForEndOfFrame();
             }
+            audioManager.windEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            audioManager.windEv.release();
             tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(false);
+        }
+    }
+    public IEnumerator MoveOverBeats(float objectToMove, Vector3 end, int beats)
+    {
+        Vector3 objToMove = new Vector3(objectToMove, 0);
+        float seconds = beats * gameManager.overallCorruption.bpmInMs/1000;
+        if (animationDone == true)
+        {
+            animationDone = false;
+            float elapsedTime = 0;
+            Vector3 startingPos = new Vector3(objectToMove,0);
+            while (elapsedTime < seconds)
+            {
+                objToMove = Vector3.Lerp(startingPos, end, (elapsedTime / seconds));
+                scoreAreaOffset = objToMove.x;
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            objectToMove = end.x;
+            index++;
+            animationDone = true;
         }
     }
 }
@@ -253,4 +320,12 @@ public struct WindStruct
     public float duration;
     public bool blowLeft;
     [HideInInspector] public bool hasBeenActive;
+}
+
+[System.Serializable]
+public struct ScoreAreaNode
+{
+    public int beats;
+    [Range (-1, 1)]public float position;
+
 }

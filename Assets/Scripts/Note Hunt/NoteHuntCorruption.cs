@@ -136,6 +136,8 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 }
                 RecordSegment();
             }
+            else
+                ResetConditions();
         }
         else if (inSegment) //If player leaves the segment area
         {

@@ -10,7 +10,6 @@ public class PitchNode
     [Range (-2, 2)]
     public float position = 0;
     public float seconds = 0;
-    public float mercyRange;
 }
 
 public class PitchCorruption : CorruptionBaseClass {
@@ -121,13 +120,30 @@ public class PitchCorruption : CorruptionBaseClass {
                     RecordPitch();
                 MoveLine();
             }
-            else if (inSegment)
-                ExitSegment();
+            else
+            {
+                ResetConditions();
+            }
         }
         else if (inSegment) //If player leaves corrupted area
         {
             ExitSegment();
         }
+    }
+
+    void ResetConditions()
+    {
+        pitchSlider.gameObject.SetActive(false);
+        audioPitch.TogglePitch(pitchType, 0f);
+        GradeScore();
+        timeSinceStart = 0;
+        innerDistortion = 0;
+        index = 0;
+        if (lastCoroutine != null)
+            StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
+        Destroy(pitchIndicatorInstance);
+        audioPitch.SetPitch(0, pitchType);
+        DestroyLine();
     }
 
     void GenerateLine()
@@ -215,11 +231,6 @@ public class PitchCorruption : CorruptionBaseClass {
         lineRenderer.positionCount = 0;
     }
 
-    void EnterCorruption()
-    {
-
-    }
-
     public override void EnterSegment()
     {
         pitchSlider.gameObject.SetActive(true);
@@ -251,17 +262,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void ExitSegment()
     {
-        pitchSlider.gameObject.SetActive(false);
-		audioPitch.TogglePitch (pitchType, 0f);
-        GradeScore();
-        timeSinceStart = 0;
-        innerDistortion = 0;
-        index = 0;
-        if(lastCoroutine != null)
-            StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
-        Destroy(pitchIndicatorInstance);
-        audioPitch.SetPitch(0, pitchType);
-        DestroyLine();
+        ResetConditions();
         base.ExitSegment();
     }
 
