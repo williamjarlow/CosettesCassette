@@ -67,7 +67,16 @@ public class Credits : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-
+        if (showpicture == true && audiolog == true)
+        {
+            print("On");
+            AudiologPic.enabled = true;
+        }
+        else if (showpicture == true && audiolog == false)
+        {
+            print("Here");
+            AudiologPic.enabled = false;
+        }
         if (creditsOrAudiolog == "Audiolog" && audiolog == true)
         {
             audioPos = audioManager.GetTimeLinePosition();
@@ -96,6 +105,7 @@ public class Credits : MonoBehaviour {
                 showFade = true;
                 //insert save here
             //}
+
             if (currentPos < stopPos && reachedEnd == false)
             {
                 audioPos = audioManager.GetTimeLinePosition();
