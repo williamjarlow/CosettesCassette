@@ -69,9 +69,9 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         //This means that if player hits record the record button won't be disabled.
         if (gameManager.audioManager.GetTimeLinePosition() >= duration.start)
         {
-            // Set recording to false and Toggle the minigame button position, i.e push it out
+            // Set recording to false and set the minigame button position to up
             gameManager.ToggleRecord(false);
-            gameManager.minigameButton.TogglePosition();
+            gameManager.minigameButton.SetPositionUp();
         }
             
     }

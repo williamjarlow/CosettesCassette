@@ -58,4 +58,24 @@ public class ButtonScript : MonoBehaviour {
             }
         }
     }
+
+    public void SetPositionUp()
+    {
+        // Move to original position
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
+
+        // Switch material and toggle the bool
+        gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
+        isDown = false;
+    }
+
+    public void SetPositionDown()
+    {
+        // Increase z position
+        transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
+
+        // Switch material and toggle the bool
+        gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
+        isDown = true;
+    }
 }
