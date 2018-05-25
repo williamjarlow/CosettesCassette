@@ -138,24 +138,28 @@ public class AudioTimeline : MonoBehaviour
     // Toggle hold.... 'Cause buttons
     public void ToggleHold()
     {
-        UpdateValues();
-        if (!holding)
+        if(audioManager.startedMusic)
         {
-            if (!gameManager.recording && !audioManager.switchedToAudioLog)
-                timelineMaskParent.SetActive(true);
-            holding = true;
-            return;
+            UpdateValues();
+            if (!holding)
+            {
+                if (!gameManager.recording && !audioManager.switchedToAudioLog)
+                    timelineMaskParent.SetActive(true);
+                holding = true;
+                return;
+            }
+
+            if (holding)    // Reset all values, bools are for CassetteAnimation
+            {
+                timelineMaskParent.SetActive(false);
+                holding = false;
+                movingSlow = false;
+                movingFast = false;
+                movingForward = true;
+                return;
+            }
         }
 
-        if (holding)    // Reset all values, bools are for CassetteAnimation
-        {
-            timelineMaskParent.SetActive(false);
-            holding = false;
-            movingSlow = false;
-            movingFast = false;
-            movingForward = true;
-            return;
-        }
     }
 
     private void DecideSpeedAndDirection(string speedAndDirection)

@@ -248,21 +248,30 @@ public class AudioManager : MonoBehaviour {
     #region soundEffects
     public void PlaySkip()
 	{
-		result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
-		skipEventDesc.createInstance(out skipEv);
-		skipEv.setParameterValue("skip_click", 0);
-		skipEv.start();
+        
+        if(startedMusic)
+        {
+            result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
+            skipEventDesc.createInstance(out skipEv);
+            skipEv.setParameterValue("skip_click", 0);
+            skipEv.start();
+        }
+
 	}
 
-	public void SetSkipPitch(float speed)
+    public void StopPlayingSkip()
+    {
+        if(startedMusic)
+        {
+            skipEv.setParameterValue("skip_click", 1);
+            skipEv.release();
+        }
+        
+    }
+
+    public void SetSkipPitch(float speed)
 	{
 		skipEv.setParameterValue("skip_pitch", speed);
-	}
-
-	public void StopPlayingSkip()
-	{
-		skipEv.setParameterValue("skip_click", 1);
-		skipEv.release ();
 	}
 
 	public void PlayRecordStart()
