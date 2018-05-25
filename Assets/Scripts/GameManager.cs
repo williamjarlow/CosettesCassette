@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
                 recording = true;
 				audioManager.PlayRecordStart ();
                 playButton.interactable = false;
-                Debug.Log("Set interactable: FALSE");
             }
 
             // If we are recording --> stop recording
@@ -124,7 +123,6 @@ public class GameManager : MonoBehaviour
                 recording = false;
                 audioManager.PlayRecordStop();
                 playButton.interactable = true;
-                Debug.Log("Set interactable: TRUE");
             }
         }
     }
