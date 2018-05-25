@@ -191,23 +191,26 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearStickers(Dictionary<string, Sticker> stickersRef)
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-        data = (PlayerData)bf.Deserialize(file);
-
-        List<string> keyList = new List<string>(stickersRef.Keys);
-        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
         {
-            stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].loaded = false;
-            stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Unlocked = false;
-        }
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            data = (PlayerData)bf.Deserialize(file);
 
-        data.stickersSave.Clear();
-        file.Close();
+            List<string> keyList = new List<string>(stickersRef.Keys);
+            for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
+            {
+                stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].loaded = false;
+                stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Unlocked = false;
+            }
 
-        for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
-        {
-            SaveStickers(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
+            data.stickersSave.Clear();
+            file.Close();
+
+            for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
+            {
+                SaveStickers(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
+            }
         }
     }
 
@@ -215,22 +218,25 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearSegments()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-        //data = (PlayerData)bf.Deserialize(file);
-
-        SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-        emptyStruct.points = 0;
-        for (int i = 0; i < data.segmentSave.Count; i++)
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
         {
-            for(int j = 0; j < data.segmentSave[i].Count; j++)
-            {
-                data.segmentSave[i][j] = emptyStruct;
-            }
-        }
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            //data = (PlayerData)bf.Deserialize(file);
 
-        bf.Serialize(file, data);
-        file.Close();
+            SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
+            emptyStruct.points = 0;
+            for (int i = 0; i < data.segmentSave.Count; i++)
+            {
+                for (int j = 0; j < data.segmentSave[i].Count; j++)
+                {
+                    data.segmentSave[i][j] = emptyStruct;
+                }
+            }
+
+            bf.Serialize(file, data);
+            file.Close();
+        }
 
     }
 }

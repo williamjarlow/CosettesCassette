@@ -27,6 +27,7 @@ public class StickerBook : MonoBehaviour {
             if(stickerManRef.stickers[i].Unlocked == false)
             {
                 images[i].color = Color.black;
+                descriptions[i - stickerSet * stickerAmount].text = "";
             }
             else
             {
@@ -51,6 +52,7 @@ public class StickerBook : MonoBehaviour {
                     if (stickerManRef.stickers[i].Unlocked == false)
                     {
                         images[i - stickerSet * stickerAmount].color = Color.black;
+                        descriptions[i - stickerSet * stickerAmount].text = "";
                     }
                     else
                     {
@@ -85,6 +87,7 @@ public class StickerBook : MonoBehaviour {
                     if (stickerManRef.stickers[i].Unlocked == false)
                     {
                         images[i - stickerSet * stickerAmount].color = Color.black;
+                        descriptions[i - stickerSet * stickerAmount].text = "";
                     }
                     else
                     {

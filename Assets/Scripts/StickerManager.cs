@@ -12,7 +12,7 @@ public class StickerManager : MonoBehaviour {
 
     void Start ()
     {
-        for(int i = 0; i < stickers.Length; i++)
+        for (int i = 0; i < stickers.Length; i++)
         {
             stickerDictionary.Add(stickers[i].Name, stickers[i]);
         }
