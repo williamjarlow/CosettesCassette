@@ -10,6 +10,10 @@ using UnityEngine.SceneManagement;
 public class LevelSelect : MonoBehaviour
 {
     [SerializeField] private GameObject buttons;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button aButton;
+    [SerializeField] private Button bButton;
+
     private BoxCollider disablestuff;
     private int lvl;
 
@@ -175,6 +179,7 @@ public class LevelSelect : MonoBehaviour
                         disablestuff = hit.transform.GetComponent<BoxCollider>();
                         disablestuff.enabled = false;
                         buttons.SetActive(true);
+                        EvaluateAndSetButtonStates(lvl);
                         if (buttons.activeInHierarchy == true)
                         {
                             movementLock = true;
@@ -291,12 +296,13 @@ public class LevelSelect : MonoBehaviour
                             // If the hit cassette is focused
                             if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                             {
-								audioManager.PlayLevelSelectSelect ();
+                                audioManager.PlayLevelSelectSelect ();
 								lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
 								disablestuff = hit.transform.GetComponent<BoxCollider>();
 								disablestuff.enabled = false;
 								buttons.SetActive(true);
-								if (buttons.activeInHierarchy == true)
+                                EvaluateAndSetButtonStates(lvl);
+                                if (buttons.activeInHierarchy == true)
 								{
 									movementLock = true;
 								}
@@ -381,6 +387,32 @@ public class LevelSelect : MonoBehaviour
 				audioManager.PlayLevelSelectPlay ();
                 audioManager.AudioStopMusic();
             }
+        }
+    }
+
+    private void EvaluateAndSetButtonStates(int index)
+    {
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(index))
+        {
+            if (unlocks[lvl] == true)
+                playButton.interactable = true;
+            else
+                playButton.interactable = false;
+        }
+        if (unlocks.ContainsKey(index + 7))
+        {
+            if (unlocks[lvl + 7] == true)
+                aButton.interactable = true;
+            else
+                aButton.interactable = false;
+        }
+        if (unlocks.ContainsKey(index + 14))
+        {
+            if (unlocks[lvl + 14] == true)
+                bButton.interactable = true;
+            else
+                bButton.interactable = false;
         }
     }
 		

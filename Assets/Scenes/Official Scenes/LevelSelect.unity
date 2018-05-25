@@ -113,6 +113,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &12935058 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114966566509427044, guid: fe9c67b967512f2459e57fa955a9d598,
+    type: 2}
+  m_PrefabInternal: {fileID: 1280469260}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &17394542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,6 +1770,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 321067275}
   m_Mesh: {fileID: 4300002, guid: 44d60e093cceddc40a9165b02e77b800, type: 3}
+--- !u!114 &323948228 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114584107997982228, guid: fe9c67b967512f2459e57fa955a9d598,
+    type: 2}
+  m_PrefabInternal: {fileID: 1280469260}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &323969264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2089,6 +2101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons: {fileID: 0}
+  playButton: {fileID: 0}
+  aButton: {fileID: 0}
+  bButton: {fileID: 0}
   rotationAmount: 115
   cassettes:
   - {fileID: 875421117}
@@ -4552,6 +4567,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &858248843 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1946394594939902, guid: 3a7b3e30fc118044e93bb67d3d382062,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863321367}
 --- !u!4 &862522090 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4153944779385448, guid: 11475baf3c1eab748ad9407308ca850e,
@@ -5707,6 +5727,11 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224775037974460850, guid: 1dabccccabce0b84087eb213f52b0e51,
     type: 2}
   m_PrefabInternal: {fileID: 1028312455}
+--- !u!1 &1072018581 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1308717432604878, guid: 3a7b3e30fc118044e93bb67d3d382062,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863321367}
 --- !u!1 &1104720172 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1359516698653418, guid: 11475baf3c1eab748ad9407308ca850e,
@@ -6925,6 +6950,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttons: {fileID: 1225895311}
+  playButton: {fileID: 323948228}
+  aButton: {fileID: 1318457510}
+  bButton: {fileID: 12935058}
   rotationAmount: 115
   cassettes:
   - {fileID: 1104720172}
@@ -7441,6 +7469,12 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1318457510 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114839360427030134, guid: fe9c67b967512f2459e57fa955a9d598,
+    type: 2}
+  m_PrefabInternal: {fileID: 1280469260}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1355608248
 GameObject:
   m_ObjectHideFlags: 0
@@ -9491,9 +9525,65 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114955226363812190, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: forwardButton
+      value: 
+      objectReference: {fileID: 1863321368}
+    - target: {fileID: 114955226363812190, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: backwardsButton
+      value: 
+      objectReference: {fileID: 1863321369}
+    - target: {fileID: 1496251328887822, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556520856323770, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114656936463503780, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: backwardsButton
+      value: 
+      objectReference: {fileID: 1072018581}
+    - target: {fileID: 114656936463503780, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: forwardButton
+      value: 
+      objectReference: {fileID: 858248843}
+    - target: {fileID: 1946394594939902, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1308717432604878, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114601595409702528, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 438121193}
+    - target: {fileID: 114601595409702528, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayPauseMenuExit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1863321368 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1556520856323770, guid: 3a7b3e30fc118044e93bb67d3d382062,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863321367}
+--- !u!1 &1863321369 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1496251328887822, guid: 3a7b3e30fc118044e93bb67d3d382062,
+    type: 2}
+  m_PrefabInternal: {fileID: 1863321367}
 --- !u!1 &1865111742 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1902477941105296, guid: b71481a9af3b62d44b6d851658247729,
