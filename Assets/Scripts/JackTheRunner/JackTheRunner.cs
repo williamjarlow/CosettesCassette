@@ -30,6 +30,9 @@ public class JackTheRunner : CorruptionBaseClass
     private float timeStamp = 0;
     private float tolerance = 30;
 
+    bool conditionsReset;
+    bool dothings;
+
 
     void Start()
     {
@@ -52,25 +55,24 @@ public class JackTheRunner : CorruptionBaseClass
     {
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
-
         {
             if (gameManager.recording) //If recording
             {
                 if (inSegment == false) //If player just entered the segment
                 {
                     EnterSegment();
+                    Debug.Log("Entered segment");
                 }
                 RecordSegment();
             }
-
             else if (!gameManager.recording)
             {
                 ResetConditions();
             }
         }
-
         else if (inSegment) //If player leaves the segment area
         {
+            Debug.Log("Exited segment");
             ExitSegment();
         }
     }
@@ -85,22 +87,22 @@ public class JackTheRunner : CorruptionBaseClass
     public override void EnterSegment()
     {
         ResetConditions();
+        conditionsReset = false;
         inSegment = true;
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
-        if (gameManager.recording)
-            corruptionClearedPercent = 0;
         Instantiate(groundPrefab, transform);
         Instantiate(jackTheRunnerPrefab, transform);
         damageTaken = 0;
+        dothings = true;
         base.EnterSegment();
     }
 
     public override void ExitSegment()
     {
-
         inSegment = false;
-        if (gameManager.recording)
+        if (gameManager.recording && dothings)
             GradeScore(); //Score gets evaluated and saved to file here.
+        dothings = false;
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
         innerDistortion = 0;
         //DestroyObjects();
@@ -110,12 +112,15 @@ public class JackTheRunner : CorruptionBaseClass
 
     public override void GradeScore()
     {
+        Debug.Log(damageTaken + " / " + maxScore);
         currentScore = ((maxScore - damageTaken) * 100) / maxScore;
         base.GradeScore(); //Score gets evaluated and saved to file here.
     }
 
     void ResetConditions()
     {
+        conditionsReset = true;
+        dothings = false;
         for (int i = 0; i < enemiesList.Count; i++)
         {
             enemiesList[i].hasSpawned = false;

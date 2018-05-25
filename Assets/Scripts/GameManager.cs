@@ -94,26 +94,28 @@ public class GameManager : MonoBehaviour
 
     // ** General functions for different mechanics ** //
 
-
-    public void ToggleRecord()
+    IEnumerator ToggleRecordCoroutine()
     {
         // If the current track is playing
-		if (audioManager.startedMusic)
+        if (audioManager.startedMusic)
         {
             // If we are not recording --> start recording
-			if (recording == false)
+            if (recording == false)
             {
-				//If we are paused
-				if (audioManager.pausedMusic)
-				{
-					audioManager.gameMusicEv.setPaused (false);
-					audioManager.pausedMusic = false;
-				}
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
+
+                //If we are paused
+                if (audioManager.pausedMusic)
+                {
+                    audioManager.gameMusicEv.setPaused(false);
+                    audioManager.pausedMusic = false;
+                }
+                yield return new WaitForSeconds(0.1f);//Arbitrary wait time in order to not auto-clear Jack-corruption
+
                 // Start recording
                 recording = true;
-				audioManager.PlayRecordStart ();
+                audioManager.PlayRecordStart();
                 playButton.interactable = false;
             }
 
@@ -125,6 +127,11 @@ public class GameManager : MonoBehaviour
                 playButton.interactable = true;
             }
         }
+    }
+
+    public void ToggleRecord()
+    {
+        StartCoroutine(ToggleRecordCoroutine());
     }
     public void SetRecord(bool recordingState)
     {

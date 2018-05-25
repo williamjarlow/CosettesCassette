@@ -63,8 +63,6 @@ public class TiltCorruption : CorruptionBaseClass
         if (audioManager.GetTimeLinePosition() >= duration.start &&
             audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted segment
         {
-
-
             if (gameManager.recording) //If recording
             {
                 if (inSegment == false) //If player just entered the segment
@@ -251,6 +249,8 @@ public class TiltCorruption : CorruptionBaseClass
         soundPos = 0;
         innerDistortion = 0;
         scoreAreaOffset = 0;
+        currentScore = 0;
+
         audioManager.musicChanSubGroup.setPan(0);
         Destroy(tiltIndicatorInstance);
         for (int i = 0; i < winds.Length; i++)
