@@ -65,15 +65,15 @@ public class GameManager : MonoBehaviour
         stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
 
         Scene currentScene = SceneManager.GetActiveScene();
-        if (((currentScene.buildIndex - 1) * 2) > (stickerManageRef.stickers.Length - 1) || currentScene.buildIndex < 0)
+        if (((currentScene.buildIndex - 2) * 2) > (stickerManageRef.stickers.Length - 2) || currentScene.buildIndex < 0)
         {
             stickerForGood = stickerManageRef.stickers[0];
             stickerForPerfect = stickerManageRef.stickers[1];
         }
         else
         {
-            stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 1) * 2];
-            stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 1) * 2) + 1];
+            stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 2) * 2];
+            stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 2) * 2) + 1];
         }
 
         // Set the eject button to non-interactable since the level has not been cleared

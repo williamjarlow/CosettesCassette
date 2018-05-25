@@ -45,6 +45,9 @@ public class LevelSelect : MonoBehaviour
     private Vector3[] startPos;
     private bool movementLock = false;
 
+    private SaveSystem saveSystemRef;
+    private Dictionary<int, bool> unlocks;
+
 
                                      // ** TODO ** // 
         // 
@@ -52,6 +55,8 @@ public class LevelSelect : MonoBehaviour
 
     void Start()
     {
+        saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
+
 		audioManager = FindObjectOfType<AudioManager>();
 
         cassetteAmount = cassettes.Count;
@@ -341,21 +346,40 @@ public class LevelSelect : MonoBehaviour
 
     public void Playlvl()
     {
-        SceneManager.LoadScene(lvl);
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(lvl))
+        {
+            if (unlocks[lvl] == true)
+            {
+                SceneManager.LoadScene(lvl);
+            }
+        }
     }
 
     public void PlayASide()
     {
-        lvl = lvl + 7;
-        print(lvl);
-        SceneManager.LoadScene(lvl);
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(lvl + 7))
+        {
+            if (unlocks[lvl + 7] == true)
+            {
+                lvl = lvl + 7;
+                SceneManager.LoadScene(lvl);
+            }
+        }
     }
 
     public void PlayBSide()
     {
-        lvl = lvl + 14;
-        print(lvl);
-        SceneManager.LoadScene(lvl);
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(lvl + 14))
+        {
+            if (unlocks[lvl + 14] == true)
+            {
+                lvl = lvl + 14;
+                SceneManager.LoadScene(lvl);
+            }
+        }
     }
 
 

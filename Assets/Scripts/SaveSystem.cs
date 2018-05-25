@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -8,6 +9,7 @@ using System.IO;
 public class SaveSystem : Singleton<SaveSystem>
 {
     public static SaveSystem saveSystem;
+    private int sceneIndexes;
 
     [SerializeField] private GameObject stickerManRef;
     PlayerData data = new PlayerData();
@@ -20,21 +22,24 @@ public class SaveSystem : Singleton<SaveSystem>
             DontDestroyOnLoad(gameObject);
             saveSystem = this;
 
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            //data = (PlayerData)bf.Deserialize(file);
-            //file.Close();
+            if (!data.levelLockSave.ContainsKey(0))
+            {
+                sceneIndexes = SceneManager.sceneCountInBuildSettings;
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
 
-            //SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
-            //emptyStruct.exists = true;
-            ////for (int i = 0; i < 20; i++)
-            ////{
-            ////    SaveSegment(emptyStruct, i, 0);
-            ////    for (int j = 0; j < 20; j++)
-            ////    {
-            ////        SaveSegment(emptyStruct, i, j);
-            ////    }
-            ////}
+                data.levelLockSave[0] = true;
+                data.levelLockSave[1] = true;
+                data.levelLockSave[2] = true;
+
+                for (int i = 3; i < sceneIndexes; i++)
+                {
+                    data.levelLockSave[i] = false;
+                }
+
+                bf.Serialize(file, data);
+                file.Close();
+            }
         }
         else if (saveSystem != this)
         {
@@ -47,6 +52,7 @@ public class SaveSystem : Singleton<SaveSystem>
         if (Input.GetKeyDown(KeyCode.R))
         {
             ClearSegments();
+            ClearUnlocks();
         }
     }
 
@@ -222,7 +228,6 @@ public class SaveSystem : Singleton<SaveSystem>
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
-            //data = (PlayerData)bf.Deserialize(file);
 
             SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
             emptyStruct.points = 0;
@@ -239,16 +244,68 @@ public class SaveSystem : Singleton<SaveSystem>
         }
 
     }
+
+    public void ClearUnlocks()
+    {
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+
+            for (int i = 2; i < sceneIndexes; i++)
+            {
+                data.levelLockSave[i] = false;
+            }
+
+            bf.Serialize(file, data);
+            file.Close();
+        }
+
+    }
+
+    public void UnlockLevel(int buildIndex)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+
+        //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
+
+        Debug.Log("Unlocking levels");
+        data.levelLockSave[buildIndex + 1] = true;
+        data.levelLockSave[buildIndex + 7] = true;
+        data.levelLockSave[buildIndex + 14] = true;
+
+        //Serialize the values and save
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public Dictionary<int, bool> GetUnlocks()
+    {
+        Dictionary<int, bool> unlocks = new Dictionary<int, bool>();
+
+        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            data = (PlayerData)bf.Deserialize(file);
+
+            unlocks = data.levelLockSave;
+
+            file.Close();
+            return unlocks;
+        }
+        return unlocks;
+    }
+
 }
 
-//WIP, behöver fyllas med exakt vad som måste sparas för varje segment. 
+
 [Serializable]
 public struct SaveSegmentStruct
 {
-    // Ljudfil för sparad inspelning?
     public bool exists;
     public float points;
-
 }
 
 [Serializable]
@@ -259,4 +316,6 @@ class PlayerData
 
     //Dictionary av strings och bools, sparar namnet på en sticker och sätter boolen till antingen true eller false, baserat på om vi har fått den eller ej.
     public Dictionary<string, bool> stickersSave = new Dictionary<string, bool>();
+
+    public Dictionary<int, bool> levelLockSave = new Dictionary<int, bool>();
 }
