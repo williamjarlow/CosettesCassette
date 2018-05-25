@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
     public void ToggleRecord()
     {
         // If the current track is playing
-		if (audioManager.startedMusic)
+		if (audioManager.startedMusic && !audioManager.switchedToAudioLog)
         {
             // If we are not recording --> start recording
 			if (recording == false)
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
     public void SetRecord(bool recordingState)
     {
         // If the current track is playing
-        if (audioManager.startedMusic)
+        if (audioManager.startedMusic && !audioManager.switchedToAudioLog)
         {
             //If start recording
             if (recordingState == true)
@@ -221,15 +221,18 @@ public class GameManager : MonoBehaviour
 
     public void SnapToClosestSegment()
     {
-        FindClosestSegment();
+        if (!audioManager.switchedToAudioLog)
+        {
+            FindClosestSegment();
 
-        // Tolerance to make sure we run certain functions for entering a segment
-        audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start - tolerance);
+            // Tolerance to make sure we run certain functions for entering a segment
+            audioManager.gameMusicEv.setTimelinePosition(overallCorruption.durations[currentSegmentIndex].start - tolerance);
+        }
     }
 
     public void SnapToClosestSegmentInFront()
     {
-		if (!recording && audioManager.startedMusic)
+		if (!recording && audioManager.startedMusic && !audioManager.switchedToAudioLog)
         {
 			audioManager.PlaySnapSound ();
 
@@ -249,7 +252,7 @@ public class GameManager : MonoBehaviour
 
     public void SnapToClosestSegmentBehind()
     {
-		if (!recording && audioManager.startedMusic)
+		if (!recording && audioManager.startedMusic && !audioManager.switchedToAudioLog)
         {
 			audioManager.PlaySnapSound ();
 
