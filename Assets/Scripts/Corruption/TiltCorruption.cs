@@ -175,7 +175,6 @@ public class TiltCorruption : CorruptionBaseClass
         if (soundPos < -scoreArea + scoreAreaOffset || soundPos > scoreArea + scoreAreaOffset)
         {
             currentScore -= punishment * Time.deltaTime;
-            Debug.Log(currentScore);
         }
 
         //Lose minigame if outside of boundaries
@@ -223,8 +222,8 @@ public class TiltCorruption : CorruptionBaseClass
                 }
             }
         }
-        
-        tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5 + permanentPositionalOffset, 0, 0);
+        Transform flyingNote = tiltIndicatorInstance.transform.GetChild(0);
+        flyingNote.localPosition = new Vector3(soundPos * 5 + permanentPositionalOffset, flyingNote.localPosition.y, flyingNote.localPosition.z);
     }
 
     public override void GradeScore()
