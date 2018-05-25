@@ -1258,6 +1258,7 @@ MonoBehaviour:
     type: 2}
   newStickerParticleEffect: {fileID: 1990726310614772, guid: 9964a5cd44a5ab344b057d8480bedd42,
     type: 2}
+  ejectButtonParticlesEffect: {fileID: 0}
   positionForParticleEffects: {fileID: 0}
   timeToShowGood: 3
   timeToShowPerfect: 4.5
@@ -8724,6 +8725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bc6aab3d883254d9d00e9e5442809a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MainCamera: {fileID: 0}
 --- !u!1 &387104567
 GameObject:
   m_ObjectHideFlags: 0
@@ -12619,7 +12621,7 @@ Transform:
   - {fileID: 2072858771}
   m_Father: {fileID: 1693623229}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10.461588, y: 179.9617, z: -0.21047881}
 --- !u!1001 &514209217
 Prefab:
   m_ObjectHideFlags: 0
@@ -12794,6 +12796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d094dbc708a327f4ba0c08acd29af538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisImage: {fileID: 0}
   speed: 1
 --- !u!114 &575952117
 MonoBehaviour:
@@ -13003,40 +13006,62 @@ MonoBehaviour:
   liveTutorials:
   - tutorialText: Press the Play Button to start and pause the track.
     timeToAppearInMs: 0
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 0
   - tutorialText: The Cassette is broken! The dark Segments on the Timeline are the
       sources of Distortion.
     timeToAppearInMs: 8000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 0
   - tutorialText: Navigate through the Track by pressing the Timeline or dragging
       the Time Indicator.
     timeToAppearInMs: 15000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 0
   - tutorialText: 'Press the Repair Button to begin repairing this segment. '
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: Move the Slider to meet the incoming trail to adjust the pitch.
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: Choose the matching lyrics to fix the vocals.
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: Tap the Notes to reduce distortion, but avoid the squiggly ones!
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: 'Keep the sound balance in the middle by tilting your phone! '
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: Playing the Segments fills the Repair-Bar. The better you do, the
       more it fills!
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: Press the Skip Buttons to quickly jump back and forth between Segments.
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
   - tutorialText: The Cassette is now repaired enough for you to access the B-side.
       Just press the Eject Button!
     timeToAppearInMs: 100000
+    specialCaseWithDelay: 0
+    delayedCaseInSeconds: 3.5
     hasBeenShown: 1
 --- !u!1 &590012556
 GameObject:
@@ -18183,7 +18208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1198448207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21682,6 +21707,35 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1215976483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 514209217}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1215976484}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1215976484
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 514209217}
+  m_GameObject: {fileID: 1215976483}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1934744315}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224613514
 Prefab:
   m_ObjectHideFlags: 0
@@ -26519,7 +26573,6 @@ MonoBehaviour:
   AudioManagerz: {fileID: 817842827}
   Timeslider: {fileID: 0}
   credits: {fileID: 1674995562}
-  winning: {fileID: 0}
   CreditsFade: {fileID: 261013774}
   AudiologPic: {fileID: 2081886086}
   creditsOrAudiolog: Audiolog
@@ -30848,11 +30901,35 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &1934744314 stripped
+--- !u!1 &1934744314
 GameObject:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1466799440085134, guid: d60ec69f146796a4d8f1fab688dc3eaa,
     type: 2}
   m_PrefabInternal: {fileID: 514209217}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1934744315}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1934744315
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 514209217}
+  m_GameObject: {fileID: 1934744314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1215976484}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1938000348
 GameObject:
   m_ObjectHideFlags: 0
@@ -31898,7 +31975,7 @@ RectTransform:
   - {fileID: 747012002}
   - {fileID: 82318632}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
