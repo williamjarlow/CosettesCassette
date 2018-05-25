@@ -117,11 +117,14 @@ public class AudioManager : MonoBehaviour {
     void Update()
     {
         //// Special case for LiveTutorial
-        if (liveTutorial != null && !showedSpecialCase && GetTimeLinePosition() == GetTrackLength())
+        if (liveTutorial != null && switchedToAudioLog && !showedSpecialCase)
         {
-            print("End of log in Tutorial level, did popup show?");
-            showedSpecialCase = true;
-            liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
+            if (GetTimeLinePosition() >= GetTrackLength() - 30)
+            {
+                showedSpecialCase = true;
+                liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
+            }
+
         }
         ////
     }
