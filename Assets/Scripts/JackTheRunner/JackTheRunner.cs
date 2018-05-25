@@ -64,7 +64,9 @@ public class JackTheRunner : CorruptionBaseClass
             }
 
             else if (!gameManager.recording)
+            {
                 ResetConditions();
+            }
         }
 
         else if (inSegment) //If player leaves the segment area
@@ -89,6 +91,7 @@ public class JackTheRunner : CorruptionBaseClass
             corruptionClearedPercent = 0;
         Instantiate(groundPrefab, transform);
         Instantiate(jackTheRunnerPrefab, transform);
+        damageTaken = 0;
         base.EnterSegment();
     }
 
@@ -118,7 +121,7 @@ public class JackTheRunner : CorruptionBaseClass
             enemiesList[i].hasSpawned = false;
         }
         currentScore = 0;
-        damageTaken = 0;
+        damageTaken = maxScore;
         DestroyObjects();
     }
 
