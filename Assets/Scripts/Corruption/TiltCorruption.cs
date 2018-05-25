@@ -25,7 +25,8 @@ public class TiltCorruption : CorruptionBaseClass
     private List<GameObject> scoreAreaIndicatorInstances = new List<GameObject>();
     [SerializeField] private bool useRandomWind;
     [SerializeField] private WindStruct[] winds;
-    Coroutine lastCoroutine;
+    Coroutine lastMovementCoroutine;
+    Coroutine lastWindCoroutine;
     private bool setPan = false;
     int index = 0;
     bool animationDone;
@@ -107,16 +108,13 @@ public class TiltCorruption : CorruptionBaseClass
             GradeScore(); //Score gets graded and saved to file here
         corruptionClearedPercent = Mathf.Clamp(corruptionClearedPercent, 0, 100);
 
-        if (lastCoroutine != null)
-            StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
-
         base.ExitSegment();
         ResetConditions();
     }
 
     void MoveScoreArea()
     {
-        lastCoroutine = StartCoroutine(MoveOverBeats(scoreAreaOffset, new Vector3(nodes[index].position, 0), nodes[index].beats));
+        lastMovementCoroutine = StartCoroutine(MoveOverBeats(scoreAreaOffset, new Vector3(nodes[index].position, 0), nodes[index].beats));
     }
 
     void RecordSegment()
@@ -196,11 +194,11 @@ public class TiltCorruption : CorruptionBaseClass
             float randomDirection = Random.Range(0f, 1f);
             if(randomDirection < 0.5f)
             {
-                StartCoroutine(WindEffect(windSpeed, false, randomWindDuration));
+                lastWindCoroutine = StartCoroutine(WindEffect(windSpeed, false, randomWindDuration));
             }
             else
             {
-                StartCoroutine(WindEffect(windSpeed, true, randomWindDuration));
+                lastWindCoroutine = StartCoroutine(WindEffect(windSpeed, true, randomWindDuration));
             }
 
             RNGWindSpawner = Random.Range(randomWindSpawnLowerBound, randomWindSpawnUpperBound);
@@ -215,11 +213,11 @@ public class TiltCorruption : CorruptionBaseClass
                 {
                     if(winds[i].blowLeft == true)
                     {
-                        StartCoroutine(WindEffect(windSpeed, true, (winds[i].duration/1000)));
+                        lastWindCoroutine = StartCoroutine(WindEffect(windSpeed, true, (winds[i].duration/1000)));
                     }
                     else if (winds[i].blowLeft == false)
                     {
-                        StartCoroutine(WindEffect(windSpeed, false, (winds[i].duration/1000)));
+                        lastWindCoroutine = StartCoroutine(WindEffect(windSpeed, false, (winds[i].duration/1000)));
                     }
                     winds[i].hasBeenActive = true;
                 }
@@ -236,6 +234,11 @@ public class TiltCorruption : CorruptionBaseClass
 
     void ResetConditions()
     {
+        if (lastWindCoroutine != null)
+            StopCoroutine(lastWindCoroutine);
+        if (lastMovementCoroutine != null)
+            StopCoroutine(lastMovementCoroutine);
+
         if (scoreAreaIndicatorInstances.Count > 0)
         {
             foreach (GameObject indicator in scoreAreaIndicatorInstances)
