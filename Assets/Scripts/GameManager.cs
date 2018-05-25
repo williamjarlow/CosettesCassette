@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject pitchSlider;
     public ButtonScript minigameButton;
     public Button ejectButton;
+    public Button playButton;
     public StageClearVFX stageClearVFX;
 
     const int timelineOffset = 100;
@@ -112,8 +113,8 @@ public class GameManager : MonoBehaviour
                 SnapToClosestSegment();
                 // Start recording
                 recording = true;
-
 				audioManager.PlayRecordStart ();
+                playButton.interactable = false;
             }
 
             // If we are recording --> stop recording
@@ -121,6 +122,7 @@ public class GameManager : MonoBehaviour
             {
                 recording = false;
                 audioManager.PlayRecordStop();
+                playButton.interactable = true;
             }
         }
     }

@@ -85,6 +85,8 @@ public class AudioManager : MonoBehaviour {
     private LiveTutorial liveTutorial;
     private bool showedSpecialCase = false;
 
+    private GameManager gameManager;
+
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -112,6 +114,8 @@ public class AudioManager : MonoBehaviour {
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
+
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 	}
 
     void Update()
@@ -225,25 +229,26 @@ public class AudioManager : MonoBehaviour {
 
     public void AudioPlayPauseAndUnpause()
     {
+            if (startedMusic && !pausedMusic)
+            {
+                AudioPauseMusic();
+                pausedMusic = true;
+            }
+
+            else if (startedMusic && pausedMusic)
+            {
+                AudioUnpauseMusic();
+                pausedMusic = false;
+            }
+
+            if (!startedMusic)
+            {
+                AudioPlayMusic();
+                startedMusic = true;
+                pausedMusic = false;
+            }
         
-        if (startedMusic && !pausedMusic)
-        {
-            AudioPauseMusic();
-            pausedMusic = true;
-        }
 
-        else if (startedMusic && pausedMusic)
-        {
-            AudioUnpauseMusic();
-            pausedMusic = false;
-        }
-
-        if (!startedMusic)
-        {
-            AudioPlayMusic();
-            startedMusic = true;
-            pausedMusic = false;
-        }
 
     }
 
