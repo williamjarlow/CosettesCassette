@@ -51,15 +51,15 @@ public class StoryTelling : MonoBehaviour {
         episodeIndex = index;
         transcriptHeader.text = episodes[index].header;
         episodeMenu.SetActive(false);
-        forwardButton.SetActive(true);
-        backwardsButton.SetActive(true);
         backToEpisodesButton.SetActive(true);
         pageIndex = 0;
         if (episodes[index].pages.Count > 0)
             leftPage.text = episodes[index].pages[0].pageText;
         if (episodes[index].pages.Count > 1)
+        {
+            forwardButton.SetActive(true);
             rightPage.text = episodes[index].pages[1].pageText;
-
+        }
 		audioManager.PlayPauseMenuSelect ();
     }
 
@@ -69,11 +69,16 @@ public class StoryTelling : MonoBehaviour {
         {
 			audioManager.PlayScriptFlip ();
             pageIndex += 2;
-                leftPage.text = episodes[episodeIndex].pages[pageIndex].pageText;
+            leftPage.text = episodes[episodeIndex].pages[pageIndex].pageText;
             if (pageIndex <= episodes[episodeIndex].pages.Count - 2)
                 rightPage.text = episodes[episodeIndex].pages[pageIndex + 1].pageText;
             if (pageIndex == episodes[episodeIndex].pages.Count - 1)
                 rightPage.text = "";
+            if (pageIndex > 1)
+                backwardsButton.SetActive(true);
+            if (pageIndex == episodes[episodeIndex].pages.Count - 2)
+                forwardButton.SetActive(false);
+
         }
     }
 
@@ -85,7 +90,10 @@ public class StoryTelling : MonoBehaviour {
             pageIndex -= 2;
             leftPage.text = episodes[episodeIndex].pages[pageIndex].pageText;
             rightPage.text = episodes[episodeIndex].pages[pageIndex + 1].pageText;
+            forwardButton.SetActive(true);
         }
+        if (pageIndex < 1)
+            backwardsButton.SetActive(false);
     }
 
     public void BackToEpisodes()
@@ -97,7 +105,6 @@ public class StoryTelling : MonoBehaviour {
         forwardButton.SetActive(false);
         backwardsButton.SetActive(false);
         backToEpisodesButton.SetActive(false);
-
         audioManager.PlayPauseMenuBack ();
     }
 
