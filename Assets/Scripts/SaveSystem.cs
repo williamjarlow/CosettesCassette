@@ -31,6 +31,7 @@ public class SaveSystem : Singleton<SaveSystem>
                 data.levelLockSave[0] = true;
                 data.levelLockSave[1] = true;
                 data.levelLockSave[2] = true;
+                data.levelLockSave[23] = true;
 
                 for (int i = 3; i < sceneIndexes; i++)
                 {
@@ -270,8 +271,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
         //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
 
-        Debug.Log("Unlocking levels");
-        data.levelLockSave[buildIndex + 1] = true;
+        if (buildIndex < 8)
+        {
+            data.levelLockSave[buildIndex + 1] = true;
+        }
         data.levelLockSave[buildIndex + 7] = true;
         data.levelLockSave[buildIndex + 14] = true;
 
