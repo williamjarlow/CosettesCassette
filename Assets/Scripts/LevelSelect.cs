@@ -85,7 +85,7 @@ public class LevelSelect : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetKeyDown(KeyCode.LeftArrow)) // forward
         {
-            if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
+            if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false && !buttons.activeInHierarchy)
             {
                 movementLock = true;
                 //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
@@ -118,7 +118,7 @@ public class LevelSelect : MonoBehaviour
 				audioManager.PlayLevelSelectScroll ();
             }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.RightArrow)) // backwards
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f || Input.GetKeyDown(KeyCode.RightArrow) && !buttons.activeInHierarchy) // backwards
         {
             if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
             {
@@ -204,7 +204,7 @@ public class LevelSelect : MonoBehaviour
                 // If you scrolled to the left
                 if ((touchPosition.x - origPosition.x) >= minimumMovementForChange)
                 {
-                    if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
+                    if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false && !buttons.activeInHierarchy)
                     {
                         movementLock = true;
                         //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
@@ -241,7 +241,7 @@ public class LevelSelect : MonoBehaviour
                 // If you scrolled to the right
                 if ((touchPosition.x - origPosition.x) < -minimumMovementForChange)
                 {
-                    if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false)
+                    if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false && !buttons.activeInHierarchy)
                     {
                         movementLock = true;
                         //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
@@ -349,6 +349,7 @@ public class LevelSelect : MonoBehaviour
             {
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay ();
+                audioManager.AudioStopMusic();
             }
         }
     }
@@ -363,6 +364,7 @@ public class LevelSelect : MonoBehaviour
                 lvl = lvl + 7;
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay ();
+                audioManager.AudioStopMusic();
             }
         }
     }
@@ -377,6 +379,7 @@ public class LevelSelect : MonoBehaviour
                 lvl = lvl + 14;
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay ();
+                audioManager.AudioStopMusic();
             }
         }
     }
