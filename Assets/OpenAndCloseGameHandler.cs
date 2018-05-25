@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OpenAndCloseGameHandler : MonoBehaviour {
 
@@ -12,10 +13,20 @@ public class OpenAndCloseGameHandler : MonoBehaviour {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         audioManHolder = audioManager;
     }
-
-    private void Update()
+    
+    void OnEnable()
     {
-        if(GameObject.FindWithTag("GameManager").GetComponent<GameManager>() != null)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (GameObject.FindWithTag("GameManager").GetComponent<GameManager>() != null)
         {
             gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
             audioManager = gameManager.audioManager;
@@ -24,7 +35,6 @@ public class OpenAndCloseGameHandler : MonoBehaviour {
         {
             audioManager = audioManHolder;
         }
-
     }
 
     void OnApplicationQuit()
