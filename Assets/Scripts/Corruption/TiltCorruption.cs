@@ -33,6 +33,7 @@ public class TiltCorruption : CorruptionBaseClass
     private float soundPos = 0;
     private float RNGWindSpawner;
     private const int startingScore = 100;
+    const float permanentPositionalOffset = 0.2f;
     FMOD.Studio.PLAYBACK_STATE state;
 
     private GameObject tiltIndicatorInstance;
@@ -127,9 +128,9 @@ public class TiltCorruption : CorruptionBaseClass
         for(int i = 0; i < scoreAreaIndicatorInstances.Count; i++)//Temp bullshit
         {
             if (i == 0)
-                scoreAreaIndicatorInstances[0].transform.localPosition = new Vector3(scoreAreaOffset*2 - scoreArea, 0, -3);
+                scoreAreaIndicatorInstances[0].transform.localPosition = new Vector3(scoreAreaOffset*2 - scoreArea + permanentPositionalOffset, 0, -3);
             else
-                scoreAreaIndicatorInstances[1].transform.localPosition = new Vector3(scoreAreaOffset*2 + scoreArea, 0, -3);
+                scoreAreaIndicatorInstances[1].transform.localPosition = new Vector3(scoreAreaOffset*2 + scoreArea + permanentPositionalOffset, 0, -3);
         }
 
         //Reset Panning on entering and exiting segment
@@ -225,7 +226,7 @@ public class TiltCorruption : CorruptionBaseClass
             }
         }
         
-        tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5, 0, 0);
+        tiltIndicatorInstance.transform.GetChild(0).localPosition = new Vector3(soundPos * 5 + permanentPositionalOffset, 0, 0);
     }
 
     public override void GradeScore()
