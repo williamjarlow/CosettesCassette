@@ -13,6 +13,8 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private GameObject perfectParticleEffect;
     [SerializeField] private GameObject newStickerAnimation;
     [SerializeField] private GameObject newStickerParticleEffect;
+    [SerializeField] private GameObject ejectButtonParticlesEffect;
+    private GameObject ejectParticlesObject;    // Eject button particle object to be instantiated
     [Header("OBS! This needs the prefab ParticleSpawnPosition in the scene to work")]
     [SerializeField] private Transform positionForParticleEffects;
     public float timeToShowGood = 3;
@@ -24,12 +26,14 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private GameObject stickerSpritePosition;
     private SpriteRenderer stickerSprite;
 	private AudioManager audioManager;
+    private GameManager gameManager;
 
     private void Start()
     {
         Debug.Assert(positionForParticleEffects != null, "StageClearVFX needs the prefab ParticleSpawnPosition. Make sure you read info on prefab!");
         stickerSprite = stickerSpritePosition.GetComponent<SpriteRenderer>();
-		audioManager = FindObjectOfType<AudioManager>();
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        audioManager = gameManager.audioManager;
     }
 
     public void CallVFX(segmentEffects typeOfEffect)
@@ -87,6 +91,17 @@ public class StageClearVFX : MonoBehaviour
                 Destroy(temp, temp.GetComponent<ParticleSystem>().main.duration);
             }
         }
+    }
+
+    public void CallEjectParticles(bool value)
+    {
+        // If value == true --> enable particles
+        if(value)
+            ejectParticlesObject = Instantiate(ejectButtonParticlesEffect);
+
+        // If value == false --> disable particles
+        else if(!value)
+            Destroy(ejectParticlesObject);
     }
 
     IEnumerator StickerDelay(float delay)

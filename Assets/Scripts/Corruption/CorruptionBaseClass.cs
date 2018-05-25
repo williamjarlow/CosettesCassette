@@ -39,7 +39,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour
     [HideInInspector]
     public float innerDistortion;
     [HideInInspector]
-    public bool inSegment = false;
+    public bool inSegment;
     [HideInInspector]
     public bool cleared;
 
@@ -73,6 +73,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour
             gameManager.SetRecord(false);
             gameManager.minigameButton.SetPositionUp();
             gameManager.playButton.interactable = true;
+            gameManager.stageClearVFX.CallEjectParticles(true);
         }
     }
     public virtual void GradeScore()
