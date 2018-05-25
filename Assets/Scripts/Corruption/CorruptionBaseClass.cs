@@ -39,7 +39,7 @@ public abstract class CorruptionBaseClass : MonoBehaviour
     [HideInInspector]
     public float innerDistortion;
     [HideInInspector]
-    public bool inSegment;
+    public bool inSegment = false;
     [HideInInspector]
     public bool cleared;
 

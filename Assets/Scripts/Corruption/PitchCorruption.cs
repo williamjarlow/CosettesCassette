@@ -57,6 +57,8 @@ public class PitchCorruption : CorruptionBaseClass {
     Vector3 startingPosition;
 
     [SerializeField] GameObject pitchIndicator;
+    [SerializeField] GameObject pitchPixelParticlePrefab;
+    GameObject pitchPixelParticleInstance;
     GameObject pitchIndicatorInstance;
     Coroutine lastCoroutine;
     AudioManager audioManager;

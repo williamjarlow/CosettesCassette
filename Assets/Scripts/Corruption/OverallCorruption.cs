@@ -55,6 +55,8 @@ public class OverallCorruption : MonoBehaviour {
     // Added for special case of LiveTutorial popup
     private LiveTutorial liveTutorial;
 
+    private SaveSystem saveSystemRef;
+
     void Awake () {
 
         bpmInMs = ConvertBpmToMs(bpm);
@@ -93,7 +95,9 @@ public class OverallCorruption : MonoBehaviour {
             UpdateCorruptionAmount();
             UpdateDistortionAmount();
 
-	}
+        saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
+
+    }
 
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.C))
@@ -158,6 +162,7 @@ public class OverallCorruption : MonoBehaviour {
                     gameManager.LevelCleared = true;
                     gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
+                    saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
 
                     // Activate the eject button when the level is cleared
                     ejectButton.interactable = true;
@@ -179,6 +184,7 @@ public class OverallCorruption : MonoBehaviour {
             gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
+            saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
 
             // Activate the eject button when the level is cleared
             ejectButton.interactable = true;

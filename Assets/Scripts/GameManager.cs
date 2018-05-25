@@ -65,15 +65,15 @@ public class GameManager : MonoBehaviour
         stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
 
         Scene currentScene = SceneManager.GetActiveScene();
-        if (((currentScene.buildIndex - 1) * 2) > (stickerManageRef.stickers.Length - 1) || currentScene.buildIndex < 0)
+        if (((currentScene.buildIndex - 2) * 2) > (stickerManageRef.stickers.Length - 2) || currentScene.buildIndex < 0)
         {
             stickerForGood = stickerManageRef.stickers[0];
             stickerForPerfect = stickerManageRef.stickers[1];
         }
         else
         {
-            stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 1) * 2];
-            stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 1) * 2) + 1];
+            stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 2) * 2];
+            stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 2) * 2) + 1];
         }
 
         // Set the eject button to non-interactable since the level has not been cleared
@@ -94,26 +94,28 @@ public class GameManager : MonoBehaviour
 
     // ** General functions for different mechanics ** //
 
-
-    public void ToggleRecord()
+    IEnumerator ToggleRecordCoroutine()
     {
         // If the current track is playing
-		if (audioManager.startedMusic)
+        if (audioManager.startedMusic)
         {
             // If we are not recording --> start recording
-			if (recording == false)
+            if (recording == false)
             {
-				//If we are paused
-				if (audioManager.pausedMusic)
-				{
-					audioManager.gameMusicEv.setPaused (false);
-					audioManager.pausedMusic = false;
-				}
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
+
+                //If we are paused
+                if (audioManager.pausedMusic)
+                {
+                    audioManager.gameMusicEv.setPaused(false);
+                    audioManager.pausedMusic = false;
+                }
+                yield return new WaitForSeconds(0.1f);//Arbitrary wait time in order to not auto-clear Jack-corruption
+
                 // Start recording
                 recording = true;
-				audioManager.PlayRecordStart ();
+                audioManager.PlayRecordStart();
                 playButton.interactable = false;
             }
 
@@ -125,6 +127,11 @@ public class GameManager : MonoBehaviour
                 playButton.interactable = true;
             }
         }
+    }
+
+    public void ToggleRecord()
+    {
+        StartCoroutine(ToggleRecordCoroutine());
     }
     public void SetRecord(bool recordingState)
     {

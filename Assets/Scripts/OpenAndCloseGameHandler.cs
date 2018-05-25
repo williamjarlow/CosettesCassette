@@ -26,7 +26,7 @@ public class OpenAndCloseGameHandler : MonoBehaviour {
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (GameObject.FindWithTag("GameManager").GetComponent<GameManager>() != null)
+        if (GameObject.FindWithTag("GameManager") != null)
         {
             gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
             audioManager = gameManager.audioManager;
@@ -40,7 +40,11 @@ public class OpenAndCloseGameHandler : MonoBehaviour {
     void OnApplicationQuit()
     {
         Screen.sleepTimeout = SleepTimeout.SystemSetting;
-        audioManager.musicChanGroup.setPan(0);
-        audioManager.musicChanSubGroup.setPan(0);
+
+        if(audioManager != null)
+        {
+            audioManager.musicChanGroup.setPan(0);
+            audioManager.musicChanSubGroup.setPan(0);
+        }
     }
 }
