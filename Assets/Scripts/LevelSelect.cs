@@ -48,7 +48,6 @@ public class LevelSelect : MonoBehaviour
     private SaveSystem saveSystemRef;
     private Dictionary<int, bool> unlocks;
 
-
                                      // ** TODO ** // 
         // 
         // 1. Make it so you can only call the function LoadScene on the object that is focused
@@ -69,8 +68,7 @@ public class LevelSelect : MonoBehaviour
 
         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
     }
-
-
+		
     void Update()
     {
         if (!pauseScreen)
@@ -81,8 +79,6 @@ public class LevelSelect : MonoBehaviour
         if (workWithMouseInput && !pauseScreen)
         MouseControls();
         //// 
-
-
     }
 
     private void MouseControls()
@@ -91,7 +87,6 @@ public class LevelSelect : MonoBehaviour
         {
             if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
             {
-
                 movementLock = true;
                 //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                 //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -175,22 +170,17 @@ public class LevelSelect : MonoBehaviour
                     // If the hit cassette is focused
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
-                        //audioManager.UnloadBanks();
-                        //audioManager.AudioStopMusic();
+						audioManager.PlayLevelSelectSelect ();
                         lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
                         disablestuff = hit.transform.GetComponent<BoxCollider>();
                         disablestuff.enabled = false;
-                        //SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
                         buttons.SetActive(true);
                         if (buttons.activeInHierarchy == true)
                         {
                             movementLock = true;
                         }
-
                     }
                 }
-
-                    
             }
         }
     }
@@ -216,7 +206,6 @@ public class LevelSelect : MonoBehaviour
                 {
                     if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false)
                     {
-
                         movementLock = true;
                         //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
                         //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
@@ -302,10 +291,17 @@ public class LevelSelect : MonoBehaviour
                             // If the hit cassette is focused
                             if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                             {
-                                SceneManager.LoadScene(hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex);
+								audioManager.PlayLevelSelectSelect ();
+								lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+								disablestuff = hit.transform.GetComponent<BoxCollider>();
+								disablestuff.enabled = false;
+								buttons.SetActive(true);
+								if (buttons.activeInHierarchy == true)
+								{
+									movementLock = true;
+								}
                             }
                         }
-
                     }
                 }
 
@@ -340,7 +336,7 @@ public class LevelSelect : MonoBehaviour
         {
             movementLock = false;
             disablestuff.enabled = true;
-            
+			audioManager.PlayLevelSelectBack ();
         }
     }
 
@@ -352,6 +348,7 @@ public class LevelSelect : MonoBehaviour
             if (unlocks[lvl] == true)
             {
                 SceneManager.LoadScene(lvl);
+				audioManager.PlayLevelSelectPlay ();
             }
         }
     }
@@ -365,6 +362,7 @@ public class LevelSelect : MonoBehaviour
             {
                 lvl = lvl + 7;
                 SceneManager.LoadScene(lvl);
+				audioManager.PlayLevelSelectPlay ();
             }
         }
     }
@@ -378,12 +376,11 @@ public class LevelSelect : MonoBehaviour
             {
                 lvl = lvl + 14;
                 SceneManager.LoadScene(lvl);
+				audioManager.PlayLevelSelectPlay ();
             }
         }
     }
-
-
-
+		
     public void OpenPause()
     {
         pauseScreen = true;
@@ -393,5 +390,4 @@ public class LevelSelect : MonoBehaviour
     {
         pauseScreen = false;
     }
-
 }
