@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject uiParent;
     public GameObject pitchSlider;
     public ButtonScript minigameButton;
+    public Button ejectButton;
     public StageClearVFX stageClearVFX;
 
     const int timelineOffset = 100;
@@ -72,6 +74,9 @@ public class GameManager : MonoBehaviour
             stickerForGood = stickerManageRef.stickers[(currentScene.buildIndex - 1) * 2];
             stickerForPerfect = stickerManageRef.stickers[((currentScene.buildIndex - 1) * 2) + 1];
         }
+
+        // Set the eject button to non-interactable since the level has not been cleared
+        ejectButton.interactable = false;
     }
 
     private void Update()

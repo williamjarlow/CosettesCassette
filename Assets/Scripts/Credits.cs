@@ -69,12 +69,10 @@ public class Credits : MonoBehaviour {
     {
         if (showpicture == true && audiolog == true)
         {
-            print("On");
             AudiologPic.enabled = true;
         }
         else if (showpicture == true && audiolog == false)
         {
-            print("Here");
             AudiologPic.enabled = false;
         }
         if (creditsOrAudiolog == "Audiolog" && audiolog == true)
