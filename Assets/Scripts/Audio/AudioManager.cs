@@ -243,7 +243,6 @@ public class AudioManager : MonoBehaviour {
                 startedMusic = true;
                 pausedMusic = false;
             }
-
     }
 
     #region soundEffects
