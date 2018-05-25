@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CorruptionInformation {
 	[Range(0, 100)]
@@ -34,6 +35,7 @@ public class OverallCorruption : MonoBehaviour {
 	public int bpmInMs;
 
     GameManager gameManager;
+    private Button ejectButton;
 
     [Tooltip("Percent of corruption that has to be cleared before corruption is considered solved.")]
     [SerializeField] [Range(0, 100)] int corruptionClearThreshold;
@@ -71,8 +73,9 @@ public class OverallCorruption : MonoBehaviour {
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         ////
 
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioDistortion = gameManager.audioDistortion;
+        ejectButton = gameManager.ejectButton;
 
 		corruptions.AddRange(GetComponentsInChildren<CorruptionBaseClass>());
 
@@ -155,6 +158,11 @@ public class OverallCorruption : MonoBehaviour {
                     gameManager.LevelCleared = true;
                     gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
+
+                    // Activate the eject button when the level is cleared
+                    ejectButton.interactable = true;
+                    Debug.Log("Set ejectButton to interactable");
+
                     //// Special case for LiveTutorial
                     if (liveTutorial != null)
                     liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew);
@@ -171,6 +179,10 @@ public class OverallCorruption : MonoBehaviour {
             gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
+
+            // Activate the eject button when the level is cleared
+            ejectButton.interactable = true;
+
             //// Special case for LiveTutorial
             if (liveTutorial != null)
             liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew);
