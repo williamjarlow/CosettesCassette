@@ -8,7 +8,7 @@ public class AudiologPicture : MonoBehaviour {
 
     [SerializeField] private Image AudiologPic;
     [SerializeField] private float origPos;
-    [SerializeField] public float currentPos;
+    [HideInInspector] public float currentPos;
     [SerializeField] private float endOfTheLine;
     [SerializeField] private GameObject AudioManagerz;
     [SerializeField] private float waitforit;
@@ -21,7 +21,7 @@ public class AudiologPicture : MonoBehaviour {
     private float audioP;
     public bool music = true;
     public bool audiolog = false;
-    public bool showpicture = false;
+    [HideInInspector] public bool showpicture = false;
 
 
 
