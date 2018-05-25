@@ -71,7 +71,7 @@ public class OverallCorruption : MonoBehaviour {
 	void Start()
 	{
         //// Special case for LiveTutorial
-        if (SceneManager.GetActiveScene().name == "Cassette00Tutorial")
+        if (SceneManager.GetActiveScene().name == "Cassette00")
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         ////
 
@@ -153,10 +153,11 @@ public class OverallCorruption : MonoBehaviour {
 				corruptions[i].cleared = false;
 		}
 
-        if(gameManager.LevelPerfected == false && overallCorruption == 0)
+        if(gameManager.LevelPerfected == false && overallCorruption < 30)           // Hej hej. Fixa här tack? Tutorial funkar fan inte när den är 0. Funkar något?
         {
-            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
+            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name) || SceneManager.GetActiveScene().buildIndex <= 2)  // Testade att fixa, funkar nog fan inte heller
             {
+                print("Hello");
                 if (!gameManager.LevelCleared)
                 {
                     gameManager.LevelCleared = true;

@@ -81,9 +81,6 @@ public class AudioManager : MonoBehaviour {
     // Added for special case of LiveTutorial popup
     private LiveTutorial liveTutorial;
     private bool showedSpecialCase = false;
-
-    private GameManager gameManager;
-
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -103,7 +100,7 @@ public class AudioManager : MonoBehaviour {
     void Start()
     {
         //// Special case for LiveTutorial
-        if (SceneManager.GetActiveScene().name == "Cassette00Tutorial")
+        if (SceneManager.GetActiveScene().name == "Cassette00")
         {
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         }
@@ -111,8 +108,6 @@ public class AudioManager : MonoBehaviour {
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
-
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 	}
 
     void Update()

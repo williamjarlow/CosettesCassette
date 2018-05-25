@@ -56,7 +56,7 @@ public class LevelSelect : MonoBehaviour
     {
         saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
 
-		audioManager = FindObjectOfType<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
 
         cassetteAmount = cassettes.Count;
         currentFocus = cassetteAmount - 1;
