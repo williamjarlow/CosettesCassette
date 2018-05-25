@@ -20,8 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224045719373579764}
   - component: {fileID: 222459380147831896}
-  - component: {fileID: 114788387517698198}
-  - component: {fileID: 114597916523605672}
+  - component: {fileID: 114944620202832200}
   - component: {fileID: 95554256897344302}
   m_Layer: 5
   m_Name: Audiolog Pictures
@@ -47,7 +46,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114597916523605672
+--- !u!114 &114944620202832200
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -55,58 +54,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271169323027372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d008bdb51f63be24aaa88e926ba6066b, type: 3}
+  m_Script: {fileID: 11500000, guid: ce8c3bc9b250b2745b3e616950dbcecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopper: {fileID: 1809763009724594, guid: 5b0e98cecdfd036409c0c11b7bd227da, type: 2}
-  origPos: 2300
+  AudiologPic: {fileID: 0}
+  origPos: 0
   currentPos: 0
-  endOfTheLine: 4400
-  AudioManagerz: {fileID: 1986457720149012, guid: f236062a340c42644b0efd0d34e0e407,
-    type: 2}
-  credits: {fileID: 1271169323027372}
-  winning: {fileID: 1158382942144798, guid: bcedd92d8e820f949aae2ae09df97828, type: 2}
-  AudiologPic: {fileID: 114564559796991680, guid: 86d9273e587eee747aed9e994bb9eb30,
-    type: 2}
+  endOfTheLine: 0
+  AudioManagerz: {fileID: 0}
+  waitforit: 0
+  safeguard: 0
+  delay: 0
   music: 1
   audiolog: 0
-  creditsOrAudiolog: Audiolog
-  waitforit: 0
-  delay: 0
   showpicture: 0
---- !u!114 &114788387517698198
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1271169323027372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 200
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 
 --- !u!222 &222459380147831896
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -120,7 +81,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1271169323027372}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -797, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000306, y: 1.0000306, z: 1.0000306}
   m_Children: []
   m_Father: {fileID: 0}
@@ -128,6 +89,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -797}
-  m_SizeDelta: {x: 1920, y: 500}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
