@@ -9,12 +9,14 @@ public class StickerBook : MonoBehaviour {
     [SerializeField] private Text[] titles;
     [SerializeField] private Text[] descriptions;
     private StickerManager stickerManRef;
+	private AudioManager audioManager;
     private int stickerAmount = 6;
     private int stickerSet = 0;
     
     void Awake()
     {
         stickerManRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
+		audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioManager> ();
     }
 
     public void InitializeStickerPage()
@@ -40,6 +42,7 @@ public class StickerBook : MonoBehaviour {
     {
         if (stickerSet * stickerAmount < stickerManRef.stickers.Length - stickerAmount)
         {
+			audioManager.PlayScriptFlip ();
             stickerSet += 1;
             for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
             {
@@ -74,6 +77,7 @@ public class StickerBook : MonoBehaviour {
     {
         if (stickerSet * stickerAmount > 0)
         {
+			audioManager.PlayScriptFlip ();
             stickerSet -= 1;
             for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
             {

@@ -592,9 +592,9 @@ public class AudioManager : MonoBehaviour {
 		systemObj.getBus ("bus:/SFX", out sfxBus);
 		systemObj.getBus ("bus:/Interface", out interfaceBus);
 
-		if(!mute)
+		if(mute)
 			StartCoroutine (delayMute (0.103f)); //waits until "off" event finishes
-		else if (mute) 
+		else if (!mute) 
 		{
 			sfxBus.setMute (false);
 			interfaceBus.setMute (false);
