@@ -165,7 +165,7 @@ public class OverallCorruption : MonoBehaviour {
 
                     //// Special case for LiveTutorial
                     if (liveTutorial != null)
-                    liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew);
+                    liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 0.5f);
                     ////
                 }
                 else
@@ -185,7 +185,7 @@ public class OverallCorruption : MonoBehaviour {
 
             //// Special case for LiveTutorial
             if (liveTutorial != null)
-            liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew);
+            liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + 0.5f);
             ////
         }
 	} 
