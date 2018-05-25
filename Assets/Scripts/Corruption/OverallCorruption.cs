@@ -166,7 +166,7 @@ public class OverallCorruption : MonoBehaviour {
 
                     // Activate the eject button when the level is cleared
                     ejectButton.interactable = true;
-                    Debug.Log("Set ejectButton to interactable");
+                    gameManager.stageClearVFX.CallEjectParticles(true);
 
                     //// Special case for LiveTutorial
                     if (liveTutorial != null)
@@ -184,6 +184,7 @@ public class OverallCorruption : MonoBehaviour {
             gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
+            gameManager.stageClearVFX.CallEjectParticles(true);
             saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
 
             // Activate the eject button when the level is cleared
