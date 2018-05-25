@@ -15,7 +15,6 @@ public class Credits : MonoBehaviour {
     [SerializeField] private GameObject AudioManagerz;
     [SerializeField] private GameObject Timeslider;
     [SerializeField] private GameObject credits;
-    [SerializeField] private GameObject winning;
     [SerializeField] private Image CreditsFade;
     [SerializeField] private Image AudiologPic;
     [SerializeField] private string creditsOrAudiolog;

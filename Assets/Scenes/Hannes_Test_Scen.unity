@@ -308,8 +308,8 @@ MonoBehaviour:
   uiHandler: {fileID: 1114126539}
   uiParent: {fileID: 364654449}
   pitchSlider: {fileID: 1216849505}
-  recordButton: {fileID: 0}
-  winScreen: {fileID: 0}
+  minigameButton: {fileID: 0}
+  ejectButton: {fileID: 1446676424}
   stageClearVFX: {fileID: 0}
   LevelCleared: 0
   LevelPerfected: 0
@@ -320,6 +320,17 @@ MonoBehaviour:
   timeStamp: 0
   allowedProgressIntoBarInMs: 5000
   selectedInstrument: 0
+  stickerManageRef: {fileID: 0}
+  stickerForGood:
+    stickerName: 
+    stickerDescription: 
+    sprite: {fileID: 0}
+    loaded: 0
+  stickerForPerfect:
+    stickerName: 
+    stickerDescription: 
+    sprite: {fileID: 0}
+    loaded: 0
 --- !u!1 &644978756 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1360134638316876, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
@@ -804,6 +815,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 917d32ac7d1f353479fefa28d72391ef, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1446676424 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114886433752834250, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1489952864}
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &1489952864
 Prefab:
   m_ObjectHideFlags: 0
@@ -1039,7 +1056,7 @@ Prefab:
     - target: {fileID: 224601842357146770, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -35
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 223169730228929020, guid: 6b37d6c28a57add4ea709a7dd4ab2f4a,
         type: 2}
@@ -2199,6 +2216,11 @@ Prefab:
       propertyPath: uiParent
       value: 
       objectReference: {fileID: 364654449}
+    - target: {fileID: 114297254969430954, guid: 660aec3712e9fc24fbd150b30b2bc378,
+        type: 2}
+      propertyPath: ejectButton
+      value: 
+      objectReference: {fileID: 1446676424}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 660aec3712e9fc24fbd150b30b2bc378, type: 2}
   m_IsPrefabParent: 0

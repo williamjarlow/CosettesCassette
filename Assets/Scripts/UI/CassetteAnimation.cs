@@ -23,7 +23,7 @@ public class CassetteAnimation : MonoBehaviour {
     [SerializeField] private float cassetteMoveDelay;
     [SerializeField] private int lidClosingDelay;
     [SerializeField] private int startClosingDelay;
-
+    private bool tapeside = false;
     void Start ()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
@@ -185,6 +185,15 @@ public class CassetteAnimation : MonoBehaviour {
         cassetteToAnimate.SetActive(true);
         cassetteToAnimate.GetComponent<Animator>().SetBool("Intro", true);
         cassetteToAnimate.GetComponent<Animator>().SetBool("Run", true);
+        if (tapeside == false)
+        {
+            tapeside = true; 
+        }
+        else if (tapeside == true)
+        {
+            tapeside = false;
+            cassetteToAnimate.GetComponent<Animator>().SetBool("isOnA", false);
+        }
         yield return new WaitForSeconds(lidClosingDelay);
         lid.GetComponent<Animator>().SetBool("Run", true);
         cassetteToAnimate.SetActive(false);

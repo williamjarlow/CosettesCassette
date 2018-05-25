@@ -6783,7 +6783,6 @@ MonoBehaviour:
   AudioManagerz: {fileID: 1047728282}
   Timeslider: {fileID: 0}
   credits: {fileID: 964155006}
-  winning: {fileID: 0}
   CreditsFade: {fileID: 1959314565}
   AudiologPic: {fileID: 284257945}
   creditsOrAudiolog: Audiolog
@@ -10885,6 +10884,35 @@ Prefab:
     - {fileID: 114873727322114600, guid: d60ec69f146796a4d8f1fab688dc3eaa, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d60ec69f146796a4d8f1fab688dc3eaa, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1095691998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1094667323}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1095691999}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1095691999
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1094667323}
+  m_GameObject: {fileID: 1095691998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1455572043}
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1100033547
 GameObject:
   m_ObjectHideFlags: 0
@@ -11659,6 +11687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d094dbc708a327f4ba0c08acd29af538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisImage: {fileID: 0}
   speed: 1
 --- !u!114 &1225501213
 MonoBehaviour:
@@ -19386,11 +19415,35 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1449305277}
---- !u!1 &1455572042 stripped
+--- !u!1 &1455572042
 GameObject:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1466799440085134, guid: d60ec69f146796a4d8f1fab688dc3eaa,
     type: 2}
   m_PrefabInternal: {fileID: 1094667323}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1455572043}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1455572043
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 1094667323}
+  m_GameObject: {fileID: 1455572042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1095691999}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1492520544
 GameObject:
   m_ObjectHideFlags: 0
@@ -31906,3 +31959,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bc6aab3d883254d9d00e9e5442809a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_MainCamera: {fileID: 1791535849}

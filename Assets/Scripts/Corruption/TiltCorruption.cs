@@ -34,7 +34,8 @@ public class TiltCorruption : CorruptionBaseClass
     private float soundPos = 0;
     private float RNGWindSpawner;
     private const int startingScore = 100;
-    const float permanentPositionalOffset = 0.2f;
+
+    float permanentPositionalOffset = 0.2f;
     FMOD.Studio.PLAYBACK_STATE state;
 
     private GameObject tiltIndicatorInstance;
@@ -92,6 +93,7 @@ public class TiltCorruption : CorruptionBaseClass
         if (gameManager.recording)
             corruptionClearedPercent = 0;
         tiltIndicatorInstance = Instantiate(tiltIndicatorPrefab, transform);
+        permanentPositionalOffset = tiltIndicatorInstance.transform.GetChild(0).localPosition.x;
         scoreAreaIndicatorInstances.Clear();
         scoreAreaIndicatorInstances.Add(Instantiate(scoreAreaIndicatorPrefab, transform));
         scoreAreaIndicatorInstances.Add(Instantiate(scoreAreaIndicatorPrefab, transform));
@@ -272,19 +274,22 @@ public class TiltCorruption : CorruptionBaseClass
             while (t >= 0.0f)
             {
                 t -= Time.deltaTime / time; // Sweeps from 0 to 1 in time seconds
-                if(blowLeft == true)
+                Transform wind = tiltIndicatorInstance.transform.GetChild(1);
+                if (blowLeft == true)
                 {
                     soundPos -= strength;
-                    tiltIndicatorInstance.transform.GetChild(1).transform.eulerAngles = new Vector3(180, 0, 180);
-                    tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
-                    tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(1f, 0, 0);
+                    wind.transform.eulerAngles = new Vector3(180, 0, 180);
+                    wind.gameObject.SetActive(true);
+                    if(wind.localPosition.x < 0)
+                        wind.localPosition = new Vector3(-wind.localPosition.x, wind.localPosition.y, wind.localPosition.z);
                 }
                 else if(blowLeft == false)
                 {
                     soundPos += strength;
-                    tiltIndicatorInstance.transform.GetChild(1).transform.eulerAngles = new Vector3(0, 0, 0);
-                    tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(true);
-                    tiltIndicatorInstance.transform.GetChild(1).localPosition = new Vector3(-1f, 0, 0);
+                    wind.transform.eulerAngles = new Vector3(0, 0, 0);
+                    wind.gameObject.SetActive(true);
+                    if (wind.localPosition.x > 0)
+                        wind.localPosition = new Vector3(-wind.localPosition.x, wind.localPosition.y, wind.localPosition.z);
                 }
 
                 yield return new WaitForEndOfFrame();

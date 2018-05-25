@@ -29,7 +29,7 @@ public class EnemiesMovement : MonoBehaviour {
         {
             dead = true;
             animator.enabled = false;
-            coll.enabled = false;           // SURPRISE!!! Yes, this is why they act weird... But it was fun =(
+            coll.enabled = false;
             spriteRenderer.sprite = deadSprite;
             rb.AddTorque(Random.Range(-100, 300), ForceMode2D.Force);
         }
