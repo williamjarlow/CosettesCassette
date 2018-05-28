@@ -93,6 +93,7 @@ public class OverallCorruption : MonoBehaviour
 
         for (int i = 0; i < segments.Count; i++)
         {
+            print(i);
             // Instantiate the corrupted area prefab according to the corrupted area specifications
             RectTransform timelineSlider = gameManager.timelineSlider.GetComponent<RectTransform>();
             GameObject instantiatedObject = Instantiate(corruptedArea, timelineSlider);
