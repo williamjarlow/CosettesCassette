@@ -63,7 +63,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        FileStream file = File.Create(Application.dataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
         
         //Check if the specific level and segment is a part of the save file, if its not we create a slot for it
     CreateSaveState:
@@ -106,7 +106,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void SaveStickers(string name, bool earned)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        FileStream file = File.Create(Application.dataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
         
         //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
         if(data.stickersSave.ContainsKey(name))
@@ -124,10 +124,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public void LoadStickers(Dictionary<string, Sticker> stickersRef)
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
 
             //Get all keys and update the values in the sticker album, basically check if we have earned a sticker
@@ -152,10 +152,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
 
         CreateSaveStateLoad:
@@ -201,10 +201,10 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearStickers(Dictionary<string, Sticker> stickersRef)
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
 
             List<string> keyList = new List<string>(stickersRef.Keys);
@@ -228,10 +228,10 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearSegments()
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
 
             SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
             emptyStruct.points = 0;
@@ -251,10 +251,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public void ClearUnlocks()
     {
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
 
             for (int i = 2; i < sceneIndexes; i++)
             {
@@ -270,7 +270,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void UnlockLevel(int buildIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        FileStream file = File.Create(Application.dataPath + "/playerInfo.dat");      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
 
         //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
 
@@ -290,10 +290,10 @@ public class SaveSystem : Singleton<SaveSystem>
     {
         Dictionary<int, bool> unlocks = new Dictionary<int, bool>();
 
-        if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
+        if (File.Exists(Application.dataPath + "/playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+            FileStream file = File.Open(Application.dataPath + "/playerInfo.dat", FileMode.Open);
             data = (PlayerData)bf.Deserialize(file);
 
             unlocks = data.levelLockSave;
