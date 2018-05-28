@@ -8,8 +8,11 @@ public class WalkmanMaterialSelects : MonoBehaviour {
 	private AudioManager audioManager;
 
 	[SerializeField] private GameObject walkmanRef;
+    [SerializeField] private GameObject settingsIcon;
+    [SerializeField] private Material buttonsmaterial;
     [SerializeField] private Texture textureRef;
     [SerializeField] private Texture buttonTextureRef;
+    [SerializeField] private Texture shadedTextureRef;
     
     private UnityEngine.UI.Toggle toggle;
 
@@ -43,7 +46,8 @@ public class WalkmanMaterialSelects : MonoBehaviour {
             
         }
 
-		audioManager.PlaySkinMenuSelect ();
+        settingsIcon.GetComponent<Renderer>().sharedMaterial.SetTexture("_MainTex", buttonTextureRef);
+        audioManager.PlaySkinMenuSelect ();
 
         /*
         for (int i = 0; i < buttonRefs.Length; i++)
