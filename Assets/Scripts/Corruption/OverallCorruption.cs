@@ -143,17 +143,21 @@ public class OverallCorruption : MonoBehaviour {
             // Set the alpha value according to corruption percentage of the segment
             corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().SetAlpha(corruptions[i].corruptionClearedPercent);
 
-            if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold && !corruptions[i].cleared)
+            if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold)
 			{
                 corruptions[i].cleared = true;
-                //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor
+            }
+			else if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold)
+            {
+                corruptions[i].cleared = true;
                 corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
             }
-			else
+            else
 				corruptions[i].cleared = false;
 		}
 
-        if(gameManager.LevelPerfected == false && overallCorruption < 30)           // Hej hej. Fixa här tack? Tutorial funkar fan inte när den är 0. Funkar något? BUG BUG BUG
+        if(gameManager.LevelPerfected == false && overallCorruption <= 0)           // Hej hej. Fixa här tack? Tutorial funkar fan inte när den är 0. Funkar något? BUG BUG BUG
         {
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name) || SceneManager.GetActiveScene().buildIndex <= 2)  // Testade att fixa, funkar nog fan inte heller
             {
