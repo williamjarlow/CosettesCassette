@@ -124,7 +124,21 @@ public class PitchCorruption : CorruptionBaseClass {
             }
             else
             {
-                ResetConditions();
+                if (!cleared)
+                {
+                    if (!inSegment)
+                    {
+                        EnterSegment();
+                        inSegment = true;
+                        hitTime = 0;
+                        timeSinceStart = 0;
+                        index = 0;
+                    }
+                    pitchSlider.gameObject.SetActive(false);
+                    DestroyLine();
+                    RecordPitch();
+                    //ResetConditions();
+                }
             }
         }
         else if (inSegment) //If player leaves corrupted area
@@ -280,7 +294,8 @@ public class PitchCorruption : CorruptionBaseClass {
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
                 audioPitch.SetPitch(0, pitchType); //If the player is within acceptable margin, let the pitch be normal.
-                hitTime += Time.deltaTime;
+                if(gameManager.recording)
+                    hitTime += Time.deltaTime;
             }
             else
             {

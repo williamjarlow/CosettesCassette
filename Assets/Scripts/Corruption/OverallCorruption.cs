@@ -143,13 +143,17 @@ public class OverallCorruption : MonoBehaviour {
             // Set the alpha value according to corruption percentage of the segment
             corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().SetAlpha(corruptions[i].corruptionClearedPercent);
 
-            if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold && !corruptions[i].cleared)
+            if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold)
 			{
                 corruptions[i].cleared = true;
-                //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
+                //corruptedAreaList[i].GetComponent<CorruptionVisuals>().RestoreOriginalColor
+            }
+			else if (corruptions[i].corruptionClearedPercent >= corruptions[i].clearThreshold)
+            {
+                corruptions[i].cleared = true;
                 corruptedAreaList[corruptions[i].segmentID].GetComponent<CorruptionVisuals>().RestoreOriginalColor();
             }
-			else
+            else
 				corruptions[i].cleared = false;
 		}
 
