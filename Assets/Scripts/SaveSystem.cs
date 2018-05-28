@@ -20,42 +20,37 @@ public class SaveSystem : Singleton<SaveSystem>
     void Awake()
     {
         // Make sure we only have one instance of the save system and make sure it won't be destroyed between scenes
-        if (saveSystem == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            saveSystem = this;
 
-            if (!data.levelLockSave.ContainsKey(0))
+        DontDestroyOnLoad(gameObject);
+        saveSystem = this;
+
+        if (!data.levelLockSave.ContainsKey(0))
+        {
+            sceneIndexes = SceneManager.sceneCountInBuildSettings;
+            BinaryFormatter bf = new BinaryFormatter();
+            if (!File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
             {
-                sceneIndexes = SceneManager.sceneCountInBuildSettings;
-                BinaryFormatter bf = new BinaryFormatter();
-                if (!File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
-                {
-                    file = File.Create(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat");
-                }
-                else
-                {
-                    file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
-                }
-
-                data.levelLockSave[0] = true;
-                data.levelLockSave[1] = true;
-                data.levelLockSave[2] = true;
-
-                for (int i = 3; i < sceneIndexes; i++)
-                {
-                    data.levelLockSave[i] = false;
-                }
-
-                data.levelLockSave[23] = true;
-
-                bf.Serialize(file, data);
-                file.Close();
+                file = File.Create("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat");
             }
-        }
-        else if (saveSystem != this)
-        {
-            Destroy(gameObject);
+            else
+            {
+                file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            }
+
+            data.levelLockSave[0] = true;
+            data.levelLockSave[1] = true;
+            data.levelLockSave[2] = true;
+
+            for (int i = 3; i < sceneIndexes; i++)
+            {
+                data.levelLockSave[i] = false;
+            }
+
+            data.levelLockSave[23] = true;
+
+            bf.Serialize(file, data);
+            file.Close();
+
         }
     }
 
@@ -71,7 +66,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
         
         //Check if the specific level and segment is a part of the save file, if its not we create a slot for it
     CreateSaveState:
@@ -114,7 +109,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void SaveStickers(string name, bool earned)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
 
         //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
         if (data.stickersSave.ContainsKey(name))
@@ -132,10 +127,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public void LoadStickers(Dictionary<string, Sticker> stickersRef)
     {
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
             data = (PlayerData)bf.Deserialize(file);
 
             //Get all keys and update the values in the sticker album, basically check if we have earned a sticker
@@ -160,10 +155,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
             data = (PlayerData)bf.Deserialize(file);
 
         CreateSaveStateLoad:
@@ -209,10 +204,10 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearStickers(Dictionary<string, Sticker> stickersRef)
     {
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
             data = (PlayerData)bf.Deserialize(file);
 
             List<string> keyList = new List<string>(stickersRef.Keys);
@@ -236,10 +231,10 @@ public class SaveSystem : Singleton<SaveSystem>
     //This is currently only used for testing the stickers.
     public void ClearSegments()
     {
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
 
             SaveSegmentStruct emptyStruct = new SaveSegmentStruct();
             emptyStruct.points = 0;
@@ -259,10 +254,10 @@ public class SaveSystem : Singleton<SaveSystem>
 
     public void ClearUnlocks()
     {
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
 
             for (int i = 2; i < sceneIndexes; i++)
             {
@@ -278,7 +273,7 @@ public class SaveSystem : Singleton<SaveSystem>
     public void UnlockLevel(int buildIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
+        file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
 
         //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
 
@@ -298,10 +293,10 @@ public class SaveSystem : Singleton<SaveSystem>
     {
         Dictionary<int, bool> unlocks = new Dictionary<int, bool>();
 
-        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        if (File.Exists("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            file = File.Open("file:///" + Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
             data = (PlayerData)bf.Deserialize(file);
 
             unlocks = data.levelLockSave;
