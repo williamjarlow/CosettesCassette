@@ -108,8 +108,8 @@ public class AudioManager : MonoBehaviour {
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         }
         ////
-
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        if(SceneManager.GetActiveScene().buildIndex >= 2)
+            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");

@@ -14,6 +14,8 @@ public class SaveSystem : Singleton<SaveSystem>
     [SerializeField] private GameObject stickerManRef;
     PlayerData data = new PlayerData();
 
+	[HideInInspector] public bool masterBanksLoaded = false;
+
     void Awake()
     {
         // Make sure we only have one instance of the save system and make sure it won't be destroyed between scenes
@@ -26,7 +28,7 @@ public class SaveSystem : Singleton<SaveSystem>
             {
                 sceneIndexes = SceneManager.sceneCountInBuildSettings;
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream file = File.Create(Application.persistentDataPath + "/playerInfo.dat");
+                FileStream file = File.Create(Application.dataPath + "/playerInfo.dat");
 
                 data.levelLockSave[0] = true;
                 data.levelLockSave[1] = true;

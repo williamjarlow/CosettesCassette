@@ -91,29 +91,28 @@ public class GameManager : MonoBehaviour
         set { selectedInstrument = value; }
     }
 
-
-    // ** General functions for different mechanics ** //
-
-
-    public void ToggleRecord()
+    IEnumerator ToggleRecordCoroutine()
     {
         // If the current track is playing
-		if (audioManager.startedMusic && !audioManager.switchedToAudioLog)
+        if (audioManager.startedMusic && !audioManager.switchedToAudioLog)
         {
             // If we are not recording --> start recording
-			if (recording == false)
+            if (recording == false)
             {
-				//If we are paused
-				if (audioManager.pausedMusic)
-				{
-					audioManager.gameMusicEv.setPaused (false);
-					audioManager.pausedMusic = false;
-				}
+                //If we are paused
+                if (audioManager.pausedMusic)
+                {
+                    audioManager.gameMusicEv.setPaused(false);
+                    audioManager.pausedMusic = false;
+                }
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
+
+                yield return new WaitForSeconds(tolerance/1000);
+
                 // Start recording
                 recording = true;
-				audioManager.PlayRecordStart ();
+                audioManager.PlayRecordStart();
                 playButton.interactable = false;
             }
 
@@ -125,6 +124,15 @@ public class GameManager : MonoBehaviour
                 playButton.interactable = true;
             }
         }
+    }
+
+
+    // ** General functions for different mechanics ** //
+
+
+    public void ToggleRecord()
+    {
+        StartCoroutine(ToggleRecordCoroutine());
     }
     public void SetRecord(bool recordingState)
     {

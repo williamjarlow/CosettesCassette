@@ -5,13 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class LoadSceneOnClick : MonoBehaviour
 {
+	private AudioManager audioManager;
+
     [SerializeField] private Image black;
     [SerializeField] private Animator anim;
     //[SerializeField] private int index;
 
+	private void Start()
+	{
+		audioManager = GameObject.FindWithTag ("AudioManager").GetComponent<AudioManager> ();
+	}
+
     public void LoadByIndex(int index)
     {
         Time.timeScale = 1.0F;
+		audioManager.UnloadBanks ();
         StartCoroutine(Fading(index));
     }
 
@@ -20,6 +28,5 @@ public class LoadSceneOnClick : MonoBehaviour
         anim.SetBool("Fade", true);
         yield return new WaitUntil(() => black.color.a == 1);
         SceneManager.LoadScene(index);
-
     }
 }
