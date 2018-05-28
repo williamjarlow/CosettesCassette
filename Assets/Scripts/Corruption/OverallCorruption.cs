@@ -171,8 +171,6 @@ public class OverallCorruption : MonoBehaviour
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
                     saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
 
-                    // Activate the eject button when the level is cleared
-                    ejectButton.interactable = true;
                     gameManager.stageClearVFX.CallEjectParticles(true);
 
                     // Special case for LiveTutorial
@@ -182,6 +180,9 @@ public class OverallCorruption : MonoBehaviour
                 else
                     gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
             }
+            // Activate the eject button when the level is cleared
+            overallCorruption = 0;
+            ejectButton.interactable = true;
             gameManager.audioManager.PlayWinSound(1);
             gameManager.LevelPerfected = true;
             gameManager.LevelCleared = true;
