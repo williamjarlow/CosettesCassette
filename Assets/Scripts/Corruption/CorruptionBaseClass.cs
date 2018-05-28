@@ -42,6 +42,8 @@ public abstract class CorruptionBaseClass : MonoBehaviour
     public bool inSegment;
     [HideInInspector]
     public bool cleared;
+    [HideInInspector]
+    public bool perfected;
 
 
     void Awake()
@@ -85,15 +87,14 @@ public abstract class CorruptionBaseClass : MonoBehaviour
             {
                 bestScore = 100; //Perfect Segment
 				gameManager.audioManager.PlaySegmentClear(1f);
+                cleared = true;
+                perfected = true;
             }
             else if (bestScore > clearThreshold)
             {
                 //Cleared Segment
+                cleared = true;
                 gameManager.audioManager.PlaySegmentClear(0f);
-            }
-            else
-            {
-                //New Highscore
             }
         }
         currentScore = 0;
