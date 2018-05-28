@@ -73,7 +73,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour
             gameManager.SetRecord(false);
             gameManager.minigameButton.SetPositionUp();
             gameManager.playButton.interactable = true;
-            gameManager.stageClearVFX.CallEjectParticles(true);
         }
     }
     public virtual void GradeScore()

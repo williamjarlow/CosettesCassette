@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class StickerBook : MonoBehaviour {
-    
+
+    [SerializeField] private GameObject forwardButton;
+    [SerializeField] private GameObject backwardsButton;
     [SerializeField] private Image[] images;
     [SerializeField] private Text[] titles;
     [SerializeField] private Text[] descriptions;
@@ -21,6 +23,7 @@ public class StickerBook : MonoBehaviour {
 
     public void InitializeStickerPage()
     {
+        forwardButton.SetActive(true);
         for (int i = 0; i < stickerAmount; i++)
         {
             images[i].sprite = stickerManRef.stickers[i].Sprite;
@@ -42,6 +45,7 @@ public class StickerBook : MonoBehaviour {
     {
         if (stickerSet * stickerAmount < stickerManRef.stickers.Length - stickerAmount)
         {
+            backwardsButton.SetActive(true);
 			audioManager.PlayScriptFlip ();
             stickerSet += 1;
             for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
@@ -71,12 +75,15 @@ public class StickerBook : MonoBehaviour {
                 }
             }
         }
+        if (stickerSet * stickerAmount >= stickerManRef.stickers.Length - stickerAmount)
+            forwardButton.SetActive(false);
     }
 
     public void FlipPagesBackward()
     {
         if (stickerSet * stickerAmount > 0)
         {
+            forwardButton.SetActive(true);
 			audioManager.PlayScriptFlip ();
             stickerSet -= 1;
             for (int i = stickerSet * stickerAmount; i < stickerAmount * (stickerSet + 1); i++)
@@ -105,9 +112,10 @@ public class StickerBook : MonoBehaviour {
                     titles[i - stickerSet * stickerAmount].text = "";
                     descriptions[i - stickerSet * stickerAmount].text = "";
                 }
-
             }
         }
+        if (stickerSet < 1)
+            backwardsButton.SetActive(false);
     }
 
 }

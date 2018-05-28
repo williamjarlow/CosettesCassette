@@ -6213,7 +6213,7 @@ Prefab:
     - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
       propertyPath: levelClearPath
-      value: event:/SFX/StageClear/stage_clear_03
+      value: event:/SFX/StageClear/stage_clear_04
       objectReference: {fileID: 0}
     - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
@@ -6228,7 +6228,7 @@ Prefab:
     - target: {fileID: 114532949545563618, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
       propertyPath: audioLogPath
-      value: event:/Logs/log_03
+      value: event:/Logs/log_04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f236062a340c42644b0efd0d34e0e407, type: 2}
@@ -10039,10 +10039,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
+    m_DisabledColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -10081,9 +10081,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: MuteSFX
-        m_Mode: 6
+      - m_Target: {fileID: 738148953}
+        m_MethodName: PlayPauseMenuOn
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10092,9 +10092,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayPauseMenuOn
-        m_Mode: 1
+      - m_Target: {fileID: 738148953}
+        m_MethodName: MuteSFX
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10784,6 +10784,8 @@ MonoBehaviour:
   tutorialMenu: {fileID: 1492809998}
   leftImage: {fileID: 294570975}
   rightTextBox: {fileID: 787619622}
+  forwardButton: {fileID: 0}
+  backwardsButton: {fileID: 0}
   book: {fileID: 55156472}
   tutorialHeader: {fileID: 789715492}
   tutorials:
@@ -11574,10 +11576,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.7058823, g: 0.7058823, b: 0.7058823, a: 1}
+    m_DisabledColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -11616,9 +11618,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: MuteSFX
-        m_Mode: 6
+      - m_Target: {fileID: 738148953}
+        m_MethodName: PlayPauseMenuOff
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11627,9 +11629,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: PlayPauseMenuOff
-        m_Mode: 1
+      - m_Target: {fileID: 738148953}
+        m_MethodName: MuteSFX
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11699,6 +11701,7 @@ MonoBehaviour:
     type: 2}
   newStickerParticleEffect: {fileID: 1990726310614772, guid: 9964a5cd44a5ab344b057d8480bedd42,
     type: 2}
+  ejectButtonParticlesEffect: {fileID: 994644005}
   positionForParticleEffects: {fileID: 136236098}
   timeToShowGood: 3
   timeToShowPerfect: 4.5
@@ -12339,6 +12342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab28782b41b7b68428f2b683e2e825f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forwardButton: {fileID: 1568365664}
+  backwardsButton: {fileID: 897334461}
   images:
   - {fileID: 421205179}
   - {fileID: 1738662546}
@@ -17488,7 +17493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &897334462
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18036,10 +18041,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
+    m_DisabledColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -18078,7 +18083,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 738148953}
         m_MethodName: PlayPauseMenuOff
         m_Mode: 1
         m_Arguments:
@@ -19662,6 +19667,16 @@ Prefab:
       propertyPath: minigameButton
       value: 
       objectReference: {fileID: 1741343763}
+    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
+        type: 2}
+      propertyPath: ejectButton
+      value: 
+      objectReference: {fileID: 994644008}
+    - target: {fileID: 114994938406711260, guid: aef8bb58cd7cb7c418421394dfeb49d7,
+        type: 2}
+      propertyPath: playButton
+      value: 
+      objectReference: {fileID: 300518908}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aef8bb58cd7cb7c418421394dfeb49d7, type: 2}
   m_IsPrefabParent: 0
@@ -28908,6 +28923,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 738148953}
+        m_MethodName: PlayPauseMenuExit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -28989,10 +29015,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.625, g: 0.625, b: 0.625, a: 1}
+    m_DisabledColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -29031,7 +29057,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 738148953}
         m_MethodName: PlayPauseMenuOn
         m_Mode: 1
         m_Arguments:
@@ -29658,7 +29684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1568365665
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41034,8 +41060,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1372248059}
-        m_MethodName: EnableButtons
+      - m_Target: {fileID: 738148953}
+        m_MethodName: PlayPauseMenuClose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -41225,7 +41251,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2081223231
 Transform:
   m_ObjectHideFlags: 0

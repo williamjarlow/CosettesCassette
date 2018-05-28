@@ -68,9 +68,6 @@ public class AudioManager : MonoBehaviour {
 	[FMODUnity.EventRef]
 	[SerializeField] private string levelClearPath;
 
-	//Audio table keys
-    //public string bassDrumKey;
-
 	private int trackLength;
 
     [Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
@@ -84,9 +81,6 @@ public class AudioManager : MonoBehaviour {
     // Added for special case of LiveTutorial popup
     private LiveTutorial liveTutorial;
     private bool showedSpecialCase = false;
-
-    private GameManager gameManager;
-
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -106,7 +100,7 @@ public class AudioManager : MonoBehaviour {
     void Start()
     {
         //// Special case for LiveTutorial
-        if (SceneManager.GetActiveScene().name == "Cassette00Tutorial")
+        if (SceneManager.GetActiveScene().name == "Cassette00")
         {
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         }
@@ -114,8 +108,6 @@ public class AudioManager : MonoBehaviour {
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
-
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 	}
 
     void Update()
@@ -128,7 +120,6 @@ public class AudioManager : MonoBehaviour {
                 showedSpecialCase = true;
                 liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
             }
-
         }
         ////
     }
@@ -247,16 +238,11 @@ public class AudioManager : MonoBehaviour {
                 startedMusic = true;
                 pausedMusic = false;
             }
-        
-
-
     }
-
 
     #region soundEffects
     public void PlaySkip()
 	{
-        
         if(startedMusic)
         {
             result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
@@ -264,7 +250,6 @@ public class AudioManager : MonoBehaviour {
             skipEv.setParameterValue("skip_click", 0);
             skipEv.start();
         }
-
 	}
 
     public void StopPlayingSkip()
@@ -274,7 +259,6 @@ public class AudioManager : MonoBehaviour {
             skipEv.setParameterValue("skip_click", 1);
             skipEv.release();
         }
-        
     }
 
     public void SetSkipPitch(float speed)
@@ -402,6 +386,16 @@ public class AudioManager : MonoBehaviour {
 		pauseMenuOffEv.release();
 	}
 
+	public void PlayPauseMenuExit()
+	{
+		FMOD.Studio.EventDescription pauseMenuExitEventDesc;
+		FMOD.Studio.EventInstance pauseMenuExitEv;
+		systemObj.getEvent("event:/Interface/PauseMenu/exit", out pauseMenuExitEventDesc);
+		pauseMenuExitEventDesc.createInstance(out pauseMenuExitEv);
+		pauseMenuExitEv.start();
+		pauseMenuExitEv.release();
+	}
+
 	public void PlayScriptFlip()
 	{
 		FMOD.Studio.EventDescription scriptFlipEventDesc;
@@ -430,6 +424,16 @@ public class AudioManager : MonoBehaviour {
 		levelSelectSelectEventDesc.createInstance(out levelSelectBackEv);
 		levelSelectBackEv.start();
 		levelSelectBackEv.release();
+	}
+
+	public void PlayLevelSelectPlay ()
+	{
+		FMOD.Studio.EventDescription levelSelectPlayEventDesc;
+		FMOD.Studio.EventInstance levelSelectPlayEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/play", out levelSelectPlayEventDesc);
+		levelSelectPlayEventDesc.createInstance(out levelSelectPlayEv);
+		levelSelectPlayEv.start();
+		levelSelectPlayEv.release();
 	}
 
 	public void PlayLevelSelectBack ()
@@ -743,11 +747,4 @@ public class AudioManager : MonoBehaviour {
 		PlayEjectSound ();
 		PlayFlipAnimSound ();
     }
-
-//    private void OnDestroy()
-//    {
-//        //release FMOD system objects (safety precaution, likely not needed anymore). "systemObj" has to be released first.
-//        systemObj.release();
-//	      lowLevelSys.release();
-//    }
 }

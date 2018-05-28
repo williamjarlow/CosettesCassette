@@ -31,12 +31,13 @@ public class SaveSystem : Singleton<SaveSystem>
                 data.levelLockSave[0] = true;
                 data.levelLockSave[1] = true;
                 data.levelLockSave[2] = true;
-                data.levelLockSave[23] = true;
 
                 for (int i = 3; i < sceneIndexes; i++)
                 {
                     data.levelLockSave[i] = false;
                 }
+
+                data.levelLockSave[23] = true;
 
                 bf.Serialize(file, data);
                 file.Close();
