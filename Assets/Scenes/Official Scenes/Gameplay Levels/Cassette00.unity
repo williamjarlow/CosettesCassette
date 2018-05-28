@@ -118,88 +118,70 @@ Transform:
   m_PrefabParentObject: {fileID: 4296859196166698, guid: 651a0c52c03935649b31ebf85ba6f400,
     type: 2}
   m_PrefabInternal: {fileID: 302288735}
---- !u!1 &243773707 stripped
+--- !u!1 &243773707
 GameObject:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1478660321060842, guid: a90333ef8d562754a91efebf14d3fc08,
     type: 2}
-  m_PrefabInternal: {fileID: 262611403}
---- !u!1001 &262611403
-Prefab:
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 243773709}
+  - component: {fileID: 243773708}
+  m_Layer: 0
+  m_Name: Corruption Handler Level 00
+  m_TagString: CorruptionHandler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &243773708
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: timerStartPoint
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114428509803443562, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: bpm
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 114428509803443562, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: corruptionClearThreshold
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: lyricsGuess
-      value: The humans felt _____
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: lyrics.Array.data[1]
-      value: disturbed
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: lyrics.Array.data[0]
-      value: the earth
-      objectReference: {fileID: 0}
-    - target: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
-        type: 2}
-      propertyPath: lyrics.Array.data[2]
-      value: their worth
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: a90333ef8d562754a91efebf14d3fc08, type: 2}
-  m_IsPrefabParent: 0
+  m_PrefabParentObject: {fileID: 114428509803443562, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 243773707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6491359230e1ef458c9759a0572bc08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overallDistortionMax: 70
+  segments:
+  - start: 65
+    stop: 150
+  - start: 192
+    stop: 248
+  - start: 280
+    stop: 408
+  durations: []
+  bpm: 150
+  bpmInMs: 0
+  corruptionClearThreshold: 80
+  overallCorruption: 0
+  overallDistortion: 0
+  corruptions: []
+  corruptedArea: {fileID: 1862118199916272, guid: f6c05bde89f2a914e9a4f8532caa5cd8,
+    type: 2}
+  corruptedAreaList: []
+--- !u!4 &243773709
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4239723700949994, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 243773707}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 1.55, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 491472001}
+  - {fileID: 1675465085}
+  - {fileID: 2085924652}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &274036666
 Prefab:
   m_ObjectHideFlags: 0
@@ -342,6 +324,16 @@ Prefab:
       propertyPath: audioLogPath
       value: event:/Logs/log_00
       objectReference: {fileID: 0}
+    - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: maxSpeedThresholdInMs
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: fastSpeedInMs
+      value: 50000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f236062a340c42644b0efd0d34e0e407, type: 2}
   m_IsPrefabParent: 0
@@ -413,6 +405,182 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1284172764}
   m_Script: {fileID: 11500000, guid: 5a715458656b35741bdd96f89a26c33d, type: 3}
+--- !u!1 &491472000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1318992004240216, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 491472001}
+  - component: {fileID: 491472003}
+  - component: {fileID: 491472002}
+  m_Layer: 8
+  m_Name: Pitch Corruption Prefab (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &491472001
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4161969583683188, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491472000}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8299999, y: -0.24000001, z: -3.39}
+  m_LocalScale: {x: 1, y: 0.55, z: 1}
+  m_Children: []
+  m_Father: {fileID: 243773709}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &491472002
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 120987292375044412, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491472000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec124f2273965794db91ecee47425b1c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.17796326
+        inSlope: 0.6148427
+        outSlope: 0.6148427
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 10
+    numCapVertices: 2
+    alignment: 0
+    textureMode: 1
+    generateLightingData: 0
+  m_UseWorldSpace: 0
+  m_Loop: 0
+--- !u!114 &491472003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114076221746780000, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 491472000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 80
+  perfectThreshold: 95
+  segmentID: 0
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: "Add the pitch corruption prefab as a child of corruption handler whenever
+    you wish to create a new pitch corruption\n segment."
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  nodes:
+  - position: 0
+    seconds: 0.25
+  - position: -1
+    seconds: 1
+  - position: 1
+    seconds: 1
+  - position: 2
+    seconds: 0.5
+  - position: 2
+    seconds: 1
+  - position: 0
+    seconds: 1.25
+  - position: 1
+    seconds: 1.25
+  curvify: 0
+  temporaryTestValue: 0
+  pitchType: 5
+  lineSpeed: 3
+  mercyRange: 10
+  rGoalRange: {x: -2, y: 2}
+  rTravelTimeRange: {x: 1, y: 1}
+  randomizeNodes: 0
+  leadUp: 1.5
+  ruggedness: 0
+  pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
+    type: 2}
+  pitchPixelParticlePrefab: {fileID: 0}
 --- !u!4 &645112936 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5,
@@ -1372,6 +1540,87 @@ GameObject:
   m_PrefabParentObject: {fileID: 1889760755494544, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
     type: 2}
   m_PrefabInternal: {fileID: 1284172764}
+--- !u!1 &1675465084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1647263718430712, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1675465085}
+  - component: {fileID: 1675465086}
+  m_Layer: 0
+  m_Name: OddOneOut Corruption Prefab (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1675465085
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4000189539097248, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1675465084}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 243773709}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1675465086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114226352485954514, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1675465084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f13241b272b384c8cdfb23441161d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 100
+  perfectThreshold: 100
+  segmentID: 1
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: For this corruption the clear threshold is irrelevant, as you either clear
+    the corruption or you don't.
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  lyricsGuessPrefab: {fileID: 1678298423003994, guid: a3d349e1de7ccac4987448fb55ac8be3,
+    type: 2}
+  lyricsPrefab: {fileID: 1208538762326652, guid: 55f865a21e7bb7c49a6ca7270ef32967,
+    type: 2}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 0.3455882, g: 0.3455882, b: 0.3455882, a: 1}
+  correctColor: {r: 0.1892301, g: 0.7352941, b: 0.19299604, a: 1}
+  incorrectColor: {r: 0.89705884, g: 0.08574825, b: 0.08574825, a: 1}
+  lyricsGuess: The humans felt _____
+  lyrics:
+  - betrayed
+  - disturbed
+  - destroyed
+  correctLyricSegment: 1
+  chosenWordStart: 22800
+  chosenWordEnd: 24400
+  timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
+    type: 2}
+  timerStartPoint: 14
+  timerLength: 4
+  inputBeats: 1
 --- !u!224 &1678507487 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224012328462755682, guid: 5b0e98cecdfd036409c0c11b7bd227da,
@@ -1529,6 +1778,190 @@ GameObject:
   m_PrefabParentObject: {fileID: 1260116405087990, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
     type: 2}
   m_PrefabInternal: {fileID: 1284172764}
+--- !u!1 &2085924651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1363552627410436, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2085924652}
+  - component: {fileID: 2085924654}
+  - component: {fileID: 2085924653}
+  m_Layer: 8
+  m_Name: Pitch Corruption Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2085924652
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4535481875610492, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2085924651}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8299999, y: -0.24000001, z: -3.39}
+  m_LocalScale: {x: 1, y: 0.55, z: 1}
+  m_Children: []
+  m_Father: {fileID: 243773709}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &2085924653
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 120663018178521816, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2085924651}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec124f2273965794db91ecee47425b1c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.17796326
+        inSlope: 0.6148427
+        outSlope: 0.6148427
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 10
+    numCapVertices: 2
+    alignment: 0
+    textureMode: 1
+    generateLightingData: 0
+  m_UseWorldSpace: 0
+  m_Loop: 0
+--- !u!114 &2085924654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114118620157359412, guid: a90333ef8d562754a91efebf14d3fc08,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2085924651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 80
+  perfectThreshold: 95
+  segmentID: 2
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: "Add the pitch corruption prefab as a child of corruption handler whenever
+    you wish to create a new pitch corruption\n segment."
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  nodes:
+  - position: -0.71
+    seconds: 0.75
+  - position: 1.2
+    seconds: 1
+  - position: 0.12
+    seconds: 1
+  - position: -1.76
+    seconds: 1
+  - position: -0.09
+    seconds: 1
+  - position: -1.79
+    seconds: 1
+  - position: 1.65
+    seconds: 1.25
+  - position: 0.26
+    seconds: 1
+  - position: 2
+    seconds: 1
+  - position: -0.12
+    seconds: 1
+  - position: 1
+    seconds: 0.75
+  curvify: 0
+  temporaryTestValue: 0
+  pitchType: 5
+  lineSpeed: 3
+  mercyRange: 10
+  rGoalRange: {x: -2, y: 2}
+  rTravelTimeRange: {x: 1, y: 1}
+  randomizeNodes: 0
+  leadUp: 1.5
+  ruggedness: 0
+  pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
+    type: 2}
+  pitchPixelParticlePrefab: {fileID: 0}
 --- !u!1 &2128113034
 GameObject:
   m_ObjectHideFlags: 0
