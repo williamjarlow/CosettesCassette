@@ -6,13 +6,21 @@ using UnityEngine.UI;
 public class WalkmanMaterialSelects : MonoBehaviour {
 
 	private AudioManager audioManager;
-
+    [Header("Walkman Color changer")]
 	[SerializeField] private GameObject walkmanRef;
-    [SerializeField] private GameObject settingsIcon;
-    [SerializeField] private Material buttonsmaterial;
     [SerializeField] private Texture textureRef;
+
+    [Header("Settings Icon changer")]
+    [SerializeField] private GameObject settingsIcon;
     [SerializeField] private Texture buttonTextureRef;
+
+    [Header("PressedButtonsMaterial")]
+    [SerializeField] private Material buttonsmaterial;
     [SerializeField] private Texture shadedTextureRef;
+
+    [Header("Gradientbar")]
+    [SerializeField] private Material corruptionBarMat;
+    [SerializeField] private Texture corrutionBarTex;
     
     private UnityEngine.UI.Toggle toggle;
 
@@ -47,6 +55,8 @@ public class WalkmanMaterialSelects : MonoBehaviour {
         }
 
         settingsIcon.GetComponent<Renderer>().sharedMaterial.SetTexture("_MainTex", buttonTextureRef);
+        buttonsmaterial.SetTexture("_MainTex", shadedTextureRef);
+        corruptionBarMat.SetTexture("_MainTex", corrutionBarTex);
         audioManager.PlaySkinMenuSelect ();
 
         /*
