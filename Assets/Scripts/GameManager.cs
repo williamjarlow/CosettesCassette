@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
 
-                yield return new WaitForSeconds(tolerance / 1000);
+                yield return new WaitForSeconds(tolerance/1000);
 
                 // Start recording
                 recording = true;
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     public void ToggleRecord()
     {
-        
+        StartCoroutine(ToggleRecordCoroutine());
     }
     public void SetRecord(bool recordingState)
     {
