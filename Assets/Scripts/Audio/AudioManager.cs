@@ -81,6 +81,9 @@ public class AudioManager : MonoBehaviour {
     // Added for special case of LiveTutorial popup
     private LiveTutorial liveTutorial;
     private bool showedSpecialCase = false;
+
+    private GameManager gameManager;
+
     void Awake ()
 	{
         systemObj = FMODUnity.RuntimeManager.StudioSystem;
@@ -105,6 +108,8 @@ public class AudioManager : MonoBehaviour {
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
         }
         ////
+
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
@@ -746,5 +751,24 @@ public class AudioManager : MonoBehaviour {
 
 		PlayEjectSound ();
 		PlayFlipAnimSound ();
+
+        // If we are in the audio log --> disable visuals
+        if (switchedToAudioLog)
+        {
+            for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
+            {
+                gameManager.overallCorruption.corruptedAreaList[i].SetActive(false);
+            }
+        }
+
+        // If we are in the song --> enable visuals
+        else if (!switchedToAudioLog)
+        {
+            for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
+            {
+                gameManager.overallCorruption.corruptedAreaList[i].SetActive(true);
+            }
+        }
+
     }
 }

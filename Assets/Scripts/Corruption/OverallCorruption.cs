@@ -50,7 +50,7 @@ public class OverallCorruption : MonoBehaviour {
 	[SerializeField]
 	[Tooltip("Corrupted area prefab")]
 	private GameObject corruptedArea;
-	private List<GameObject> corruptedAreaList = new List<GameObject>();
+	[HideInInspector] public List<GameObject> corruptedAreaList = new List<GameObject>();
 
     // Added for special case of LiveTutorial popup
     private LiveTutorial liveTutorial;
