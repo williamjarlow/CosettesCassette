@@ -14,6 +14,8 @@ public class SaveSystem : Singleton<SaveSystem>
     [SerializeField] private GameObject stickerManRef;
     PlayerData data = new PlayerData();
 
+	[HideInInspector] public bool masterBanksLoaded = false;
+
     void Awake()
     {
         // Make sure we only have one instance of the save system and make sure it won't be destroyed between scenes
