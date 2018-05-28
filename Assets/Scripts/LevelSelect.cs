@@ -70,6 +70,16 @@ public class LevelSelect : MonoBehaviour
             startPos[i] = cassettes[i].transform.localPosition;
         }
 
+        unlocks = saveSystemRef.GetUnlocks();
+        for (int i = cassetteAmount - 2; i > 0; i--)
+        {
+            int lockFocus = cassetteAmount - i - 1;
+            if (unlocks[lockFocus + 2] == true)
+            {
+                cassettes[i].transform.GetChild(7).gameObject.SetActive(false);
+            }
+        }
+
         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
     }
 		
@@ -354,7 +364,7 @@ public class LevelSelect : MonoBehaviour
             if (unlocks[lvl] == true)
             {
                 SceneManager.LoadScene(lvl);
-				audioManager.PlayLevelSelectPlay ();
+				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
             }
         }
@@ -369,7 +379,7 @@ public class LevelSelect : MonoBehaviour
             {
                 lvl = lvl + 7;
                 SceneManager.LoadScene(lvl);
-				audioManager.PlayLevelSelectPlay ();
+				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
             }
         }
