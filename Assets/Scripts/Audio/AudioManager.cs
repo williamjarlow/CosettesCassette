@@ -111,6 +111,12 @@ public class AudioManager : MonoBehaviour {
         if(SceneManager.GetActiveScene().buildIndex >= 2)
             gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
+        // To make sure we get audiolog for audiolog only scenes...
+        if (SceneManager.GetActiveScene().buildIndex > 15 && SceneManager.GetActiveScene().buildIndex < 23)
+        {
+            switchedToAudioLog = true;
+        }
+
         Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
         Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}

@@ -10,7 +10,7 @@ public class AudiologPicture : MonoBehaviour {
     private float origPos = 0;
     [HideInInspector] public float currentPos;
     private float endOfTheLine;
-    [SerializeField] private GameObject AudioManagerz;
+    private GameObject AudioManagerz;
     [SerializeField] private float waitforit;
     private float safeguard;
     [SerializeField] private float delay = 0.5f;
@@ -28,7 +28,7 @@ public class AudiologPicture : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-        audioManager = AudioManagerz.GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         audiolength = audioManager.GetTrackLength();
 
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);

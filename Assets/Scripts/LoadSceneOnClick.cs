@@ -23,6 +23,14 @@ public class LoadSceneOnClick : MonoBehaviour
         StartCoroutine(Fading(index));
     }
 
+    public void ReloadScene()
+    {
+        // Can't load same scene without this for some reason... Needed for level select
+        audioManager.UnloadBanks();
+        StartCoroutine(Fading(1));
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     IEnumerator Fading(int index)
     {
         anim.SetBool("Fade", true);
