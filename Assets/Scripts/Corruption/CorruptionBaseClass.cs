@@ -89,7 +89,6 @@ public abstract class CorruptionBaseClass : MonoBehaviour
 				gameManager.audioManager.PlaySegmentClear(1f);
                 cleared = true;
                 perfected = true;
-                Debug.Log("ayyest");
             }
             else if (bestScore >= clearThreshold)
             {

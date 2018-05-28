@@ -37,6 +37,7 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private float yOffset;
     //[SerializeField] private float cassetteOffset;
     [SerializeField] private float cassetteAngle;
+    [HideInInspector] public bool pauseScreen = false;
 
     // Temporary
     ////
@@ -44,7 +45,6 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private bool workWithMouseInput = false;
     ////
 
-    public bool pauseScreen = false;
 
     private Vector3[] startPos;
     private bool movementLock = false;

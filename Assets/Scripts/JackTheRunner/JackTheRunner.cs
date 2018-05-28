@@ -61,7 +61,6 @@ public class JackTheRunner : CorruptionBaseClass
                 if (inSegment == false) //If player just entered the segment
                 {
                     EnterSegment();
-                    Debug.Log("Entered segment");
                 }
                 RecordSegment();
             }
@@ -72,7 +71,6 @@ public class JackTheRunner : CorruptionBaseClass
         }
         else if (inSegment) //If player leaves the segment area
         {
-            Debug.Log("Exited segment");
             ExitSegment();
         }
     }

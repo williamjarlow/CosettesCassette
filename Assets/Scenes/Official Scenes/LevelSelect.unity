@@ -2286,8 +2286,8 @@ MonoBehaviour:
   xOffset: 0
   yOffset: 0
   cassetteAngle: 30
-  workWithMouseInput: 1
   pauseScreen: 0
+  workWithMouseInput: 1
 --- !u!4 &384455290
 Transform:
   m_ObjectHideFlags: 0
@@ -4523,7 +4523,7 @@ GameObject:
   - component: {fileID: 826326850}
   - component: {fileID: 826326849}
   m_Layer: 0
-  m_Name: Button
+  m_Name: PauseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4609,6 +4609,39 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 826326847}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: OpenPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1225895311}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1870714366}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -6816,10 +6849,8 @@ Transform:
   m_LocalScale: {x: 0.38394368, y: 0.38394368, z: 0.38394368}
   m_Children:
   - {fileID: 2014899666}
-  - {fileID: 1870714371}
-  - {fileID: 2063853631}
   m_Father: {fileID: 1564931354}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1247805490
 MonoBehaviour:
@@ -7194,8 +7225,8 @@ MonoBehaviour:
   xOffset: 3.5
   yOffset: 1
   cassetteAngle: 35
-  workWithMouseInput: 1
   pauseScreen: 0
+  workWithMouseInput: 1
 --- !u!114 &1254622550 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114529061550264318, guid: b71481a9af3b62d44b6d851658247729,
@@ -7396,7 +7427,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4854102014608760, guid: fe9c67b967512f2459e57fa955a9d598, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114135618744191550, guid: fe9c67b967512f2459e57fa955a9d598,
         type: 2}
@@ -7959,7 +7990,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014899665}
+      - m_Target: {fileID: 1247805488}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -7982,8 +8013,30 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 438121193}
-        m_MethodName: PlayPauseMenuClose
+        m_MethodName: PlaySkinMenuClose
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: ClosePause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1870714366}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8310,6 +8363,7 @@ RectTransform:
   - {fileID: 378056514}
   - {fileID: 1028312456}
   - {fileID: 1355608249}
+  - {fileID: 1870714371}
   - {fileID: 1247805489}
   - {fileID: 1942734997}
   - {fileID: 446365674}
@@ -9469,7 +9523,7 @@ Prefab:
     - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4070677934810182, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
       propertyPath: m_LocalPosition.x
@@ -9679,11 +9733,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 438121193}
+      objectReference: {fileID: 1252220919}
     - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
-      value: AudioUnpauseMusic
+      value: ClosePause
       objectReference: {fileID: 0}
     - target: {fileID: 114000454911450138, guid: 3a7b3e30fc118044e93bb67d3d382062,
         type: 2}
@@ -9856,7 +9910,42 @@ Prefab:
     - target: {fileID: 114601595409702528, guid: 3a7b3e30fc118044e93bb67d3d382062,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadByIndex
+      value: ReloadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 114601595409702528, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      value: 
+      objectReference: {fileID: 1870714366}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114904112906610066, guid: 3a7b3e30fc118044e93bb67d3d382062,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a7b3e30fc118044e93bb67d3d382062, type: 2}
@@ -9999,7 +10088,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014899665}
+      - m_Target: {fileID: 1247805488}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -10021,28 +10110,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1870714366}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2063853630}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 438121193}
         m_MethodName: PlaySkinMenuOpen
         m_Mode: 1
@@ -10053,6 +10120,39 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: OpenPause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1225895311}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1870714366}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -10116,17 +10216,17 @@ RectTransform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1870714366}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2927, y: 1437, z: 320}
-  m_LocalScale: {x: 5.788312, y: 5.7883115, z: 5.7883115}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 898.19653, y: 385.2832, z: 94.80277}
+  m_LocalScale: {x: 2.222386, y: 2.2223856, z: 2.2223856}
   m_Children:
   - {fileID: 842458889}
-  m_Father: {fileID: 1247805489}
-  m_RootOrder: 1
+  m_Father: {fileID: 1564931354}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2927, y: 1437}
+  m_AnchoredPosition: {x: 898.19653, y: 385.2832}
   m_SizeDelta: {x: 86.7, y: 84.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1881117689
@@ -10991,6 +11091,7 @@ Transform:
   m_Children:
   - {fileID: 1454759664}
   - {fileID: 1689899584}
+  - {fileID: 2063853631}
   m_Father: {fileID: 1247805489}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11335,7 +11436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2063853631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11343,17 +11444,17 @@ RectTransform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2063853630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2927, y: 1437, z: 320}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 998, y: 1402, z: 1522}
   m_LocalScale: {x: 5.788312, y: 5.7883115, z: 5.7883115}
   m_Children:
   - {fileID: 159281078}
-  m_Father: {fileID: 1247805489}
+  m_Father: {fileID: 2014899666}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2927, y: 1437}
+  m_AnchoredPosition: {x: 998, y: 1402}
   m_SizeDelta: {x: 86.7, y: 84.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2063853632
@@ -11414,29 +11515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1870714366}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2014899665}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2063853630}
+      - m_Target: {fileID: 1247805488}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -11461,6 +11540,28 @@ MonoBehaviour:
       - m_Target: {fileID: 438121193}
         m_MethodName: PlaySkinMenuClose
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1252220919}
+        m_MethodName: ClosePause
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1870714366}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
