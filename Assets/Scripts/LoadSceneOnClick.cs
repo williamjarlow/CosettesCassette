@@ -19,14 +19,12 @@ public class LoadSceneOnClick : MonoBehaviour
     public void LoadByIndex(int index)
     {
         Time.timeScale = 1.0F;
-		audioManager.UnloadBanks ();
         StartCoroutine(Fading(index));
     }
 
     public void ReloadScene()
     {
         // Can't load same scene without this for some reason... Needed for level select
-        audioManager.UnloadBanks();
         StartCoroutine(Fading(1));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -36,5 +34,6 @@ public class LoadSceneOnClick : MonoBehaviour
         anim.SetBool("Fade", true);
         yield return new WaitUntil(() => black.color.a == 1);
         SceneManager.LoadScene(index);
+		BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (index).name);
     }
 }

@@ -366,6 +366,7 @@ public class LevelSelect : MonoBehaviour
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
             }
         }
     }
@@ -381,6 +382,7 @@ public class LevelSelect : MonoBehaviour
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
             }
         }
     }
@@ -396,6 +398,7 @@ public class LevelSelect : MonoBehaviour
                 SceneManager.LoadScene(lvl);
 				audioManager.PlayLevelSelectPlay ();
                 audioManager.AudioStopMusic();
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
             }
         }
     }
