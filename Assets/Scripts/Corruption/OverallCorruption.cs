@@ -153,7 +153,7 @@ public class OverallCorruption : MonoBehaviour {
 				corruptions[i].cleared = false;
 		}
 
-        if(gameManager.LevelPerfected == false && overallCorruption < 30)           // Hej hej. Fixa här tack? Tutorial funkar fan inte när den är 0. Funkar något? BUG BUG BUG
+        if(gameManager.LevelPerfected == false && overallCorruption <= 0)           // Hej hej. Fixa här tack? Tutorial funkar fan inte när den är 0. Funkar något? BUG BUG BUG
         {
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name) || SceneManager.GetActiveScene().buildIndex <= 2)  // Testade att fixa, funkar nog fan inte heller
             {

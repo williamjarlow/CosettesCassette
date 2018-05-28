@@ -17,7 +17,7 @@ public class JackTheRunnerMovement : MonoBehaviour {
     private bool invisible = false;
 
     [SerializeField] private float jumpForce = 4.5f;
-    [SerializeField] private float invisibilitySeconds = 1;
+    [SerializeField] private float invisibilitySeconds = 0.1f;
     [SerializeField] private float invisibilityBlinkSpeed = 5;
     [SerializeField] private GameObject jacksHurt;
 
