@@ -33,10 +33,14 @@ public class StoryTelling : MonoBehaviour {
     private int pageIndex = 0;
     private string originalHeader = "";
 
-	private AudioManager audioManager;
+    private AudioManager audioManager;
+    private Button[] episodeButtons;
+    private SaveSystem saveSystemRef;
+    private Dictionary<int, bool> unlocks;
 
     void Start()
-	{
+    {
+        saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
         audioManager = GameObject.FindWithTag("AudioManager").GetComponent<AudioManager>();
         forwardButton.SetActive(false);
         backwardsButton.SetActive(false);
@@ -44,6 +48,16 @@ public class StoryTelling : MonoBehaviour {
         originalHeader = transcriptHeader.text;
         leftPage.text = "";
         rightPage.text = "";
+        episodeButtons = episodeMenu.GetComponentsInChildren<Button>();
+
+        unlocks = saveSystemRef.GetUnlocks();
+        for(int i = 0; i < episodeButtons.Length; i++)
+        {
+            if(unlocks[i + 2 + 14] == false)
+            {
+                episodeButtons[i].interactable = false;
+            }
+        }
     }
 
     public void InitializeStory(int index)
