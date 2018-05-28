@@ -22,15 +22,15 @@ public class AudioManager : MonoBehaviour {
 	private FMOD.Studio.Bus interfaceBus;
 
 	//DSPs
-//	public FMOD.DSP musicChanSubGroupDSP;
-//	public FMOD.DSP pitchSumDSP;
-//	public FMOD.DSP pitchChordsDSP;
-//	public FMOD.DSP pitchVocalsDSP;
-//	public FMOD.DSP pitchDrumsDSP;
-//	public FMOD.DSP pitchBassDSP;
-//	public FMOD.DSP pitchLeadDSP;
-//	public FMOD.DSP tremoloVocalsDSP;
-//	public FMOD.DSP flangerVocalsDSP;
+	//	public FMOD.DSP musicChanSubGroupDSP;
+	//	public FMOD.DSP pitchSumDSP;
+	//	public FMOD.DSP pitchChordsDSP;
+	//	public FMOD.DSP pitchVocalsDSP;
+	//	public FMOD.DSP pitchDrumsDSP;
+	//	public FMOD.DSP pitchBassDSP;
+	//	public FMOD.DSP pitchLeadDSP;
+	//	public FMOD.DSP tremoloVocalsDSP;
+	//	public FMOD.DSP flangerVocalsDSP;
 
 	//Parameter instances
 	public FMOD.Studio.ParameterInstance togglePitchVocals;
@@ -70,90 +70,101 @@ public class AudioManager : MonoBehaviour {
 
 	private int trackLength;
 
-    [Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
-    [SerializeField] private List<string> bankFiles;
+	[Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
+	[SerializeField] private List<string> bankFiles;
 	private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
-    [HideInInspector] public bool switchedToAudioLog = false;
-    [HideInInspector] public bool startedMusic = false;
-    [HideInInspector] public bool pausedMusic = true;
+	[HideInInspector] public bool switchedToAudioLog = false;
+	[HideInInspector] public bool startedMusic = false;
+	[HideInInspector] public bool pausedMusic = true;
 
-    // Added for special case of LiveTutorial popup
-    private LiveTutorial liveTutorial;
-    private bool showedSpecialCase = false;
+	// Added for special case of LiveTutorial popup
+	private LiveTutorial liveTutorial;
+	private bool showedSpecialCase = false;
 
-    private GameManager gameManager;
+	private GameManager gameManager;
+	//private SaveSystem saveSystem;
 
-    void Awake ()
+	void Awake ()
 	{
-        systemObj = FMODUnity.RuntimeManager.StudioSystem;
-        lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
+		systemObj = FMODUnity.RuntimeManager.StudioSystem;
+		lowLevelSys = FMODUnity.RuntimeManager.LowlevelSystem;
+		//saveSystem = SaveSystem.Instance.GetComponent<SaveSystem> ();
 
-        LoadBanks();
+		FMODUnity.RuntimeManager.LoadBank ("Master Bank.bank", true);
+		FMODUnity.RuntimeManager.LoadBank ("Master Bank.strings.bank", true);
 
-        // Get the event description of music event, needed to get Track Length
-        // Required to be in Awake() because a lot of game objects ask for the track length in Start()
-        systemObj.getEvent(musicPath, out musicEventDesc);
-        musicEventDesc.getLength(out trackLength);
+		SaveSystem.Instance.masterBanksLoaded = true;
+
+		LoadBanks();
+
+		// Get the event description of music event, needed to get Track Length
+		// Required to be in Awake() because a lot of game objects ask for the track length in Start()
+		systemObj.getEvent(musicPath, out musicEventDesc);
+		musicEventDesc.getLength(out trackLength);
 
 		//Get the event description of audio log
 		systemObj.getEvent (audioLogPath, out logEventDesc);
-    }
-		
-    void Start()
-    {
-        //// Special case for LiveTutorial
-        if (SceneManager.GetActiveScene().name == "Cassette00")
-        {
-            liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
-        }
-        ////
-        if(SceneManager.GetActiveScene().buildIndex <= 1)
-            gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-
-        Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
-        Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
 
-    void Update()
-    {
-        //// Special case for LiveTutorial
-        if (liveTutorial != null && switchedToAudioLog && !showedSpecialCase)
-        {
-            if (GetTimeLinePosition() >= GetTrackLength() - 30)
-            {
-                showedSpecialCase = true;
-                liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
-            }
-        }
-        ////
-    }
-
-    public void LoadBanks()
+	void Start()
 	{
-        //Loads the FMOD banks
-        for (int i = 0; i < bankFiles.Count; i++)
-        {
-            FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-            result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
-        }
+		//// Special case for LiveTutorial
+		if (SceneManager.GetActiveScene().name == "Cassette00")
+		{
+			liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+		}
+		////
 
-        //Waits for loads to finish
-        FMODUnity.RuntimeManager.WaitForAllLoads();
-        systemObj.flushCommands();
-    }
+		if (SceneManager.GetActiveScene().name != "LevelSelect")
+		{
+			gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+		}
 
-    public void UnloadBanks()
-    {
-        //Unloads the loaded FMOD banks
-        for (int i = 0; i < bankFiles.Count; i++)
-        {
-            FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
-        }
-    }
+		Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
+		Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
+	}
 
-    public void AudioPlayMusic ()
-    {
+	void Update()
+	{
+		//// Special case for LiveTutorial
+		if (liveTutorial != null && switchedToAudioLog && !showedSpecialCase)
+		{
+			if (GetTimeLinePosition() >= GetTrackLength() - 30)
+			{
+				showedSpecialCase = true;
+				liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
+			}
+		}
+		////
+	}
+
+	public void LoadBanks()
+	{
+		//Loads the FMOD banks
+		for (int i = 0; i < bankFiles.Count; i++)
+		{
+			FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
+			result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
+		}
+
+		//Waits for loads to finish
+		FMODUnity.RuntimeManager.WaitForAllLoads();
+		systemObj.flushCommands();
+	}
+
+	public void UnloadBanks()
+	{
+		//Unloads the loaded FMOD banks
+		for (int i = 0; i < bankFiles.Count; i++)
+		{
+			result = banks[i].unload();
+			print("Unload bank: " + result);
+		}
+	}
+
+	public void AudioPlayMusic ()
+	{
 		//"music" event is assigned to "gameMusicEv"
 		if (!switchedToAudioLog)
 		{
@@ -167,38 +178,38 @@ public class AudioManager : MonoBehaviour {
 		}
 
 		//audio log event is assigned to "gameMusicEv"
-        if(switchedToAudioLog)
+		if(switchedToAudioLog)
 			logEventDesc.createInstance(out gameMusicEv);
 
-        gameMusicEv.start();
+		gameMusicEv.start();
 
 		GetDSPParameters ();
 
-        //assigns DSPs if starting music and they haven't been assigned already
+		//assigns DSPs if starting music and they haven't been assigned already
 		//if (!startedMusic & !switchedToAudioLog) 
 		//	StartCoroutine (GetDSP ());
-    }
+	}
 
-    public void AudioPlayMenuMusic()
-    {
-        musicEventDesc.createInstance(out gameMusicEv);
-        gameMusicEv.start();
-    }
+	public void AudioPlayMenuMusic()
+	{
+		musicEventDesc.createInstance(out gameMusicEv);
+		gameMusicEv.start();
+	}
 
 	public void AudioStopMusic ()
-    {
-        gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+	{
+		gameMusicEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 		gameMusicEv.release ();
 
 		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
-        startedMusic = false;
-    }
+		startedMusic = false;
+	}
 
 	public void AudioPauseMusic ()
-    {
+	{
 		FMOD.Studio.EventDescription pauseEventDesc;
-	 	FMOD.Studio.EventInstance pauseEv;
+		FMOD.Studio.EventInstance pauseEv;
 		systemObj.getEvent ("event:/Interface/Playback/pause", out pauseEventDesc);
 		pauseEventDesc.createInstance (out pauseEv);
 		pauseEv.start ();
@@ -206,12 +217,12 @@ public class AudioManager : MonoBehaviour {
 
 		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
-        gameMusicEv.setPaused(true);
-        pausedMusic = true;
-    }
+		gameMusicEv.setPaused(true);
+		pausedMusic = true;
+	}
 
 	public void AudioUnpauseMusic ()
-    {
+	{
 		FMOD.Studio.EventDescription playEventDesc;
 		FMOD.Studio.EventInstance playEv;
 		systemObj.getEvent ("event:/Interface/Playback/play", out playEventDesc);
@@ -219,54 +230,54 @@ public class AudioManager : MonoBehaviour {
 		playEv.start ();
 		playEv.release ();
 
-        gameMusicEv.setPaused(false);
-        pausedMusic = false;
-    }
-
-    public void AudioPlayPauseAndUnpause()
-    {
-            if (startedMusic && !pausedMusic)
-            {
-                AudioPauseMusic();
-                pausedMusic = true;
-            }
-
-            else if (startedMusic && pausedMusic)
-            {
-                AudioUnpauseMusic();
-                pausedMusic = false;
-            }
-
-            if (!startedMusic)
-            {
-                AudioPlayMusic();
-                startedMusic = true;
-                pausedMusic = false;
-            }
-    }
-
-    #region soundEffects
-    public void PlaySkip()
-	{
-        if(startedMusic)
-        {
-            result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
-            skipEventDesc.createInstance(out skipEv);
-            skipEv.setParameterValue("skip_click", 0);
-            skipEv.start();
-        }
+		gameMusicEv.setPaused(false);
+		pausedMusic = false;
 	}
 
-    public void StopPlayingSkip()
-    {
-        if(startedMusic)
-        {
-            skipEv.setParameterValue("skip_click", 1);
-            skipEv.release();
-        }
-    }
+	public void AudioPlayPauseAndUnpause()
+	{
+		if (startedMusic && !pausedMusic)
+		{
+			AudioPauseMusic();
+			pausedMusic = true;
+		}
 
-    public void SetSkipPitch(float speed)
+		else if (startedMusic && pausedMusic)
+		{
+			AudioUnpauseMusic();
+			pausedMusic = false;
+		}
+
+		if (!startedMusic)
+		{
+			AudioPlayMusic();
+			startedMusic = true;
+			pausedMusic = false;
+		}
+	}
+
+	#region soundEffects
+	public void PlaySkip()
+	{
+		if(startedMusic)
+		{
+			result = systemObj.getEvent("event:/Interface/Playback/skip", out skipEventDesc);
+			skipEventDesc.createInstance(out skipEv);
+			skipEv.setParameterValue("skip_click", 0);
+			skipEv.start();
+		}
+	}
+
+	public void StopPlayingSkip()
+	{
+		if(startedMusic)
+		{
+			skipEv.setParameterValue("skip_click", 1);
+			skipEv.release();
+		}
+	}
+
+	public void SetSkipPitch(float speed)
 	{
 		skipEv.setParameterValue("skip_pitch", speed);
 	}
@@ -311,25 +322,25 @@ public class AudioManager : MonoBehaviour {
 		levelClearEvent.release ();
 	}
 
-    public void PlayEjectSound()
-    {
-        FMOD.Studio.EventDescription ejectEventDesc;
-        FMOD.Studio.EventInstance ejectEv;
-        systemObj.getEvent("event:/Interface/Playback/eject", out ejectEventDesc);
-        ejectEventDesc.createInstance(out ejectEv);
-        ejectEv.start();
-        ejectEv.release();
-    }
-		
-    public void PlaySnapSound()
-    {
-        FMOD.Studio.EventDescription snapEventDesc;
-        FMOD.Studio.EventInstance snapEv;
-        systemObj.getEvent("event:/Interface/Playback/snap", out snapEventDesc);
-        snapEventDesc.createInstance(out snapEv);
-        snapEv.start();
-        snapEv.release();
-    }
+	public void PlayEjectSound()
+	{
+		FMOD.Studio.EventDescription ejectEventDesc;
+		FMOD.Studio.EventInstance ejectEv;
+		systemObj.getEvent("event:/Interface/Playback/eject", out ejectEventDesc);
+		ejectEventDesc.createInstance(out ejectEv);
+		ejectEv.start();
+		ejectEv.release();
+	}
+
+	public void PlaySnapSound()
+	{
+		FMOD.Studio.EventDescription snapEventDesc;
+		FMOD.Studio.EventInstance snapEv;
+		systemObj.getEvent("event:/Interface/Playback/snap", out snapEventDesc);
+		snapEventDesc.createInstance(out snapEv);
+		snapEv.start();
+		snapEv.release();
+	}
 
 	public void PlayPauseMenuOpen()
 	{
@@ -611,9 +622,9 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEv.release ();
 	}
 
-    #endregion
+	#endregion
 
-    public void MuteSFX(bool mute)
+	public void MuteSFX(bool mute)
 	{
 		systemObj.getBus ("bus:/SFX", out sfxBus);
 		systemObj.getBus ("bus:/Interface", out interfaceBus);
@@ -635,140 +646,140 @@ public class AudioManager : MonoBehaviour {
 		interfaceBus.setMute (true);
 	}
 
-    public void GetDSPParameters()
-    {
-        //Toggles
-        gameMusicEv.getParameter("toggle_pitch_vocals", out togglePitchVocals);
-        gameMusicEv.getParameter("toggle_pitch_chords", out togglePitchChords);
-        gameMusicEv.getParameter("toggle_pitch_drums", out togglePitchDrums);
-        gameMusicEv.getParameter("toggle_pitch_bass", out togglePitchBass);
-        gameMusicEv.getParameter("toggle_pitch_lead", out togglePitchLead);
+	public void GetDSPParameters()
+	{
+		//Toggles
+		gameMusicEv.getParameter("toggle_pitch_vocals", out togglePitchVocals);
+		gameMusicEv.getParameter("toggle_pitch_chords", out togglePitchChords);
+		gameMusicEv.getParameter("toggle_pitch_drums", out togglePitchDrums);
+		gameMusicEv.getParameter("toggle_pitch_bass", out togglePitchBass);
+		gameMusicEv.getParameter("toggle_pitch_lead", out togglePitchLead);
 
-        //Intensity
-        gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
-        gameMusicEv.getParameter("pitch_chords", out pitchChords);
-        gameMusicEv.getParameter("pitch_drums", out pitchDrums);
-        gameMusicEv.getParameter("pitch_bass", out pitchBass);
-        gameMusicEv.getParameter("pitch_lead", out pitchLead);
-        gameMusicEv.getParameter("ooo_vocals", out oooVocals);
-    }
+		//Intensity
+		gameMusicEv.getParameter("pitch_vocals", out pitchVocals);
+		gameMusicEv.getParameter("pitch_chords", out pitchChords);
+		gameMusicEv.getParameter("pitch_drums", out pitchDrums);
+		gameMusicEv.getParameter("pitch_bass", out pitchBass);
+		gameMusicEv.getParameter("pitch_lead", out pitchLead);
+		gameMusicEv.getParameter("ooo_vocals", out oooVocals);
+	}
 
-    //    private IEnumerator GetDSP()
-    //	{
-    //		FMOD.Studio.PLAYBACK_STATE state;
-    //
-    //		gameMusicEv.getPlaybackState (out state);
-    //
-    //		//waits for "gameMusicEv" to start before trying to get DSPs
-    //		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
-    //		{
-    //			gameMusicEv.getPlaybackState (out state);
-    //			yield return null;
-    //		}
-    //		
-    //		FMOD.DSPConnection DSPCon;
-    //		FMOD.DSP_TYPE type;
-    //
-    //		//CHANNEL GROUP AND DSP HEAD
-    //		gameMusicEv.getChannelGroup (out musicChanGroup);
-    //		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
-    //		//print ("Get subgroup: " + result);
-    //		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
-    //		//print ("Get subgroup DSP: " + result);
-    //
-    //		musicChanSubGroupDSP.get
-    //
-    //		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
-    //		pitchChordsDSP.getType (out type);
-    //		print (result);
-    //		print (type);
-    //		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
-    //		tremoloVocalsDSP.getType (out type);
-    //		print (result);
-    //		print (type);
-    //		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
-    //		pitchDrumsDSP.getType (out type);
-    //		print (result);
-    //		print (type);
-    //		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
-    //		pitchBassDSP.getType (out type);
-    //		print (result);
-    //		print (type);
-    //		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
-    //		pitchLeadDSP.getType (out type);
-    //		print (result);
-    //		print (type);
-    //
-    //		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
-    //		result = flangerVocalsDSP.getType(out type);
-    //		print(result);
-    //		print(type);
-    //
-    //		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
-    //		result = pitchVocalsDSP.getType(out type);
-    //		print(result);
-    //		print(type);
-    //
-    //		/*pitchChordsDSP.setBypass(false);
-    //		pitchVocalsDSP.setBypass(false);
-    //		pitchDrumsDSP.setBypass(false);
-    //		pitchBassDSP.setBypass(false);
-    //		pitchLeadDSP.setBypass(false);*/
-    //	}
+	//    private IEnumerator GetDSP()
+	//	{
+	//		FMOD.Studio.PLAYBACK_STATE state;
+	//
+	//		gameMusicEv.getPlaybackState (out state);
+	//
+	//		//waits for "gameMusicEv" to start before trying to get DSPs
+	//		while (state != FMOD.Studio.PLAYBACK_STATE.PLAYING) 
+	//		{
+	//			gameMusicEv.getPlaybackState (out state);
+	//			yield return null;
+	//		}
+	//		
+	//		FMOD.DSPConnection DSPCon;
+	//		FMOD.DSP_TYPE type;
+	//
+	//		//CHANNEL GROUP AND DSP HEAD
+	//		gameMusicEv.getChannelGroup (out musicChanGroup);
+	//		result = musicChanGroup.getGroup (0, out musicChanSubGroup);
+	//		//print ("Get subgroup: " + result);
+	//		result = musicChanSubGroup.getDSP (3, out musicChanSubGroupDSP);
+	//		//print ("Get subgroup DSP: " + result);
+	//
+	//		musicChanSubGroupDSP.get
+	//
+	//		result = musicChanSubGroupDSP.getInput (0, out pitchChordsDSP, out DSPCon);
+	//		pitchChordsDSP.getType (out type);
+	//		print (result);
+	//		print (type);
+	//		result = musicChanSubGroupDSP.getInput (1, out tremoloVocalsDSP, out DSPCon);
+	//		tremoloVocalsDSP.getType (out type);
+	//		print (result);
+	//		print (type);
+	//		result = musicChanSubGroupDSP.getInput (2, out pitchDrumsDSP, out DSPCon);
+	//		pitchDrumsDSP.getType (out type);
+	//		print (result);
+	//		print (type);
+	//		result = musicChanSubGroupDSP.getInput (3, out pitchBassDSP, out DSPCon);
+	//		pitchBassDSP.getType (out type);
+	//		print (result);
+	//		print (type);
+	//		result = musicChanSubGroupDSP.getInput (4, out pitchLeadDSP, out DSPCon);
+	//		pitchLeadDSP.getType (out type);
+	//		print (result);
+	//		print (type);
+	//
+	//		result = tremoloVocalsDSP.getInput (0, out flangerVocalsDSP, out DSPCon);
+	//		result = flangerVocalsDSP.getType(out type);
+	//		print(result);
+	//		print(type);
+	//
+	//		result = flangerVocalsDSP.getInput (0, out pitchVocalsDSP, out DSPCon);
+	//		result = pitchVocalsDSP.getType(out type);
+	//		print(result);
+	//		print(type);
+	//
+	//		/*pitchChordsDSP.setBypass(false);
+	//		pitchVocalsDSP.setBypass(false);
+	//		pitchDrumsDSP.setBypass(false);
+	//		pitchBassDSP.setBypass(false);
+	//		pitchLeadDSP.setBypass(false);*/
+	//	}
 
-    public float GetTrackLength()
-    {
-        return trackLength;
-    }
+	public float GetTrackLength()
+	{
+		return trackLength;
+	}
 
-    public float GetTimeLinePosition()
-    {
-        int temp;
-        gameMusicEv.getTimelinePosition(out temp);
-        return temp;
-    }
+	public float GetTimeLinePosition()
+	{
+		int temp;
+		gameMusicEv.getTimelinePosition(out temp);
+		return temp;
+	}
 
-    public string GetMusicPath()
-    {
-        return musicPath;
-    }
+	public string GetMusicPath()
+	{
+		return musicPath;
+	}
 
-    public string GetAudioLogPath()
-    {
-        return audioLogPath;
-    }
+	public string GetAudioLogPath()
+	{
+		return audioLogPath;
+	}
 
-    public void toggleTapeSide()
-    {
-        switchedToAudioLog = !switchedToAudioLog;
+	public void toggleTapeSide()
+	{
+		switchedToAudioLog = !switchedToAudioLog;
 
-        if (switchedToAudioLog)
-            logEventDesc.getLength(out trackLength);
-        if (!switchedToAudioLog)
-            musicEventDesc.getLength(out trackLength);
+		if (switchedToAudioLog)
+			logEventDesc.getLength(out trackLength);
+		if (!switchedToAudioLog)
+			musicEventDesc.getLength(out trackLength);
 
-        AudioStopMusic();
+		AudioStopMusic();
 
 		PlayEjectSound ();
 		PlayFlipAnimSound ();
 
-        // If we are in the audio log --> disable visuals
-        if (switchedToAudioLog)
-        {
-            for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
-            {
-                gameManager.overallCorruption.corruptedAreaList[i].SetActive(false);
-            }
-        }
+		// If we are in the audio log --> disable visuals
+		if (switchedToAudioLog)
+		{
+			for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
+			{
+				gameManager.overallCorruption.corruptedAreaList[i].SetActive(false);
+			}
+		}
 
-        // If we are in the song --> enable visuals
-        else if (!switchedToAudioLog)
-        {
-            for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
-            {
-                gameManager.overallCorruption.corruptedAreaList[i].SetActive(true);
-            }
-        }
+		// If we are in the song --> enable visuals
+		else if (!switchedToAudioLog)
+		{
+			for (int i = 0; i < gameManager.overallCorruption.corruptedAreaList.Count; i++)
+			{
+				gameManager.overallCorruption.corruptedAreaList[i].SetActive(true);
+			}
+		}
 
-    }
+	}
 }
