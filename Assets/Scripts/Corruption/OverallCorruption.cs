@@ -158,12 +158,13 @@ public class OverallCorruption : MonoBehaviour
             }
             else
                 tempPerfected = false;
-
         }
 
+        Debug.Log(gameManager.LevelPerfected);
+        Debug.Log(tempPerfected);
         if (gameManager.LevelPerfected == false && tempPerfected)
         {
-            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))  // Testade att fixa, funkar nog fan inte heller
+            if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
             {
                 if (!gameManager.LevelCleared)
                 {
