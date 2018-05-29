@@ -56,7 +56,7 @@ public class WalkmanMaterialSelects : MonoBehaviour {
 
         settingsIcon.GetComponent<Renderer>().sharedMaterial.SetTexture("_MainTex", buttonTextureRef);
         buttonsmaterial.SetTexture("_MainTex", shadedTextureRef);
-        corruptionBarMat.SetTexture("_MainTex", corrutionBarTex);
+        //corruptionBarMat.SetTexture("_MainTex", corrutionBarTex);
         audioManager.PlaySkinMenuSelect ();
 
         /*
