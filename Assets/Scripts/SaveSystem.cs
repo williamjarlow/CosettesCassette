@@ -274,6 +274,8 @@ public class SaveSystem : Singleton<SaveSystem>
                 data.levelLockSave[i] = false;
             }
 
+            data.levelLockSave[23] = true;
+
             bf.Serialize(file, data);
             file.Close();
         }
@@ -318,6 +320,35 @@ public class SaveSystem : Singleton<SaveSystem>
             return unlocks;
         }
         return unlocks;
+    }
+
+    //Clear all data
+    public void ClearData()
+    {
+        ClearSegments();
+        ClearUnlocks();
+
+        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            data = (PlayerData)bf.Deserialize(file);
+
+            List<string> keyList = new List<string>(stickerManRef.GetComponent<StickerManager>().stickerDictionary.Keys);
+            for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
+            {
+                stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].loaded = false;
+                stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Unlocked = false;
+            }
+
+            data.stickersSave.Clear();
+            file.Close();
+
+            for (int i = 0; i < stickerManRef.GetComponent<StickerManager>().stickerDictionary.Count; i++)
+            {
+                SaveStickers(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
+            }
+        }
     }
 
 }
