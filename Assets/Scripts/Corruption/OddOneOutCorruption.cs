@@ -41,8 +41,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
     private bool displayChoice;     // Used to check if we are displaying the results/choice, i.e which toggle/word was pressed
     private bool resetConditions;   // Used to reset conditions only once
 
-                                // ** TODO ** // 
-        // 1. Fix calling ResetConditions() every frame. Happens when inSegment and !recording
+
     void Start()
     {
         overallCorruption = gameManager.overallCorruption;

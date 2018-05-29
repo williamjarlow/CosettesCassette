@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageAnimation : MonoBehaviour {
 
-    private SpriteRenderer spriteRenderer;
+    private Image image;
     private Color currentColor;
 
     [Header("To have image blink with alpha")]
@@ -20,8 +21,8 @@ public class ImageAnimation : MonoBehaviour {
 
     void Start ()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        currentColor = GetComponent<SpriteRenderer>().color;
+        image = GetComponent<Image>();
+        currentColor = GetComponent<Image>().color;
 	}
 	
 
@@ -30,7 +31,7 @@ public class ImageAnimation : MonoBehaviour {
         if (blinkWithAlpha)
         {
             currentColor.a = Mathf.Lerp(maxAlpha, minAlpha, Mathf.PingPong(Time.time * blinkingSpeed, 1));
-            spriteRenderer.color = currentColor;
+            image.color = currentColor;
         }
 
         if (rotateImage)

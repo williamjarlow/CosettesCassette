@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-// ** Written by Hannes Gustafsson ** // 
+// ** Written by Hannes Gustafsson, template by William Jarlow ** // 
 
 public enum NoteType { CORRECT, INCORRECT, CORRECTMULTI };
 public enum NoteValue { SINGLE, DOUBLE };
