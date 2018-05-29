@@ -24,6 +24,7 @@ public class CorruptionVisuals : MonoBehaviour {
     private float rectWidth;
     private float rectHeight;
     private int trackLength;
+    [SerializeField] private float fadeDelay = 5;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class CorruptionVisuals : MonoBehaviour {
         // Save the original color to be able to reset it when the corrupted area has been fixed
         //maskImage = GetComponentInChildren<Image>();
         repairedColor = gameManager.timelineSlider.GetComponent<Image>().color;
+        StartCoroutine(FadeInDelay(fadeDelay));
 	}
 
     public void SetCorruptionPosition(int corruptionStartPoint, int corruptionEndPoint)
@@ -84,6 +86,15 @@ public class CorruptionVisuals : MonoBehaviour {
 
         // Set alpha value to actual image
         maskImage.color = savedColor;
+    }
+
+    IEnumerator FadeInDelay(float fadeDelay)
+    {
+        Color savedColor = maskImage.color;
+        savedColor.a = 0;
+        maskImage.color = savedColor;
+        yield return new WaitForSeconds(fadeDelay);
+        maskImage.CrossFadeAlpha(1, 2, false);
     }
 
 }
