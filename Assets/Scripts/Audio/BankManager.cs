@@ -22,7 +22,6 @@ public class BankManager : Singleton<BankManager> {
 		FMODUnity.RuntimeManager.LoadBank ("Master Bank.strings.bank", true);
 
 		SceneChanged (SceneManager.GetActiveScene ().name);
-		print (SceneManager.GetActiveScene ().name);
 
 		if (!created)
 		{
@@ -31,13 +30,7 @@ public class BankManager : Singleton<BankManager> {
 		}
 	}
 
-	private void Start ()
-	{
-		//FMODUnity.RuntimeManager.LoadBank ("LevelSelect.bank", true);
-		//currentBank = "LevelSelect.bank";
-	}
-
-	public void LoadBanks(string bankToLoad)
+	private void LoadBanks(string bankToLoad)
 	{
 		FMODUnity.RuntimeManager.LoadBank (bankToLoad, true);
 		currentBank = bankToLoad;
@@ -47,7 +40,7 @@ public class BankManager : Singleton<BankManager> {
 		audioManager.systemObj.flushCommands();
 	}
 
-	public IEnumerator UnloadBanks(string bankToUnload)
+	private IEnumerator UnloadBanks(string bankToUnload)
 	{
 		yield return new WaitForSeconds(2.0f);
 
@@ -57,7 +50,7 @@ public class BankManager : Singleton<BankManager> {
 	public void SceneChanged(string levelName)
 	{
 		if (created)
-		StartCoroutine(UnloadBanks(currentBank));
+			StartCoroutine(UnloadBanks(currentBank));
 
 		switch (levelName)
 		{

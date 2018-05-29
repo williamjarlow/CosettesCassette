@@ -48,15 +48,13 @@ public class AudioManager : MonoBehaviour {
 	//Event instances
 	public FMOD.Studio.EventInstance gameMusicEv;
 	private FMOD.Studio.EventInstance skipEv;
-	private FMOD.Studio.EventInstance levelClearEvent;
 	private FMOD.Studio.EventInstance playerFadeEv;
-	[HideInInspector] public FMOD.Studio.EventInstance windEv;
+	public FMOD.Studio.EventInstance windEv;
 
 	//Event descriptions
 	private FMOD.Studio.EventDescription musicEventDesc;
 	private FMOD.Studio.EventDescription logEventDesc;
 	private FMOD.Studio.EventDescription skipEventDesc;
-	private FMOD.Studio.EventDescription levelClearEventDesc;
 	private FMOD.Studio.EventDescription playerFadeEventDesc;
 	private FMOD.Studio.EventDescription windEventDesc;
 
@@ -69,10 +67,6 @@ public class AudioManager : MonoBehaviour {
 	[SerializeField] private string levelClearPath;
 
 	private int trackLength;
-
-	//[Tooltip("Bank files to load, should only be the file name in the directory, e.g. 'Cassette_01'. Master banks have to be loaded.")]
-	//[SerializeField] public List<string> bankFiles;
-	//private FMOD.Studio.Bank[] banks = new FMOD.Studio.Bank[3];
 
 	[HideInInspector] public bool switchedToAudioLog = false;
 	[HideInInspector] public bool startedMusic = false;
@@ -115,7 +109,6 @@ public class AudioManager : MonoBehaviour {
 			switchedToAudioLog = true;
 		}
 
-		//Debug.Assert(bankFiles.Count > 0, "Enter the bank file names into the audio manager");
 		Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
 
@@ -132,37 +125,7 @@ public class AudioManager : MonoBehaviour {
 		}
 		////
 	}
-
-	//    public void LoadBanks()
-	//	{
-	//        //Loads the FMOD banks
-	//        for (int i = 0; i < bankFiles.Count; i++)
-	//        {
-	//            FMODUnity.RuntimeManager.LoadBank(bankFiles[i] + ".bank", true);
-	//            result = systemObj.getBank("bank:/" + bankFiles[i], out banks[i]);
-	//			print ("Get bank: " + result);
-	//        }
-	//
-	//        //Waits for loads to finish
-	//        FMODUnity.RuntimeManager.WaitForAllLoads();
-	//        systemObj.flushCommands();
-	//    }
-	//
-	//    public void UnloadBanks()
-	//    {
-	//        //Unloads the loaded FMOD banks
-	//        for (int i = 0; i < bankFiles.Count; i++)
-	//        {
-	//            //FMODUnity.RuntimeManager.UnloadBank(bankFiles[i] + ".bank");
-	//			result = banks[i].unload();
-	//			print ("Unload bank: " + result);
-	//        }
-	//
-	//		//Waits for loads to finish
-	//		FMODUnity.RuntimeManager.WaitForAllLoads();
-	//		systemObj.flushCommands();
-	//    }
-
+		
 	public void AudioPlayMusic ()
 	{
 		//"music" event is assigned to "gameMusicEv"
@@ -183,6 +146,7 @@ public class AudioManager : MonoBehaviour {
 
 		gameMusicEv.start();
 
+		//assigns parameters of effects used by music event
 		GetDSPParameters ();
 
 		//assigns DSPs if starting music and they haven't been assigned already
@@ -245,13 +209,11 @@ public class AudioManager : MonoBehaviour {
 		if (startedMusic && !pausedMusic)
 		{
 			AudioPauseMusic();
-			pausedMusic = true;
 		}
 
 		else if (startedMusic && pausedMusic)
 		{
 			AudioUnpauseMusic();
-			pausedMusic = false;
 		}
 
 		if (!startedMusic)
@@ -321,6 +283,8 @@ public class AudioManager : MonoBehaviour {
 
 	public void PlayWinSound(float score)
 	{
+		FMOD.Studio.EventDescription levelClearEventDesc;
+		FMOD.Studio.EventInstance levelClearEvent;
 		systemObj.getEvent(levelClearPath, out levelClearEventDesc);
 		levelClearEventDesc.createInstance(out levelClearEvent);
 		levelClearEvent.setParameterValue ("stage_clear_score", score); // 0 = okay, 1 = perfect
