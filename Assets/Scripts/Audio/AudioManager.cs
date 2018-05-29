@@ -432,6 +432,36 @@ public class AudioManager : MonoBehaviour {
 		levelSelectBackEv.release();
 	}
 
+	public void PlayResetOpen()
+	{
+		FMOD.Studio.EventDescription resetOpenEventDesc;
+		FMOD.Studio.EventInstance resetOpenEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/reset_open", out resetOpenEventDesc);
+		resetOpenEventDesc.createInstance(out resetOpenEv);
+		resetOpenEv.start();
+		resetOpenEv.release();
+	}
+
+	public void PlayResetYes()
+	{
+		FMOD.Studio.EventDescription resetYesEventDesc;
+		FMOD.Studio.EventInstance resetYesEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/reset_yes", out resetYesEventDesc);
+		resetYesEventDesc.createInstance(out resetYesEv);
+		resetYesEv.start();
+		resetYesEv.release();
+	}
+
+	public void PlayResetNo()
+	{
+		FMOD.Studio.EventDescription resetNoEventDesc;
+		FMOD.Studio.EventInstance resetNoEv;
+		systemObj.getEvent("event:/Interface/LevelSelect/reset_no", out resetNoEventDesc);
+		resetNoEventDesc.createInstance(out resetNoEv);
+		resetNoEv.start();
+		resetNoEv.release();
+	}
+
 	public void PlaySkinMenuOpen()
 	{
 		FMOD.Studio.EventDescription skinOpenEventDesc;

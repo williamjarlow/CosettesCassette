@@ -40,13 +40,13 @@ public class SaveSystem : Singleton<SaveSystem>
             file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
 
             //StartScreen, LevelSelect and Tutorial Level unlocked from start.
-            data.levelLockSave[0] = true;
-            data.levelLockSave[1] = true;
-            data.levelLockSave[2] = true;
+            data.levelLockSave.Add(0, true);
+            data.levelLockSave.Add(1, true);
+            data.levelLockSave.Add(2, true);
 
             for (int i = 3; i < sceneIndexes; i++)
             {
-                data.levelLockSave[i] = false;
+                data.levelLockSave.Add(i, false);
             }
 
             //Credits unlocked from start.
@@ -269,11 +269,19 @@ public class SaveSystem : Singleton<SaveSystem>
             BinaryFormatter bf = new BinaryFormatter();
             file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
 
-            for (int i = 2; i < sceneIndexes; i++)
+            data.levelLockSave.Clear();
+            sceneIndexes = SceneManager.sceneCountInBuildSettings;
+
+            //StartScreen, LevelSelect and Tutorial Level unlocked from start.
+            data.levelLockSave.Add(0, true);
+            data.levelLockSave.Add(1, true);
+            data.levelLockSave.Add(2, true);
+            for (int i = 3; i < sceneIndexes; i++)
             {
-                data.levelLockSave[i] = false;
+                data.levelLockSave.Add(i, false);
             }
 
+            //Credits unlocked from start.
             data.levelLockSave[23] = true;
 
             bf.Serialize(file, data);
@@ -288,8 +296,6 @@ public class SaveSystem : Singleton<SaveSystem>
     {
         BinaryFormatter bf = new BinaryFormatter();
         file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);      // According to random source this might need "//playerInfo.dat" instead for android, must be tested
-
-        //Check if specific key exists in the save file, if it does we just save otherwise we create a new one
 
         if (buildIndex < 8)
         {

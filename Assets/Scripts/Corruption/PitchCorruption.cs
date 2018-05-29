@@ -46,7 +46,7 @@ public class PitchCorruption : CorruptionBaseClass {
     [Range(0.1f, 1)]
     float ruggedness;
 
-    bool inCorruption = false;
+    bool conditionsReset = false;
 
     const float startingScore = 100;
     const int pitchIndicatorMax = 2; //This constant represents the maximum positional value that the pitch indicator can have.
@@ -58,6 +58,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     [SerializeField] GameObject pitchIndicator;
     [SerializeField] GameObject pitchPixelParticlePrefab;
+    List<ParticleSystem> particleSystems = new List<ParticleSystem>();
     GameObject pitchPixelParticleInstance;
     GameObject pitchIndicatorInstance;
     Coroutine lastCoroutine;
@@ -124,21 +125,27 @@ public class PitchCorruption : CorruptionBaseClass {
             }
             else
             {
-                if (!cleared)
+                if (conditionsReset == false)
                 {
-                    if (!inSegment)
+                    conditionsReset = true;
+                    if (!cleared)
                     {
-                        EnterSegment();
-                        inSegment = true;
-                        hitTime = 0;
-                        timeSinceStart = 0;
-                        index = 0;
+                        if (!inSegment)
+                        {
+                            EnterSegment();
+                            inSegment = true;
+                            hitTime = 0;
+                            timeSinceStart = 0;
+                            index = 0;
+                        }
+                        pitchSlider.gameObject.SetActive(false);
+                        DestroyLine();
+                        RecordPitch();
+                        //ResetConditions();
                     }
-                    pitchSlider.gameObject.SetActive(false);
-                    DestroyLine();
-                    RecordPitch();
-                    //ResetConditions();
                 }
+                Destroy(pitchPixelParticleInstance);
+                particleSystems.Clear();
             }
         }
         else if (inSegment) //If player leaves corrupted area
@@ -158,6 +165,8 @@ public class PitchCorruption : CorruptionBaseClass {
         if (lastCoroutine != null)
             StopCoroutine(lastCoroutine); //This is neccessary in order to ensure that nothing breaks if the corruption gets ended early.
         Destroy(pitchIndicatorInstance);
+        Destroy(pitchPixelParticleInstance);
+        particleSystems.Clear();
         audioPitch.SetPitch(0, pitchType);
         DestroyLine();
     }
@@ -249,7 +258,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
-        
+        conditionsReset = false;
         pitchSlider.gameObject.SetActive(true);
         pitchSlider.value = 0;
         hitTime = 0;
@@ -273,7 +282,10 @@ public class PitchCorruption : CorruptionBaseClass {
         currentScore = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
-        pitchPixelParticleInstance = Instantiate(pitchPixelParticlePrefab, pitchIndicatorInstance.transform);
+        pitchPixelParticleInstance = Instantiate(pitchPixelParticlePrefab, pitchIndicatorInstance.transform.position, pitchPixelParticlePrefab.transform.rotation);
+        particleSystems.AddRange(pitchPixelParticleInstance.GetComponentsInChildren<ParticleSystem>());
+        foreach (ParticleSystem ps in particleSystems)
+            ps.Stop();
         GenerateLine();
         base.EnterSegment();
     }
@@ -296,11 +308,28 @@ public class PitchCorruption : CorruptionBaseClass {
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
                 audioPitch.SetPitch(0, pitchType); //If the player is within acceptable margin, let the pitch be normal.
-                if(gameManager.recording)
+                if (gameManager.recording)
+                {
+                    foreach(ParticleSystem ps in particleSystems)
+                    {
+                        ParticleSystem.MainModule a = ps.main;
+                        if (ps.isStopped || ps.isPaused)
+                        {
+                            ps.Play();
+                        }
+                        if (a.loop == false)
+                            a.loop = true;
+                    }
                     hitTime += Time.deltaTime;
+                }
             }
             else
             {
+                foreach (ParticleSystem ps in particleSystems)
+                {
+                    ParticleSystem.MainModule a = ps.main;
+                    a.loop = false;
+                }
                 audioPitch.SetPitch(pitchSlider.value - (pitchIndicatorInstance.transform.localPosition.y *
                 (pitchSlider.maxValue / pitchIndicatorMax)), pitchType);
             }
