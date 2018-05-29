@@ -50,14 +50,14 @@ public class StoryTelling : MonoBehaviour {
         rightPage.text = "";
         episodeButtons = episodeMenu.GetComponentsInChildren<Button>();
 
-        unlocks = saveSystemRef.GetUnlocks();
-        for(int i = 0; i < episodeButtons.Length; i++)
-        {
-            if(unlocks[i + 2 + 14] == false)
-            {
-                episodeButtons[i].interactable = false;
-            }
-        }
+        //unlocks = saveSystemRef.GetUnlocks();
+        //for (int i = 0; i < episodeButtons.Length; i++)
+        //{
+        //    if (unlocks[i + 2 + 14] == false)
+        //    {
+        //        episodeButtons[i].interactable = false;
+        //    }
+        //}
     }
 
     public void InitializeStory(int index)
