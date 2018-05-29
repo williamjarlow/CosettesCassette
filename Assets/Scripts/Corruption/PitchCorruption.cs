@@ -108,8 +108,8 @@ public class PitchCorruption : CorruptionBaseClass {
 	
 	// Update is called once per frame
 	void Update () {
-    
-        if(audioManager.GetTimeLinePosition() > duration.start && audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
+
+        if (audioManager.GetTimeLinePosition() > duration.start && audioManager.GetTimeLinePosition() < duration.stop) //If player is inside a corrupted area
         {
             if (gameManager.recording)
             {
@@ -124,7 +124,21 @@ public class PitchCorruption : CorruptionBaseClass {
             }
             else
             {
-                ResetConditions();
+                if (!cleared)
+                {
+                    if (!inSegment)
+                    {
+                        EnterSegment();
+                        inSegment = true;
+                        hitTime = 0;
+                        timeSinceStart = 0;
+                        index = 0;
+                    }
+                    pitchSlider.gameObject.SetActive(false);
+                    DestroyLine();
+                    RecordPitch();
+                    //ResetConditions();
+                }
             }
         }
         else if (inSegment) //If player leaves corrupted area
@@ -235,6 +249,7 @@ public class PitchCorruption : CorruptionBaseClass {
 
     public override void EnterSegment()
     {
+        
         pitchSlider.gameObject.SetActive(true);
         pitchSlider.value = 0;
         hitTime = 0;
@@ -258,6 +273,7 @@ public class PitchCorruption : CorruptionBaseClass {
         currentScore = startingScore; //Score starts at 100 and decreases when the player makes mistakes.
         innerDistortion = maxDistortion * (1 - (corruptionClearedPercent / 100));
         pitchIndicatorInstance = Instantiate(pitchIndicator, gameObject.transform); //Create an instance of the object that the player needs to follow.
+        pitchPixelParticleInstance = Instantiate(pitchPixelParticlePrefab, pitchIndicatorInstance.transform);
         GenerateLine();
         base.EnterSegment();
     }
@@ -280,7 +296,8 @@ public class PitchCorruption : CorruptionBaseClass {
                 pitchSlider.value >= (pitchIndicatorInstance.transform.localPosition.y * (pitchSlider.maxValue / pitchIndicatorMax) - mercyRange))
             {
                 audioPitch.SetPitch(0, pitchType); //If the player is within acceptable margin, let the pitch be normal.
-                hitTime += Time.deltaTime;
+                if(gameManager.recording)
+                    hitTime += Time.deltaTime;
             }
             else
             {

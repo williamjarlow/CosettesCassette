@@ -19,43 +19,37 @@ public class SaveSystem : Singleton<SaveSystem>
 
     void Awake()
     {
-        // Make sure we only have one instance of the save system and make sure it won't be destroyed between scenes
-        if (saveSystem == null)
+        if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
-            DontDestroyOnLoad(gameObject);
-            saveSystem = this;
-
-            if (!data.levelLockSave.ContainsKey(0))
-            {
-                sceneIndexes = SceneManager.sceneCountInBuildSettings;
-                BinaryFormatter bf = new BinaryFormatter();
-                if (!File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
-                {
-                    file = File.Create(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat");
-                }
-                else
-                {
-                    file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
-                }
-
-                data.levelLockSave[0] = true;
-                data.levelLockSave[1] = true;
-                data.levelLockSave[2] = true;
-
-                for (int i = 3; i < sceneIndexes; i++)
-                {
-                    data.levelLockSave[i] = false;
-                }
-
-                data.levelLockSave[23] = true;
-
-                bf.Serialize(file, data);
-                file.Close();
-            }
+            BinaryFormatter bf = new BinaryFormatter();
+            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+            data = (PlayerData)bf.Deserialize(file);
+            file.Close();
         }
-        else if (saveSystem != this)
+
+        DontDestroyOnLoad(gameObject);
+        saveSystem = this;
+
+        if (!data.levelLockSave.ContainsKey(0))
         {
-            Destroy(gameObject);
+            sceneIndexes = SceneManager.sceneCountInBuildSettings;
+            BinaryFormatter bf = new BinaryFormatter();
+            file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
+
+            data.levelLockSave[0] = true;
+            data.levelLockSave[1] = true;
+            data.levelLockSave[2] = true;
+
+            for (int i = 3; i < sceneIndexes; i++)
+            {
+                data.levelLockSave[i] = false;
+            }
+
+            data.levelLockSave[23] = true;
+
+            bf.Serialize(file, data);
+            file.Close();
+
         }
     }
 

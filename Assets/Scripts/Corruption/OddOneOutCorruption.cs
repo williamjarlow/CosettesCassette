@@ -215,7 +215,6 @@ public class OddOneOutCorruption : CorruptionBaseClass
                  {
                     lyricPages[i].GetComponent<Text>().color = correctColor;
                     currentScore = 100;
-                    GradeScore();
 					audioManager.PlayOOOResult (0f);
                  }
 
@@ -224,13 +223,8 @@ public class OddOneOutCorruption : CorruptionBaseClass
                  {
                     lyricPages[i].GetComponent<Text>().color = incorrectColor;
                     currentScore = 0;
-                    GradeScore();
 					audioManager.PlayOOOResult (1f);
                  }
-
-                 // The player clicked the incorrect button --> set score to 0 and add some distortion?
-                 currentScore = 0;
-                 GradeScore();
              }
 
          }

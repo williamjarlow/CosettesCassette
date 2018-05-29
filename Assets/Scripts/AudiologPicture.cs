@@ -7,20 +7,20 @@ using System.IO;
 public class AudiologPicture : MonoBehaviour {
 
     [SerializeField] private Image AudiologPic;
-    [SerializeField] private float origPos;
+    private float origPos = 0;
     [HideInInspector] public float currentPos;
-    [SerializeField] private float endOfTheLine;
-    [SerializeField] private GameObject AudioManagerz;
+    private float endOfTheLine;
+    private GameObject AudioManagerz;
     [SerializeField] private float waitforit;
-    [SerializeField] private float safeguard;
-    [SerializeField] private float delay;
+    private float safeguard;
+    [SerializeField] private float delay = 0.5f;
     private AudioManager audioManager;
     private float audiolength;
     private float audiologlength;
     private float audioPos;
     private float audioP;
-    public bool music = true;
-    public bool audiolog = false;
+    private bool music = true;
+    private bool audiolog = false;
     [HideInInspector] public bool showpicture = false;
 
 
@@ -28,7 +28,7 @@ public class AudiologPicture : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-        audioManager = AudioManagerz.GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         audiolength = audioManager.GetTrackLength();
 
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
@@ -39,21 +39,24 @@ public class AudiologPicture : MonoBehaviour {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         }
 
+        endOfTheLine = audioManager.GetTrackLength();
+        safeguard = waitforit + 1000;
+
 
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (showpicture == true)
+        if (showpicture == true && audioManager.switchedToAudioLog)
         {
             AudiologPic.enabled = true;
         }
-        else if (showpicture == true && audiolog == false)
+        else if (showpicture == true && audioManager.switchedToAudioLog == false)
         {
             AudiologPic.enabled = false;
         }
-        if (audiolog == true)
+        if (audioManager.switchedToAudioLog == true)
         {
             audioPos = audioManager.GetTimeLinePosition();
             audioP = audioPos / audiolength;
@@ -83,7 +86,7 @@ public class AudiologPicture : MonoBehaviour {
 
     public void Fade()
     {
-        if (audiolog == true)
+        if (audioManager.switchedToAudioLog == true)
         {
             AudiologPic.enabled = true;
             StartCoroutine(Audiopic());

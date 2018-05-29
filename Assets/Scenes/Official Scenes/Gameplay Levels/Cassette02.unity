@@ -606,7 +606,7 @@ Prefab:
         type: 2}
       propertyPath: timelineMaskParent
       value: 
-      objectReference: {fileID: 1029944937}
+      objectReference: {fileID: 713232830}
     - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
         type: 2}
       propertyPath: cassetteNormalSpeed
@@ -641,6 +641,16 @@ Prefab:
         type: 2}
       propertyPath: audioLogPath
       value: event:/Logs/log_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: maxSpeedThresholdInMs
+      value: 6000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114758486644592606, guid: f236062a340c42644b0efd0d34e0e407,
+        type: 2}
+      propertyPath: fastSpeedInMs
+      value: 20000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f236062a340c42644b0efd0d34e0e407, type: 2}
@@ -776,14 +786,14 @@ MonoBehaviour:
   highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
   correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
   incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
-  lyricsGuess: Are we through, are we ____
+  lyricsGuess: Are we through, are we ____?
   lyrics:
-  - Gone
-  - Alone
-  - Done
+  - gone
+  - alone
+  - done
   correctLyricSegment: 2
-  chosenWordStart: 21
-  chosenWordEnd: 28
+  chosenWordStart: 88900
+  chosenWordEnd: 90000
   timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
     type: 2}
   timerStartPoint: 1
@@ -864,18 +874,18 @@ MonoBehaviour:
   highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
   correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
   incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
-  lyricsGuess: Do you ____ Like I ____ you
+  lyricsGuess: Do you ____ me like I ____ you?
   lyrics:
-  - Love
-  - Hate
-  - Leave
+  - love
+  - hate
+  - beat
   correctLyricSegment: 0
-  chosenWordStart: 10
-  chosenWordEnd: 20
+  chosenWordStart: 36730
+  chosenWordEnd: 38450
   timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
     type: 2}
-  timerStartPoint: 1
-  timerLength: 5
+  timerStartPoint: 12
+  timerLength: 4
   inputBeats: 1
 --- !u!4 &645112936 stripped
 Transform:
@@ -910,11 +920,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1592572908}
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &1029944937 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1241057739907782, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1592572908}
 --- !u!114 &1051293187 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114030266895050296, guid: f88fd96c84f5ec54fb0beb025cef54b5,
@@ -1231,50 +1236,44 @@ MonoBehaviour:
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 6
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2
+    animatedSpeed: 0.75
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 22
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2
+    animatedSpeed: 0.75
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 41
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2
+    animatedSpeed: 0.75
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 54
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2.5
+    animatedSpeed: 0.5
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 70
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2.5
+    animatedSpeed: 0.5
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 86
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2.5
+    animatedSpeed: 0.5
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 102
-    speed: 1.5
-    animatedSpeed: 1
-    hasSpawned: 0
-  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
-      type: 2}
-    spawnTime: 118
-    speed: 1.5
-    animatedSpeed: 1
+    speed: 2.5
+    animatedSpeed: 0.5
     hasSpawned: 0
 --- !u!1 &1271237939 stripped
 GameObject:
@@ -1926,6 +1925,26 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 82745e74df4b3d946bfdae384466209f,
         type: 3}
+    - target: {fileID: 114884050565617112, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1850200041}
+    - target: {fileID: 114884050565617112, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: UpdateDistortionAmount
+      objectReference: {fileID: 0}
+    - target: {fileID: 114046476471054626, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: AudioManagerz
+      value: 
+      objectReference: {fileID: 1271237939}
+    - target: {fileID: 114046476471054626, guid: aec3342522feb2e4e86bf1e5dc3de8fd,
+        type: 2}
+      propertyPath: waitforit
+      value: 25000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aec3342522feb2e4e86bf1e5dc3de8fd, type: 2}
   m_IsPrefabParent: 0
@@ -1998,11 +2017,11 @@ MonoBehaviour:
   highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
   correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
   incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
-  lyricsGuess: Have we built an _____ Wall
+  lyricsGuess: Have we built an _____ wall?
   lyrics:
-  - Invincible
-  - Invisible
-  - Indestructable
+  - unscalable
+  - invisible
+  - 
   correctLyricSegment: 1
   chosenWordStart: 24
   chosenWordEnd: 35
@@ -2221,55 +2240,55 @@ MonoBehaviour:
       type: 2}
     spawnTime: 14
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 18
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 24
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 45
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 51
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 57
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 78
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 83
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
   - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
       type: 2}
     spawnTime: 89
     speed: 1.5
-    animatedSpeed: 0
+    animatedSpeed: 0.6
     hasSpawned: 0
 --- !u!1 &1850200040
 GameObject:
@@ -2302,13 +2321,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overallDistortionMax: 70
   segments:
-  - start: 63
-    stop: 193
-  - start: 264
-    stop: 293
+  - start: 64
+    stop: 192
+  - start: 252
+    stop: 288
   - start: 385
     stop: 514
-  - start: 633
+  - start: 632
     stop: 664
   - start: 692
     stop: 740

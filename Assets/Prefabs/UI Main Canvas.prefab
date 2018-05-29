@@ -635,7 +635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1218600514556640
 GameObject:
   m_ObjectHideFlags: 1
@@ -2441,10 +2441,10 @@ GameObject:
   - component: {fileID: 224906032541340744}
   - component: {fileID: 222923424654693022}
   - component: {fileID: 114381038340238108}
-  - component: {fileID: 114896342767925604}
   - component: {fileID: 95564999683065788}
+  - component: {fileID: 114046476471054626}
   m_Layer: 5
-  m_Name: Audiolog and credits handler
+  m_Name: Audiolog handler
   m_TagString: AudioLog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2856,7 +2856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1911617739630150
 GameObject:
   m_ObjectHideFlags: 1
@@ -3594,7 +3594,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c8711bc00b055ec4ba159615f5845bbf, type: 2}
+  - {fileID: 2100000, guid: 74ed8a2e2df39d840979af1580fb9c87, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3935,7 +3935,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 74ed8a2e2df39d840979af1580fb9c87, type: 2}
+  - {fileID: 2100000, guid: c8711bc00b055ec4ba159615f5845bbf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4737,6 +4737,22 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 1995
+--- !u!114 &114046476471054626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1818507203527818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8c3bc9b250b2745b3e616950dbcecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudiologPic: {fileID: 114046726729286512}
+  currentPos: 0
+  waitforit: 18000
+  delay: 0.5
+  showpicture: 0
 --- !u!114 &114046726729286512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4756,7 +4772,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 44068501a8d24684885417f8b632b5d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 866cc517432d1924b925d2dc945b59fb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5397,7 +5413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 00:03
+  m_Text: 00:00
 --- !u!114 &114154376242153070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6191,6 +6207,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: DisableButtons
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114499041825117030}
+        m_MethodName: TogglePosition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11241,6 +11268,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: UpdateDistortionAmount
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114884498280770132
@@ -11454,36 +11492,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114896342767925604
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1818507203527818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d008bdb51f63be24aaa88e926ba6066b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopper: {fileID: 1809763009724594, guid: 5b0e98cecdfd036409c0c11b7bd227da, type: 2}
-  stopPos: 0
-  freeze: {x: 0, y: 0, z: 0}
-  origPos: 1695
-  currentPos: 0
-  endOfTheLine: 4400
-  AudioManagerz: {fileID: 0}
-  Timeslider: {fileID: 1378819001593880}
-  credits: {fileID: 1818507203527818}
-  CreditsFade: {fileID: 114332965484643978}
-  AudiologPic: {fileID: 114046726729286512}
-  creditsOrAudiolog: Audiolog
-  waitforit: 600
-  safeguard: 650
-  delay: 0
-  music: 1
-  audiolog: 0
-  showpicture: 0
-  showFade: 0
 --- !u!114 &114897225459185248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12010,17 +12018,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 114896342767925604}
-        m_MethodName: Flip
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 114992616599438418}
         m_MethodName: SetPositionUp
         m_Mode: 1
@@ -12194,15 +12191,15 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 114362786314261726}
   m_FillRect: {fileID: 0}
   m_HandleRect: {fileID: 224047997010049762}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 110605
+  m_MaxValue: 139764
   m_WholeNumbers: 0
-  m_Value: 3632
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -36148,7 +36145,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e07ba2814cbd6ed44bf104d88ba4bf3a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 29dd001321c96084c8eb46c989efdbf0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -37213,7 +37210,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1434219520033896}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.9000244, y: -5.5, z: -9}
+  m_LocalPosition: {x: 0.2000122, y: -5.5, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224364232821196390}
@@ -37221,7 +37218,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.9, y: -5.5}
+  m_AnchoredPosition: {x: 0.19999999, y: -5.5}
   m_SizeDelta: {x: 1024, y: 1024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224125207308030344
