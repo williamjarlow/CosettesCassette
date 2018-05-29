@@ -19,8 +19,8 @@ public class WalkmanMaterialSelects : MonoBehaviour {
     [SerializeField] private Texture shadedTextureRef;
 
     [Header("Gradientbar")]
-    [SerializeField] private Material corruptionBarMat;
-    [SerializeField] private Texture corrutionBarTex;
+    [SerializeField] public GameObject corruptionBarMat;
+    [SerializeField] private Sprite corrutionBarTex;
     
     private UnityEngine.UI.Toggle toggle;
 
@@ -56,7 +56,7 @@ public class WalkmanMaterialSelects : MonoBehaviour {
 
         settingsIcon.GetComponent<Renderer>().sharedMaterial.SetTexture("_MainTex", buttonTextureRef);
         buttonsmaterial.SetTexture("_MainTex", shadedTextureRef);
-        //corruptionBarMat.SetTexture("_MainTex", corrutionBarTex);
+        //corruptionBarMat.GetComponent<Image>().overrideSprite = corrutionBarTex;
         audioManager.PlaySkinMenuSelect ();
 
         /*
