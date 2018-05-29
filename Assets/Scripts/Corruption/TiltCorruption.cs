@@ -234,7 +234,11 @@ public class TiltCorruption : CorruptionBaseClass
     void ResetConditions()
     {
         if (lastWindCoroutine != null)
+        {
             StopCoroutine(lastWindCoroutine);
+            audioManager.windEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            audioManager.windEv.release();
+        }
         if (lastMovementCoroutine != null)
             StopCoroutine(lastMovementCoroutine);
 
@@ -261,7 +265,7 @@ public class TiltCorruption : CorruptionBaseClass
 
     IEnumerator WindEffect(float strength, bool blowLeft, float time)
     {
-		if (blowLeft)
+        if (blowLeft)
 			audioManager.PlayWind (1f);
 		else if (!blowLeft)
 			audioManager.PlayWind (-1f);
@@ -294,10 +298,10 @@ public class TiltCorruption : CorruptionBaseClass
 
                 yield return new WaitForEndOfFrame();
             }
-            audioManager.windEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            audioManager.windEv.release();
             tiltIndicatorInstance.transform.GetChild(1).gameObject.SetActive(false);
         }
+        audioManager.windEv.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        audioManager.windEv.release();
     }
     public IEnumerator MoveOverBeats(float objectToMove, Vector3 end, int beats)
     {
