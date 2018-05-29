@@ -152,8 +152,9 @@ public class GameManager : MonoBehaviour
             //If stop recording
             else if (recordingState == false)
             {
-                recording = false;
+                if (recording)
                 audioManager.PlayRecordStop();
+                recording = false;
             }
         }
     }

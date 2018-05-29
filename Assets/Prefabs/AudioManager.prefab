@@ -53,15 +53,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844182bf29c8d42d88e9879c085be9cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicPath: event:/Music/Cassette_01/music
-  audioLogPath: event:/Logs/log_01
-  levelClearPath: event:/SFX/StageClear/stage_clear_01
-  bassDrumKey: cassette_01_kick
-  bankFiles:
-  - Cassette_01
-  - Master Bank
-  - Master Bank.strings
+  musicPath: event:/Music/cassette_03
+  audioLogPath: event:/Logs/log_03
+  levelClearPath: event:/SFX/StageClear/stage_clear_03
   switchedToAudioLog: 0
+  startedMusic: 0
   pausedMusic: 1
 --- !u!114 &114660314149128492
 MonoBehaviour:
@@ -89,7 +85,7 @@ MonoBehaviour:
     Down: Call function ToggleHold(); \n Pointer up: Call function ToggleHold(); \n
     Select: Call function SaveValue(); \n Drag: Call function UpdateValues();"
   timelineMaskParent: {fileID: 0}
-  maxSpeedThresholdInMs: 6000
+  maxSpeedThresholdInMs: 2000
   fastSpeedInMs: 20000
   slowSpeedInMs: 1500
   cassetteNormalSpeed: 50
