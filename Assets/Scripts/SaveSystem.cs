@@ -274,6 +274,8 @@ public class SaveSystem : Singleton<SaveSystem>
                 data.levelLockSave[i] = false;
             }
 
+            data.levelLockSave[23] = true;
+
             bf.Serialize(file, data);
             file.Close();
         }
