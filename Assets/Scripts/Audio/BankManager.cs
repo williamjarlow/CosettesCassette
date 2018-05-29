@@ -11,38 +11,37 @@ public class BankManager : Singleton<BankManager> {
 
 	private string currentBank;
 
-	[HideInInspector] public List<string> managerBankFiles;
-	[HideInInspector] public FMOD.Studio.Bank[] banksToLoad = new FMOD.Studio.Bank[3];
-	[HideInInspector] public FMOD.Studio.Bank[] banksToUnload = new FMOD.Studio.Bank[3];
-
 	private FMOD.RESULT result;
 
 	private void Awake()
 	{
-		if (!created)
-		{
-			DontDestroyOnLoad(this.gameObject);
-			created = true;
-		}
-			
 		audioManager = GameObject.FindWithTag ("AudioManager").GetComponent<AudioManager> ();
 
 		//Load master banks
 		FMODUnity.RuntimeManager.LoadBank ("Master Bank.bank", true);
 		FMODUnity.RuntimeManager.LoadBank ("Master Bank.strings.bank", true);
+
+		SceneChanged (SceneManager.GetActiveScene ().name);
+		print (SceneManager.GetActiveScene ().name);
+
+		if (!created)
+		{
+			DontDestroyOnLoad(this.gameObject);
+			created = true;
+		}
 	}
 
 	private void Start ()
 	{
-		FMODUnity.RuntimeManager.LoadBank ("LevelSelect.bank", true);
-		currentBank = "LevelSelect.bank";
+		//FMODUnity.RuntimeManager.LoadBank ("LevelSelect.bank", true);
+		//currentBank = "LevelSelect.bank";
 	}
 
 	public void LoadBanks(string bankToLoad)
 	{
 		FMODUnity.RuntimeManager.LoadBank (bankToLoad, true);
 		currentBank = bankToLoad;
-			
+
 		//Waits for loads to finish
 		FMODUnity.RuntimeManager.WaitForAllLoads();
 		audioManager.systemObj.flushCommands();
@@ -57,11 +56,13 @@ public class BankManager : Singleton<BankManager> {
 
 	public void SceneChanged(string levelName)
 	{
+		if (created)
 		StartCoroutine(UnloadBanks(currentBank));
 
 		switch (levelName)
 		{
 		case "LevelSelect":
+		case "StartScene":
 			LoadBanks ("LevelSelect.bank");
 			break;
 		case "Cassette00": 

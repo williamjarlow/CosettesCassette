@@ -215,10 +215,16 @@ public class AudioManager : MonoBehaviour {
 		pauseEv.start ();
 		pauseEv.release ();
 
-		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-
-		gameMusicEv.setPaused(true);
 		pausedMusic = true;
+		StartCoroutine (WaitForPause ());
+
+		playerFadeEv.stop (FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+	}
+
+	private IEnumerator WaitForPause()
+	{
+		yield return new WaitForSeconds(0.140f);
+		gameMusicEv.setPaused(true);
 	}
 
 	public void AudioUnpauseMusic ()
