@@ -19,6 +19,7 @@ public class SaveSystem : Singleton<SaveSystem>
 
     void Awake()
     {
+        //Make sure the save file is copied when starting the application.
         if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
@@ -27,15 +28,18 @@ public class SaveSystem : Singleton<SaveSystem>
             file.Close();
         }
 
+        //Make object dont destroy on load, singleton requirement.
         DontDestroyOnLoad(gameObject);
         saveSystem = this;
 
+        //Lock and unlocks levels in the preset order if this is the first time application is started.
         if (!data.levelLockSave.ContainsKey(0))
         {
             sceneIndexes = SceneManager.sceneCountInBuildSettings;
             BinaryFormatter bf = new BinaryFormatter();
             file = File.Open(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat", FileMode.OpenOrCreate);
 
+            //StartScreen, LevelSelect and Tutorial Level unlocked from start.
             data.levelLockSave[0] = true;
             data.levelLockSave[1] = true;
             data.levelLockSave[2] = true;
@@ -45,6 +49,7 @@ public class SaveSystem : Singleton<SaveSystem>
                 data.levelLockSave[i] = false;
             }
 
+            //Credits unlocked from start.
             data.levelLockSave[23] = true;
 
             bf.Serialize(file, data);
@@ -55,6 +60,7 @@ public class SaveSystem : Singleton<SaveSystem>
 
     private void Update()
     {
+        //Reset key if needed.
         if (Input.GetKeyDown(KeyCode.R))
         {
             ClearSegments();
@@ -62,6 +68,7 @@ public class SaveSystem : Singleton<SaveSystem>
         }
     }
 
+    //Save individual segments.
     public void SaveSegment(SaveSegmentStruct save, int levelIndex, int segmentIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -105,6 +112,7 @@ public class SaveSystem : Singleton<SaveSystem>
         file.Close();
     }
 
+    //Save individual stickers.
     public void SaveStickers(string name, bool earned)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -119,11 +127,12 @@ public class SaveSystem : Singleton<SaveSystem>
         {
             data.stickersSave.Add(name, earned);
         }
-        //Serialize the values and save
+        //Serialize the values and save.
         bf.Serialize(file, data);
         file.Close();
     }
 
+    //Function to load stickers, used when restarting the application.
     public void LoadStickers(Dictionary<string, Sticker> stickersRef)
     {
         if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
@@ -133,7 +142,7 @@ public class SaveSystem : Singleton<SaveSystem>
             data = (PlayerData)bf.Deserialize(file);
 
             //Get all keys and update the values in the sticker album, basically check if we have earned a sticker
-            //and make sure we also have it unlocked again when we start the game anew
+            //and make sure we also have it unlocked again when we start the game anew.
             List<string> keyList = new List<string>(stickersRef.Keys);
             for (int i = 0; i < data.stickersSave.Count; i++)
             {
@@ -152,6 +161,7 @@ public class SaveSystem : Singleton<SaveSystem>
         }
     }
 
+    //Function to load segments, used when starting a level.
     public SaveSegmentStruct LoadSegment(SaveSegmentStruct load, int loadLevelID, int loadSegmentID)
     {
         if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
@@ -194,7 +204,7 @@ public class SaveSystem : Singleton<SaveSystem>
         ContinueLoad:
             load.points = data.segmentSave[loadLevelID][loadSegmentID].points;
             file.Close();
-            //Needs Completed Levels to implement
+            
         }
         return load;
     }
@@ -251,6 +261,7 @@ public class SaveSystem : Singleton<SaveSystem>
 
     }
 
+    //Clears the unlocked dictionary.
     public void ClearUnlocks()
     {
         if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + "playerInfo.dat"))
@@ -269,6 +280,8 @@ public class SaveSystem : Singleton<SaveSystem>
 
     }
 
+    //Unlock specific scene index, currently it unlocks levels and at the same time it unlocks the audiolog and music scene
+    //for the completed level aswell. 
     public void UnlockLevel(int buildIndex)
     {
         BinaryFormatter bf = new BinaryFormatter();
@@ -288,6 +301,7 @@ public class SaveSystem : Singleton<SaveSystem>
         file.Close();
     }
 
+    //Function to get all unlocks.
     public Dictionary<int, bool> GetUnlocks()
     {
         Dictionary<int, bool> unlocks = new Dictionary<int, bool>();
@@ -308,7 +322,7 @@ public class SaveSystem : Singleton<SaveSystem>
 
 }
 
-
+//Struct for the needed variables for a segment.
 [Serializable]
 public struct SaveSegmentStruct
 {
@@ -316,6 +330,7 @@ public struct SaveSegmentStruct
     public float points;
 }
 
+//All data we save into the file.
 [Serializable]
 class PlayerData
 {
@@ -325,5 +340,6 @@ class PlayerData
     //Dictionary av strings och bools, sparar namnet på en sticker och sätter boolen till antingen true eller false, baserat på om vi har fått den eller ej.
     public Dictionary<string, bool> stickersSave = new Dictionary<string, bool>();
 
+    //Dictionary av int och bools, sparar indexet på en scen och sätter boolen till antingen true eller false, baserat på om vi har låst upp den eller ej.
     public Dictionary<int, bool> levelLockSave = new Dictionary<int, bool>();
 }
