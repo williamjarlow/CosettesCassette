@@ -128,6 +128,7 @@ public class OverallCorruption : MonoBehaviour
             UpdateCorruptionAmount();
         }
 
+
         // Win the game
         if (Input.GetKeyDown(KeyCode.Z))
         {

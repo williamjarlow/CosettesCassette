@@ -85,6 +85,15 @@ public class LevelSelect : MonoBehaviour
 		
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            for (int i = 2; i < 9; i++)
+                saveSystemRef.UnlockLevel(i);
+
+            unlocks = saveSystemRef.GetUnlocks();
+        }
+
         if (!pauseScreen)
         TouchControls();
 
