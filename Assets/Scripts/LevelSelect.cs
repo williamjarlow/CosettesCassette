@@ -81,6 +81,18 @@ public class LevelSelect : MonoBehaviour
         }
 
         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
+
+
+
+        /// FOR TESTING BUILD LAST DAY
+        saveSystemRef.ClearSegments();
+        {
+            for (int i = 2; i < 9; i++)
+                saveSystemRef.UnlockLevel(i);
+
+            unlocks = saveSystemRef.GetUnlocks();
+        }
+        ///
     }
 		
     void Update()
@@ -435,6 +447,11 @@ public class LevelSelect : MonoBehaviour
                 bButton.interactable = true;
             else
                 bButton.interactable = false;
+        }
+        if (index >= 23)
+        {
+            aButton.interactable = false;
+            bButton.interactable = false;
         }
     }
 		

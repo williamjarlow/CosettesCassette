@@ -628,9 +628,19 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEv.release ();
 	}
 
-	#endregion
+    public void PlayBoyfriend()
+    {
+        FMOD.Studio.EventDescription flipCassetteEventDesc;
+        FMOD.Studio.EventInstance flipCassetteEv;
+        systemObj.getEvent("event:/SFX/boyfriend", out flipCassetteEventDesc);
+        flipCassetteEventDesc.createInstance(out flipCassetteEv);
+        flipCassetteEv.start();
+        flipCassetteEv.release();
+    }
 
-	public void MuteSFX(bool mute)
+    #endregion
+
+    public void MuteSFX(bool mute)
 	{
 		systemObj.getBus ("bus:/SFX", out sfxBus);
 		systemObj.getBus ("bus:/Interface", out interfaceBus);
