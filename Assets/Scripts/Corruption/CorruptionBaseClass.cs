@@ -114,6 +114,16 @@ public abstract class CorruptionBaseClass : MonoBehaviour
         saveStruct = SaveSystem.Instance.LoadSegment(saveStruct, SceneManager.GetActiveScene().buildIndex, segmentID);
         corruptionClearedPercent = saveStruct.points;
         bestScore = saveStruct.points;
+        if (bestScore >= perfectThreshold)
+        {
+            cleared = true;
+            perfected = true;
+        }
+        else if (bestScore >= clearThreshold)
+        {
+            //Cleared Segment
+            cleared = true;
+        }
         //gameManager.overallCorruption.UpdateCorruptionAmount();
     }
 }

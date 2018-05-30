@@ -80,21 +80,25 @@ public class OddOneOutCorruption : CorruptionBaseClass
                     SpawnLyrics();
                 }   
 
-            }
-
-            // If we stopped recording --> destroy the mechanic objects by resetting
+            } // If we stopped recording --> destroy the mechanic objects by resetting
             else if (!gameManager.recording && !resetConditions)
             {
                 ResetConditions();
                 resetConditions = true;
             }
-
-            // If player is currently listening to chosen word
-            if (audioManager.GetTimeLinePosition () >= chosenWordStart &&
-			    audioManager.GetTimeLinePosition () < chosenWordEnd)
-				audioManager.oooVocals.setValue (100f);
-			else // If player is not currently listening to chosen word
-				audioManager.oooVocals.setValue (30f);
+            if (gameManager.recording || cleared != true)
+            {
+                // If player is currently listening to chosen word
+                if (audioManager.GetTimeLinePosition() >= chosenWordStart &&
+                    audioManager.GetTimeLinePosition() < chosenWordEnd)
+                    audioManager.oooVocals.setValue(100f);
+                else // If player is not currently listening to chosen word
+                    audioManager.oooVocals.setValue(30f);
+            }
+            else
+            {
+                audioManager.oooVocals.setValue(0f);
+            }
         }
 
         else if (inSegment) //If player leaves the segment area
@@ -167,7 +171,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             // Add listeners to the toggles to be able to call functions when toggled
             lyricPages[i].GetComponent<Toggle>().onValueChanged.AddListener(delegate { OnToggleValueChanged(); } );
-         }
+        }
 
         Debug.Assert(lyricPages.Count == lyricsObject.transform.childCount, "The number of lyrics does not equal to the number of lyric pages");
      }
