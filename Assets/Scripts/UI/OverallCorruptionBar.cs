@@ -13,7 +13,7 @@ public class OverallCorruptionBar : MonoBehaviour {
     private float corruptionPercentage;
     private float startValue;
     [SerializeField] private float speed = 1;
-    [SerializeField] private float clearLineWidth = 7;
+    [SerializeField] private float clearLineWidth = 3.5f;
 
     private void Awake()
     {
