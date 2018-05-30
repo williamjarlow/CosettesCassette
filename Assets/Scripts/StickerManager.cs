@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StickerManager : MonoBehaviour {
     
-    [SerializeField] private GameObject saveSystemRef;
+    private SaveSystem saveSystemRef;
     public Sticker[] stickers;
 
     public Dictionary<string, Sticker> stickerDictionary = new Dictionary<string, Sticker>();
@@ -17,7 +17,8 @@ public class StickerManager : MonoBehaviour {
             stickerDictionary.Add(stickers[i].Name, stickers[i]);
         }
 
-        saveSystemRef.GetComponent<SaveSystem>().LoadStickers(stickerDictionary);
+        saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
+        saveSystemRef.LoadStickers(stickerDictionary);
     }
 	
 	void Update () {
@@ -37,5 +38,14 @@ public class StickerManager : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public void ClearStickerBook()
+    {
+        for(int i = 0; i < SaveSystem.Instance.GetComponent<SaveSystem>().stickerManRef.GetComponent<StickerManager>().stickers.Length; i++)
+        {
+            SaveSystem.Instance.GetComponent<SaveSystem>().stickerManRef.GetComponent<StickerManager>().stickers[i].loaded = false;
+            SaveSystem.Instance.GetComponent<SaveSystem>().stickerManRef.GetComponent<StickerManager>().stickers[i].Unlocked = false;
+        }
     }
 }

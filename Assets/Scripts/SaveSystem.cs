@@ -12,7 +12,7 @@ public class SaveSystem : Singleton<SaveSystem>
     private int sceneIndexes;
     private FileStream file;
 
-    [SerializeField] private GameObject stickerManRef;
+    public GameObject stickerManRef;
     PlayerData data = new PlayerData();
 
 	[HideInInspector] public bool masterBanksLoaded = false;
