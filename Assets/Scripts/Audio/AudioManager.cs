@@ -622,6 +622,16 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEv.release ();
 	}
 
+	public void PlayBoyfriend()
+	{
+		FMOD.Studio.EventDescription boyfriendEventDesc;
+		FMOD.Studio.EventInstance boyfriendEv;
+		systemObj.getEvent ("event:/SFX/boyfriend", out boyfriendEventDesc);
+		boyfriendEventDesc.createInstance (out boyfriendEv);
+		boyfriendEv.start ();
+		boyfriendEv.release ();
+	}
+
 	#endregion
 
 	public void MuteSFX(bool mute)
