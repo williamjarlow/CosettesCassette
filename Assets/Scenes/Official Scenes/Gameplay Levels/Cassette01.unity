@@ -447,6 +447,88 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 62183277}
   m_Mesh: {fileID: 4300000, guid: d6b78d5079f3d7042bb1e585c27efde1, type: 3}
+--- !u!1 &90266973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1316517880685588, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 90266974}
+  - component: {fileID: 90266975}
+  m_Layer: 0
+  m_Name: OddOneOut Corruption Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &90266974
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4414642846146340, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 90266973}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &90266975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 90266973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f13241b272b384c8cdfb23441161d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 100
+  perfectThreshold: 100
+  segmentID: 0
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: For this corruption the clear threshold is irrelevant, as you either clear
+    the corruption or you don't.
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  lyricsGuessPrefab: {fileID: 1678298423003994, guid: a3d349e1de7ccac4987448fb55ac8be3,
+    type: 2}
+  lyricsPrefab: {fileID: 1208538762326652, guid: 55f865a21e7bb7c49a6ca7270ef32967,
+    type: 2}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
+  correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
+  incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
+  lyricsGuess: Better than a boyfriend, _____ for life
+  lyrics:
+  - best friends
+  - 'BFF '
+  - girlfriends
+  correctLyricSegment: 1
+  chosenWordStart: 20800
+  chosenWordEnd: 21270
+  timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
+    type: 2}
+  timerStartPoint: 4
+  timerLength: 4
+  inputBeats: 1
 --- !u!1 &117255561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,6 +1308,202 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 198553133}
+--- !u!1 &216782599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1903016595672528, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 216782600}
+  - component: {fileID: 216782602}
+  - component: {fileID: 216782601}
+  m_Layer: 8
+  m_Name: Pitch Corruption Prefab (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &216782600
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4117727355602304, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 216782599}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8299999, y: -0.24000001, z: -3.39}
+  m_LocalScale: {x: 1, y: 0.55, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &216782601
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 120978812824926036, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 216782599}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec124f2273965794db91ecee47425b1c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.11000061
+        inSlope: 0.6148427
+        outSlope: 0.6148427
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 10
+    numCapVertices: 2
+    alignment: 0
+    textureMode: 1
+    generateLightingData: 0
+  m_UseWorldSpace: 0
+  m_Loop: 0
+--- !u!114 &216782602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 216782599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 60
+  perfectThreshold: 85
+  segmentID: 4
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: Add the pitch corruption prefab as a child of corruption handler whenever
+    you wish to create a new pitch corruption segment.
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  nodes:
+  - position: 0.2
+    seconds: 0.75
+  - position: -0.2
+    seconds: 0.75
+  - position: 0.4
+    seconds: 0.75
+  - position: -0.4
+    seconds: 0.75
+  - position: 0.6
+    seconds: 0.75
+  - position: -0.6
+    seconds: 0.75
+  - position: 0.8
+    seconds: 0.75
+  - position: -0.8
+    seconds: 0.75
+  - position: -1.42
+    seconds: 1
+  - position: 1
+    seconds: 1
+  - position: -1
+    seconds: 1
+  - position: 0
+    seconds: 0.75
+  - position: 1.5
+    seconds: 0.75
+  - position: -0.71
+    seconds: 1
+  - position: -1.5
+    seconds: 0.5
+  - position: 1.6
+    seconds: 1.5
+  - position: -1.6
+    seconds: 1.25
+  pitchType: 4
+  lineSpeed: 3
+  mercyRange: 24
+  rGoalRange: {x: -2, y: 2}
+  rTravelTimeRange: {x: 0.5, y: 0.5}
+  randomizeNodes: 0
+  leadUp: 1.5
+  ruggedness: 0
+  pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
+    type: 2}
+  pitchPixelParticlePrefab: {fileID: 1267399523278430, guid: e0f4f0120bbe2334c8dcdbbe5fcfeffd,
+    type: 2}
 --- !u!1 &272066389
 GameObject:
   m_ObjectHideFlags: 0
@@ -7549,6 +7827,88 @@ Transform:
   m_PrefabParentObject: {fileID: 4742329593644076, guid: f88fd96c84f5ec54fb0beb025cef54b5,
     type: 2}
   m_PrefabInternal: {fileID: 1548238030}
+--- !u!1 &657047387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1773299289959012, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 657047388}
+  - component: {fileID: 657047389}
+  m_Layer: 0
+  m_Name: OddOneOut Corruption Prefab (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657047388
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4427139223980590, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 657047387}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &657047389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 657047387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f13241b272b384c8cdfb23441161d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 100
+  perfectThreshold: 100
+  segmentID: 3
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: For this corruption the clear threshold is irrelevant, as you either clear
+    the corruption or you don't.
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  lyricsGuessPrefab: {fileID: 1678298423003994, guid: a3d349e1de7ccac4987448fb55ac8be3,
+    type: 2}
+  lyricsPrefab: {fileID: 1208538762326652, guid: 55f865a21e7bb7c49a6ca7270ef32967,
+    type: 2}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
+  correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
+  incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
+  lyricsGuess: No matter what they say, I ________ anyway
+  lyrics:
+  - like you
+  - don't care
+  - hate them
+  correctLyricSegment: 1
+  chosenWordStart: 81680
+  chosenWordEnd: 82360
+  timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
+    type: 2}
+  timerStartPoint: 10
+  timerLength: 4
+  inputBeats: 1
 --- !u!1 &671937575
 GameObject:
   m_ObjectHideFlags: 0
@@ -14608,11 +14968,43 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -17.55}
   m_SizeDelta: {x: 0, y: 321.9}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1101771010 stripped
+--- !u!1 &1101771010
 GameObject:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 1510351448229498, guid: fba8d4d839023b84fa0a3f0627bed522,
     type: 2}
-  m_PrefabInternal: {fileID: 1873795746}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1101771011}
+  - component: {fileID: 1873795747}
+  m_Layer: 0
+  m_Name: Corruption Handler Level 01
+  m_TagString: CorruptionHandler
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1101771011
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101771010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 1.55, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 90266974}
+  - {fileID: 1474362186}
+  - {fileID: 2098125127}
+  - {fileID: 657047388}
+  - {fileID: 216782600}
+  - {fileID: 2026525128}
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1120937591
 GameObject:
   m_ObjectHideFlags: 0
@@ -20697,6 +21089,206 @@ RectTransform:
   m_AnchoredPosition: {x: -4.2, y: -106.686005}
   m_SizeDelta: {x: 350, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1474362185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1289554981403888, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1474362186}
+  - component: {fileID: 1474362188}
+  - component: {fileID: 1474362187}
+  m_Layer: 0
+  m_Name: Pitch Corruption Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1474362186
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4226117763952454, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1474362185}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8299999, y: -0.24000001, z: -3.39}
+  m_LocalScale: {x: 1, y: 0.55, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &1474362187
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 120409975559123208, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1474362185}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ec124f2273965794db91ecee47425b1c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions: []
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.13580513
+        inSlope: 0.6148427
+        outSlope: 0.6148427
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 10
+    numCapVertices: 2
+    alignment: 0
+    textureMode: 1
+    generateLightingData: 0
+  m_UseWorldSpace: 0
+  m_Loop: 0
+--- !u!114 &1474362188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1474362185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca9ed218d42e284a839143a9973a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 60
+  perfectThreshold: 85
+  segmentID: 1
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: "Add the pitch corruption prefab as a child of corruption handler whenever
+    you wish to create a new pitch corruption\n segment."
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  nodes:
+  - position: 0.04
+    seconds: 0.25
+  - position: 1.89
+    seconds: 2
+  - position: 2
+    seconds: 0.1
+  - position: 0.53
+    seconds: 0.5
+  - position: -1.14
+    seconds: 1
+  - position: -1.83
+    seconds: 1
+  - position: -2
+    seconds: 0.5
+  - position: -2
+    seconds: 1
+  - position: -1.5
+    seconds: 0.2
+  - position: 1.27
+    seconds: 1
+  - position: 2
+    seconds: 1
+  - position: 0.67
+    seconds: 0.5
+  - position: -0.87
+    seconds: 0.5
+  - position: 0.91
+    seconds: 1
+  - position: 0
+    seconds: 1
+  - position: 2
+    seconds: 1
+  - position: -1.16
+    seconds: 1
+  - position: -2
+    seconds: 1
+  - position: -0.82
+    seconds: 1
+  pitchType: 5
+  lineSpeed: 3
+  mercyRange: 24
+  rGoalRange: {x: -2, y: 2}
+  rTravelTimeRange: {x: 1, y: 1}
+  randomizeNodes: 0
+  leadUp: 1.5
+  ruggedness: 0
+  pitchIndicator: {fileID: 1175529980697344, guid: b91ec8584c6d0e24095014e4869023bb,
+    type: 2}
+  pitchPixelParticlePrefab: {fileID: 1267399523278430, guid: e0f4f0120bbe2334c8dcdbbe5fcfeffd,
+    type: 2}
 --- !u!1 &1477871277
 GameObject:
   m_ObjectHideFlags: 0
@@ -31599,446 +32191,42 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1838729553}
---- !u!1001 &1873795746
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.size
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.size
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4851737033829552, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[9].position
-      value: 1.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[10].position
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[10].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[11].position
-      value: 0.67
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[11].seconds
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[12].position
-      value: -0.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[13].position
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[13].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[14].position
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[15].position
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[16].position
-      value: -1.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[17].position
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[18].position
-      value: -0.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[19].position
-      value: -0.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[19].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[8].position
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[9].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: lineSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[23].seconds
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: clearThreshold
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: clearThreshold
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: perfectThreshold
-      value: 92
-      objectReference: {fileID: 0}
-    - target: {fileID: 114704904271674596, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: clearThreshold
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: lineSpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[21].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[11].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[24].seconds
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[20].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[26].position
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[26].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[25].seconds
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[19].position
-      value: 0.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[18].position
-      value: -0.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[17].position
-      value: 0.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[16].position
-      value: -1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[15].position
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: timerLength
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordStart
-      value: 20800
-      objectReference: {fileID: 0}
-    - target: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordEnd
-      value: 21270
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordStart
-      value: 67360
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordEnd
-      value: 68000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordStart
-      value: 81680
-      objectReference: {fileID: 0}
-    - target: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: chosenWordEnd
-      value: 82360
-      objectReference: {fileID: 0}
-    - target: {fileID: 114863882719159952, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: segments.Array.data[0].stop
-      value: 164
-      objectReference: {fileID: 0}
-    - target: {fileID: 114863882719159952, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: segments.Array.data[2].stop
-      value: 522
-      objectReference: {fileID: 0}
-    - target: {fileID: 114863882719159952, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: segments.Array.data[2].start
-      value: 472
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: lyrics.Array.data[2]
-      value: dumbest
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: timerLength
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: timerStartPoint
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114863882719159952, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: segments.Array.data[3].start
-      value: 568
-      objectReference: {fileID: 0}
-    - target: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: timerLength
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: timerStartPoint
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: pitchPixelParticlePrefab
-      value: 
-      objectReference: {fileID: 1267399523278430, guid: e0f4f0120bbe2334c8dcdbbe5fcfeffd,
-        type: 2}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: pitchPixelParticlePrefab
-      value: 
-      objectReference: {fileID: 1267399523278430, guid: e0f4f0120bbe2334c8dcdbbe5fcfeffd,
-        type: 2}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: mercyRange
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: mercyRange
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[0].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[1].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[2].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[3].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[4].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[5].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[6].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[7].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[20].position
-      value: -1.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[24].position
-      value: 0.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[13].position
-      value: -0.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: nodes.Array.data[22].seconds
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: maxDistortion
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114535721315407810, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: maxDistortion
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: maxDistortion
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114704904271674596, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: maxDistortion
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114658407079180216, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: perfectThreshold
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: perfectThreshold
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114954926122334144, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: perfectThreshold
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114147920189531300, guid: fba8d4d839023b84fa0a3f0627bed522,
-        type: 2}
-      propertyPath: perfectThreshold
-      value: 92
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: fba8d4d839023b84fa0a3f0627bed522, type: 2}
-  m_IsPrefabParent: 0
---- !u!114 &1873795747 stripped
+--- !u!114 &1873795747
 MonoBehaviour:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 114863882719159952, guid: fba8d4d839023b84fa0a3f0627bed522,
     type: 2}
-  m_PrefabInternal: {fileID: 1873795746}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1101771010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6491359230e1ef458c9759a0572bc08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overallDistortionMax: 70
+  segments:
+  - start: 128
+    stop: 164
+  - start: 262
+    stop: 387
+  - start: 472
+    stop: 516
+  - start: 568
+    stop: 616
+  - start: 648
+    stop: 768
+  - start: 896
+    stop: 1032
+  durations: []
+  bpm: 110
+  bpmInMs: 0
+  corruptionClearThreshold: 80
+  overallCorruption: 0
+  overallDistortion: 0
+  corruptions: []
+  corruptedArea: {fileID: 1862118199916272, guid: f6c05bde89f2a914e9a4f8532caa5cd8,
+    type: 2}
+  corruptedAreaList: []
 --- !u!1 &1884195621
 GameObject:
   m_ObjectHideFlags: 0
@@ -37144,6 +37332,113 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!1 &2026525127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1051158565612130, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2026525128}
+  - component: {fileID: 2026525129}
+  m_Layer: 0
+  m_Name: JackTheRunner Corruption Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2026525128
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4183758811884112, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2026525127}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5, y: -1.635, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2026525129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114704904271674596, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2026525127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285c1e902cb1060449d09983648ab602, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 80
+  perfectThreshold: 100
+  segmentID: 5
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: 
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  groundPrefab: {fileID: 1221239473348454, guid: ef9561d2fd672b74cbca5e64d25932c9,
+    type: 2}
+  jackTheRunnerPrefab: {fileID: 1600833370806168, guid: faa83f35f74769c4fb9c0e937cd20c21,
+    type: 2}
+  enemiesList:
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 16
+    speed: 2.5
+    animatedSpeed: 0.75
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 32
+    speed: 3
+    animatedSpeed: 0.5
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 48
+    speed: 2
+    animatedSpeed: 1
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 64
+    speed: 2.5
+    animatedSpeed: 0.75
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 80
+    speed: 2
+    animatedSpeed: 1
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 96
+    speed: 3
+    animatedSpeed: 0.5
+    hasSpawned: 0
+  - enemyTypePrefab: {fileID: 1380176509693816, guid: cff4dd05ccca62f4590b7e961b79c1a9,
+      type: 2}
+    spawnTime: 112
+    speed: 2.5
+    animatedSpeed: 0.75
+    hasSpawned: 0
 --- !u!1 &2037915139
 GameObject:
   m_ObjectHideFlags: 0
@@ -37791,6 +38086,88 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2085771098}
+--- !u!1 &2098125126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1903431238894024, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2098125127}
+  - component: {fileID: 2098125128}
+  m_Layer: 0
+  m_Name: OddOneOut Corruption Prefab (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2098125127
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4755429426406224, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2098125126}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1101771011}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2098125128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114008322409385394, guid: fba8d4d839023b84fa0a3f0627bed522,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2098125126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86f13241b272b384c8cdfb23441161d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistortion: 30
+  currentDistortion: 0
+  clearThreshold: 100
+  perfectThreshold: 100
+  segmentID: 2
+  bestScore: 0
+  currentScore: 0
+  gameManager: {fileID: 0}
+  notes: For this corruption the clear threshold is irrelevant, as you either clear
+    the corruption or you don't.
+  duration:
+    start: 0
+    stop: 0
+  corruptionClearedPercent: 0
+  innerDistortion: 0
+  inSegment: 0
+  cleared: 0
+  perfected: 0
+  lyricsGuessPrefab: {fileID: 1678298423003994, guid: a3d349e1de7ccac4987448fb55ac8be3,
+    type: 2}
+  lyricsPrefab: {fileID: 1208538762326652, guid: 55f865a21e7bb7c49a6ca7270ef32967,
+    type: 2}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  highlightedColor: {r: 0.7794118, g: 0.7794118, b: 0.7794118, a: 1}
+  correctColor: {r: 0.1532764, g: 0.77205884, b: 0.33677724, a: 1}
+  incorrectColor: {r: 0.77205884, g: 0.124891855, b: 0.124891855, a: 1}
+  lyricsGuess: You're like the _____ that I've ever seen
+  lyrics:
+  - hottest
+  - coolest
+  - dumbest
+  correctLyricSegment: 1
+  chosenWordStart: 67360
+  chosenWordEnd: 68000
+  timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
+    type: 2}
+  timerStartPoint: 2
+  timerLength: 4
+  inputBeats: 1
 --- !u!1 &2099731318
 GameObject:
   m_ObjectHideFlags: 0
