@@ -222,7 +222,9 @@ public class AudioManager : MonoBehaviour {
 			startedMusic = true;
 			pausedMusic = false;
 		}
-	}
+        gameManager.overallCorruption.UpdateCorruptionAmount();
+        gameManager.overallCorruption.UpdateDistortionAmount();
+    }
 
 	#region soundEffects
 	public void PlaySkip()
