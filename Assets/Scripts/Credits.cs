@@ -21,6 +21,7 @@ public class Credits : MonoBehaviour {
     [SerializeField] private float waitforit;
     [SerializeField] private float safeguard;
     [SerializeField] private float delay;
+    [SerializeField] private float duration = 120;
     private AudioManager audioManager;
     private float audiolength;
     private float audiologlength;
@@ -32,7 +33,7 @@ public class Credits : MonoBehaviour {
     public bool showFade = false;
     private bool reachedEnd = false;
 
-
+    private bool LerpStarted = false;
 
 
 
@@ -41,7 +42,7 @@ public class Credits : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-
+        
         audioManager = AudioManagerz.GetComponent<AudioManager>();
         audiolength = audioManager.GetTrackLength();
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
@@ -59,12 +60,17 @@ public class Credits : MonoBehaviour {
             CreditsFade.CrossFadeAlpha(0, 0.0f, false);
         }
 
-
     }
 
     // Update is called once per frame
     void Update ()
     {
+        if(LerpStarted == false)
+        {
+            LerpStarted = true;
+            StartCoroutine(MoveFromTo(new Vector3(transform.localPosition.x, transform.localPosition.y + stopPos, transform.localPosition.z), transform.localPosition, duration));
+        }
+
         if (showpicture == true && audiolog == true)
         {
             AudiologPic.enabled = true;
@@ -80,7 +86,7 @@ public class Credits : MonoBehaviour {
             currentPos = audioP * endOfTheLine;
             Vector3 temp2 = transform.localPosition;
             temp2.y = currentPos - origPos;
-            transform.localPosition = temp2;
+            //transform.localPosition = temp2;
             if (currentPos < safeguard)
             {
                 if (currentPos > waitforit && showpicture == false)
@@ -109,11 +115,11 @@ public class Credits : MonoBehaviour {
                 currentPos = audioP * endOfTheLine;
                 Vector3 temp = transform.localPosition;
                 temp.y = currentPos - origPos;
-                transform.localPosition = temp;
+                //transform.localPosition = temp;
             }
             else if (currentPos > stopPos && !reachedEnd)
             {
-                transform.localPosition = freeze;
+                //transform.localPosition = freeze;
                 reachedEnd = true;
                 Timeslider.SetActive(false);
                 //audioManager.AudioPauseMusic();
@@ -165,6 +171,23 @@ public class Credits : MonoBehaviour {
         yield return new WaitForSeconds(delay);
         CreditsFade.CrossFadeAlpha(0.5f, 0.0f, false);
 
+    }
+
+    IEnumerator MoveFromTo(Vector3 pointA, Vector3 pointB, float time)
+    {
+        bool moving = false;
+        if (!moving)
+        {   
+            moving = true;     
+            float t = 1.0f;
+            while (t >= 0.0f)
+            {
+                t -= Time.deltaTime / time; 
+                transform.localPosition = Vector3.Lerp(pointA, pointB, t); // Set position proportional to t
+                yield return new WaitForEndOfFrame();
+            }
+            moving = false;
+        }
     }
 
 }
