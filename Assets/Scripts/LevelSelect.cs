@@ -85,13 +85,13 @@ public class LevelSelect : MonoBehaviour
 
 
         /// FOR TESTING BUILD LAST DAY
-        saveSystemRef.ClearSegments();
-        {
-            for (int i = 2; i < 9; i++)
-                saveSystemRef.UnlockLevel(i);
+        //saveSystemRef.ClearSegments();
+        //{
+        //    for (int i = 2; i < 9; i++)
+        //        saveSystemRef.UnlockLevel(i);
 
-            unlocks = saveSystemRef.GetUnlocks();
-        }
+        //    unlocks = saveSystemRef.GetUnlocks();
+        //}
         ///
     }
 		

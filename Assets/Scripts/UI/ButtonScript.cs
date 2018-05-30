@@ -33,7 +33,6 @@ public class ButtonScript : MonoBehaviour {
     {
         // Set the newPosition according to buttonDepth here, so that it updates in real-time
         //newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + buttonDepth);
-
         if (audioManager.startedMusic)
         {
             // If button is 'down'
@@ -41,7 +40,7 @@ public class ButtonScript : MonoBehaviour {
             {
                 // Move to original position
                 //transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
-                transform.position = originalPosition;
+                //transform.position = originalPosition;
 
                 // Switch material and toggle the bool
                 gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
@@ -53,7 +52,7 @@ public class ButtonScript : MonoBehaviour {
             {
                 // Increase z position
                 //transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
-                transform.position = newPosition;
+                //transform.position = newPosition;
 
                 // Switch material and toggle the bool
                 gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
@@ -66,7 +65,7 @@ public class ButtonScript : MonoBehaviour {
     {
         // Move to original position
         //transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
-        transform.position = originalPosition;
+        //transform.position = originalPosition;
 
         // Switch material and toggle the bool
         gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
@@ -77,7 +76,7 @@ public class ButtonScript : MonoBehaviour {
     {
         // Increase z position
         //transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
-        transform.position = newPosition;
+        //transform.position = newPosition;
 
         // Switch material and toggle the bool
         gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;
