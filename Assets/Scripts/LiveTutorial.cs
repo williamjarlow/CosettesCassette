@@ -37,7 +37,9 @@ public class LiveTutorial : MonoBehaviour {
         {
             for (int i = 0; i < liveTutorials.Length; i++)
             {
-                if (liveTutorials[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - tolerance && liveTutorials[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + tolerance && liveTutorials[i].hasBeenShown == false)
+                if (liveTutorials[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - tolerance && 
+                    liveTutorials[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + tolerance && 
+                    liveTutorials[i].hasBeenShown == false)
                 {
                     if (liveTutorials[i].specialCaseWithDelay)
                     {
