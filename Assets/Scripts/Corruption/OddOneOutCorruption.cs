@@ -31,7 +31,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
     // Timer
     [SerializeField] private GameObject timerPrefab;
     private GameObject timerObject;    // Timer object to be instantiated
-    [Tooltip("Timer startpoin in ms/beats from the segment start")][SerializeField] private float timerStartPoint;
+    [Tooltip("Timer startpoint in ms/beats from the segment start")][SerializeField] private float timerStartPoint;
     [SerializeField] [Tooltip("Time in seconds the timer will display")] private float timerLength;
     private float originalTimerLength;
     [Tooltip("Check this box if input is in bpm rather than milliseconds")]
@@ -117,7 +117,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
         float timeStamp = Mathf.Clamp(gameManager.audioManager.GetTimeLinePosition() - duration.start, 0, duration.stop - duration.start);
 
         // Check if we are at the timerStartPoint with some tolerance
-        if (timeStamp < timerStartPoint + 20 && timeStamp > timerStartPoint - 20 && !spawnedTimer)
+        if (timeStamp < timerStartPoint + 40 && timeStamp > timerStartPoint - 40 && !spawnedTimer)
         {
             // Instantiate the timer object
             timerObject = Instantiate(timerPrefab, gameManager.uiParent.transform);
