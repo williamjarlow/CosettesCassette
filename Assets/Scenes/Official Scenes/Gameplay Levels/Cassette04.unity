@@ -1047,7 +1047,7 @@ MonoBehaviour:
   spikeBoundaryLeft: 0.65
   scoreArea: 0.5
   minimumScore: 0
-  windSpeed: 0.01
+  windSpeed: 0.012
   randomWindDuration: 1.5
   randomWindSpawnLowerBound: 1
   randomWindSpawnUpperBound: 2
@@ -1055,31 +1055,31 @@ MonoBehaviour:
     type: 2}
   tiltIndicatorPrefab: {fileID: 1381994805003684, guid: e397f0b461b535b4aac378dc216b62f2,
     type: 2}
-  useRandomWind: 1
+  useRandomWind: 0
   winds:
-  - timeToAppear: 8
-    duration: 1
+  - timeToAppear: 1000
+    duration: 2000
     blowLeft: 0
     hasBeenActive: 0
-  - timeToAppear: 0
-    duration: 0
+  - timeToAppear: 4000
+    duration: 2000
     blowLeft: 0
     hasBeenActive: 0
-  - timeToAppear: 0
-    duration: 0
+  - timeToAppear: 7000
+    duration: 1000
+    blowLeft: 1
+    hasBeenActive: 0
+  - timeToAppear: 9000
+    duration: 1000
     blowLeft: 0
     hasBeenActive: 0
-  - timeToAppear: 0
-    duration: 0
+  - timeToAppear: 11000
+    duration: 1000
     blowLeft: 0
     hasBeenActive: 0
-  - timeToAppear: 0
-    duration: 0
-    blowLeft: 0
-    hasBeenActive: 0
-  - timeToAppear: 0
-    duration: 0
-    blowLeft: 0
+  - timeToAppear: 13000
+    duration: 2000
+    blowLeft: 1
     hasBeenActive: 0
 --- !u!1 &994644005 stripped
 GameObject:
@@ -1279,8 +1279,8 @@ MonoBehaviour:
   - ruse
   - lie
   correctLyricSegment: 2
-  chosenWordStart: 0
-  chosenWordEnd: 0
+  chosenWordStart: 95620
+  chosenWordEnd: 97500
   timerPrefab: {fileID: 1092547237559206, guid: cd32baf156754a440abd165a30454ff5,
     type: 2}
   timerStartPoint: 8
@@ -1816,7 +1816,7 @@ MonoBehaviour:
   maxDistortion: 30
   currentDistortion: 0
   clearThreshold: 80
-  perfectThreshold: 95
+  perfectThreshold: 92
   segmentID: 4
   bestScore: 0
   currentScore: 0
@@ -1868,8 +1868,6 @@ MonoBehaviour:
     seconds: 0.75
   - position: -2
     seconds: 0.75
-  curvify: 0
-  temporaryTestValue: 0
   pitchType: 1
   lineSpeed: 4
   mercyRange: 16
@@ -3183,7 +3181,7 @@ MonoBehaviour:
   maxDistortion: 30
   currentDistortion: 0
   clearThreshold: 80
-  perfectThreshold: 95
+  perfectThreshold: 92
   segmentID: 0
   bestScore: 0
   currentScore: 0
@@ -3220,20 +3218,18 @@ MonoBehaviour:
   - position: -1.8
     seconds: 1
   - position: 1.6
-    seconds: 1
+    seconds: 1.25
   - position: 0
+    seconds: 1
+  - position: 1
     seconds: 0.75
-  - position: 1.6
-    seconds: 0.5
   - position: -0.5
     seconds: 1
   - position: -0.5
     seconds: 0.25
-  curvify: 0
-  temporaryTestValue: 0
   pitchType: 5
   lineSpeed: 3
-  mercyRange: 12
+  mercyRange: 15
   rGoalRange: {x: -2, y: 2}
   rTravelTimeRange: {x: 0.5, y: 1}
   randomizeNodes: 0
