@@ -31,7 +31,8 @@ public class ButtonScript : MonoBehaviour {
     public void TogglePosition()
     {
         // Set the newPosition according to buttonDepth here, so that it updates in real-time
-        newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + buttonDepth);
+        //newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + buttonDepth);
+        newPosition = originalPosition + new Vector3(0, 0, buttonDepth);
 
         if (audioManager.startedMusic)
         {
@@ -39,7 +40,8 @@ public class ButtonScript : MonoBehaviour {
             if (isDown)
             {
                 // Move to original position
-                transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
+                //transform.position = Vector3.MoveTowards(transform.position, originalPosition, buttonDepth);
+                transform.position = originalPosition;
 
                 // Switch material and toggle the bool
                 gameObject.GetComponent<MeshRenderer>().material = originalMaterial;
@@ -50,7 +52,8 @@ public class ButtonScript : MonoBehaviour {
             else if (!isDown)
             {
                 // Increase z position
-                transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
+                //transform.position = Vector3.MoveTowards(transform.position, newPosition, buttonDepth);
+                transform.position = newPosition;
 
                 // Switch material and toggle the bool
                 gameObject.GetComponent<MeshRenderer>().material = selectedMaterial;

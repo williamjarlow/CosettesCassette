@@ -120,9 +120,6 @@ public class PitchCorruption : CorruptionBaseClass {
             }
             else
             {
-                if (conditionsReset == false)
-                {
-                    conditionsReset = true;
                     if (!cleared)
                     {
                         if (!inSegment)
@@ -138,8 +135,9 @@ public class PitchCorruption : CorruptionBaseClass {
                         RecordPitch();
                         //ResetConditions();
                     }
-                }
                 Destroy(pitchPixelParticleInstance);
+                DestroyLine();
+                pitchSlider.gameObject.SetActive(false);
                 particleSystems.Clear();
             }
         }
