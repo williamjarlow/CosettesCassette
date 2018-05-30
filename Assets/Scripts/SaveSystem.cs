@@ -66,6 +66,10 @@ public class SaveSystem : Singleton<SaveSystem>
             ClearSegments();
             ClearUnlocks();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GetStickers();
+        }
     }
 
     //Save individual segments.
@@ -355,6 +359,24 @@ public class SaveSystem : Singleton<SaveSystem>
                 SaveStickers(stickerManRef.GetComponent<StickerManager>().stickerDictionary[keyList[i]].Name, false);
             }
         }
+    }
+    //Save individual stickers.
+    public void GetStickers()
+    {
+        SaveStickers("A", true);
+        SaveStickers("B", true);
+        SaveStickers("C", true);
+        SaveStickers("D", true);
+        SaveStickers("E", true);
+        SaveStickers("F", true);
+        SaveStickers("G", true);
+        SaveStickers("H", true);
+        SaveStickers("I", true);
+        SaveStickers("J", true);
+        SaveStickers("K", true);
+        SaveStickers("L", true);
+        SaveStickers("M", true);
+        SaveStickers("N", true);
     }
 
 }
