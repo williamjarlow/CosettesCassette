@@ -200,7 +200,7 @@ public class TiltCorruption : CorruptionBaseClass
                 lastWindCoroutine = StartCoroutine(WindEffect(windSpeed, true, randomWindDuration));
             }
 
-            RNGWindSpawner = Random.Range(randomWindSpawnLowerBound, randomWindSpawnUpperBound);
+            RNGWindSpawner = Random.Range(randomWindDuration + randomWindSpawnLowerBound, randomWindDuration + randomWindSpawnUpperBound);
         }
 
         //Preset wind handler
