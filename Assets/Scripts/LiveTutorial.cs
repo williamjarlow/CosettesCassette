@@ -21,10 +21,9 @@ public class LiveTutorial : MonoBehaviour {
 
     [SerializeField] private GameObject liveTutorial;
     [SerializeField] private Text textBoxForLiveTutorial;
-
     [SerializeField] public LiveTutorials[] liveTutorials;
-
     private AudioManager audioManager;
+    private float tolerance = 120;
 
 
     void Start ()
@@ -38,7 +37,7 @@ public class LiveTutorial : MonoBehaviour {
         {
             for (int i = 0; i < liveTutorials.Length; i++)
             {
-                if (liveTutorials[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - 30 && liveTutorials[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + 30 && liveTutorials[i].hasBeenShown == false)
+                if (liveTutorials[i].timeToAppearInMs >= audioManager.GetTimeLinePosition() - tolerance && liveTutorials[i].timeToAppearInMs <= audioManager.GetTimeLinePosition() + tolerance && liveTutorials[i].hasBeenShown == false)
                 {
                     if (liveTutorials[i].specialCaseWithDelay)
                     {
