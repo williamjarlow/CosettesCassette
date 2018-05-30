@@ -222,7 +222,9 @@ public class AudioManager : MonoBehaviour {
 			startedMusic = true;
 			pausedMusic = false;
 		}
-	}
+        gameManager.overallCorruption.UpdateCorruptionAmount();
+        gameManager.overallCorruption.UpdateDistortionAmount();
+    }
 
 	#region soundEffects
 	public void PlaySkip()
@@ -620,6 +622,16 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEventDesc.createInstance (out flipCassetteEv);
 		flipCassetteEv.start ();
 		flipCassetteEv.release ();
+	}
+
+	public void PlayBoyfriend()
+	{
+		FMOD.Studio.EventDescription boyfriendEventDesc;
+		FMOD.Studio.EventInstance boyfriendEv;
+		systemObj.getEvent ("event:/SFX/boyfriend", out boyfriendEventDesc);
+		boyfriendEventDesc.createInstance (out boyfriendEv);
+		boyfriendEv.start ();
+		boyfriendEv.release ();
 	}
 
 	#endregion

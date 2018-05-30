@@ -44,7 +44,7 @@ public class Credits : MonoBehaviour {
 
         audioManager = AudioManagerz.GetComponent<AudioManager>();
         audiolength = audioManager.GetTrackLength();
-
+        print("Tracklength is " + audiolength);
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         CreditsFade.CrossFadeAlpha(0, 0.0f, false);
 
@@ -105,12 +105,18 @@ public class Credits : MonoBehaviour {
 
             if (currentPos < stopPos && reachedEnd == false)
             {
+                print(audiolength);
                 audioPos = audioManager.GetTimeLinePosition();
+                print(audioPos);
                 audioP = audioPos / audiolength;
+                print(audioP);
                 currentPos = audioP * endOfTheLine;
+                print(endOfTheLine);
                 Vector3 temp = transform.localPosition;
                 temp.y = currentPos - origPos;
                 transform.localPosition = temp;
+                print(temp);
+                print(currentPos-origPos);
             }
             else if (currentPos > stopPos && !reachedEnd)
             {
