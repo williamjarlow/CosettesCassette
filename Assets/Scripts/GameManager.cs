@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     private int allowedProgressIntoBarInMs = 5000;
 
     // Tolerance to make sure we run certain functions for entering a segment
-    private const int tolerance = 150;
+    private const int tolerance = 250;
     Coroutine lastCoroutine;
 
     public instruments selectedInstrument = instruments.drums;
@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
 
         // Set the eject button to non-interactable since the level has not been cleared
         ejectButton.interactable = false;
+        ejectButton.GetComponent<ButtonScript>().SetPositionDown();
     }
 
     private void Update()
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
 
-                yield return new WaitForSeconds((float)tolerance / (float)2000);
+                yield return new WaitForSeconds((float)tolerance / (float)1000);
 
                 // Start recording
                 recording = true;

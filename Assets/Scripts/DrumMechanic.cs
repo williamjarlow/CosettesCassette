@@ -24,7 +24,6 @@ public class DrumMechanic : MonoBehaviour {
 
     private bool isPlaying;
     [HideInInspector] public bool gaveInput = false;
-
     [SerializeField] private int timeStamp;
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")][SerializeField] private int tolerance;
 

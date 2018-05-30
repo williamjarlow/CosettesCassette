@@ -180,6 +180,7 @@ public class OverallCorruption : MonoBehaviour
             // Activate the eject button when the level is cleared
             overallCorruption = 0;
             ejectButton.interactable = true;
+            ejectButton.GetComponent<ButtonScript>().SetPositionUp();
             gameManager.audioManager.PlayWinSound(1);
             gameManager.LevelPerfected = true;
             gameManager.LevelCleared = true;

@@ -28,7 +28,7 @@ public class JackTheRunner : CorruptionBaseClass
     private int maxScore = 0;
     private int damageTaken = 0;
     private float timeStamp = 0;
-    private float tolerance = 30;
+    private float tolerance = 80;
 
     bool conditionsReset;
     bool dothings;
