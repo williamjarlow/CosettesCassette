@@ -630,12 +630,12 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayBoyfriend()
     {
-        FMOD.Studio.EventDescription flipCassetteEventDesc;
-        FMOD.Studio.EventInstance flipCassetteEv;
-        systemObj.getEvent("event:/SFX/boyfriend", out flipCassetteEventDesc);
-        flipCassetteEventDesc.createInstance(out flipCassetteEv);
-        flipCassetteEv.start();
-        flipCassetteEv.release();
+        FMOD.Studio.EventDescription boyfriendEventDesc;
+        FMOD.Studio.EventInstance boyfriendEv;
+        systemObj.getEvent("event:/SFX/boyfriend", out boyfriendEventDesc);
+        boyfriendEventDesc.createInstance(out boyfriendEv);
+        boyfriendEv.start();
+        boyfriendEv.release();
     }
 
     #endregion
