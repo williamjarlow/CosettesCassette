@@ -1294,7 +1294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &535326817
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1607,7 +1607,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 573611490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -35, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 766735916}
@@ -1949,7 +1949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &667393688
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2501,7 +2501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &763472043
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2773,7 +2773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &784547520
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3454,7 +3454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &931853363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3893,7 +3893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1107351043
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4528,6 +4528,7 @@ GameObject:
   - component: {fileID: 1419718593}
   - component: {fileID: 1419718595}
   - component: {fileID: 1419718594}
+  - component: {fileID: 1419718597}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4620,6 +4621,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1419718597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1419718592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e188ee899633d0b49870a5ae38b7359d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ratio: {x: 16, y: 9}
+  forceRatioOnAwake: 1
+  listenForWindowChanges: 1
+  createCameraForLetterBoxRendering: 1
+  findCamerasAutomatically: 1
+  letterBoxCameraColor: {r: 0, g: 0, b: 0, a: 1}
+  cameras: []
+  letterBoxCamera: {fileID: 0}
 --- !u!1 &1425100602
 GameObject:
   m_ObjectHideFlags: 0
@@ -4787,7 +4807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1431499841
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5506,6 +5526,26 @@ Prefab:
         \ Tomas Nyman\r\n  Tomas Nyman\r\nTobias Eriksson\r\nTobias Eriksson\r\n  Tomas
         Nyman"
       objectReference: {fileID: 0}
+    - target: {fileID: 224835903941934622, guid: 8b58c810e8749824f895cf1025808cef,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -3900
+      objectReference: {fileID: 0}
+    - target: {fileID: 224835903941934622, guid: 8b58c810e8749824f895cf1025808cef,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -3900
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428941405547364, guid: 8b58c810e8749824f895cf1025808cef,
+        type: 2}
+      propertyPath: stopPos
+      value: 8600
+      objectReference: {fileID: 0}
+    - target: {fileID: 114428941405547364, guid: 8b58c810e8749824f895cf1025808cef,
+        type: 2}
+      propertyPath: freeze.y
+      value: 4600
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b58c810e8749824f895cf1025808cef, type: 2}
   m_IsPrefabParent: 0
@@ -5784,7 +5824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1724516349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6561,7 +6601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2143186794
 RectTransform:
   m_ObjectHideFlags: 0
