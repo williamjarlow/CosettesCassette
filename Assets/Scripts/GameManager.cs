@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     // Tolerance to make sure we run certain functions for entering a segment
     private const int tolerance = 150;
+    Coroutine lastCoroutine;
 
     public instruments selectedInstrument = instruments.drums;
 
@@ -99,26 +100,31 @@ public class GameManager : MonoBehaviour
             // If we are not recording --> start recording
             if (recording == false)
             {
+                minigameButton.GetComponent<ButtonScript>().SetPositionUp();
+                playButton.interactable = false;
+                audioManager.PlayRecordStart();
                 //If we are paused
                 if (audioManager.pausedMusic)
                 {
                     audioManager.gameMusicEv.setPaused(false);
+                    playButton.GetComponent<ButtonScript>().SetPositionDown();
                     audioManager.pausedMusic = false;
                 }
                 // Find and jump to the closest segment
                 SnapToClosestSegment();
 
-                yield return new WaitForSeconds(tolerance/500);
+                yield return new WaitForSeconds((float)tolerance / (float)500);
 
                 // Start recording
                 recording = true;
-                audioManager.PlayRecordStart();
-                playButton.interactable = false;
+                
+                
             }
 
             // If we are recording --> stop recording
             else if (recording)
             {
+                minigameButton.GetComponent<ButtonScript>().SetPositionDown();
                 recording = false;
                 audioManager.PlayRecordStop();
                 playButton.interactable = true;
@@ -132,7 +138,12 @@ public class GameManager : MonoBehaviour
 
     public void ToggleRecord()
     {
-        StartCoroutine(ToggleRecordCoroutine());
+        if (lastCoroutine != null)
+        {
+            StopCoroutine(lastCoroutine);
+        }
+        lastCoroutine = StartCoroutine(ToggleRecordCoroutine());
+        
     }
     public void SetRecord(bool recordingState)
     {
