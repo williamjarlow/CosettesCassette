@@ -117,13 +117,17 @@ public class AudioManager : MonoBehaviour {
 		//// Special case for LiveTutorial
 		if (liveTutorial != null && switchedToAudioLog && !showedSpecialCase)
 		{
-			if (GetTimeLinePosition() >= GetTrackLength() - 30)
+			if (GetTimeLinePosition() >= GetTrackLength() - 300)
 			{
 				showedSpecialCase = true;
 				liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
 			}
 		}
-		////
+
+		if(switchedToAudioLog && GetTimeLinePosition() >= GetTrackLength() - 150)
+        {
+            SceneManager.LoadScene(1);
+        }
 	}
 		
 	public void AudioPlayMusic ()
@@ -622,16 +626,6 @@ public class AudioManager : MonoBehaviour {
 		flipCassetteEventDesc.createInstance (out flipCassetteEv);
 		flipCassetteEv.start ();
 		flipCassetteEv.release ();
-	}
-
-	public void PlayBoyfriend()
-	{
-		FMOD.Studio.EventDescription boyfriendEventDesc;
-		FMOD.Studio.EventInstance boyfriendEv;
-		systemObj.getEvent ("event:/SFX/boyfriend", out boyfriendEventDesc);
-		boyfriendEventDesc.createInstance (out boyfriendEv);
-		boyfriendEv.start ();
-		boyfriendEv.release ();
 	}
 
 	#endregion
