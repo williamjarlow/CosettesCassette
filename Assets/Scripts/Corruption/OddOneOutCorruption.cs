@@ -69,7 +69,7 @@ public class OddOneOutCorruption : CorruptionBaseClass
 
             if (gameManager.recording) //If recording
             {
-               
+                resetConditions = false;
                 if (inSegment && !gameManager.audioManager.switchedToAudioLog)
                 {
                     Timer();
