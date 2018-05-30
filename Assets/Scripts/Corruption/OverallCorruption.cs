@@ -66,7 +66,7 @@ public class OverallCorruption : MonoBehaviour
 
     void Awake()
     {
-
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         bpmInMs = ConvertBpmToMs(bpm);
         for (int i = 0; i < segments.Count; i++)
         {
@@ -81,9 +81,7 @@ public class OverallCorruption : MonoBehaviour
         //// Special case for LiveTutorial
         if (SceneManager.GetActiveScene().name == "Cassette00")
             liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
-        ////
 
-        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioDistortion = gameManager.audioDistortion;
         ejectButton = gameManager.ejectButton;
 
