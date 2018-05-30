@@ -53,7 +53,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
     private Sprite[] incorrectNotesSprites = new Sprite[5];
     private int noteSpriteIndex;    // Index to use when randomzing the sprite for the note
     [Tooltip("Time tolerance in ms when comparing timeline position and recorded beats")]
-    private int tolerance = 100;
+    private int tolerance = 130;
     [SerializeField]
     private int correctNotePoints;
     [SerializeField]
