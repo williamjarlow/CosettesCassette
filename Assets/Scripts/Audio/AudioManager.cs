@@ -71,6 +71,7 @@ public class AudioManager : MonoBehaviour {
 	[HideInInspector] public bool switchedToAudioLog = false;
 	[HideInInspector] public bool startedMusic = false;
 	[HideInInspector] public bool pausedMusic = true;
+    [HideInInspector] public bool bSideSpecialCase = false;
 
 	// Added for special case of LiveTutorial popup
 	private LiveTutorial liveTutorial;
@@ -107,7 +108,8 @@ public class AudioManager : MonoBehaviour {
 		if (SceneManager.GetActiveScene().buildIndex > 15 && SceneManager.GetActiveScene().buildIndex < 23)
 		{
 			switchedToAudioLog = true;
-		}
+            bSideSpecialCase = true;
+        }
 
 		Debug.Assert(this.tag == "AudioManager", "Set the tag of AudioManager to 'AudioManager'");
 	}
