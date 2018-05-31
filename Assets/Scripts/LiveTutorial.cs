@@ -33,7 +33,7 @@ public class LiveTutorial : MonoBehaviour {
 
     void Update()
     {
-        if (liveTutorials.Length > 0)
+        if (liveTutorials.Length > 0 && !audioManager.switchedToAudioLog)
         {
             for (int i = 0; i < liveTutorials.Length; i++)
             {

@@ -123,11 +123,6 @@ public class AudioManager : MonoBehaviour {
 				liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
 			}
 		}
-
-		if(switchedToAudioLog && GetTimeLinePosition() >= GetTrackLength() - 150)
-        {
-            SceneManager.LoadScene(1);
-        }
 	}
 		
 	public void AudioPlayMusic ()

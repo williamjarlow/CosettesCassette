@@ -174,7 +174,7 @@ public class OverallCorruption : MonoBehaviour
                     if (liveTutorial != null)
                     {
                         liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 0.5f);
-                        liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 1.5f);
+                        liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 5.5f);
 
 
                     }
@@ -208,7 +208,7 @@ public class OverallCorruption : MonoBehaviour
             if (liveTutorial != null)
             {
                 liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + 0.5f);
-                liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + 1.5f);
+                liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowGood + gameManager.stageClearVFX.timeToShowNew + 5.5f);
             }
         }
     }
