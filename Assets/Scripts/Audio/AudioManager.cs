@@ -613,11 +613,16 @@ public class AudioManager : MonoBehaviour {
 		insertCassetteEv.release ();
 	}
 
-	public void PlayFlipAnimSound()
+	public void PlayFlipAnimSound(bool sideIsA)
 	{
 		FMOD.Studio.EventDescription flipCassetteEventDesc;
 		FMOD.Studio.EventInstance flipCassetteEv;
-		systemObj.getEvent ("event:/SFX/flipCassette", out flipCassetteEventDesc);
+
+		if (!sideIsA)
+			systemObj.getEvent ("event:/SFX/flipCassette_BA", out flipCassetteEventDesc);
+		else
+			systemObj.getEvent ("event:/SFX/flipCassette_AB", out flipCassetteEventDesc);
+
 		flipCassetteEventDesc.createInstance (out flipCassetteEv);
 		flipCassetteEv.start ();
 		flipCassetteEv.release ();
@@ -772,7 +777,7 @@ public class AudioManager : MonoBehaviour {
 		AudioStopMusic();
 
 		PlayEjectSound ();
-		PlayFlipAnimSound ();
+		PlayFlipAnimSound (switchedToAudioLog);
 
 		// If we are in the audio log --> disable visuals
 		if (switchedToAudioLog)
