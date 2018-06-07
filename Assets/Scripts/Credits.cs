@@ -6,15 +6,10 @@ using System.IO;
 
 public class Credits : MonoBehaviour {
 
-    [SerializeField] private GameObject stopper;
     [SerializeField] private float stopPos;
-    [SerializeField] private Vector3 freeze;
     [SerializeField] private float origPos;
     [SerializeField] public float currentPos;
     [SerializeField] private float endOfTheLine;
-    [SerializeField] private GameObject AudioManagerz;
-    [SerializeField] private GameObject Timeslider;
-    [SerializeField] private GameObject credits;
     [SerializeField] private Image CreditsFade;
     [SerializeField] private Image AudiologPic;
     [SerializeField] private string creditsOrAudiolog;
@@ -22,12 +17,16 @@ public class Credits : MonoBehaviour {
     [SerializeField] private float safeguard;
     [SerializeField] private float delay;
     [SerializeField] private float duration = 120;
+    [SerializeField] private GameManager gameManager;
+
     private AudioManager audioManager;
+    private GameObject timelineSlider;
     private float audiolength;
     private float audiologlength;
     private float audioPos;
     private float audioP;
-    public bool music = true;
+
+    bool music = true;
     public bool audiolog = false;
     public bool showpicture = false;
     public bool showFade = false;
@@ -42,13 +41,13 @@ public class Credits : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        
-        audioManager = AudioManagerz.GetComponent<AudioManager>();
+        gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        timelineSlider = gameManager.timelineSlider;
+        audioManager = gameManager.audioManager;
         audiolength = audioManager.GetTrackLength();
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         CreditsFade.CrossFadeAlpha(0, 0.0f, false);
 
-        //insert load here
         AudiologPic.enabled = false;
         CreditsFade.enabled = false;
         if (showpicture == true)
@@ -100,14 +99,8 @@ public class Credits : MonoBehaviour {
         }
         else if (creditsOrAudiolog == "Credits" && music == true)
         {
-        
-            //if (currentPos > waitforit && showFade == false)
-            //{
-                FadeOut();
-                showFade = true;
-                //insert save here
-            //}
-
+            FadeOut();
+            showFade = true;
             if (currentPos < stopPos && reachedEnd == false)
             {
                 audioPos = audioManager.GetTimeLinePosition();
@@ -115,15 +108,11 @@ public class Credits : MonoBehaviour {
                 currentPos = audioP * endOfTheLine;
                 Vector3 temp = transform.localPosition;
                 temp.y = currentPos - origPos;
-                //transform.localPosition = temp;
             }
             else if (currentPos > stopPos && !reachedEnd)
             {
-                //transform.localPosition = freeze;
                 reachedEnd = true;
-                Timeslider.SetActive(false);
-                //audioManager.AudioPauseMusic();
-                //audioManager.pausedMusic = true;
+                timelineSlider.SetActive(false);
             }
         }
     }

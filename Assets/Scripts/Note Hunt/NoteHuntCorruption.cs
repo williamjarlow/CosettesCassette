@@ -82,13 +82,24 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     float timeStamp;
 
+    //Optimization variable to reduce iterations in spawnNotes.
+    int spawnedNotes;
+
     // The list of notes the designers will spawn
     public List<Notes> noteList;
     // The list of notes (the game object) to destroy when exiting segment
     [HideInInspector]
     public List<GameObject> destroyList;
+
+    static int SortBySpawnTime(Notes n1, Notes n2)
+    {
+        return n1.spawnTime.CompareTo(n2.spawnTime);
+    }
+
     void Start()
     {
+        noteList.Sort(SortBySpawnTime);
+
         audioManager = gameManager.audioManager;
         overallCorruption = gameManager.overallCorruption;
 
@@ -202,93 +213,86 @@ public class NoteHuntCorruption : CorruptionBaseClass
 
     private void SpawnNotes()
     {
-        // Loop through the list of notes
-        for (int i = 0; i < noteList.Count; i++)
+        // If we are at the right time stamp --> spawn the note according to the object's note type
+        if (timeStamp > 0 && spawnedNotes < noteList.Count && timeStamp >= noteList[spawnedNotes].spawnTime)
         {
-            // If we are at the right time stamp (with some tolerance) --> spawn the note according to the object's note type
-            if (timeStamp > 0 && timeStamp <= noteList[i].spawnTime + tolerance / 2 && timeStamp >= noteList[i].spawnTime - tolerance / 2)
+            GameObject spawnedNote;
+
+            // Correct note
+            if (noteList[spawnedNotes].noteType == NoteType.CORRECT)
             {
-                GameObject spawnedNote;
-
-                // Correct note
-                if (noteList[i].noteType == NoteType.CORRECT && !noteList[i].hasSpawned)
-                {
-                    //Randomize the sprite
-                    noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
-                    //Debug for spawning notes at edges
-                    if (spawnNotesAtEdge)
-                        if (Random.Range(0, 2) == 0)
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                        else
-                            spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                //Randomize the sprite
+                noteSpriteIndex = Random.Range(0, correctNotesSprites.Length - 1);
+                //Debug for spawning notes at edges
+                if (spawnNotesAtEdge)
+                    if (Random.Range(0, 2) == 0)
+                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                     else
-                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                    // Set the sprite according to the randomly generated sprite
-                    spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
-                    // Set the required amount of hits
-                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
-                }
-
-                // Incorrect note
-                else if (noteList[i].noteType == NoteType.INCORRECT && !noteList[i].hasSpawned)
-                {
-                    //Randomize the sprite
-                    noteSpriteIndex = Random.Range(0, incorrectNotesSprites.Length - 1);
-                    //Debug for spawning notes at edges
-                    if (spawnNotesAtEdge)
-                        if (Random.Range(0, 2) == 0)
-                            spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                        else
-                            spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                    else
-                        spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                    // Set the sprite according to the randomly generated sprite
-                    spawnedNote.GetComponent<SpriteRenderer>().sprite = incorrectNotesSprites[noteSpriteIndex];
-                    // Set the required amount of hits
-                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
-                }
-                else if (noteList[i].noteType == NoteType.CORRECTMULTI && !noteList[i].hasSpawned)
-                {
-                    //Randomize the sprite
-                    noteSpriteIndex = Random.Range(0, correctMultiNotesSprites.Length - 1);
-                    //Debug for spawning notes at edges
-                    if (spawnNotesAtEdge)
-                        if (Random.Range(0, 2) == 0)
-                            spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                        else
-                            spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                    else
-                        spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
-                    // Set the sprite according to the randomly generated sprite
-                    spawnedNote.GetComponent<SpriteRenderer>().sprite = correctMultiNotesSprites[noteSpriteIndex];
-                    // Set the required amount of hits
-                    spawnedNote.GetComponent<NoteMovement>().hitsRemaining = multiNoteHits;
-                }
+                        spawnedNote = Instantiate(correctNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
                 else
-                {
-                    spawnedNote = new GameObject();
-                    Destroy(spawnedNote);
-                }
-                if (!noteList[i].hasSpawned)
-                {
-                    // Spawn the correct randomized note
-                    noteList[i].hasSpawned = true;
-                    // Set the game object's speed according to the specified speed in this script
-                    spawnedNote.GetComponent<NoteMovement>().speed = speed;
-                    // Save the box collider and sprite as variables
-                    BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
-                    Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
-                    // Convert the sprite to world space units
-                    float pixelsPerUnit = sprite.pixelsPerUnit;
-                    // Set the box collider size according to the world space size + the added box collider size
-                    boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
-
-                    // Prepare the object for destruction
-                    destroyList.Add(spawnedNote);
-                    // Set note movement type
-                    spawnedNote.GetComponent<NoteMovement>().movementType = noteList[i].movementType;
-                }
+                    spawnedNote = Instantiate(correctNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                // Set the sprite according to the randomly generated sprite
+                spawnedNote.GetComponent<SpriteRenderer>().sprite = correctNotesSprites[noteSpriteIndex];
+                // Set the required amount of hits
+                spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
             }
+            // Incorrect note
+            else if (noteList[spawnedNotes].noteType == NoteType.INCORRECT)
+            {
+                //Randomize the sprite
+                noteSpriteIndex = Random.Range(0, incorrectNotesSprites.Length - 1);
+                //Debug for spawning notes at edges
+                if (spawnNotesAtEdge)
+                    if (Random.Range(0, 2) == 0)
+                        spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                    else
+                        spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                else
+                    spawnedNote = Instantiate(incorrectNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                // Set the sprite according to the randomly generated sprite
+                spawnedNote.GetComponent<SpriteRenderer>().sprite = incorrectNotesSprites[noteSpriteIndex];
+                // Set the required amount of hits
+                spawnedNote.GetComponent<NoteMovement>().hitsRemaining = standardNoteHits;
+            }
+            else if (noteList[spawnedNotes].noteType == NoteType.CORRECTMULTI)
+            {
+                //Randomize the sprite
+                noteSpriteIndex = Random.Range(0, correctMultiNotesSprites.Length - 1);
+                //Debug for spawning notes at edges
+                if (spawnNotesAtEdge)
+                    if (Random.Range(0, 2) == 0)
+                        spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMin, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                    else
+                        spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(xSpawnRandomMax, transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                else
+                    spawnedNote = Instantiate(correctMultiNotePrefab, new Vector3(Random.Range(xSpawnRandomMin, xSpawnRandomMax), transform.localPosition.y, transform.localPosition.z), Quaternion.identity, transform);
+                // Set the sprite according to the randomly generated sprite
+                spawnedNote.GetComponent<SpriteRenderer>().sprite = correctMultiNotesSprites[noteSpriteIndex];
+                // Set the required amount of hits
+                spawnedNote.GetComponent<NoteMovement>().hitsRemaining = multiNoteHits;
+            }
+            else
+            {
+                spawnedNote = new GameObject();
+                Destroy(spawnedNote);
+            }
+            // Set the game object's speed according to the specified speed in this script
+            spawnedNote.GetComponent<NoteMovement>().speed = speed;
+            // Save the box collider and sprite as variables
+            BoxCollider boxCol = spawnedNote.GetComponent<BoxCollider>();
+            Sprite sprite = spawnedNote.GetComponent<SpriteRenderer>().sprite;
+            // Convert the sprite to world space units
+            float pixelsPerUnit = sprite.pixelsPerUnit;
+            // Set the box collider size according to the world space size + the added box collider size
+            boxCol.size = new Vector3(sprite.rect.size.x / pixelsPerUnit + addedBoxColliderSize.x, sprite.rect.size.y / pixelsPerUnit + addedBoxColliderSize.y, 0);
+            //Prevent garbage from lagging the game.
+            Destroy(spawnedNote, 5);
+            // Prepare the object for destruction
+            destroyList.Add(spawnedNote);
+            // Set note movement type
+            spawnedNote.GetComponent<NoteMovement>().movementType = noteList[spawnedNotes].movementType;
+            //Optimization for removal of for-loop
+            spawnedNotes++;
         }
     }
 
@@ -300,12 +304,6 @@ public class NoteHuntCorruption : CorruptionBaseClass
                 Destroy(destroyList[i].transform.gameObject);
         }
         destroyList.Clear();
-    }
-
-    private IEnumerator SpawnCooldown()
-    {
-        yield return new WaitForSeconds(spawnCooldown);
-        SpawnNotes();
     }
 
     public override void EnterSegment()
@@ -337,6 +335,7 @@ public class NoteHuntCorruption : CorruptionBaseClass
     void ResetConditions()
     {
         // Loop through the list of notes and set the hasSpawned bool to false. Then destroy all notes.
+        spawnedNotes = 0;
         for (int i = 0; i < noteList.Count; i++)
         {
             noteList[i].hasSpawned = false;

@@ -78,8 +78,11 @@ public class GameManager : MonoBehaviour
         }
 
         // Set the eject button to non-interactable since the level has not been cleared
-        ejectButton.interactable = false;
-        ejectButton.GetComponent<ButtonScript>().SetPositionDown();
+        if (ejectButton != null)
+        {
+            ejectButton.interactable = false;
+            ejectButton.GetComponent<ButtonScript>().SetPositionDown();
+        }
     }
 
     private void Update()
