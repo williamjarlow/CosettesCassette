@@ -7,58 +7,16 @@ using System.IO;
 public class Credits : MonoBehaviour {
 
     [SerializeField] private float stopPos;
-    [SerializeField] private float origPos;
-    [SerializeField] public float currentPos;
-    [SerializeField] private float endOfTheLine;
-    [SerializeField] private Image CreditsFade;
-    [SerializeField] private Image AudiologPic;
-    [SerializeField] private string creditsOrAudiolog;
-    [SerializeField] private float waitforit;
-    [SerializeField] private float safeguard;
-    [SerializeField] private float delay;
     [SerializeField] private float duration = 120;
-    [SerializeField] private GameManager gameManager;
-
+    private GameManager gameManager;
     private AudioManager audioManager;
-    private GameObject timelineSlider;
-    private float audiolength;
-    private float audiologlength;
-    private float audioPos;
-    private float audioP;
-
-    bool music = true;
-    public bool audiolog = false;
-    public bool showpicture = false;
-    public bool showFade = false;
-    private bool reachedEnd = false;
-
     private bool LerpStarted = false;
-
-
-
-
 
     // Use this for initialization
     void Start ()
     {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        timelineSlider = gameManager.timelineSlider;
         audioManager = gameManager.audioManager;
-        audiolength = audioManager.GetTrackLength();
-        AudiologPic.CrossFadeAlpha(0, 0.0f, false);
-        CreditsFade.CrossFadeAlpha(0, 0.0f, false);
-
-        AudiologPic.enabled = false;
-        CreditsFade.enabled = false;
-        if (showpicture == true)
-        {
-            AudiologPic.CrossFadeAlpha(0, 0.0f, false);
-        }
-        if (showFade == true)
-        {
-            CreditsFade.CrossFadeAlpha(0, 0.0f, false);
-        }
-
     }
 
     // Update is called once per frame
@@ -69,97 +27,6 @@ public class Credits : MonoBehaviour {
             LerpStarted = true;
             StartCoroutine(MoveFromTo(new Vector3(transform.localPosition.x, transform.localPosition.y + stopPos, transform.localPosition.z), transform.localPosition, duration));
         }
-
-        if (showpicture == true && audiolog == true)
-        {
-            AudiologPic.enabled = true;
-        }
-        else if (showpicture == true && audiolog == false)
-        {
-            AudiologPic.enabled = false;
-        }
-        if (creditsOrAudiolog == "Audiolog" && audiolog == true)
-        {
-            audioPos = audioManager.GetTimeLinePosition();
-            audioP = audioPos / audiolength;
-            currentPos = audioP * endOfTheLine;
-            Vector3 temp2 = transform.localPosition;
-            temp2.y = currentPos - origPos;
-            //transform.localPosition = temp2;
-            if (currentPos < safeguard)
-            {
-                if (currentPos > waitforit && showpicture == false)
-                {
-                    Fade();
-                    showpicture = true;
-                    //insert save here
-                }
-            }
-
-        }
-        else if (creditsOrAudiolog == "Credits" && music == true)
-        {
-            FadeOut();
-            showFade = true;
-            if (currentPos < stopPos && reachedEnd == false)
-            {
-                audioPos = audioManager.GetTimeLinePosition();
-                audioP = audioPos / audiolength;
-                currentPos = audioP * endOfTheLine;
-                Vector3 temp = transform.localPosition;
-                temp.y = currentPos - origPos;
-            }
-            else if (currentPos > stopPos && !reachedEnd)
-            {
-                reachedEnd = true;
-                timelineSlider.SetActive(false);
-            }
-        }
-    }
-  
-    public void Flip()
-    {
-        music = !music;
-        audiolog = !audiolog;
-    }
-
-    public void Fade()
-    {
-        if (audiolog == true)
-        {
-            AudiologPic.enabled = true;
-            StartCoroutine(Audiopic());
-            
-        }
-
-        
-    }
-    public void FadeOut()
-    {
-        if (music == true)
-        {
-            CreditsFade.enabled = true;
-            StartCoroutine(FadeOutCounter());
-
-        }
-
-
-    }
-
-    IEnumerator Audiopic()
-    {
-
-        yield return new WaitForSeconds(delay);
-        AudiologPic.CrossFadeAlpha(1, 1.0f, false);
-
-    }
-
-    IEnumerator FadeOutCounter()
-    {
-
-        yield return new WaitForSeconds(delay);
-        CreditsFade.CrossFadeAlpha(0.5f, 0.0f, false);
-
     }
 
     IEnumerator MoveFromTo(Vector3 pointA, Vector3 pointB, float time)
@@ -178,6 +45,5 @@ public class Credits : MonoBehaviour {
             moving = false;
         }
     }
-
 }
 
