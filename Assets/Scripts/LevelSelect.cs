@@ -346,7 +346,7 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void Playlevel()
+    public void PlayLevel()
     {
         unlocks = saveSystemRef.GetUnlocks();
         if (unlocks.ContainsKey(selectedLevel))

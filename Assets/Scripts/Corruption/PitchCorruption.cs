@@ -27,14 +27,6 @@ public class PitchCorruption : CorruptionBaseClass {
     private Slider pitchSlider;
     public float mercyRange;
 
-    [Header ("Randomness variables")] [Tooltip ("Set the values of rGoalRange between -2 and 2. The x value has to be lower than the y value.")]
-    public Vector2 rGoalRange = new Vector2(-2, 2);
-    [Tooltip("Set the values of rTravelTimeRange between 1 and 3. The x value has to be lower than the y value.")]
-    public Vector2 rTravelTimeRange = new Vector2(1, 3);
-
-    [Header("Random generation of pitch nodes")]
-    public bool randomizeNodes;
-
     [SerializeField] [Range(0, 5)]
     float leadUp;
     [SerializeField]
@@ -77,27 +69,6 @@ public class PitchCorruption : CorruptionBaseClass {
         overallCorruption = gameManager.overallCorruption;
         // Set the pitch segments to the recording type PITCH 
         overallCorruption.durations[segmentID].recordingType = Duration.RecordingType.PITCH;
-
-        if (randomizeNodes) //This code randomizes the nodes rather than use the nodes specified in the inspector.
-                            //Useful for testing.
-        {
-            int nodesCount = nodes.Count;
-            nodes.Clear();
-            for (int i = 0; i < nodesCount; i++)
-            {
-                nodes.Add(new PitchNode());
-                if (i == 0)
-                {
-                    nodes[i].seconds = 1;
-                    nodes[i].position = 0;
-                }
-                else
-                {
-                    nodes[i].seconds = Random.Range(rTravelTimeRange.x, rTravelTimeRange.y);
-                    nodes[i].position = Random.Range(rGoalRange.x, rGoalRange.y);
-                }
-            }
-        }
         duration = overallCorruption.durations[segmentID];
         Load();
     }
@@ -120,21 +91,21 @@ public class PitchCorruption : CorruptionBaseClass {
             }
             else
             {
-                    if (!cleared)
+                if (!cleared)
+                {
+                    if (!inSegment)
                     {
-                        if (!inSegment)
-                        {
-                            EnterSegment();
-                            inSegment = true;
-                            hitTime = 0;
-                            timeSinceStart = 0;
-                            index = 0;
-                        }
-                        pitchSlider.gameObject.SetActive(false);
-                        DestroyLine();
-                        RecordPitch();
-                        //ResetConditions();
+                        EnterSegment();
+                        inSegment = true;
+                        hitTime = 0;
+                        timeSinceStart = 0;
+                        index = 0;
                     }
+                    pitchSlider.gameObject.SetActive(false);
+                    DestroyLine();
+                    RecordPitch();
+                    //ResetConditions();
+                }
                 Destroy(pitchPixelParticleInstance);
                 DestroyLine();
                 pitchSlider.gameObject.SetActive(false);
@@ -303,7 +274,7 @@ public class PitchCorruption : CorruptionBaseClass {
         if (animationDone == true)
         {
             animationDone = false;
-            float elapsedTime = 1/30;
+            float elapsedTime = Time.deltaTime;
             Vector3 startingPos = objectToMove.transform.localPosition;
             while (elapsedTime < seconds)
             {
