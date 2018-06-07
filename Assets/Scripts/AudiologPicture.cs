@@ -7,29 +7,24 @@ using System.IO;
 public class AudiologPicture : MonoBehaviour {
 
     [SerializeField] private Image AudiologPic;
-    private float origPos = 0;
     [HideInInspector] public float currentPos;
-    private float endOfTheLine;
-    private GameObject AudioManagerz;
-    [SerializeField] private float waitforit;
-    private float safeguard;
-    [SerializeField] private float delay = 0.5f;
+    private float trackLength;
+    private GameObject AudioManager;
+    [Tooltip("Time in milliseconds from start of audiolog to when picture appears.")]
+    [SerializeField] private float pictureAppearTime;
     private AudioManager audioManager;
     private float audiolength;
     private float audiologlength;
     private float audioPos;
-    private float audioP;
-    private bool music = true;
-    private bool audiolog = false;
     [HideInInspector] public bool showpicture = false;
 
-
-
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
 
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         audiolength = audioManager.GetTrackLength();
+        trackLength = audioManager.GetTrackLength();
 
         AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         AudiologPic.enabled = false;
@@ -39,68 +34,38 @@ public class AudiologPicture : MonoBehaviour {
             AudiologPic.CrossFadeAlpha(0, 0.0f, false);
         }
 
-        endOfTheLine = audioManager.GetTrackLength();
-        safeguard = waitforit + 1000;
-
-
+        
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (showpicture == true && audioManager.switchedToAudioLog)
+        if (showpicture)
         {
-            AudiologPic.enabled = true;
+            if (audioManager.switchedToAudioLog)
+                AudiologPic.enabled = true;
+            else
+                AudiologPic.enabled = false;
         }
-        else if (showpicture == true && audioManager.switchedToAudioLog == false)
-        {
-            AudiologPic.enabled = false;
-        }
+
         if (audioManager.switchedToAudioLog == true)
         {
-            audioPos = audioManager.GetTimeLinePosition();
-            audioP = audioPos / audiolength;
-            currentPos = audioP * endOfTheLine;
-            Vector3 temp2 = transform.localPosition;
-            temp2.y = currentPos - origPos;
-            transform.localPosition = temp2;
-            if (currentPos < safeguard)
+            currentPos = trackLength * audioManager.GetTimeLinePosition() / audiolength;
+            Vector3 temp = transform.localPosition;
+            temp.y = currentPos;
+            transform.localPosition = temp;
+            if (currentPos > pictureAppearTime && showpicture == false)
             {
-                if (currentPos > waitforit && showpicture == false)
-                {
-                    Fade();
-                    showpicture = true;
-                    //insert save here
-                }
+                Fade();
+                showpicture = true;
             }
-
         }
 
-    }
-
-    public void Flip()
-    {
-        music = !music;
-        audiolog = !audiolog;
     }
 
     public void Fade()
     {
-        if (audioManager.switchedToAudioLog == true)
-        {
-            AudiologPic.enabled = true;
-            StartCoroutine(Audiopic());
-
-        }
+        AudiologPic.enabled = true;
+        AudiologPic.CrossFadeAlpha(1, 1.0f, false);
     }
-
-    IEnumerator Audiopic()
-    {
-
-       yield return new WaitForSeconds(delay);
-       AudiologPic.CrossFadeAlpha(1, 1.0f, false);
-
-    }
-
-    
 }
