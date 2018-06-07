@@ -50,11 +50,8 @@ public class AudiologPicture : MonoBehaviour {
 
         if (audioManager.switchedToAudioLog == true)
         {
-            currentPos = trackLength * audioManager.GetTimeLinePosition() / audiolength;
-            Vector3 temp = transform.localPosition;
-            temp.y = currentPos;
-            transform.localPosition = temp;
-            if (currentPos > pictureAppearTime && showpicture == false)
+            //transform.localPosition = new Vector3(transform.localPosition.x, audioManager.GetTimeLinePosition(), transform.localPosition.z);
+            if (audioManager.GetTimeLinePosition() > pictureAppearTime && showpicture == false)
             {
                 Fade();
                 showpicture = true;
