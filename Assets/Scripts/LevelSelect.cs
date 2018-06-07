@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
-
 public class LevelSelect : MonoBehaviour
 {
     [SerializeField] private GameObject buttons;
@@ -14,14 +12,15 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private Button aButton;
     [SerializeField] private Button bButton;
 
+    const int levelCount = 7;
+
     private BoxCollider disablestuff;
-    private int lvl;
+    private int selectedLevel;
 
 	private AudioManager audioManager;
 
     private int currentFocus;
     private int cassetteAmount;
-    [SerializeField] private int rotationAmount = 50;
 
     public List<GameObject> cassettes = new List<GameObject>();
     [Tooltip("The load scene list corresponding to the 'Cassette' list. Use the same index as the 'Cassette' list to set the load scene index")]
@@ -35,26 +34,18 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] private float rotationDuration;
     [SerializeField] private float xOffset;
     [SerializeField] private float yOffset;
-    //[SerializeField] private float cassetteOffset;
+
     [SerializeField] private float cassetteAngle;
     [HideInInspector] public bool pauseScreen = false;
 
-    // Temporary
-    ////
     [Header("For testing purposes, activate before starting")]
     [SerializeField] private bool workWithMouseInput = false;
-    ////
-
 
     private Vector3[] startPos;
     private bool movementLock = false;
 
     private SaveSystem saveSystemRef;
     private Dictionary<int, bool> unlocks;
-
-                                     // ** TODO ** // 
-        // 
-        // 1. Make it so you can only call the function LoadScene on the object that is focused
 
     void Start()
     {
@@ -81,18 +72,6 @@ public class LevelSelect : MonoBehaviour
         }
 
         cassettes[currentFocus].GetComponent<LevelSelectLoadScene>().isFocused = true;
-
-
-
-        /// FOR TESTING BUILD LAST DAY
-        //saveSystemRef.ClearSegments();
-        //{
-        //    for (int i = 2; i < 9; i++)
-        //        saveSystemRef.UnlockLevel(i);
-
-        //    unlocks = saveSystemRef.GetUnlocks();
-        //}
-        ///
     }
 		
     void Update()
@@ -109,11 +88,8 @@ public class LevelSelect : MonoBehaviour
         if (!pauseScreen)
         TouchControls();
 
-        // Temporary
-        ////
         if (workWithMouseInput && !pauseScreen)
         MouseControls();
-        //// 
     }
 
     private void MouseControls()
@@ -206,11 +182,11 @@ public class LevelSelect : MonoBehaviour
                     if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                     {
 						audioManager.PlayLevelSelectSelect ();
-                        lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+                        selectedLevel = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
                         disablestuff = hit.transform.GetComponent<BoxCollider>();
                         disablestuff.enabled = false;
                         buttons.SetActive(true);
-                        EvaluateAndSetButtonStates(lvl);
+                        EvaluateAndSetButtonStates(selectedLevel);
                         if (buttons.activeInHierarchy == true)
                         {
                             movementLock = true;
@@ -243,9 +219,6 @@ public class LevelSelect : MonoBehaviour
                     if (currentFocus >= -1 && currentFocus < cassetteAmount - 1 && movementLock == false && !buttons.activeInHierarchy)
                     {
                         movementLock = true;
-                        //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                        //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                        //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
                         StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z + xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                         for (int i = cassetteAmount - 1; i >= 0; i--)
@@ -280,9 +253,6 @@ public class LevelSelect : MonoBehaviour
                     if (currentFocus > 0 && currentFocus <= cassetteAmount && movementLock == false && !buttons.activeInHierarchy)
                     {
                         movementLock = true;
-                        //Quaternion flatRotation = Quaternion.Euler(270, 0, 0);
-                        //Quaternion standingRotation = Quaternion.Euler(-cassetteAngle, 0, 0);
-                        //Quaternion reversedStandingRotation = Quaternion.Euler(180+cassetteAngle, 0, 0);
                         StartCoroutine(MoveFromTo(new Vector3(startPos[currentFocus].x, startPos[currentFocus].y + yOffset, startPos[currentFocus].z - xOffset), startPos[currentFocus], rotationDuration, currentFocus));
 
                         for (int i = cassetteAmount - 1; i >= 0; i--)
@@ -328,11 +298,11 @@ public class LevelSelect : MonoBehaviour
                             if (hit.transform.GetComponent<LevelSelectLoadScene>().isFocused == true)
                             {
                                 audioManager.PlayLevelSelectSelect ();
-								lvl = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
+								selectedLevel = hit.transform.GetComponent<LevelSelectLoadScene>().LoadSceneIndex;
 								disablestuff = hit.transform.GetComponent<BoxCollider>();
 								disablestuff.enabled = false;
 								buttons.SetActive(true);
-                                EvaluateAndSetButtonStates(lvl);
+                                EvaluateAndSetButtonStates(selectedLevel);
                                 if (buttons.activeInHierarchy == true)
 								{
 									movementLock = true;
@@ -358,7 +328,6 @@ public class LevelSelect : MonoBehaviour
             {
                 t -= Time.deltaTime / time; // Sweeps from 0 to 1 in time seconds
                 cassettes[chosen].transform.localPosition = Vector3.Lerp(pointA, pointB, t); // Set position proportional to t
-                //cassettes[chosen].transform.localRotation = Quaternion.Slerp(fromRot, targetRot, t);
                 yield return new WaitForEndOfFrame();
             }
             moving = false;
@@ -377,17 +346,17 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void Playlvl()
+    public void Playlevel()
     {
         unlocks = saveSystemRef.GetUnlocks();
-        if (unlocks.ContainsKey(lvl))
+        if (unlocks.ContainsKey(selectedLevel))
         {
-            if (unlocks[lvl] == true)
+            if (unlocks[selectedLevel] == true)
             {
-                SceneManager.LoadScene(lvl);
+                SceneManager.LoadScene(selectedLevel);
 				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
-				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (selectedLevel).name);
             }
         }
     }
@@ -395,15 +364,15 @@ public class LevelSelect : MonoBehaviour
     public void PlayASide()
     {
         unlocks = saveSystemRef.GetUnlocks();
-        if (unlocks.ContainsKey(lvl + 7))
+        if (unlocks.ContainsKey(selectedLevel + levelCount))
         {
-            if (unlocks[lvl + 7] == true)
+            if (unlocks[selectedLevel + levelCount] == true)
             {
-                lvl = lvl + 7;
-                SceneManager.LoadScene(lvl);
+                selectedLevel = selectedLevel + levelCount;
+                SceneManager.LoadScene(selectedLevel);
 				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
-				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (selectedLevel).name);
             }
         }
     }
@@ -411,15 +380,15 @@ public class LevelSelect : MonoBehaviour
     public void PlayBSide()
     {
         unlocks = saveSystemRef.GetUnlocks();
-        if (unlocks.ContainsKey(lvl + 14))
+        if (unlocks.ContainsKey(selectedLevel + levelCount * 2))
         {
-            if (unlocks[lvl + 14] == true)
+            if (unlocks[selectedLevel + levelCount * 2] == true)
             {
-                lvl = lvl + 14;
-                SceneManager.LoadScene(lvl);
-				audioManager.PlayLevelSelectPlay ();
+                selectedLevel = selectedLevel + levelCount * 2;
+                SceneManager.LoadScene(selectedLevel);
+				audioManager.PlayLevelSelectPlay();
                 audioManager.AudioStopMusic();
-				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (lvl).name);
+				BankManager.Instance.SceneChanged (SceneManager.GetSceneByBuildIndex (selectedLevel).name);
             }
         }
     }
@@ -429,26 +398,26 @@ public class LevelSelect : MonoBehaviour
         unlocks = saveSystemRef.GetUnlocks();
         if (unlocks.ContainsKey(index))
         {
-            if (unlocks[lvl] == true)
+            if (unlocks[selectedLevel] == true)
                 playButton.interactable = true;
             else
                 playButton.interactable = false;
         }
-        if (unlocks.ContainsKey(index + 7))
+        if (unlocks.ContainsKey(index + levelCount))
         {
-            if (unlocks[lvl + 7] == true)
+            if (unlocks[selectedLevel + levelCount] == true)
                 aButton.interactable = true;
             else
                 aButton.interactable = false;
         }
-        if (unlocks.ContainsKey(index + 14))
+        if (unlocks.ContainsKey(index + levelCount * 2))
         {
-            if (unlocks[lvl + 14] == true)
+            if (unlocks[selectedLevel + levelCount * 2] == true)
                 bButton.interactable = true;
             else
                 bButton.interactable = false;
         }
-        if (index >= 23)
+        if (index >= 23) //If at credits scene
         {
             aButton.interactable = false;
             bButton.interactable = false;

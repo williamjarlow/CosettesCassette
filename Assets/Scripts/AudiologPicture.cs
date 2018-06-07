@@ -10,6 +10,7 @@ public class AudiologPicture : MonoBehaviour {
     [HideInInspector] public float currentPos;
     [Tooltip("Time in milliseconds from start of audiolog to when picture appears.")]
     [SerializeField] private float pictureAppearTime;
+    [SerializeField] private float fadeInTime = 1.0f;
     private AudioManager audioManager;
     private float audiologlength;
     private float audioPos;
@@ -57,6 +58,6 @@ public class AudiologPicture : MonoBehaviour {
     public void Fade()
     {
         AudiologPic.enabled = true;
-        AudiologPic.CrossFadeAlpha(1, 1.0f, false);
+        AudiologPic.CrossFadeAlpha(1, fadeInTime, false);
     }
 }
