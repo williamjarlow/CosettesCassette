@@ -130,8 +130,8 @@ public class AudioTimeline : MonoBehaviour
             audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
 
             // Update mask according to timeline bar
-            if (!gameManager.recording && !audioManager.switchedToAudioLog)
-                timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
+            //if (!gameManager.recording && !audioManager.switchedToAudioLog)
+            //    timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
         }
     }
 
@@ -143,15 +143,15 @@ public class AudioTimeline : MonoBehaviour
             UpdateValues();
             if (!holding)
             {
-                if (!gameManager.recording && !audioManager.switchedToAudioLog)
-                    timelineMaskParent.SetActive(true);
+                //if (!gameManager.recording && !audioManager.switchedToAudioLog)
+                //    timelineMaskParent.SetActive(true);
                 holding = true;
                 return;
             }
 
             if (holding)    // Reset all values, bools are for CassetteAnimation
             {
-                timelineMaskParent.SetActive(false);
+                //timelineMaskParent.SetActive(false);
                 holding = false;
                 movingSlow = false;
                 movingFast = false;
