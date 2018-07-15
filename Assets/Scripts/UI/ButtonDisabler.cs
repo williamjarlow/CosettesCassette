@@ -22,9 +22,14 @@ public class ButtonDisabler : MonoBehaviour {
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
         Debug.Assert(disableButtonList.Count > 0, "Fill the list of button disabler with the buttons you desire to disable/enable during tape switching animation)");
-
 	}
 	
+    public void ToggleSkipButtons()
+    {
+        disableButtonList[1].GetComponent<Button>().interactable = !disableButtonList[1].GetComponent<Button>().interactable;
+        disableButtonList[2].GetComponent<Button>().interactable = !disableButtonList[2].GetComponent<Button>().interactable;
+    }
+
     public void ToggleButtonsInteractable()
     {
         for (int i = 0; i < disableButtonList.Count; i++)

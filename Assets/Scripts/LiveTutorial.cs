@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 
 [System.Serializable]
@@ -13,6 +14,7 @@ public class LiveTutorials
     public float timeToAppearInMs;
     public bool specialCaseWithDelay = false;
     public float delayedCaseInSeconds = 3.5f;
+    public UnityEvent customEvents;
     [HideInInspector] public bool hasBeenShown = false;
 }
 
@@ -21,7 +23,7 @@ public class LiveTutorial : MonoBehaviour {
 
     [SerializeField] private GameObject liveTutorial;
     [SerializeField] private Text textBoxForLiveTutorial;
-    [SerializeField] public LiveTutorials[] liveTutorials;
+    public LiveTutorials[] liveTutorials;
     private AudioManager audioManager;
     private float tolerance = 120;
 
@@ -29,6 +31,10 @@ public class LiveTutorial : MonoBehaviour {
     void Start ()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+        foreach(LiveTutorials tutorial in liveTutorials)
+        {
+            tutorial.customEvents.Invoke();
+        }
 	}
 
     void Update()
@@ -48,6 +54,7 @@ public class LiveTutorial : MonoBehaviour {
                     }
                     else
                     {
+                        liveTutorials[i].customEvents.Invoke();
                         OpenLiveTutorial();
                         textBoxForLiveTutorial.gameObject.SetActive(true);
                         textBoxForLiveTutorial.text = liveTutorials[i].tutorialText;

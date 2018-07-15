@@ -16,6 +16,8 @@ public class AudioTimeline : MonoBehaviour
     private GameObject timelineBar;
     public GameObject timelineMaskParent;
 
+    bool timelineEnabled = true;
+
     private int temp;
 
     [Header("Threshold accepted before we slow down the slider")]
@@ -34,9 +36,12 @@ public class AudioTimeline : MonoBehaviour
     public float cassetteNormalSpeed = 50;
     public float cassetteSlowSpeed = 200;
     public float cassetteFastSpeed = 500;
-    [HideInInspector] public bool movingSlow = false;
-    [HideInInspector] public bool movingFast = false;
-    [HideInInspector] public bool movingForward = true;
+    [HideInInspector]
+    public bool movingSlow = false;
+    [HideInInspector]
+    public bool movingFast = false;
+    [HideInInspector]
+    public bool movingForward = true;
 
     private bool holding = false;
     private float sliderValueAtPush = 0;
@@ -65,7 +70,6 @@ public class AudioTimeline : MonoBehaviour
         songToImageLengthConversion = timelineSlider.maxValue / timelineBar.GetComponent<RectTransform>().sizeDelta.x;
     }
 
-
     void Update()
     {
         if (gameManager.recording && timelineSlider.IsInteractable())
@@ -73,13 +77,13 @@ public class AudioTimeline : MonoBehaviour
             timelineSlider.interactable = false;
         }
 
-        if (!gameManager.recording && !timelineSlider.IsInteractable())
+        if (!gameManager.recording && !timelineSlider.IsInteractable() && timelineEnabled)
         {
             timelineSlider.interactable = true;
         }
 
 
-        if (!holding || gameManager.recording)
+        if (!holding || gameManager.recording || !timelineEnabled)
         {
             ChangeOnPlaying();
         }
@@ -87,6 +91,11 @@ public class AudioTimeline : MonoBehaviour
         {
             HoldChange();
         }
+    }
+
+    public void ToggleTimelineEnabled()
+    {
+        timelineEnabled = !timelineEnabled; //Jank-lösning för sista minuten grejer, disablar timeline om man inte sett tooltipet ännu.
     }
 
     public void ChangeTimeline()
@@ -100,50 +109,54 @@ public class AudioTimeline : MonoBehaviour
         if (!gameManager.recording)
         {
             // Stop player from breaking song by forcing it to play the exact same moment over and over again.
-            if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100) // Yes we have a magic number here!
+            if (Mathf.Abs(sliderValueAtPush - valuePushedOn) < 100)
             {
                 DecideSpeedAndDirection("moveNormal");
                 return;
             }
-			if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn) {
-				DecideSpeedAndDirection ("fastForward");
-				audioManager.SetSkipPitch (100f);
-			}
+            if (sliderValueAtPush < (valuePushedOn - maxSpeedThresholdInMs) && sliderValueAtPush != valuePushedOn)
+            {
+                DecideSpeedAndDirection("fastForward");
+                audioManager.SetSkipPitch(100f);
+            }
 
-			else if (sliderValueAtPush < valuePushedOn) {
-				DecideSpeedAndDirection ("slowForward");
-				audioManager.SetSkipPitch (0f);
-			}
+            else if (sliderValueAtPush < valuePushedOn)
+            {
+                DecideSpeedAndDirection("slowForward");
+                audioManager.SetSkipPitch(0f);
+            }
 
-			if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs)) {
-				DecideSpeedAndDirection ("fastBackwards");
-				audioManager.SetSkipPitch (100f);
-			}
+            if (sliderValueAtPush > (valuePushedOn + maxSpeedThresholdInMs))
+            {
+                DecideSpeedAndDirection("fastBackwards");
+                audioManager.SetSkipPitch(100f);
+            }
 
-			else if (sliderValueAtPush > valuePushedOn) {
-				DecideSpeedAndDirection ("slowBackwards");
-				audioManager.SetSkipPitch (0f);
-			}
+            else if (sliderValueAtPush > valuePushedOn)
+            {
+                DecideSpeedAndDirection("slowBackwards");
+                audioManager.SetSkipPitch(0f);
+            }
 
 
             timelineSlider.value = sliderValueAtPush;
             audioManager.gameMusicEv.setTimelinePosition((int)sliderValueAtPush);
 
             // Update mask according to timeline bar
-            //if (!gameManager.recording && !audioManager.switchedToAudioLog)
-            //    timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
+           //if (!gameManager.recording && !audioManager.switchedToAudioLog)
+           //     timelineMaskParent.transform.localPosition = new Vector3(maskStartPos + (timelineSlider.value / songToImageLengthConversion), timelineMaskParent.transform.localPosition.y, 0);
         }
     }
 
     // Toggle hold.... 'Cause buttons
     public void ToggleHold()
     {
-        if(audioManager.startedMusic)
+        if (audioManager.startedMusic)
         {
             UpdateValues();
             if (!holding)
             {
-                //if (!gameManager.recording && !audioManager.switchedToAudioLog)
+                //if (!gameManager.recording && !audioManager.switchedToAudioLog && timelineEnabled)
                 //    timelineMaskParent.SetActive(true);
                 holding = true;
                 return;
