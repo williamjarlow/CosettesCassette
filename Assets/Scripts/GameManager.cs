@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
             ejectButton.interactable = false;
             ejectButton.GetComponent<ButtonScript>().SetPositionDown();
         }
+
     }
 
     private void Update()

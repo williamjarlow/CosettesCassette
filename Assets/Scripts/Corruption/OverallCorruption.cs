@@ -63,6 +63,7 @@ public class OverallCorruption : MonoBehaviour
     private LiveTutorial liveTutorial;
 
     private SaveSystem saveSystemRef;
+    private Dictionary<int, bool> unlocks;
 
     void Awake()
     {
@@ -103,6 +104,23 @@ public class OverallCorruption : MonoBehaviour
 
         saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
 
+
+
+        //// Turn off tooltips if we already completed the level
+        //unlocks = saveSystemRef.GetUnlocks();
+        //if (unlocks.ContainsKey(SceneManager.GetActiveScene().buildIndex))
+        //{
+        //    gameManager.LevelCleared = true;
+        //    if (GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>())
+        //    {
+        //        liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+        //        for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)
+        //        {
+        //            liveTutorial.liveTutorials[i].hasBeenShown = true;
+        //            liveTutorial.liveTutorials[i].customEvents.Invoke();
+        //        }
+        //    }
+        //}
     }
 
     void Update()
@@ -174,9 +192,7 @@ public class OverallCorruption : MonoBehaviour
                     if (liveTutorial != null)
                     {
                         liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 0.5f);
-                        liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 5.5f);
-
-
+                        liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 5f);
                     }
                 }
                 else
