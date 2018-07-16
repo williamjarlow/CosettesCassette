@@ -28,6 +28,7 @@ public class CorruptionVisuals : MonoBehaviour {
     [SerializeField] private float fadeDelay = 3.45f;
     [SerializeField] private float fadeSpeed = 0.4f;
     Color savedColor;
+    private float corruptedPercentage = 100;
 
     private void Awake()
     {
@@ -42,7 +43,7 @@ public class CorruptionVisuals : MonoBehaviour {
         savedColor = maskImage.color;
         savedColor.a = 0;
         StartCoroutine(FadeInDelay(fadeDelay));
-	}
+    }
 
     void Update()
     {
@@ -50,7 +51,7 @@ public class CorruptionVisuals : MonoBehaviour {
         {
             savedColor.a += Time.deltaTime * fadeSpeed;
             maskImage.color = savedColor;
-            if (maskImage.color.a >= 1)
+            if (maskImage.color.a >= 1 - corruptedPercentage)
                 fade = false;
         }
     }
@@ -102,6 +103,9 @@ public class CorruptionVisuals : MonoBehaviour {
 
         // Set alpha value to actual image
         maskImage.color = savedColor;
+
+        // Get value to use for fade in
+        corruptedPercentage = corruptionPercentage;
     }
 
     IEnumerator FadeInDelay(float fadeDelay)

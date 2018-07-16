@@ -15,7 +15,7 @@ public class LiveTutorials
     public bool specialCaseWithDelay = false;
     public float delayedCaseInSeconds = 3.5f;
     public UnityEvent customEvents;
-    [HideInInspector] public bool hasBeenShown = false;
+    /*[HideInInspector]*/ public bool hasBeenShown = false;
 }
 
 public class LiveTutorial : MonoBehaviour {

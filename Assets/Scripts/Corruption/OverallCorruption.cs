@@ -107,20 +107,24 @@ public class OverallCorruption : MonoBehaviour
 
 
         //// Turn off tooltips if we already completed the level
-        //unlocks = saveSystemRef.GetUnlocks();
-        //if (unlocks.ContainsKey(SceneManager.GetActiveScene().buildIndex))
-        //{
-        //    gameManager.LevelCleared = true;
-        //    if (GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>())
-        //    {
-        //        liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
-        //        for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)
-        //        {
-        //            liveTutorial.liveTutorials[i].hasBeenShown = true;
-        //            liveTutorial.liveTutorials[i].customEvents.Invoke();
-        //        }
-        //    }
-        //}
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(SceneManager.GetActiveScene().buildIndex + 1))      // Get next levels information
+        {
+            if (unlocks[SceneManager.GetActiveScene().buildIndex + 1] == true)      // Have we unlocked next level, aka have we completed this one ?
+            {
+                gameManager.LevelCleared = true;
+                if (GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>())
+                {
+                    liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+                    for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)
+                    {
+                        liveTutorial.liveTutorials[i].hasBeenShown = true;
+                        liveTutorial.liveTutorials[i].customEvents.Invoke();
+                    }
+                }
+            }
+
+        }
     }
 
     void Update()
@@ -185,29 +189,34 @@ public class OverallCorruption : MonoBehaviour
                     gameManager.stageClearVFX.CallVFXWith2StickersEarned(gameManager.stickerForGood.Sprite, gameManager.stickerForPerfect.Sprite);
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
                     saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
-
+                    gameManager.audioManager.PlayWinSound(1);
+                    print("Played first");
                     gameManager.stageClearVFX.CallEjectParticles(true);
 
                     // Special case for LiveTutorial
-                    if (liveTutorial != null)
+                    if (SceneManager.GetActiveScene().name == "Cassette00" && liveTutorial != null)
                     {
                         liveTutorial.ForceOpenLiveTutorial("The Cassette is now repaired enough for you to access the B-side. Just press the Eject Button!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 0.5f);
                         liveTutorial.ForceOpenLiveTutorial("You can continue playing if you like. There might even be a special reward for completely filling the Repair-Bar!", gameManager.stageClearVFX.timeToShowPerfect + gameManager.stageClearVFX.timeToShowNew + +gameManager.stageClearVFX.timeToShowNew + 5f);
                     }
                 }
                 else
+                {
                     gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
+                    gameManager.audioManager.PlayWinSound(1);
+                    print("Played second");
+                }
             }
             // Activate the eject button when the level is cleared
             overallCorruption = 0;
             ejectButton.interactable = true;
             ejectButton.GetComponent<ButtonScript>().SetPositionUp();
-            gameManager.audioManager.PlayWinSound(1);
             gameManager.LevelPerfected = true;
             gameManager.LevelCleared = true;
         }
         else if (overallCorruption <= 100 - corruptionClearThreshold && gameManager.LevelCleared == false) //If player hasn't won already
         {
+            print("Played third");
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name))
