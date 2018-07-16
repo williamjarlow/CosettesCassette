@@ -113,7 +113,7 @@ public class OverallCorruption : MonoBehaviour
             if (unlocks[SceneManager.GetActiveScene().buildIndex + 1] == true)      // Have we unlocked next level, aka have we completed this one ?
             {
                 gameManager.LevelCleared = true;
-                if (GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>())
+                if (GameObject.FindGameObjectWithTag("LiveTutorial") != null)       // If a live tutorial exists in the level, disable all popups and invoke all custom events
                 {
                     liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
                     for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)

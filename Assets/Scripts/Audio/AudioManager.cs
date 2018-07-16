@@ -125,7 +125,6 @@ public class AudioManager : MonoBehaviour {
 				liveTutorial.ForceOpenLiveTutorial("Press the Gear Icon to find more help in the future!");
 			}
 		}
-
 	}
 		
 	public void AudioPlayMusic ()
