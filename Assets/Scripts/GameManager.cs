@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public StickerManager stickerManageRef;
     [HideInInspector] public Sticker stickerForGood;
     [HideInInspector] public Sticker stickerForPerfect;
+    private SaveSystem saveSystemRef;
+    private Dictionary<int, bool> unlocks;
+    private LiveTutorial liveTutorial;
 
 
     void Awake()
@@ -82,6 +85,34 @@ public class GameManager : MonoBehaviour
         {
             ejectButton.interactable = false;
             ejectButton.GetComponent<ButtonScript>().SetPositionDown();
+        }
+
+
+
+        saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
+
+
+
+        //// Turn off tooltips and enable eject button if we already completed the level
+        unlocks = saveSystemRef.GetUnlocks();
+        if (unlocks.ContainsKey(SceneManager.GetActiveScene().buildIndex + 1))      // Get next levels information
+        {
+            if (unlocks[SceneManager.GetActiveScene().buildIndex + 1] == true)      // Have we unlocked next level, aka have we completed this one ?
+            {
+                ejectButton.interactable = true;                                    // Enable eject button
+                ejectButton.GetComponent<ButtonScript>().SetPositionUp();           // Toggle button to up position
+                LevelCleared = true;
+                if (GameObject.FindGameObjectWithTag("LiveTutorial") != null)       // If a live tutorial exists in the level, disable all popups and invoke all custom events
+                {
+                    liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
+                    for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)
+                    {
+                        liveTutorial.liveTutorials[i].hasBeenShown = true;
+                        liveTutorial.liveTutorials[i].customEvents.Invoke();
+                    }
+                }
+            }
+
         }
 
     }

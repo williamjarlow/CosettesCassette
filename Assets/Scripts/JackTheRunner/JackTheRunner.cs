@@ -110,7 +110,6 @@ public class JackTheRunner : CorruptionBaseClass
 
     public override void GradeScore()
     {
-        Debug.Log(damageTaken + " / " + maxScore);
         currentScore = ((maxScore - damageTaken) * 100) / maxScore;
         base.GradeScore(); //Score gets evaluated and saved to file here.
     }

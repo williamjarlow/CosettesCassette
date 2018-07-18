@@ -63,7 +63,6 @@ public class OverallCorruption : MonoBehaviour
     private LiveTutorial liveTutorial;
 
     private SaveSystem saveSystemRef;
-    private Dictionary<int, bool> unlocks;
 
     void Awake()
     {
@@ -103,28 +102,6 @@ public class OverallCorruption : MonoBehaviour
         UpdateDistortionAmount();
 
         saveSystemRef = SaveSystem.Instance.GetComponent<SaveSystem>();
-
-
-
-        //// Turn off tooltips if we already completed the level
-        unlocks = saveSystemRef.GetUnlocks();
-        if (unlocks.ContainsKey(SceneManager.GetActiveScene().buildIndex + 1))      // Get next levels information
-        {
-            if (unlocks[SceneManager.GetActiveScene().buildIndex + 1] == true)      // Have we unlocked next level, aka have we completed this one ?
-            {
-                gameManager.LevelCleared = true;
-                if (GameObject.FindGameObjectWithTag("LiveTutorial") != null)       // If a live tutorial exists in the level, disable all popups and invoke all custom events
-                {
-                    liveTutorial = GameObject.FindGameObjectWithTag("LiveTutorial").GetComponent<LiveTutorial>();
-                    for (int i = 0; i < liveTutorial.liveTutorials.Length; i++)
-                    {
-                        liveTutorial.liveTutorials[i].hasBeenShown = true;
-                        liveTutorial.liveTutorials[i].customEvents.Invoke();
-                    }
-                }
-            }
-
-        }
     }
 
     void Update()
@@ -190,7 +167,6 @@ public class OverallCorruption : MonoBehaviour
                     gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name);
                     saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
                     gameManager.audioManager.PlayWinSound(1);
-                    print("Played first");
                     gameManager.stageClearVFX.CallEjectParticles(true);
 
                     // Special case for LiveTutorial
@@ -204,7 +180,6 @@ public class OverallCorruption : MonoBehaviour
                 {
                     gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.perfect, gameManager.stickerForPerfect.Sprite);
                     gameManager.audioManager.PlayWinSound(1);
-                    print("Played second");
                 }
             }
             // Activate the eject button when the level is cleared
@@ -216,7 +191,6 @@ public class OverallCorruption : MonoBehaviour
         }
         else if (overallCorruption <= 100 - corruptionClearThreshold && gameManager.LevelCleared == false) //If player hasn't won already
         {
-            print("Played third");
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name))
