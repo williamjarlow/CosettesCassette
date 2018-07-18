@@ -159,6 +159,12 @@ public class OverallCorruption : MonoBehaviour
         }
         if (gameManager.LevelPerfected == false && tempPerfected)
         {
+            // Activate the eject button when the level is cleared
+            overallCorruption = 0;
+            ejectButton.interactable = true;
+            ejectButton.GetComponent<ButtonScript>().SetPositionUp();
+            gameManager.LevelPerfected = true;
+            gameManager.LevelCleared = true;
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
             {
                 if (!gameManager.LevelCleared)
@@ -182,27 +188,19 @@ public class OverallCorruption : MonoBehaviour
                     gameManager.audioManager.PlayWinSound(1);
                 }
             }
-            // Activate the eject button when the level is cleared
-            overallCorruption = 0;
-            ejectButton.interactable = true;
-            ejectButton.GetComponent<ButtonScript>().SetPositionUp();
-            gameManager.LevelPerfected = true;
-            gameManager.LevelCleared = true;
         }
         else if (overallCorruption <= 100 - corruptionClearThreshold && gameManager.LevelCleared == false) //If player hasn't won already
         {
             gameManager.audioManager.PlayWinSound(0);
             gameManager.LevelCleared = true;
+            // Activate the eject button when the level is cleared
+            ejectButton.interactable = true;
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForGood.Name))
             {
                 gameManager.stageClearVFX.CallVFXWithStickerEarned(segmentEffects.good, gameManager.stickerForGood.Sprite);
                 gameManager.stageClearVFX.CallEjectParticles(true);
                 saveSystemRef.UnlockLevel(SceneManager.GetActiveScene().buildIndex);
             }
-
-            // Activate the eject button when the level is cleared
-            ejectButton.interactable = true;
-
             // Special case for LiveTutorial
             if (liveTutorial != null)
             {

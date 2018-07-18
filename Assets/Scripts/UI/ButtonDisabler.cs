@@ -30,6 +30,11 @@ public class ButtonDisabler : MonoBehaviour {
         disableButtonList[2].GetComponent<Button>().interactable = !disableButtonList[2].GetComponent<Button>().interactable;
     }
 
+    public void ToggleRepairButton()
+    {
+        disableButtonList[3].GetComponent<Button>().interactable = !disableButtonList[3].GetComponent<Button>().interactable;
+    }
+
     public void ToggleButtonsInteractable()
     {
         for (int i = 0; i < disableButtonList.Count; i++)
@@ -40,6 +45,7 @@ public class ButtonDisabler : MonoBehaviour {
 
     public void DisableButtons()
     {
+        Debug.Log("REEEEE");
         // Disable buttons
         for (int i = 0; i < disableButtonList.Count; i++)
         {

@@ -24,9 +24,12 @@ public class StageClearVFX : MonoBehaviour
     [SerializeField] private float perfectParticleYOffset = 1.6f;
     [SerializeField] private float newStickerParticleYOffset = 0.1f;
     [SerializeField] private GameObject stickerSpritePosition;
+    bool stickerButtonLock = false; //Only for when there are two stickers.
+
     private SpriteRenderer stickerSprite;
 	private AudioManager audioManager;
     private GameManager gameManager;
+    ButtonDisabler buttonDisabler;
 
     private void Start()
     {
@@ -34,10 +37,12 @@ public class StageClearVFX : MonoBehaviour
         stickerSprite = stickerSpritePosition.GetComponent<SpriteRenderer>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         audioManager = gameManager.audioManager;
+        buttonDisabler = gameManager.uiHandler.GetComponent<ButtonDisabler>();
     }
 
     public void CallVFX(segmentEffects typeOfEffect)
     {
+        buttonDisabler.DisableButtons();
         if (typeOfEffect == segmentEffects.good)
             CallFullEffect(goodClearAnimation, timeToShowGood, goodParticleEffect, goodParticleYOffset);
 
@@ -53,6 +58,7 @@ public class StageClearVFX : MonoBehaviour
     public void CallVFXWithStickerEarned(segmentEffects typeOfEffect, Sprite sticker)
     {
         stickerSprite.sprite = sticker;
+        buttonDisabler.DisableButtons();
 
         if (typeOfEffect == segmentEffects.good)
         {
@@ -71,6 +77,8 @@ public class StageClearVFX : MonoBehaviour
 
     public void CallVFXWith2StickersEarned(Sprite sticker, Sprite secondSticker)
     {
+        stickerButtonLock = true; //Two stickers unlocked
+        buttonDisabler.DisableButtons();
         stickerSprite.sprite = sticker;
         CallFullEffect(perfectClearAnimation, timeToShowPerfect, perfectParticleEffect, perfectParticleYOffset);
         StartCoroutine(StickerDelay(timeToShowPerfect));
@@ -79,6 +87,7 @@ public class StageClearVFX : MonoBehaviour
 
     private void CallFullEffect(GameObject gameObjectForEffect, float timeToShowEffect, GameObject particleEffect, float yOffset)
     {
+        buttonDisabler.DisableButtons();
         GameObject effect = Instantiate(gameObjectForEffect, gameObject.transform);
         Destroy(effect, timeToShowEffect);
         foreach (Transform particleEffects in particleEffect.transform)
@@ -121,6 +130,7 @@ public class StageClearVFX : MonoBehaviour
         CallFullEffect(newStickerAnimation, timeToShowNew, newStickerParticleEffect, newStickerParticleYOffset);
 		audioManager.PlayStickerGet ();
         StartCoroutine(HideStickerObject(timeToShowNew));
+        
     }
 
 
@@ -129,6 +139,11 @@ public class StageClearVFX : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         stickerSpritePosition.SetActive(false);
+        Debug.Log(stickerButtonLock);
+        if (stickerButtonLock == true)
+            stickerButtonLock = false; //Undo the lock
+        else
+            buttonDisabler.EnableButtons(); //If no lock, enable buttons
     }
 
 }
