@@ -160,11 +160,8 @@ public class OverallCorruption : MonoBehaviour
         if (gameManager.LevelPerfected == false && tempPerfected)
         {
             // Activate the eject button when the level is cleared
-            overallCorruption = 0;
             ejectButton.interactable = true;
             ejectButton.GetComponent<ButtonScript>().SetPositionUp();
-            gameManager.LevelPerfected = true;
-            gameManager.LevelCleared = true;
             if (gameManager.stickerManageRef.EarnSticker(gameManager.stickerForPerfect.Name))
             {
                 if (!gameManager.LevelCleared)
@@ -188,6 +185,9 @@ public class OverallCorruption : MonoBehaviour
                     gameManager.audioManager.PlayWinSound(1);
                 }
             }
+            overallCorruption = 0;
+            gameManager.LevelPerfected = true;
+            gameManager.LevelCleared = true;
         }
         else if (overallCorruption <= 100 - corruptionClearThreshold && gameManager.LevelCleared == false) //If player hasn't won already
         {

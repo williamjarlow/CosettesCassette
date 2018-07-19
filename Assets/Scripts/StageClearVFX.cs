@@ -139,7 +139,6 @@ public class StageClearVFX : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         stickerSpritePosition.SetActive(false);
-        Debug.Log(stickerButtonLock);
         if (stickerButtonLock == true)
             stickerButtonLock = false; //Undo the lock
         else

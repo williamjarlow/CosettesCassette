@@ -45,7 +45,6 @@ public class ButtonDisabler : MonoBehaviour {
 
     public void DisableButtons()
     {
-        Debug.Log("REEEEE");
         // Disable buttons
         for (int i = 0; i < disableButtonList.Count; i++)
         {
