@@ -64,6 +64,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (uiParent != null)
+        {
+            uiParent.GetComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            uiParent.GetComponent<CanvasScaler>().screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        }
+
 		audioManager.PlayInsertAnimSound ();
         Debug.Assert(this.gameObject.tag == "GameManager", "Set GameManager tag to GameManager");
         stickerManageRef = SaveSystem.Instance.transform.GetChild(0).GetComponent<StickerManager>();
